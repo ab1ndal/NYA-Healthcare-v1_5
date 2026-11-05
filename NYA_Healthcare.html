@@ -2162,7 +2162,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
         <p class="financial-intro reveal">NYA’s Advanced Rapid Concept Studies (ARCS) delivers Design Development-level analysis during the earliest stages of design. By rapidly evaluating multiple structural systems with advanced seismic analysis, material quantities, and cost input, our team identifies opportunities to eliminate unnecessary steel and concrete, reduce risk, and help you select the right system with greater confidence.</p>
       </div>
       <div class="financial-graphic reveal">
-        <div class="financial-chart" role="img" tabindex="0" aria-label="Conceptual illustration of anticipated structural cost ranges from concept through construction documents. Both approaches start with the same wide range. With ARCS the range narrows sharply during concept, so by the start of schematic design it is as certain as the typical approach becomes late in design development, over one phase sooner, and it ends at a lower cost.">
+        <div class="financial-chart" role="img" tabindex="0" aria-label="Conceptual illustration of anticipated structural cost ranges from concept through construction documents. Both approaches start with the same wide range. With ARCS the range narrows sharply during concept, so by the start of schematic design it is as certain as the typical approach becomes late in design development, one phase sooner, and it ends at a lower cost.">
           <!-- Everything but <defs> is drawn by the script below, in one of two layouts:
                desktop (fixed 1400x395 viewBox) or compact (viewBox = container width in px,
                so chart text stays at true pixel size on phones). -->
@@ -3344,7 +3344,7 @@ function initArcsChart(svg){
   const hoverMQ=window.matchMedia('(hover: hover) and (pointer: fine)');
 
   const K=12, FLOOR=.4, LOCK_T=.25, N=160;
-  const LOCK_1='REDUCED UNCERTAINTY', LOCK_2='OVER ONE PHASE SOONER';
+  const LOCK_1='REDUCED UNCERTAINTY', LOCK_2='ONE PHASE SOONER';
   // Fraction of the starting range still open (1 at concept, 0 at the end).
   const fTyp=t=>1-t;
   const fArcs=t=>(FLOOR+(1-FLOOR)*Math.exp(-K*t))*(1-t);
@@ -3354,10 +3354,10 @@ function initArcsChart(svg){
 
   const DESKTOP={
     W:1400,H:395,X0:72,X1:1330,TOP:100,BOT:290,END_TYP:184,END_ARCS:246,
-    axisY:316,yTip:70,yHead:[8,13],xEnd:1359,xHead:[6,13],gridTop:96,tick:7,dot:8,
+    axisY:316,yTip:70,yHead:[8,13],xEnd:1359,xHead:[6,13],dot:8,
     sw:{top:2.7,bot:2,pill:5,axis:2,legend:3,glow:2},
     title:{x:66,size:14,ls:2,lines:[[30,'ESTIMATED'],[51,'STRUCTURAL COST']]},
-    phases:{y:348,size:14,ls:2.2,names:['CONCEPT','SCHEMATIC DESIGN','DESIGN DEVELOPMENT','CONSTRUCTION DOCS']},
+    phases:{y:348,size:14,ls:2.2},
     lock:{arrowY:58,l1:44,l2:80,size:13,ls:2.2,head:14},
     hit:{y:60,h:270},
     legend:{len:50,textDx:65,rows:[[1155,60],[1155,91]],dy:6,size:16},
@@ -3398,12 +3398,12 @@ function initArcsChart(svg){
     return {
       W,H:legRows[1][1]+12,X0:10,X1:W-26,TOP,BOT,
       END_TYP:TOP+(BOT-TOP)*(84/190),END_ARCS:TOP+(BOT-TOP)*(146/190),
-      axisY,yTip:24,yHead:[6,10],xEnd:W-4,xHead:[5,10],gridTop:TOP-4,tick:6,dot:4.5,
+      axisY,yTip:24,yHead:[6,10],xEnd:W-4,xHead:[5,10],dot:4.5,
       // Thinner marks than desktop: the narrow chart is drawn at true px, so desktop
       // weights (2.7px glowing lines, 5px bars) look heavy against a ~300px plot.
       sw:{top:1.6,bot:1.1,pill:3,axis:1.5,legend:2,glow:1},
       title:{x:0,size:fs,ls:1.4,lines:[[big?14:12,'ESTIMATED STRUCTURAL COST']]},
-      phases:{y:axisY+24,size:fs,ls:W<300?.8:1.2,names:['CONCEPT','SD','DD','CD']},
+      phases:{y:axisY+24,size:fs,ls:1.4},
       lock:{arrowY,l1,l2,lh,size:fs,ls:big?1.6:1.4,head:big?11:10},
       hit:{y:24,h:axisY+14-24},
       legend:{len:24,textDx:32,rows:legRows,dy:5,size:legSize},
@@ -3441,7 +3441,6 @@ function initArcsChart(svg){
     svg.style.aspectRatio=L.W+' / '+L.H;
     const {X0,X1,TOP,BOT,END_TYP,END_ARCS,axisY}=L;
     const x=t=>X0+t*(X1-X0);
-    const q=i=>X0+i*(X1-X0)/4;
     const typ=t=>[END_TYP-(END_TYP-TOP)*fTyp(t), END_TYP+(BOT-END_TYP)*fTyp(t)];
     const arcs=t=>[END_ARCS-(END_ARCS-TOP)*fArcs(t), END_ARCS+(BOT-END_ARCS)*fArcs(t)];
     const line=(fn,i)=>ts.map((t,j)=>(j?'L':'M')+x(t).toFixed(1)+' '+fn(t)[i].toFixed(1)).join(' ');
@@ -3450,12 +3449,6 @@ function initArcsChart(svg){
     const title=el('g',{fill:'#f0f4f6','font-family':FONT,'font-size':L.title.size,'letter-spacing':L.title.ls});
     L.title.lines.forEach(([y,s])=>el('text',{x:L.title.x,y},title,s));
 
-    // Phase grid. Concept, SD, DD, CD split the plot into quarters.
-    if(opt===1){
-      const grid=el('g',{stroke:'rgba(237,241,243,.16)','stroke-width':1,'stroke-dasharray':'3 5'});
-      [1,2,3].forEach(i=>el('line',{x1:q(i),y1:L.gridTop,x2:q(i),y2:axisY},grid));
-    }
-
     const [yh,yl]=L.yHead, [xh,xl]=L.xHead;
     el('path',{d:'M'+X0+' '+axisY+' V'+(L.yTip+yl/2),fill:'none',stroke:'#fff','stroke-width':L.sw.axis});
     el('path',{d:'M'+(X0-yh)+' '+(L.yTip+yl)+' L'+X0+' '+L.yTip+' L'+(X0+yh)+' '+(L.yTip+yl)+' Z',fill:'#fff'});
@@ -3463,10 +3456,8 @@ function initArcsChart(svg){
     el('path',{d:'M'+(L.xEnd-xl)+' '+(axisY-xh)+' L'+L.xEnd+' '+axisY+' L'+(L.xEnd-xl)+' '+(axisY+xh)+' Z',fill:'#fff'});
 
     if(opt===2){ renderOpt2(L); return; }
-    const ticks=el('g',{stroke:'#fff','stroke-width':L.sw.axis});
-    [1,2,3,4].forEach(i=>el('line',{x1:q(i),y1:axisY-L.tick,x2:q(i),y2:axisY+L.tick},ticks));
-    const ph=el('g',{fill:'#edf1f3','font-family':FONT,'font-size':L.phases.size,'letter-spacing':L.phases.ls,'text-anchor':'middle'});
-    L.phases.names.forEach((s,i)=>el('text',{x:(q(i)+q(i+1))/2,y:L.phases.y},ph,s));
+    // X-axis: a single label, no phase ticks or grid.
+    el('text',{x:(X0+X1)/2,y:L.phases.y,fill:'#edf1f3','font-family':FONT,'font-size':L.phases.size,'letter-spacing':L.phases.ls,'text-anchor':'middle'},null,'PROJECT TIMELINE');
 
     el('path',{d:band(typ),fill:ref('arcsOrangeBand')});
     el('path',{d:band(arcs),fill:ref('arcsTealBand')});
