@@ -3342,6 +3342,8 @@ function initArcsChart(svg){
   // so switch to the compact layout drawn at 1 unit = 1 CSS px.
   const COMPACT_BELOW=960;
   const hoverMQ=window.matchMedia('(hover: hover) and (pointer: fine)');
+  // Phone held sideways: the chart must fit the screen height, not just its width.
+  const shortLandscapeMQ=window.matchMedia('(orientation: landscape) and (max-height: 500px)');
 
   const K=12, FLOOR=.4, LOCK_T=.25, N=160;
   const LOCK_1='REDUCED UNCERTAINTY', LOCK_2='ONE PHASE SOONER';
@@ -3382,7 +3384,9 @@ function initArcsChart(svg){
   const ref=id=>'url(#'+id+'-'+opt+')';
   // n1/n2: how many lines each callout label wraps to (see fitLock); the plot moves
   // down by the extra lines so the callout never runs into the bands.
-  const compact=(W,n1=1,n2=1)=>{
+  // maxH (short landscape only): squeeze the plot so the whole drawing fits that height,
+  // and move the legend to the empty top-right corner to free rows below the axis.
+  const compact=(W,n1=1,n2=1,maxH=0)=>{
     // Plot grows with width so tablets don't get a long flat strip; labels step up a size there too.
     const big=W>=560, fs=big?12.5:11, lh=Math.round(fs*1.4);
     const l1=big?46:44, arrowY=l1+(n1-1)*lh+(big?14:12), l2=arrowY+(big?22:20);
@@ -3391,12 +3395,14 @@ function initArcsChart(svg){
     // Option 2 has no callout, so the plot starts right under the axis tip.
     // Plot height follows plot width so the curves keep roughly their desktop shape
     // (desktop plot is 6.6:1). A fixed tall floor on a narrow plot made the bands fat.
-    const plotW=W-36, plotH=Math.max(90,Math.min(180,Math.round(plotW*.34)));
-    const TOP=opt===2?(big?48:44):l2+(n2-1)*lh+(big?22:20), BOT=TOP+plotH, axisY=BOT+22;
-    const legSize=big?14:13, legY=axisY+56;
-    const legRows=W<290?[[0,legY],[0,legY+22]]:[[0,legY],[big?172:156,legY]];
+    const TOP=opt===2?(big?48:44):l2+(n2-1)*lh+(big?22:20);
+    const sideLeg=maxH>0&&big, legSize=big?14:13;
+    let plotH=Math.max(90,Math.min(180,Math.round((W-36)*.34)));
+    if(sideLeg) plotH=Math.max(60,Math.min(plotH,maxH-(TOP+22+24+12)));
+    const BOT=TOP+plotH, axisY=BOT+22, legY=axisY+56;
+    const legRows=sideLeg?[[W-150,14],[W-150,36]]:W<290?[[0,legY],[0,legY+22]]:[[0,legY],[big?172:156,legY]];
     return {
-      W,H:legRows[1][1]+12,X0:10,X1:W-26,TOP,BOT,
+      W,H:sideLeg?axisY+24+12:legRows[1][1]+12,X0:10,X1:W-26,TOP,BOT,
       END_TYP:TOP+(BOT-TOP)*(84/190),END_ARCS:TOP+(BOT-TOP)*(146/190),
       axisY,yTip:24,yHead:[6,10],xEnd:W-4,xHead:[5,10],dot:4.5,
       // Thinner marks than desktop: the narrow chart is drawn at true px, so desktop
@@ -3526,16 +3532,33 @@ function initArcsChart(svg){
     const w=Math.round((chart||svg).clientWidth);
     if(!w) return;
     const isCompact=w<COMPACT_BELOW;
-    const key=opt+(isCompact?'c'+Math.max(240,w):'d');
+    const maxH=isCompact?fitHeight():0;
+    const key=opt+(isCompact?'c'+Math.max(240,w)+'h'+maxH:'d');
     if(key===lastKey) return;
     lastKey=key;
     const W=Math.max(240,w);
-    render(!isCompact?DESKTOP:opt===1?fitLock(W):compact(W));
+    render(!isCompact?DESKTOP:opt===1?fitLock(W,maxH):compact(W,1,1,maxH));
+    // The HTML caption only shows once compact; its height changes what fits, so retry.
+    if(maxH&&fitHeight()!==maxH) layout();
+  }
+  // Height left for the SVG when the whole chart box (padding, border, caption) must fit
+  // the viewport. 0 = no limit. Rounded so browser-bar show/hide doesn't redraw constantly.
+  function fitHeight(){
+    if(!shortLandscapeMQ.matches) return 0;
+    // The fixed case-study nav covers the top of the screen while this part is in view.
+    const nav=document.getElementById('range-nav');
+    let used=8+(nav?nav.offsetHeight:0);
+    if(graphic){
+      const cs=getComputedStyle(graphic);
+      used+=['paddingTop','paddingBottom','borderTopWidth','borderBottomWidth'].reduce((a,k)=>a+(parseFloat(cs[k])||0),0);
+    }
+    if(caption&&caption.offsetHeight) used+=caption.offsetHeight+(parseFloat(getComputedStyle(caption).marginTop)||0);
+    return Math.floor((window.innerHeight-used)/10)*10;
   }
   // Wrap each callout label to the width between the two dashed guides, so it shrinks
   // onto more lines as the chart narrows instead of spilling past the arrow.
-  function fitLock(W){
-    const L0=compact(W), lk=L0.lock;
+  function fitLock(W,maxH=0){
+    const L0=compact(W,1,1,maxH), lk=L0.lock;
     const span=(matchT(LOCK_T)-LOCK_T)*(L0.X1-L0.X0)-12; // keep clear of the guide lines
     const probe=el('text',{'font-family':FONT,'font-size':lk.size,'letter-spacing':lk.ls,visibility:'hidden'});
     const width=s=>{probe.textContent=s;try{return probe.getBBox().width;}catch(e){return 0;}};
@@ -3546,7 +3569,7 @@ function initArcsChart(svg){
     },[]);
     const lines1=wrap(LOCK_1), lines2=wrap(LOCK_2);
     probe.remove();
-    const L=compact(W,lines1.length,lines2.length);
+    const L=compact(W,lines1.length,lines2.length,maxH);
     L.lock.lines1=lines1; L.lock.lines2=lines2;
     return L;
   }
@@ -3556,9 +3579,9 @@ function initArcsChart(svg){
   if('ResizeObserver' in window){
     let raf=0;
     new ResizeObserver(()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(layout);}).observe(chart||svg);
-  }else{
-    window.addEventListener('resize',layout);
   }
+  // Height-only changes (rotation, browser bars) don't resize the chart's width.
+  window.addEventListener('resize',layout);
   if(!lastKey) render(DESKTOP); // hidden at load: draw something
 
   // Click mode: a tap on the chart toggles; a tap anywhere else closes.
