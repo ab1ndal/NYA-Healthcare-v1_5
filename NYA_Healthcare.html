@@ -1148,7 +1148,19 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   background:rgba(1,12,17,.23);
 }
 .financial-risk--arcs .financial-chart {width:100%;min-width:0;display:block;}
-.financial-risk--arcs .arcs-cost-chart {width:100%;height:auto;display:block;aspect-ratio:1400/395;}
+.financial-risk--arcs .arcs-cost-chart {width:100%;height:auto;display:block;aspect-ratio:1400/395;overflow:visible;}
+.financial-risk--arcs .arcs-lock {opacity:0;transition:opacity .25s ease;}
+.financial-risk--arcs .arcs-cost-chart.is-locked .arcs-lock {opacity:1;}
+.financial-risk--arcs .arcs-hit {cursor:default;}
+.financial-risk--arcs .financial-chart {-webkit-tap-highlight-color:transparent;}
+.financial-risk--arcs .financial-chart.is-clickable {cursor:pointer;}
+.financial-risk--arcs .financial-chart:focus {outline:none;}
+.financial-risk--arcs .financial-chart:focus-visible {outline:2px solid var(--gold);outline-offset:4px;}
+.financial-risk--arcs .arcs-caption {display:none;margin-top:.6rem;font-size:.875rem;line-height:1.5;color:#dce2e5;}
+.financial-risk--arcs .financial-graphic.is-compact .arcs-caption {display:block;}
+@media (prefers-reduced-motion: reduce) {
+  .financial-risk--arcs .arcs-lock {transition:none;}
+}
 .financial-risk--arcs .financial-benefits {
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -1182,16 +1194,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .financial-risk--arcs .financial-header {grid-template-columns:1fr;gap:1.5rem;}
   .financial-risk--arcs .financial-header h2 em {white-space:normal;}
   .financial-risk--arcs .financial-intro {margin-left:clamp(.5rem,1.05vw,1.2rem);}
-  .financial-risk--arcs .financial-graphic {overflow-x:auto;}
-  .financial-risk--arcs .financial-chart {min-width:740px;}
   .financial-risk--arcs .financial-benefit {padding-inline:clamp(1rem,2vw,1.5rem);}
 }
 @media(max-width:700px) {
   .financial-risk--arcs {padding-block:var(--space-4);}
   .financial-risk--arcs .financial-header h2 {font-size:var(--text-h1);line-height:1.06;}
   .financial-risk--arcs .financial-intro {padding-left:1rem;line-height:1.7;}
-  .financial-risk--arcs .financial-graphic {padding:.5rem;}
-  .financial-risk--arcs .financial-chart {min-width:680px;}
+  .financial-risk--arcs .financial-graphic {padding:.75rem;}
+  .financial-risk--arcs .eyebrow {letter-spacing:.14em;align-items:flex-start;}
+  .financial-risk--arcs .eyebrow::before {margin-top:.85em;}
   .financial-risk--arcs .financial-benefits {grid-template-columns:1fr;padding-top:var(--space-2);}
   .financial-risk--arcs .financial-benefit,
   .financial-risk--arcs .financial-benefit:first-child,
@@ -1860,6 +1871,61 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .project-grid .project.wide{min-height:340px;}
 }
 </style>
+<style id="narrow-screens">
+/* Narrow screens: photos are shown whole, never cropped. */
+@media(max-width:1100px){
+  /* UCSF / Stanford story: the frame takes a 4:3 shape (most story photos are 4:3) and every
+     photo is fitted inside it, so wider ones get thin bars instead of losing their edges. */
+  .ucsf-story-media{height:auto}
+  .ucsf-story-frame{height:auto;aspect-ratio:4/3;max-height:calc(100svh - 4rem)}
+  .ucsf-story-frame .ucsf-story-image,.ucsf-story-single img{object-fit:contain}
+}
+@media(max-width:1000px){
+  /* UC Irvine: the photo keeps its own shape. */
+  .uci-reference-media{height:auto;min-height:0}
+  .uci-reference-media img{height:auto}
+}
+</style>
+<style id="range-nav-style">
+/* Range nav: the case-study run, from the first linked part to the end of the last. Hidden
+   outside that run. A quiet top bar: four columns, each with a hairline track that fills while
+   you read that part. The script puts the links in page order and numbers them, so moving a
+   PART block in the page needs no change here. data-tone follows the background of the part in
+   view; --p on each link is how far through that part you are (0 to 1). Labels wrap rather than
+   being cut off; tracks stay aligned along the bottom. */
+.range-nav{--rn-text:#e8e6e0;--rn-mark:var(--gold);--rn-surface:#0a0c0f;
+  --rn-soft:color-mix(in srgb,var(--rn-text) 60%,var(--rn-surface));--rn-on:color-mix(in srgb,var(--rn-text) 82%,var(--rn-surface));
+  --rn-fill:color-mix(in srgb,var(--rn-mark) 55%,var(--rn-surface));--rn-track:color-mix(in srgb,var(--rn-text) 12%,var(--rn-surface));
+  position:fixed;z-index:960;top:0;left:0;right:0;
+  display:grid;grid-template-columns:repeat(4,1fr);align-items:end;gap:var(--space-2,16px);padding:6px var(--gutter,24px) 0;background:var(--rn-surface);
+  font-family:var(--body);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-100%);
+  transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s linear .35s,background-color .2s}
+.range-nav[data-tone="light"]{--rn-text:#151515;--rn-mark:#151515;--rn-surface:#ffffff}
+.range-nav.is-on{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s,background-color .2s}
+/* The faintest text still reaches 4.5:1 on either surface. */
+.range-nav a{display:grid;align-content:end;gap:5px;min-width:0;color:var(--rn-soft);text-decoration:none;font-size:.6875rem;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;transition:color .4s ease}
+.range-nav a:hover,.range-nav a[aria-current="true"]{color:var(--rn-on)}
+.range-nav a:focus-visible{outline:2px solid var(--rn-text);outline-offset:2px}
+.rn-head{display:flex;min-width:0}
+.rn-num{font-variant-numeric:tabular-nums;letter-spacing:.08em;margin-right:6px}
+.range-nav-label{min-width:0;text-wrap:balance}
+.rn-current{display:none}
+.rn-bar{display:block;height:1px;margin-bottom:1px;background:var(--rn-track);overflow:visible}
+.rn-bar i{display:block;height:2px;margin-top:-.5px;background:var(--rn-fill);transform-origin:left;transform:scaleX(var(--p,0))}
+/* Finished parts fade back to a hairline. */
+.range-nav a.is-past .rn-bar i{height:1px;margin-top:0;background:color-mix(in srgb,var(--rn-mark) 30%,var(--rn-surface))}
+@media(prefers-reduced-motion:reduce){.range-nav,.range-nav.is-on{transition:opacity .2s,visibility 0s;transform:none}}
+/* Phones: just the current part's name over one track that fills across the whole run
+   (--overall, 0 to 1). The four links are left out. */
+.rn-overall{display:none}
+@media(max-width:760px){
+  .range-nav{grid-template-columns:1fr;row-gap:5px;padding:6px var(--space-2,16px) 0}
+  .range-nav a{display:none}
+  .rn-current{display:flex;color:var(--rn-on);font-size:.6875rem;line-height:1.2;letter-spacing:.12em;text-transform:uppercase}
+  .rn-overall{display:block;height:1px;margin-bottom:1px;background:var(--rn-track)}
+  .rn-overall i{display:block;height:2px;margin-top:-.5px;background:var(--rn-fill);transform-origin:left;transform:scaleX(var(--overall,0))}
+}
+</style>
 </head>
 <body id="top">
 
@@ -1960,6 +2026,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   </div>
 </section>
 
+<!-- ======== PART: Technical Excellence ========
+     UCSF / Stanford intro and the six-slide story. Self-contained: to reorder, move
+     everything from this comment to its END PART line. The case-study nav follows the page order. -->
 <section class="ucsf-proof" id="ucsf-case-study">
   <div class="ucsf-proof-intro">
     <div class="ucsf-proof-copy reveal">
@@ -2077,8 +2146,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
     </div>
   </div>
+</section>
+<!-- ======== END PART: Technical Excellence ======== -->
 
-  <section class="value financial-risk financial-risk--arcs" aria-labelledby="financial-risk-title">
+<!-- ======== PART: Cost Certainty ========
+     ARCS chart, SSI comparison and the UCSF savings. Self-contained: to reorder, move
+     everything from this comment to its END PART line. The case-study nav follows the page order. -->
+<div class="page-part" id="cost-certainty">
+
+  <section class="value financial-risk financial-risk--arcs" id="arcs-studies" aria-labelledby="financial-risk-title">
     <div class="wrap">
       <div class="eyebrow reveal"><span>Advanced Rapid Concept Studies (ARCS)</span></div>
       <div class="financial-header">
@@ -2087,50 +2163,27 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       </div>
       <div class="financial-graphic reveal">
         <div class="financial-chart" role="img" aria-label="Conceptual illustration of anticipated structural cost ranges from concept through construction documents. The orange typical-approach cost range is higher and wider than the cyan NYA with ARCS range, which is reduced and narrowed by early analysis.">
-          <svg class="arcs-cost-chart" viewBox="0 0 1400 395" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Everything but <defs> is drawn by the script below, in one of two layouts:
+               desktop (fixed 1400x395 viewBox) or compact (viewBox = container width in px,
+               so chart text stays at true pixel size on phones). -->
+          <svg class="arcs-cost-chart" data-option="2" viewBox="0 0 1400 395" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
             <defs>
-              <linearGradient id="arcsOrangeBand" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="arcsOrangeBand-2" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#f77b3b" stop-opacity=".29"/>
                 <stop offset="100%" stop-color="#f77b3b" stop-opacity=".04"/>
               </linearGradient>
-              <linearGradient id="arcsTealBand" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="arcsTealBand-2" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#24e8d6" stop-opacity=".24"/>
                 <stop offset="100%" stop-color="#24e8d6" stop-opacity=".035"/>
               </linearGradient>
-              <filter id="arcsSoftGlow" x="-25%" y="-25%" width="150%" height="150%">
+              <filter id="arcsSoftGlow-2" x="-25%" y="-25%" width="150%" height="150%">
                 <feGaussianBlur stdDeviation="2" result="glow"/>
                 <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
             </defs>
-            <g fill="#f0f4f6" font-family="DM Sans, Arial, sans-serif" font-size="14" letter-spacing="2.0">
-              <text x="66" y="30">ESTIMATED</text>
-              <text x="66" y="51">STRUCTURAL COST</text>
-            </g>
-            <path d="M72 316 V77" fill="none" stroke="#fff" stroke-width="2"/>
-            <path d="M64 83 L72 70 L80 83 Z" fill="#fff"/>
-            <path d="M72 316 H1354" fill="none" stroke="#fff" stroke-width="2"/>
-            <path d="M1346 310 L1359 316 L1346 322 Z" fill="#fff"/>
-            <path d="M72 103 C304 154 590 170 832 179 C1030 183 1223 184 1330 184 C1120 184 842 201 626 218 C414 222 214 234 72 252 Z" fill="url(#arcsOrangeBand)"/>
-            <path d="M72 181 C294 211 600 232 830 239 C1052 245 1228 246 1330 246 C1070 246 814 250 635 258 C423 261 228 255 72 252 Z" fill="url(#arcsTealBand)"/>
-            <path d="M72 103 C304 154 590 170 832 179 C1030 183 1223 184 1330 184" fill="none" stroke="#ff7930" stroke-width="2.7" stroke-linecap="round" filter="url(#arcsSoftGlow)"/>
-            <path d="M72 252 C214 240 414 228 626 218 C842 201 1120 184 1330 184" fill="none" stroke="#ff7930" stroke-width="2" stroke-linecap="round"/>
-            <path d="M72 181 C294 211 600 232 830 239 C1052 245 1228 246 1330 246" fill="none" stroke="#00ebe2" stroke-width="2.7" stroke-linecap="round" filter="url(#arcsSoftGlow)"/>
-            <path d="M72 252 C228 252 423 255 635 258 C814 250 1070 246 1330 246" fill="none" stroke="#00ebe2" stroke-width="2" stroke-linecap="round"/>
-            
-            
-            
-            <circle cx="1330" cy="184" r="8" fill="#ff7930"/>
-            <circle cx="1330" cy="246" r="8" fill="#00ebe2"/>
-            <text x="713" y="354" text-anchor="middle" fill="#edf1f3" font-family="DM Sans, Arial, sans-serif" font-size="15" letter-spacing="2.2">TIME</text>
-            <g font-family="DM Sans, Arial, sans-serif" font-size="16" fill="#edf1f3">
-              <line x1="1155" y1="60" x2="1205" y2="60" stroke="#ff7930" stroke-width="3"/>
-              <text x="1220" y="66">Typical approach</text>
-              <line x1="1155" y1="91" x2="1205" y2="91" stroke="#00ebe2" stroke-width="3"/>
-              <text x="1220" y="97">NYA with ARCS</text>
-            </g>
-            <text x="67" y="381" fill="#dce2e5" font-family="DM Sans, Arial, sans-serif" font-size="15">Conceptual illustration of anticipated structural cost ranges</text>
           </svg>
         </div>
+        <p class="arcs-caption">Conceptual illustration of anticipated structural cost ranges.</p>
       </div>
       <div class="financial-benefits">
         <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Rapid Evaluation</div><h3>Compare options with confidence</h3><p>We quickly develop and analyze multiple structural systems such as moment frames, braced frames, dampers, and base isolation so you can make informed decisions before designs become difficult and expensive to change.</p></article>
@@ -2199,7 +2252,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       </div>
     </div>
   </div>
-</section>
+</div>
+<!-- ======== END PART: Cost Certainty ======== -->
 
 <section class="nya-rel-story" id="relationships-story" aria-labelledby="team-relationships-title">
  <div class="nya-rel-pin">
@@ -2492,7 +2546,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       var r=footer.getBoundingClientRect();
       footerVisible=r.top<window.innerHeight-24;
     }
-    cue.classList.toggle('is-hidden',nearBottom||footerVisible);
+    // Past the hero the cue would sit on top of body text, so it only shows over the hero.
+    var pastHero=window.scrollY>window.innerHeight*.5;
+    cue.classList.toggle('is-hidden',nearBottom||footerVisible||pastHero);
   }
   function requestUpdate(){
     if(!ticking){ticking=true;requestAnimationFrame(updateScrollCue)}
@@ -3079,6 +3135,70 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   document.fonts && document.fonts.ready && document.fonts.ready.then(checkFit);
 })();
 </script>
+<nav class="range-nav" id="range-nav" aria-label="Case studies" data-tone="dark">
+  <span class="rn-current"><span class="rn-num" aria-hidden="true"></span><span class="rn-current-label"></span></span>
+  <span class="rn-overall" aria-hidden="true"><i></i></span>
+  <a href="#ucsf-case-study" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">01</span><span class="range-nav-label">Technical Excellence</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
+  <a href="#cost-certainty" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">02</span><span class="range-nav-label">Cost Certainty</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
+  <a href="#relationships-story" data-tone="light"><span class="rn-head"><span class="rn-num" aria-hidden="true">03</span><span class="range-nav-label">Collaboration and Partnership</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
+  <a href="#uci-delivery-proof" data-tone="light"><span class="rn-head"><span class="rn-num" aria-hidden="true">04</span><span class="range-nav-label">Schedule and Project Delivery</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
+</nav>
+<script id="range-nav-behavior">
+(function(){
+  'use strict';
+  const nav=document.getElementById('range-nav');
+  if(!nav)return;
+  // Links follow the page: sort by where each part sits, then reorder and renumber them.
+  const items=Array.from(nav.querySelectorAll('a'))
+    .map(a=>({a,el:document.getElementById(a.getAttribute('href').slice(1))})).filter(i=>i.el)
+    .sort((x,y)=>x.el.compareDocumentPosition(y.el)&Node.DOCUMENT_POSITION_FOLLOWING?-1:1);
+  if(!items.length)return;
+  items.forEach((it,k)=>{nav.appendChild(it.a);it.a.querySelector('.rn-num').textContent=String(k+1).padStart(2,'0');});
+  const links=items.map(i=>i.a);
+  const curNum=nav.querySelector('.rn-current .rn-num'),curLabel=nav.querySelector('.rn-current-label');
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  let raf=0,current=-1;
+
+  // Each link's part stays current until the next part reaches the middle of the screen.
+  // The nav shows from the first part's top to the last one's bottom.
+  function update(){
+    raf=0;
+    const mid=window.innerHeight/2;
+    const tops=items.map(i=>i.el.getBoundingClientRect().top+scrollY);
+    const end=items[items.length-1].el.getBoundingClientRect().bottom+scrollY;
+    const y=scrollY+mid;
+    const inRun=y>=tops[0]&&y<end;
+    let idx=-1;
+    if(inRun)tops.forEach((t,k)=>{if(t<=y)idx=k;});
+    nav.classList.toggle('is-on',idx>=0);
+    items.forEach((it,k)=>{
+      const a=tops[k],b=k<items.length-1?tops[k+1]:end;
+      const p=k<idx?1:k>idx?0:Math.min(1,Math.max(0,(y-a)/(b-a)));
+      it.a.style.setProperty('--p',p.toFixed(3));
+      it.a.classList.toggle('is-past',k<idx);
+      if(k===idx)nav.style.setProperty('--overall',((k+p)/items.length).toFixed(3));
+    });
+    if(idx===current)return;
+    current=idx;
+    links.forEach(a=>a.removeAttribute('aria-current'));
+    if(idx>=0){
+      const a=items[idx].a;
+      a.setAttribute('aria-current','true');nav.dataset.tone=a.dataset.tone;
+      curNum.textContent=a.querySelector('.rn-num').textContent;curLabel.textContent=a.querySelector('.range-nav-label').textContent;
+    }else if(nav.contains(document.activeElement)){document.activeElement.blur();}
+  }
+  function schedule(){if(!raf)raf=requestAnimationFrame(update);}
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule);
+  function go(k){
+    const it=items[k];if(!it)return;
+    it.el.scrollIntoView({behavior:reduced.matches?'auto':'smooth',block:'start'});
+    const u=new URL(location.href);u.hash=it.el.id;history.replaceState(null,'',u);
+  }
+  items.forEach((it,k)=>it.a.addEventListener('click',e=>{e.preventDefault();go(k);}));
+  update();
+})();
+</script>
 <script id="nya-rel-scrollytelling-script">
 (function(){
  'use strict';
@@ -3203,6 +3323,279 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  // Put the first scroll state on screen before the browser's next paint.
  if(desired){current={...desired};frame();}
 })();
+</script>
+<script>
+/* ARCS chart, same renderer as nya-healthcare-v1-arcs-section.html. This page uses
+   option 2 (data-option="2", OPT2): the static over-time concept, no interaction. Option 1:
+   both approaches start with the same cost range. The typical range
+   narrows steadily; the ARCS range drops sharply during concept, then tapers.
+   Hovering the plot (wide layout, mouse) or tapping it (narrow layout or touch) shows one snapshot: at the start of schematic design ARCS
+   already matches the certainty the typical approach only reaches late in
+   design development. */
+function initArcsChart(svg){
+  const chart=svg.closest('.financial-chart');
+  const graphic=svg.closest('.financial-graphic');
+  const caption=graphic&&graphic.querySelector('.arcs-caption');
+  const NS='http://www.w3.org/2000/svg';
+  const FONT='DM Sans, Arial, sans-serif';
+  // Below this container width the 1400-unit desktop drawing shrinks text under ~9px,
+  // so switch to the compact layout drawn at 1 unit = 1 CSS px.
+  const COMPACT_BELOW=960;
+  const hoverMQ=window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  const K=12, FLOOR=.4, LOCK_T=.25, N=160;
+  const LOCK_1='REDUCED UNCERTAINTY', LOCK_2='OVER ONE PHASE SOONER';
+  // Fraction of the starting range still open (1 at concept, 0 at the end).
+  const fTyp=t=>1-t;
+  const fArcs=t=>(FLOOR+(1-FLOOR)*Math.exp(-K*t))*(1-t);
+  // Ranges are the same width when fTyp(t') = fArcs(t), so t' = 1 - fArcs(t).
+  const matchT=t=>1-fArcs(t);
+  const ts=Array.from({length:N+1},(_,i)=>i/N);
+
+  const DESKTOP={
+    W:1400,H:395,X0:72,X1:1330,TOP:100,BOT:290,END_TYP:184,END_ARCS:246,
+    axisY:316,yTip:70,yHead:[8,13],xEnd:1359,xHead:[6,13],gridTop:96,tick:7,dot:8,
+    sw:{top:2.7,bot:2,pill:5,axis:2,legend:3,glow:2},
+    title:{x:66,size:14,ls:2,lines:[[30,'ESTIMATED'],[51,'STRUCTURAL COST']]},
+    phases:{y:348,size:14,ls:2.2,names:['CONCEPT','SCHEMATIC DESIGN','DESIGN DEVELOPMENT','CONSTRUCTION DOCS']},
+    lock:{arrowY:58,l1:44,l2:80,size:13,ls:2.2,head:14},
+    hit:{y:60,h:270},
+    legend:{len:50,textDx:65,rows:[[1155,60],[1155,91]],dy:6,size:16},
+    caption:{x:67,y:381,size:15},
+    time:{x:713,y:354,size:15,ls:2.2}
+  };
+
+  /* Option 2 (from the full page): the typical range starts higher and wider than the
+     ARCS range and both narrow over time. No phases, no interaction. The curves are the
+     original hand-drawn paths in desktop units; in the compact layout they are mapped
+     onto the smaller plot (an axis-aligned scale keeps Bezier curves exact). */
+  const OPT2={
+    typBand:'M72 103 C304 154 590 170 832 179 C1030 183 1223 184 1330 184 C1120 184 842 201 626 218 C414 222 214 234 72 252 Z',
+    arcsBand:'M72 181 C294 211 600 232 830 239 C1052 245 1228 246 1330 246 C1070 246 814 250 635 258 C423 261 228 255 72 252 Z',
+    typTop:'M72 103 C304 154 590 170 832 179 C1030 183 1223 184 1330 184',
+    typBot:'M72 252 C214 240 414 228 626 218 C842 201 1120 184 1330 184',
+    arcsTop:'M72 181 C294 211 600 232 830 239 C1052 245 1228 246 1330 246',
+    arcsBot:'M72 252 C228 252 423 255 635 258 C814 250 1070 246 1330 246'
+  };
+  const opt=svg.dataset.option==='2'?2:1;
+  // Gradient/filter ids in the markup carry the option number so the two charts don't clash.
+  const ref=id=>'url(#'+id+'-'+opt+')';
+  // n1/n2: how many lines each callout label wraps to (see fitLock); the plot moves
+  // down by the extra lines so the callout never runs into the bands.
+  const compact=(W,n1=1,n2=1)=>{
+    // Plot grows with width so tablets don't get a long flat strip; labels step up a size there too.
+    const big=W>=560, fs=big?12.5:11, lh=Math.round(fs*1.4);
+    const l1=big?46:44, arrowY=l1+(n1-1)*lh+(big?14:12), l2=arrowY+(big?22:20);
+    // Axis title sits right on top of the y-axis; the legend goes below the phase labels
+    // so it never comes between the axis and its label.
+    // Option 2 has no callout, so the plot starts right under the axis tip.
+    // Plot height follows plot width so the curves keep roughly their desktop shape
+    // (desktop plot is 6.6:1). A fixed tall floor on a narrow plot made the bands fat.
+    const plotW=W-36, plotH=Math.max(90,Math.min(180,Math.round(plotW*.34)));
+    const TOP=opt===2?(big?48:44):l2+(n2-1)*lh+(big?22:20), BOT=TOP+plotH, axisY=BOT+22;
+    const legSize=big?14:13, legY=axisY+56;
+    const legRows=W<290?[[0,legY],[0,legY+22]]:[[0,legY],[big?172:156,legY]];
+    return {
+      W,H:legRows[1][1]+12,X0:10,X1:W-26,TOP,BOT,
+      END_TYP:TOP+(BOT-TOP)*(84/190),END_ARCS:TOP+(BOT-TOP)*(146/190),
+      axisY,yTip:24,yHead:[6,10],xEnd:W-4,xHead:[5,10],gridTop:TOP-4,tick:6,dot:4.5,
+      // Thinner marks than desktop: the narrow chart is drawn at true px, so desktop
+      // weights (2.7px glowing lines, 5px bars) look heavy against a ~300px plot.
+      sw:{top:1.6,bot:1.1,pill:3,axis:1.5,legend:2,glow:1},
+      title:{x:0,size:fs,ls:1.4,lines:[[big?14:12,'ESTIMATED STRUCTURAL COST']]},
+      phases:{y:axisY+24,size:fs,ls:W<300?.8:1.2,names:['CONCEPT','SD','DD','CD']},
+      lock:{arrowY,l1,l2,lh,size:fs,ls:big?1.6:1.4,head:big?11:10},
+      hit:{y:24,h:axisY+14-24},
+      legend:{len:24,textDx:32,rows:legRows,dy:5,size:legSize},
+      time:{x:(10+W-4)/2,y:axisY+24,size:fs,ls:1.4},
+      caption:null // shown as HTML below the chart instead, so it can wrap
+    };
+  };
+
+  const el=(tag,attrs,parent,text)=>{
+    const n=document.createElementNS(NS,tag);
+    for(const k in attrs) n.setAttribute(k,attrs[k]);
+    if(text!=null) n.textContent=text;
+    (parent||svg).appendChild(n);
+    return n;
+  };
+  // Narrow layout (phones, tablets) or no mouse hover: click/tap toggles the readout.
+  // Wide layout with a mouse: hover shows it.
+  let compactMode=false;
+  // Option 2 has no readout, so neither mode applies to it.
+  const interactive=()=>opt===1;
+  const clickMode=()=>interactive()&&(compactMode||!hoverMQ.matches);
+  const captionText=()=>opt===2?'Conceptual illustration of anticipated structural cost ranges':
+    'Conceptual illustration of anticipated structural cost ranges. '+
+    (clickMode()?(hoverMQ.matches?'Click':'Tap'):'Hover')+' the chart to compare.';
+
+  const show=()=>svg.classList.add('is-locked');
+  const hide=()=>svg.classList.remove('is-locked');
+  let hit=null;
+
+  function render(L){
+    compactMode=!L.caption;
+    Array.from(svg.childNodes).forEach(n=>{if(n.nodeName!=='defs') svg.removeChild(n);});
+    svg.setAttribute('viewBox','0 0 '+L.W+' '+L.H);
+    const blur=svg.querySelector('feGaussianBlur'); if(blur) blur.setAttribute('stdDeviation',L.sw.glow);
+    svg.style.aspectRatio=L.W+' / '+L.H;
+    const {X0,X1,TOP,BOT,END_TYP,END_ARCS,axisY}=L;
+    const x=t=>X0+t*(X1-X0);
+    const q=i=>X0+i*(X1-X0)/4;
+    const typ=t=>[END_TYP-(END_TYP-TOP)*fTyp(t), END_TYP+(BOT-END_TYP)*fTyp(t)];
+    const arcs=t=>[END_ARCS-(END_ARCS-TOP)*fArcs(t), END_ARCS+(BOT-END_ARCS)*fArcs(t)];
+    const line=(fn,i)=>ts.map((t,j)=>(j?'L':'M')+x(t).toFixed(1)+' '+fn(t)[i].toFixed(1)).join(' ');
+    const band=fn=>line(fn,0)+' '+ts.slice().reverse().map(t=>'L'+x(t).toFixed(1)+' '+fn(t)[1].toFixed(1)).join(' ')+' Z';
+
+    const title=el('g',{fill:'#f0f4f6','font-family':FONT,'font-size':L.title.size,'letter-spacing':L.title.ls});
+    L.title.lines.forEach(([y,s])=>el('text',{x:L.title.x,y},title,s));
+
+    // Phase grid. Concept, SD, DD, CD split the plot into quarters.
+    if(opt===1){
+      const grid=el('g',{stroke:'rgba(237,241,243,.16)','stroke-width':1,'stroke-dasharray':'3 5'});
+      [1,2,3].forEach(i=>el('line',{x1:q(i),y1:L.gridTop,x2:q(i),y2:axisY},grid));
+    }
+
+    const [yh,yl]=L.yHead, [xh,xl]=L.xHead;
+    el('path',{d:'M'+X0+' '+axisY+' V'+(L.yTip+yl/2),fill:'none',stroke:'#fff','stroke-width':L.sw.axis});
+    el('path',{d:'M'+(X0-yh)+' '+(L.yTip+yl)+' L'+X0+' '+L.yTip+' L'+(X0+yh)+' '+(L.yTip+yl)+' Z',fill:'#fff'});
+    el('path',{d:'M'+X0+' '+axisY+' H'+(L.xEnd-xl/2),fill:'none',stroke:'#fff','stroke-width':L.sw.axis});
+    el('path',{d:'M'+(L.xEnd-xl)+' '+(axisY-xh)+' L'+L.xEnd+' '+axisY+' L'+(L.xEnd-xl)+' '+(axisY+xh)+' Z',fill:'#fff'});
+
+    if(opt===2){ renderOpt2(L); return; }
+    const ticks=el('g',{stroke:'#fff','stroke-width':L.sw.axis});
+    [1,2,3,4].forEach(i=>el('line',{x1:q(i),y1:axisY-L.tick,x2:q(i),y2:axisY+L.tick},ticks));
+    const ph=el('g',{fill:'#edf1f3','font-family':FONT,'font-size':L.phases.size,'letter-spacing':L.phases.ls,'text-anchor':'middle'});
+    L.phases.names.forEach((s,i)=>el('text',{x:(q(i)+q(i+1))/2,y:L.phases.y},ph,s));
+
+    el('path',{d:band(typ),fill:ref('arcsOrangeBand')});
+    el('path',{d:band(arcs),fill:ref('arcsTealBand')});
+    el('path',{d:line(typ,0),fill:'none',stroke:'#ff7930','stroke-width':L.sw.top,'stroke-linecap':'round',filter:ref('arcsSoftGlow')});
+    el('path',{d:line(typ,1),fill:'none',stroke:'#ff7930','stroke-width':L.sw.bot,'stroke-linecap':'round'});
+    el('path',{d:line(arcs,0),fill:'none',stroke:'#00ebe2','stroke-width':L.sw.top,'stroke-linecap':'round',filter:ref('arcsSoftGlow')});
+    el('path',{d:line(arcs,1),fill:'none',stroke:'#00ebe2','stroke-width':L.sw.bot,'stroke-linecap':'round'});
+    el('circle',{cx:X1,cy:END_TYP,r:L.dot,fill:'#ff7930'});
+    el('circle',{cx:X1,cy:END_ARCS,r:L.dot,fill:'#00ebe2'});
+
+    // Lock: ARCS at the start of SD matches the typical range late in DD.
+    const lk=L.lock, xa=x(LOCK_T), tb=matchT(LOCK_T), xb=x(tb), ra=arcs(LOCK_T), rb=typ(tb);
+    const lock=el('g',{class:'arcs-lock','pointer-events':'none'});
+    const guides=el('g',{stroke:'rgba(237,241,243,.55)','stroke-width':1,'stroke-dasharray':'4 4'},lock);
+    el('line',{x1:xa,x2:xa,y1:lk.arrowY,y2:ra[0]-3},guides);
+    el('line',{x1:xb,x2:xb,y1:lk.arrowY,y2:rb[0]-3},guides);
+    el('line',{x1:xa+lk.head-2,x2:xb,y1:lk.arrowY,y2:lk.arrowY,stroke:'#edf1f3','stroke-width':L.sw.axis},lock);
+    el('path',{d:'M'+xa+' '+lk.arrowY+' L'+(xa+lk.head)+' '+(lk.arrowY-lk.head/2)+' L'+(xa+lk.head)+' '+(lk.arrowY+lk.head/2)+' Z',fill:'#edf1f3'},lock);
+    const lbl=el('g',{fill:'#edf1f3','font-family':FONT,'font-size':lk.size,'letter-spacing':lk.ls,'text-anchor':'middle'},lock);
+    (lk.lines1||[LOCK_1]).forEach((s,i)=>el('text',{x:(xa+xb)/2,y:lk.l1+i*(lk.lh||0)},lbl,s));
+    (lk.lines2||[LOCK_2]).forEach((s,i)=>el('text',{x:(xa+xb)/2,y:lk.l2+i*(lk.lh||0)},lbl,s));
+    el('line',{x1:xb,x2:xb,y1:rb[0],y2:rb[1],stroke:'#ff7930','stroke-width':L.sw.pill,'stroke-linecap':'round'},lock);
+    el('line',{x1:xa,x2:xa,y1:ra[0],y2:ra[1],stroke:'#00ebe2','stroke-width':L.sw.pill,'stroke-linecap':'round'},lock);
+
+    hit=el('rect',{class:'arcs-hit',x:X0,y:L.hit.y,width:X1-X0+12,height:L.hit.h,fill:'transparent'});
+    hit.addEventListener('pointerenter',e=>{if(!clickMode()&&e.pointerType==='mouse') show();});
+    hit.addEventListener('pointerleave',e=>{if(!clickMode()&&e.pointerType==='mouse') hide();});
+    finish(L);
+  }
+
+  function renderOpt2(L){
+    const {X0,X1,TOP,BOT}=L;
+    // Desktop units -> this layout. Identity on desktop.
+    const mx=v=>X0+(v-72)*(X1-X0)/1258, my=v=>TOP+(v-100)*(BOT-TOP)/190;
+    const map=d=>d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g,(_,a,b)=>+mx(+a).toFixed(1)+' '+(+my(+b).toFixed(1)));
+    el('path',{d:map(OPT2.typBand),fill:ref('arcsOrangeBand')});
+    el('path',{d:map(OPT2.arcsBand),fill:ref('arcsTealBand')});
+    el('path',{d:map(OPT2.typTop),fill:'none',stroke:'#ff7930','stroke-width':L.sw.top,'stroke-linecap':'round',filter:ref('arcsSoftGlow')});
+    el('path',{d:map(OPT2.typBot),fill:'none',stroke:'#ff7930','stroke-width':L.sw.bot,'stroke-linecap':'round'});
+    el('path',{d:map(OPT2.arcsTop),fill:'none',stroke:'#00ebe2','stroke-width':L.sw.top,'stroke-linecap':'round',filter:ref('arcsSoftGlow')});
+    el('path',{d:map(OPT2.arcsBot),fill:'none',stroke:'#00ebe2','stroke-width':L.sw.bot,'stroke-linecap':'round'});
+    el('circle',{cx:X1,cy:my(184),r:L.dot,fill:'#ff7930'});
+    el('circle',{cx:X1,cy:my(246),r:L.dot,fill:'#00ebe2'});
+    const tm=L.time;
+    el('text',{x:tm.x,y:tm.y,'text-anchor':'middle',fill:'#edf1f3','font-family':FONT,'font-size':tm.size,'letter-spacing':tm.ls},null,'TIME');
+    hit=null;
+    finish(L);
+  }
+
+  function finish(L){
+    // Legend ignores the pointer so hovering it doesn't drop the readout.
+    const lg=L.legend, leg=el('g',{'font-family':FONT,'font-size':lg.size,fill:'#edf1f3','pointer-events':'none'});
+    [['#ff7930','Typical approach'],['#00ebe2','NYA with ARCS']].forEach(([c,s],i)=>{
+      const [lx,y]=lg.rows[i];
+      el('line',{x1:lx,y1:y,x2:lx+lg.len,y2:y,stroke:c,'stroke-width':L.sw.legend},leg);
+      el('text',{x:lx+lg.textDx,y:y+lg.dy},leg,s);
+    });
+    if(L.caption) el('text',{x:L.caption.x,y:L.caption.y,fill:'#dce2e5','font-family':FONT,'font-size':L.caption.size,'pointer-events':'none'},null,captionText());
+    if(caption) caption.textContent=captionText();
+    if(graphic) graphic.classList.toggle('is-compact',compactMode);
+    if(chart) chart.classList.toggle('is-clickable',clickMode());
+  }
+
+  let lastKey='';
+  function layout(){
+    const w=Math.round((chart||svg).clientWidth);
+    if(!w) return;
+    const isCompact=w<COMPACT_BELOW;
+    const key=opt+(isCompact?'c'+Math.max(240,w):'d');
+    if(key===lastKey) return;
+    lastKey=key;
+    const W=Math.max(240,w);
+    render(!isCompact?DESKTOP:opt===1?fitLock(W):compact(W));
+  }
+  // Wrap each callout label to the width between the two dashed guides, so it shrinks
+  // onto more lines as the chart narrows instead of spilling past the arrow.
+  function fitLock(W){
+    const L0=compact(W), lk=L0.lock;
+    const span=(matchT(LOCK_T)-LOCK_T)*(L0.X1-L0.X0)-12; // keep clear of the guide lines
+    const probe=el('text',{'font-family':FONT,'font-size':lk.size,'letter-spacing':lk.ls,visibility:'hidden'});
+    const width=s=>{probe.textContent=s;try{return probe.getBBox().width;}catch(e){return 0;}};
+    const wrap=s=>s.split(' ').reduce((out,word)=>{
+      const last=out[out.length-1];
+      if(last&&width(last+' '+word)<=span) out[out.length-1]=last+' '+word; else out.push(word);
+      return out;
+    },[]);
+    const lines1=wrap(LOCK_1), lines2=wrap(LOCK_2);
+    probe.remove();
+    const L=compact(W,lines1.length,lines2.length);
+    L.lock.lines1=lines1; L.lock.lines2=lines2;
+    return L;
+  }
+  layout();
+  // Wrapping is measured, so measure again once the web font has loaded.
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{lastKey='';layout();});
+  if('ResizeObserver' in window){
+    let raf=0;
+    new ResizeObserver(()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(layout);}).observe(chart||svg);
+  }else{
+    window.addEventListener('resize',layout);
+  }
+  if(!lastKey) render(DESKTOP); // hidden at load: draw something
+
+  // Click mode: a tap on the chart toggles; a tap anywhere else closes.
+  if(chart) chart.addEventListener('click',()=>{if(clickMode()) svg.classList.toggle('is-locked');});
+  // Outside taps are caught with pointerdown/pointerup rather than 'click', because iOS
+  // Safari doesn't send 'click' for taps on plain text. A scroll ends in pointercancel
+  // (or moves), so scrolling past the chart never closes it.
+  let down=null;
+  document.addEventListener('pointerdown',e=>{
+    down={x:e.clientX,y:e.clientY};
+    if(!clickMode()&&e.target!==hit) hide(); // hover mode: pressing off the plot hides it
+  });
+  document.addEventListener('pointercancel',()=>{down=null;});
+  document.addEventListener('pointerup',e=>{
+    const d=down; down=null;
+    if(!d||!clickMode()||!chart||chart.contains(e.target)) return;
+    if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<10) hide();
+  });
+  // Keyboard: Enter/Space toggles in click mode; focus shows it in hover mode.
+  if(chart){
+    chart.addEventListener('keydown',e=>{
+      if(clickMode()&&(e.key==='Enter'||e.key===' ')){e.preventDefault();svg.classList.toggle('is-locked');}
+    });
+    chart.addEventListener('focus',()=>{if(interactive()&&!clickMode()) show();});
+    chart.addEventListener('blur',hide);
+  }
+}
+document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 </script>
 
 </body>
