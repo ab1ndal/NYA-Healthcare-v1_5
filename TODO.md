@@ -11,12 +11,12 @@ Status: `Not started` · `In progress` · `Blocked` · `Done`
 
 | # | Task | Owner | Status | Notes |
 |---|------|-------|--------|-------|
-| V1 | Decide hosting for optimized videos (nyase.com WordPress vs. this repo) | AB | Not started | Blocks V4 |
-| V2 | Re-encode `New-Stanford-Hospital_V1.mp4` → 1080p, CRF ~26, `+faststart` | AB | Not started | Now 43 MB, 2560x1440, 12.3 Mbps, no faststart |
-| V3 | Re-encode `UCSF-VE-No-Labels_07-20-2026.mp4` → 30 fps, CRF ~26, `+faststart` | AB | Not started | Now 70 MB, 60 fps, 11 Mbps, no faststart |
-| V4 | Upload/host re-encoded videos | MB / AB | Blocked | Depends on V1 (WordPress → MB; repo → AB) |
+| V1 | Decide hosting for optimized videos | AB | Done | WordPress (nyase.com) — real site experience |
+| V2 | Re-encode `New-Stanford-Hospital_V1.mp4` → 1080p, CRF ~26, `+faststart` | AB | Done | 43 MB → 19 MB; 1920x1080, 24 fps, 5.3 Mbps, faststart |
+| V3 | Re-encode `UCSF-VE-No-Labels_07-20-2026.mp4` → 30 fps, CRF ~26, `+faststart` | AB | Done | 70 MB → 25 MB; 1280x794, 30 fps, 3.9 Mbps, faststart |
+| V4 | Upload re-encoded videos to nyase.com WordPress, share new URLs | MB | Not started | Files in `videos/optimized/` on AB machine |
 | V5 | Update video `src` URLs in `NYA_Healthcare.html` | AB | Blocked | Depends on V4 |
-| V6 | Change hero video `#ucsf-bg-video` `preload="auto"` → `preload="metadata"` | AB | Not started | |
+| V6 | Change hero video `#ucsf-bg-video` `preload="auto"` → `preload="metadata"` | AB | Done | |
 | V7 | Verify fast playback on live site | AB | Blocked | Depends on V5 |
 
 Encode command:
