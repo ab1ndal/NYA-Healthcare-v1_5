@@ -3,6 +3,8 @@
 Live: https://ab1ndal.github.io/NYA-Healthcare-v1_5/NYA_Healthcare.html
 Repo: https://github.com/ab1ndal/NYA-Healthcare-v1_5
 
+This repo + GitHub Pages = in-progress dev copy. Production is published periodically to GoDaddy; media (videos, images) hosted on nyase.com WordPress.
+
 Owners: `AB` Abhinav Bindal (this machine) · `MB` Michael Beshay (WordPress)
 
 Status: `Not started` · `In progress` · `Blocked` · `Done`
