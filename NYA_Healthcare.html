@@ -2162,21 +2162,21 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
         <p class="financial-intro reveal">NYA’s Advanced Rapid Concept Studies (ARCS) delivers Design Development-level analysis during the earliest stages of design. By rapidly evaluating multiple structural systems with advanced seismic analysis, material quantities, and cost input, our team identifies opportunities to eliminate unnecessary steel and concrete, reduce risk, and help you select the right system with greater confidence.</p>
       </div>
       <div class="financial-graphic reveal">
-        <div class="financial-chart" role="img" aria-label="Conceptual illustration of anticipated structural cost ranges from concept through construction documents. The orange typical-approach cost range is higher and wider than the cyan NYA with ARCS range, which is reduced and narrowed by early analysis.">
+        <div class="financial-chart" role="img" tabindex="0" aria-label="Conceptual illustration of anticipated structural cost ranges from concept through construction documents. Both approaches start with the same wide range. With ARCS the range narrows sharply during concept, so by the start of schematic design it is as certain as the typical approach becomes late in design development, over one phase sooner, and it ends at a lower cost.">
           <!-- Everything but <defs> is drawn by the script below, in one of two layouts:
                desktop (fixed 1400x395 viewBox) or compact (viewBox = container width in px,
                so chart text stays at true pixel size on phones). -->
-          <svg class="arcs-cost-chart" data-option="2" viewBox="0 0 1400 395" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <svg class="arcs-cost-chart" data-option="1" viewBox="0 0 1400 395" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
             <defs>
-              <linearGradient id="arcsOrangeBand-2" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="arcsOrangeBand-1" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#f77b3b" stop-opacity=".29"/>
                 <stop offset="100%" stop-color="#f77b3b" stop-opacity=".04"/>
               </linearGradient>
-              <linearGradient id="arcsTealBand-2" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="arcsTealBand-1" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#24e8d6" stop-opacity=".24"/>
                 <stop offset="100%" stop-color="#24e8d6" stop-opacity=".035"/>
               </linearGradient>
-              <filter id="arcsSoftGlow-2" x="-25%" y="-25%" width="150%" height="150%">
+              <filter id="arcsSoftGlow-1" x="-25%" y="-25%" width="150%" height="150%">
                 <feGaussianBlur stdDeviation="2" result="glow"/>
                 <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
@@ -3326,7 +3326,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 </script>
 <script>
 /* ARCS chart, same renderer as nya-healthcare-v1-arcs-section.html. This page uses
-   option 2 (data-option="2", OPT2): the static over-time concept, no interaction. Option 1:
+   option 1 (data-option="1"); option 2 (OPT2) is the static over-time concept. Option 1:
    both approaches start with the same cost range. The typical range
    narrows steadily; the ARCS range drops sharply during concept, then tapers.
    Hovering the plot (wide layout, mouse) or tapping it (narrow layout or touch) shows one snapshot: at the start of schematic design ARCS
