@@ -16,10 +16,10 @@ Status: `Not started` · `In progress` · `Blocked` · `Done`
 | V1 | Decide hosting for optimized videos | AB | Done | WordPress (nyase.com) — real site experience |
 | V2 | Re-encode `New-Stanford-Hospital_V1.mp4` → 1080p, CRF ~26, `+faststart` | AB | Done | 43 MB → 19 MB; 1920x1080, 24 fps, 5.3 Mbps, faststart |
 | V3 | Re-encode `UCSF-VE-No-Labels_07-20-2026.mp4` → 30 fps, CRF ~26, `+faststart` | AB | Done | 70 MB → 25 MB; 1280x794, 30 fps, 3.9 Mbps, faststart |
-| V4 | Upload re-encoded videos to nyase.com WordPress, share new URLs | MB | Not started | Files in `videos/optimized/` on AB machine |
-| V5 | Update video `src` URLs in `NYA_Healthcare.html` | AB | Blocked | Depends on V4 |
+| V4 | Upload re-encoded videos to nyase.com WordPress, share new URLs | AB | Done | Uploaded 2026-11-06 as `2026/11/*-opt.mp4` |
+| V5 | Update video `src` URLs in `NYA_Healthcare.html` | AB | Done | |
 | V6 | Change hero video `#ucsf-bg-video` `preload="auto"` → `preload="metadata"` | AB | Done | |
-| V7 | Verify fast playback on live site | AB | Blocked | Depends on V5 |
+| V7 | Verify fast playback on live site | AB | Not started | |
 
 Encode command:
 ```
