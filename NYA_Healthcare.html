@@ -160,32 +160,14 @@ body,body *{font-variant-numeric:lining-nums}
 .ucsf-step-points span{display:flex;gap:.7rem;align-items:flex-start;color:rgba(255,255,255,.8);font-size:var(--text-body);line-height:1.55}
 .ucsf-step-points span:before{content:"";width:7px;height:7px;border:1px solid var(--gold);margin-top:.46rem;flex:0 0 auto}
 
-.ucsf-value-proof{padding:var(--section) 0;background:linear-gradient(180deg,#0a0d11,#07090c)}
-.ucsf-value-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,7rem);align-items:end;margin-bottom:3rem}
-.ucsf-value-head h3{font-family:var(--display);font-size:var(--text-display);font-weight:300;line-height:1;color:#fff}
-.ucsf-value-head h3 em{color:var(--gold);font-weight:300}
-.ucsf-value-head p{max-width:620px;color:rgba(255,255,255,.7);line-height:1.8}
-.ucsf-evidence-grid{display:grid;grid-template-columns:1.22fr .78fr;gap:1px;background:var(--line);border:1px solid var(--line)}
-.ucsf-evidence-main{position:relative;overflow:hidden;padding:clamp(2rem,4.5vw,4.5rem);min-height:520px;background:radial-gradient(circle at 75% 24%,rgba(34,211,255,.12),transparent 32%),#0e1217;display:flex;flex-direction:column;justify-content:space-between}
-.ucsf-evidence-main .big-proof{font-family:var(--display);font-size:var(--text-stat);font-weight:300;letter-spacing:-.06em;line-height:.72;color:var(--gold)}
-.ucsf-evidence-main h4{font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:1.05;color:#fff;max-width:620px;margin-top:1.5rem}
-.ucsf-evidence-main p{max-width:610px;color:rgba(255,255,255,.7);line-height:1.75;margin-top:1rem}
-.ucsf-evidence-side{display:grid;grid-template-rows:repeat(5,1fr);gap:1px;background:var(--line)}
-.ucsf-evidence-item{background:#11161c;padding:1.5rem 1.6rem;display:grid;grid-template-columns:48px 1fr;gap:1rem;align-items:start;transition:.3s var(--ease)}
-.ucsf-evidence-item:hover{background:#171e26}
-.ucsf-evidence-item b{font-family:var(--display);font-size:var(--text-h3);font-weight:300;color:var(--gold);line-height:1}
-.ucsf-evidence-item h5{font-size:var(--text-h3);font-weight:500;color:#fff;margin-bottom:.32rem}
-.ucsf-evidence-item p{font-size:var(--text-small);line-height:1.55;color:rgba(255,255,255,.62)}
-.ucsf-proof-note{margin-top:1.2rem;font-size:var(--text-small);letter-spacing:.07em;color:rgba(255,255,255,.42)}
-
 @media(max-width:1100px){
   .ucsf-proof-intro{grid-template-columns:1fr}.ucsf-proof-video{min-height:540px}.ucsf-proof-copy{background:linear-gradient(180deg,rgba(6,9,12,.98),rgba(6,9,12,.72))}
-  .ucsf-story{grid-template-columns:1fr}.ucsf-story-media{position:sticky;top:0;height:58svh;padding:1.2rem 0;z-index:4;background:#070a0d}.ucsf-story-frame{height:100%}.ucsf-story-steps{border-left:0;padding-left:0}.ucsf-story-steps::before{display:none}.ucsf-step{min-height:72svh;padding:5rem 0}.ucsf-evidence-grid{grid-template-columns:1fr}
+  .ucsf-story{grid-template-columns:1fr}.ucsf-story-media{position:sticky;top:0;height:58svh;padding:1.2rem 0;z-index:4;background:#070a0d}.ucsf-story-frame{height:100%}.ucsf-story-steps{border-left:0;padding-left:0}.ucsf-story-steps::before{display:none}.ucsf-step{min-height:72svh;padding:5rem 0}
 }
 @media(max-width:760px){
   .ucsf-proof-metrics{grid-template-columns:1fr 1fr}.ucsf-metric:nth-child(2){border-right:0}.ucsf-metric:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .ucsf-story{padding:0 var(--pad)}.ucsf-story-media{height:48svh}.ucsf-story-hud{inset:auto .65rem .65rem;padding:.75rem}.ucsf-step{min-height:auto;padding:4.7rem 0}
-  .ucsf-value-head{grid-template-columns:1fr}.ucsf-evidence-main{min-height:420px}.ucsf-evidence-item{grid-template-columns:38px 1fr}.ucsf-proof-video{min-height:420px}
+  .ucsf-proof-video{min-height:420px}
 }
 @media(prefers-reduced-motion:reduce){.ucsf-story-image{transition:none}}
 
@@ -2140,37 +2122,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     </div>
   </section>
 
-  <div class="amc-block" id="amc-block" data-amc-option="1">
-  <div class="ucsf-value-proof amc-opt amc-opt--1">
-    <div class="wrap">
-      <div class="ucsf-value-head">
-        <div class="reveal"><div class="eyebrow">Measured Project Value</div><h3>At UCSF,<br><em>the savings went<br>beyond SSI.</em></h3></div>
-        <p class="reveal">Concern about HCAI approval often leads teams to follow conventional requirements without questioning whether a better solution exists. NYA looks deeper at the safety goals those requirements serve. Working with HCAI, we develop and substantiate alternative means of compliance that achieve those goals with less material, simpler construction, and lower cost.</p>
-      </div>
-      <div class="ucsf-evidence-grid reveal">
-        <div class="ucsf-evidence-main">
-          <div>
-            <div class="eyebrow">One approved AMC</div>
-            <div class="big-proof">$2M+</div>
-            <h4>Steel-cost savings from a single alternative means of compliance.</h4>
-            <p>UCSF's sustainability goals prompted NYA to investigate how using less steel could lower the hospital's embodied carbon while meeting HCAI's safety requirements. We developed and secured approval for an alternative means of compliance that reduced steel quantities, advancing UCSF's low-carbon goals and saving more than $2 million in steel costs.</p>
-          </div>
-          <div class="ucsf-proof-note">Project proof points reflect NYA's documented UCSF project experience and technical analysis.</div>
-        </div>
-        <div class="ucsf-evidence-side">
-          <div class="ucsf-evidence-item"><b>1</b><div><h5>Material savings</h5><p>Reduced seismic base shear, higher-strength steel and reinforcement, and targeted structural optimization.</p></div></div>
-          <div class="ucsf-evidence-item"><b>2</b><div><h5>Testing + inspection</h5><p>Alternative ultrasonic-testing procedures and strategic reuse of applicable damper test results.</p></div></div>
-          <div class="ucsf-evidence-item"><b>3</b><div><h5>Steel fabrication efficiency</h5><p>Alternative box-column splices, continuity-plate details, bolted SidePlate connections, and prefabrication strategies.</p></div></div>
-          <div class="ucsf-evidence-item"><b>4</b><div><h5>Sustainability</h5><p>Low-carbon concrete and thermal-control strategies tied to practical project delivery.</p></div></div>
-          <div class="ucsf-evidence-item"><b>5</b><div><h5>Constructability</h5><p>Concrete-placement tolerance and other field-focused alternatives designed around how the hospital is actually built.</p></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AMC option 2: drivers -> message -> outcomes. Scroll pins the section and moves the
+  <!-- AMC: drivers -> message -> outcomes. Scroll pins the section and moves the
        track sideways; the lead lines are drawn by the script as the scroll advances. -->
-  <section class="amc-funnel amc-opt amc-opt--2" aria-labelledby="amc-funnel-title">
+  <section class="amc-funnel" id="amc-funnel" aria-labelledby="amc-funnel-title">
     <div class="amc-funnel-pin">
       <div class="amc-funnel-track">
         <svg class="amc-funnel-lines" aria-hidden="true" focusable="false"></svg>
@@ -2200,14 +2154,6 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       </div>
     </div>
   </section>
-
-  <div class="amc-switch" role="group" aria-label="AMC section layout">
-    <span class="amc-switch-k" aria-hidden="true">AMC</span>
-    <button type="button" data-amc-set="1" aria-pressed="true">Option 1</button>
-    <button type="button" data-amc-set="2" aria-pressed="false">Option 2</button>
-    <button type="button" data-amc-set="3" aria-pressed="false">Option 3</button>
-  </div>
-  </div>
 </div>
 <!-- ======== END PART: Cost Certainty ======== -->
 
@@ -2546,8 +2492,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   </div>
   </div>
 
-  <div class="amc-switch depth-switch" id="depth-switch" role="group" aria-label="Technical depth intro option">
-    <span class="amc-switch-k" aria-hidden="true">Depth</span>
+  <div class="opt-switch" id="depth-switch" role="group" aria-label="Technical depth intro option">
+    <span class="opt-switch-k" aria-hidden="true">Depth</span>
     <button type="button" data-depth-opt="2" aria-pressed="true">Option 2</button>
     <button type="button" data-depth-opt="1" aria-pressed="false">Option 1</button>
   </div>
@@ -4019,47 +3965,48 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 </script>
 
 <style id="amc-funnel-style">
-/* AMC options: a fixed selector appears only while the AMC block is on screen. */
-/* Own layer above the fixed WebGL backdrop (z-index:0), which otherwise paints over
-   the block's unpositioned text (Option 1 heading and copy). */
-.amc-block{position:relative;z-index:1}
-.amc-block[data-amc-option="1"] .amc-opt--2,.amc-block:not([data-amc-option="1"]) .amc-opt--1{display:none}
-.amc-switch{position:fixed;right:var(--space-3);bottom:var(--space-3);z-index:950;display:flex;align-items:center;gap:4px;padding:5px;border-radius:999px;
+/* Floating option selector (used by the Technical Depth intro): shown only while its
+   section is on screen. */
+.opt-switch{position:fixed;right:var(--space-3);bottom:var(--space-3);z-index:950;display:flex;align-items:center;gap:4px;padding:5px;border-radius:999px;
   background:#0b0f14;border:1px solid var(--line2);
   font-size:var(--text-small);line-height:1;opacity:0;visibility:hidden;transform:translateY(16px);
   transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s linear .35s}
-.amc-switch.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s}
-.amc-switch-k{padding:0 .6rem 0 .8rem;font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.amc-switch button{appearance:none;border:0;border-radius:999px;min-height:32px;padding:0 .8rem;background:transparent;color:var(--text);font:inherit;white-space:nowrap;cursor:pointer;transition:background-color .25s,color .25s}
-.amc-switch button:hover{background:rgba(255,255,255,.08)}
-.amc-switch button[aria-pressed="true"]{background:var(--gold);color:#061016}
-.amc-switch button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-@media(max-width:480px),(max-height:500px){.amc-switch{right:var(--space-2);bottom:var(--space-2)}.amc-switch-k{display:none}}
+.opt-switch.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s}
+.opt-switch-k{padding:0 .6rem 0 .8rem;font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.opt-switch button{appearance:none;border:0;border-radius:999px;min-height:32px;padding:0 .8rem;background:transparent;color:var(--text);font:inherit;white-space:nowrap;cursor:pointer;transition:background-color .25s,color .25s}
+.opt-switch button:hover{background:rgba(255,255,255,.08)}
+.opt-switch button[aria-pressed="true"]{background:var(--gold);color:#061016}
+.opt-switch button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(max-width:480px),(max-height:500px){.opt-switch{right:var(--space-2);bottom:var(--space-2)}.opt-switch-k{display:none}}
 
-/* Option 2: three scenes on one horizontal track - drivers, message, outcomes. Each is
+/* AMC: three scenes on one horizontal track - drivers, message, outcomes. Each is
    centred on screen in turn; scroll holds a scene, then slides it out left while the next
-   slides in and the lead lines draw between them. Section height is set by the script. */
-.amc-funnel{position:relative;background:linear-gradient(180deg,#0a0d11,#07090c)}
+   slides in and the lead lines draw between them. Section height is set by the script.
+   White section with the page's light-section ink and accent; z-index keeps it above the
+   fixed WebGL backdrop (z-index:0). */
+.amc-funnel{position:relative;z-index:1;background:#fff;color:var(--ink)}
+.amc-funnel .eyebrow{color:var(--green-on-light)}
 .amc-funnel-pin{position:-webkit-sticky;position:sticky;top:0;height:100svh;overflow:hidden;padding-top:var(--amc-nav,36px)}
 .amc-funnel-track{position:relative;display:flex;align-items:center;width:max-content;height:100%;will-change:transform}
 .amc-funnel-lines{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
 /* 1px like the page's dividers. Inputs are neutral; lines to outcomes carry the accent. */
 .amc-funnel-lines path{fill:none;stroke-width:1;stroke-linecap:round}
-.amc-funnel-lines .is-in-line{stroke:rgba(190,200,212,.42)}
-.amc-funnel-lines .is-out-line{stroke:rgba(34,211,255,.75)}
+.amc-funnel-lines .is-in-line{stroke:rgba(21,21,21,.3)}
+.amc-funnel-lines .is-out-line{stroke:var(--green-on-light)}
 .amc-funnel-panel{position:relative;z-index:1;flex:none;width:min(1120px,calc(100vw - 2 * var(--pad)))}
 .amc-funnel-panel--center{width:min(980px,calc(100vw - 2 * var(--pad)));text-align:center}
 .amc-funnel-gap{flex:none;width:clamp(180px,34vw,560px)}
 .amc-funnel-label{margin-bottom:var(--space-3)}
+.amc-funnel-label::before{display:none}
 
 /* Drivers and outcomes share one row style: title column + description column, aligned
    across rows (subgrid), hairline dividers like the page's evidence grids. */
-.amc-funnel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:var(--space-5);border-top:1px solid var(--line)}
-.amc-funnel-item{display:grid;grid-column:1/-1;grid-template-columns:subgrid;align-items:baseline;padding:var(--space-3) 0;border-bottom:1px solid var(--line)}
-.amc-funnel-item h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2-lg);line-height:1.1;color:#fff;white-space:nowrap}
-.amc-funnel-item p{margin:0;max-width:40em;color:var(--muted)}
-.amc-funnel-msg{font-family:var(--display);font-weight:300;font-size:var(--text-display);line-height:1.03;letter-spacing:-.02em;color:#fff;text-wrap:balance}
-.amc-funnel-msg em{color:var(--gold)}
+.amc-funnel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:var(--space-5);border-top:1px solid rgba(0,0,0,.15)}
+.amc-funnel-item{display:grid;grid-column:1/-1;grid-template-columns:subgrid;align-items:baseline;padding:var(--space-3) 0;border-bottom:1px solid rgba(0,0,0,.15)}
+.amc-funnel-item h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2-lg);line-height:1.1;color:var(--ink);white-space:nowrap}
+.amc-funnel-item p{margin:0;max-width:40em;color:var(--ink2)}
+.amc-funnel-msg{font-family:var(--display);font-weight:300;font-size:var(--text-display);line-height:1.03;letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
+.amc-funnel-msg em{color:var(--green-on-light)}
 
 /* Reveal states, toggled by scroll position (both directions). */
 .amc-funnel .amc-funnel-label,.amc-funnel .amc-funnel-item,.amc-funnel-msg{opacity:0;transition:opacity .7s var(--ease),transform .7s var(--ease)}
@@ -4068,23 +4015,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel-msg{transform:scale(.97)}
 .amc-funnel .is-in{opacity:1;transform:none}
 .amc-funnel-panel--outcomes .amc-funnel-list{border-top-color:transparent;transition:border-color .7s var(--ease)}
-.amc-funnel-panel--outcomes.is-open .amc-funnel-list{border-top-color:var(--line)}
+.amc-funnel-panel--outcomes.is-open .amc-funnel-list{border-top-color:rgba(0,0,0,.15)}
 .amc-funnel.is-measuring .amc-funnel-panel *{transform:none!important;transition:none!important}
 .amc-funnel-panel--drivers .amc-funnel-item:nth-child(2){transition-delay:.08s}
 .amc-funnel-panel--drivers .amc-funnel-item:nth-child(3){transition-delay:.16s}
 .amc-funnel-panel--drivers .amc-funnel-item:nth-child(4){transition-delay:.24s}
-
-/* Option 3: Option 2 on pure white, with the page's light-section ink and accent. */
-.amc-block[data-amc-option="3"] .amc-funnel{background:#fff;color:var(--ink)}
-.amc-block[data-amc-option="3"] .amc-funnel .eyebrow{color:var(--green-on-light)}
-.amc-block[data-amc-option="3"] .amc-funnel-item h3,.amc-block[data-amc-option="3"] .amc-funnel-msg{color:var(--ink)}
-.amc-block[data-amc-option="3"] .amc-funnel-msg em{color:var(--green-on-light)}
-.amc-block[data-amc-option="3"] .amc-funnel-item p{color:var(--ink2)}
-.amc-block[data-amc-option="3"] .amc-funnel-list,.amc-block[data-amc-option="3"] .amc-funnel-item{border-color:rgba(0,0,0,.15)}
-.amc-block[data-amc-option="3"] .amc-funnel-panel--outcomes .amc-funnel-list{border-top-color:transparent}
-.amc-block[data-amc-option="3"] .amc-funnel-panel--outcomes.is-open .amc-funnel-list{border-top-color:rgba(0,0,0,.15)}
-.amc-block[data-amc-option="3"] .amc-funnel-lines .is-in-line{stroke:rgba(21,21,21,.3)}
-.amc-block[data-amc-option="3"] .amc-funnel-lines .is-out-line{stroke:var(--green-on-light)}
 
 /* Narrow screens and short landscape phones: rows stack title over description. */
 @media(max-width:820px),(max-height:500px) and (orientation:landscape){
@@ -4110,11 +4045,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 </style>
 <script id="amc-funnel-behavior">
 (function(){
-  var block=document.getElementById('amc-block');if(!block)return;
-  var KEY='nya-amc-option';
-  var sw=block.querySelector('.amc-switch');
-  var btns=[].slice.call(block.querySelectorAll('[data-amc-set]'));
-  var sec=block.querySelector('.amc-funnel'),pin=sec.querySelector('.amc-funnel-pin'),
+  var sec=document.getElementById('amc-funnel');if(!sec)return;
+  var pin=sec.querySelector('.amc-funnel-pin'),
       track=sec.querySelector('.amc-funnel-track'),svg=sec.querySelector('.amc-funnel-lines');
   var dPanel=sec.querySelector('.amc-funnel-panel--drivers'),cPanel=sec.querySelector('.amc-funnel-panel--center'),oPanel=sec.querySelector('.amc-funnel-panel--outcomes');
   var drivers=[].slice.call(dPanel.querySelectorAll('.amc-funnel-item')),outcomes=[].slice.call(oPanel.querySelectorAll('.amc-funnel-item'));
@@ -4129,8 +4061,6 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   function clamp(v,a,b){return v<a?a:v>b?b:v}
   function lerp(a,b,t){return a+(b-a)*t}
   function ease(t){return -(Math.cos(Math.PI*t)-1)/2}
-  function opt(){return block.getAttribute('data-amc-option')}
-  function funnelOn(){return opt()==='2'||opt()==='3'}
   function rel(el){var r=el.getBoundingClientRect(),t=track.getBoundingClientRect();
     return {l:r.left-t.left,r:r.right-t.left,t:r.top-t.top,cy:(r.top+r.bottom)/2-t.top}}
   // Flat start, S-curve, flat end: the lead-line shape from the concept image.
@@ -4144,7 +4074,6 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
 
   function layout(){
-    if(!funnelOn())return;
     svg.textContent='';lines=[];
     if(reduce.matches){sec.style.height='';track.style.transform='';return}
     var nav=document.getElementById('range-nav');sec.style.setProperty('--amc-nav',((nav&&nav.offsetHeight)||30)+6+'px');
@@ -4178,13 +4107,13 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     lines.forEach(function(L){L.f=-1});
   }
 
-  // Option 3 is white: while it sits under the fixed range nav, show the nav's light tone.
+  // The section is white: while it sits under the fixed range nav, show the nav's light tone.
   // The nav only sets its tone when the current part changes, so hand it back explicitly.
   var nav=document.getElementById('range-nav'),navLit=false;
   function syncNavTone(){
     if(!nav)return;
     var r=sec.getBoundingClientRect(),h=nav.offsetHeight;
-    var over=opt()==='3'&&r.top<=h&&r.bottom>h;
+    var over=r.top<=h&&r.bottom>h;
     if(over){nav.dataset.tone='light';navLit=true}
     else if(navLit){var cur=nav.querySelector('a[aria-current="true"]');if(cur)nav.dataset.tone=cur.dataset.tone;navLit=false}
   }
@@ -4192,7 +4121,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   function update(){
     raf=0;
     syncNavTone();
-    if(!funnelOn()||reduce.matches)return;
+    if(reduce.matches)return;
     var r=sec.getBoundingClientRect(),s=Math.max(0,-r.top),P=phase;
     // Phase boundaries: a = slide 1 starts, b = message reached, c = slide 2 starts, e = outcomes reached.
     var a=P.holdDrivers,b=a+P.toMessage,c=b+P.holdMessage,e=c+P.toOutcomes;
@@ -4221,24 +4150,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
   function queue(){if(!raf)raf=requestAnimationFrame(update)}
 
-  function setOpt(v,jump){
-    block.setAttribute('data-amc-option',v);
-    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-amc-set')===v))});
-    try{localStorage.setItem(KEY,v)}catch(e){}
-    if(funnelOn()){layout()}else{sec.style.height=''}
-    if(jump){var y=block.getBoundingClientRect().top+window.pageYOffset;window.scrollTo({top:y,behavior:'instant'})}
-    queue();
-  }
-  btns.forEach(function(b){b.addEventListener('click',function(){var v=b.getAttribute('data-amc-set');if(v!==opt())setOpt(v,true)})});
-
-  var start='1';
-  try{var st=localStorage.getItem(KEY);if(/^[123]$/.test(st||''))start=st}catch(e){}
-  var q=/[?&]amc=([123])/.exec(location.search);if(q)start=q[1];
-  setOpt(start,false);
-
-  if('IntersectionObserver' in window&&sw){
-    new IntersectionObserver(function(es){sw.classList.toggle('is-on',es[0].isIntersecting)},{rootMargin:'-30% 0px -30% 0px'}).observe(block);
-  }else if(sw){sw.classList.add('is-on')}
+  layout();queue();
 
   window.addEventListener('scroll',queue,{passive:true});
   // Width changes re-layout; height-only changes (mobile URL bar) do not, to avoid jumps.
