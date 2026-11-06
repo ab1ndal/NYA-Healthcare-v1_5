@@ -2271,7 +2271,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
         </div>
         <div class="amc-funnel-gap" aria-hidden="true"></div>
         <div class="amc-funnel-panel amc-funnel-panel--center">
-          <h2 class="amc-funnel-msg" id="amc-funnel-title">NYA’s technical credibility <em>with HCAI</em> transforms innovation into savings</h2>
+          <h2 class="amc-funnel-msg" id="amc-funnel-title"><span class="amc-funnel-msg-text">NYA’s technical credibility <em>with HCAI</em> transforms innovation into savings</span></h2>
         </div>
         <div class="amc-funnel-gap" aria-hidden="true"></div>
         <div class="amc-funnel-panel amc-funnel-panel--outcomes">
@@ -3660,42 +3660,42 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-block{position:relative;z-index:1}
 .amc-block[data-amc-option="1"] .amc-opt--2,.amc-block[data-amc-option="2"] .amc-opt--1{display:none}
 .amc-switch{position:fixed;right:var(--space-3);bottom:var(--space-3);z-index:950;display:flex;align-items:center;gap:4px;padding:5px;border-radius:999px;
-  background:rgba(10,14,19,.88);border:1px solid var(--line2);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,.35);
+  background:#0b0f14;border:1px solid var(--line2);
   font-size:var(--text-small);line-height:1;opacity:0;visibility:hidden;transform:translateY(16px);
   transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s linear .35s}
-.amc-switch.is-on{opacity:.55;visibility:visible;transform:none;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s}
-.amc-switch.is-on:hover,.amc-switch.is-on:focus-within{opacity:1}
+.amc-switch.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s}
 .amc-switch-k{padding:0 .6rem 0 .8rem;font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .amc-switch button{appearance:none;border:0;border-radius:999px;min-height:32px;padding:0 .8rem;background:transparent;color:var(--text);font:inherit;white-space:nowrap;cursor:pointer;transition:background-color .25s,color .25s}
 .amc-switch button:hover{background:rgba(255,255,255,.08)}
 .amc-switch button[aria-pressed="true"]{background:var(--gold);color:#061016}
 .amc-switch button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(max-width:480px),(max-height:500px){.amc-switch{right:var(--space-2);bottom:var(--space-2)}.amc-switch-k{display:none}}
 
-/* Option 2: pinned horizontal funnel. The section height is set by the script. */
+/* Option 2: three scenes on one horizontal track - drivers, message, outcomes. Each is
+   centred on screen in turn; scroll holds a scene, then slides it out left while the next
+   slides in and the lead lines draw between them. Section height is set by the script. */
 .amc-funnel{position:relative;background:linear-gradient(180deg,#0a0d11,#07090c)}
-.amc-funnel-pin{position:-webkit-sticky;position:sticky;top:0;height:100svh;overflow:hidden;padding-top:36px}
-.amc-funnel-track{position:relative;display:flex;align-items:center;width:max-content;height:100%;padding:0 var(--pad);will-change:transform}
+.amc-funnel-pin{position:-webkit-sticky;position:sticky;top:0;height:100svh;overflow:hidden;padding-top:var(--amc-nav,36px)}
+.amc-funnel-track{position:relative;display:flex;align-items:center;width:max-content;height:100%;will-change:transform}
 .amc-funnel-lines{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
-.amc-funnel-lines path{fill:none;stroke-width:1.6;stroke-linecap:round}
-.amc-funnel-lines .is-teal{stroke:var(--gold)}
-.amc-funnel-lines .is-slate{stroke:rgba(150,170,195,.6)}
-.amc-funnel-lines circle{fill:#fff;opacity:0;filter:drop-shadow(0 0 5px var(--gold)) drop-shadow(0 0 10px var(--gold));transition:opacity .2s}
-.amc-funnel-lines circle.is-live{opacity:1}
-.amc-funnel-panel{position:relative;z-index:1;flex:none}
-.amc-funnel-panel--drivers{width:clamp(320px,36vw,640px)}
-.amc-funnel-panel--center{width:clamp(320px,46vw,900px);text-align:center}
-.amc-funnel-panel--outcomes{width:clamp(340px,44vw,760px)}
-.amc-funnel-gap{flex:none;width:clamp(200px,30vw,620px)}
-.amc-funnel-label{margin-bottom:var(--space-4)}
-.amc-funnel-list{list-style:none;margin:0;padding:0 0 0 var(--space-3);display:grid;gap:var(--space-4)}
-.amc-funnel-panel--outcomes .amc-funnel-list{gap:var(--space-4)}
-/* Type: the page's tokens and display/body pairing only. */
-.amc-funnel-item h3{position:relative;font-family:var(--display);font-weight:300;font-size:var(--text-h1);line-height:1.05;color:#fff}
-.amc-funnel-item h3::before{content:"";position:absolute;left:calc(-1 * var(--space-3));top:.45em;width:7px;height:7px;border-radius:50%;background:var(--gold)}
-.amc-funnel-item p{margin-top:var(--space-1);max-width:36em;color:var(--muted)}
-.amc-funnel-panel--outcomes .amc-funnel-item h3{font-size:var(--text-h2-lg)}
+/* 1px like the page's dividers. Inputs are neutral; lines to outcomes carry the accent. */
+.amc-funnel-lines path{fill:none;stroke-width:1;stroke-linecap:round}
+.amc-funnel-lines .is-in-line{stroke:rgba(190,200,212,.42)}
+.amc-funnel-lines .is-out-line{stroke:rgba(34,211,255,.75)}
+.amc-funnel-panel{position:relative;z-index:1;flex:none;width:min(1120px,calc(100vw - 2 * var(--pad)))}
+.amc-funnel-panel--center{width:min(980px,calc(100vw - 2 * var(--pad)));text-align:center}
+.amc-funnel-gap{flex:none;width:clamp(180px,34vw,560px)}
+.amc-funnel-label{margin-bottom:var(--space-3)}
+
+/* Drivers and outcomes share one row style: title column + description column, aligned
+   across rows (subgrid), hairline dividers like the page's evidence grids. */
+.amc-funnel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:var(--space-5);border-top:1px solid var(--line)}
+.amc-funnel-item{display:grid;grid-column:1/-1;grid-template-columns:subgrid;align-items:baseline;padding:var(--space-3) 0;border-bottom:1px solid var(--line)}
+.amc-funnel-item h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2-lg);line-height:1.1;color:#fff;white-space:nowrap}
+.amc-funnel-item p{margin:0;max-width:40em;color:var(--muted)}
 .amc-funnel-msg{font-family:var(--display);font-weight:300;font-size:var(--text-display);line-height:1.03;letter-spacing:-.02em;color:#fff;text-wrap:balance}
 .amc-funnel-msg em{color:var(--gold)}
+
 /* Reveal states, toggled by scroll position (both directions). */
 .amc-funnel .amc-funnel-label,.amc-funnel .amc-funnel-item,.amc-funnel-msg{opacity:0;transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .amc-funnel-panel--drivers .amc-funnel-item,.amc-funnel-panel--drivers .amc-funnel-label{transform:translateY(18px)}
@@ -3703,20 +3703,29 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel-msg{transform:scale(.97)}
 .amc-funnel .is-in{opacity:1;transform:none}
 .amc-funnel.is-measuring .amc-funnel-panel *{transform:none!important;transition:none!important}
-.amc-funnel-panel--drivers .amc-funnel-item:nth-child(2){transition-delay:.12s}
-.amc-funnel-panel--drivers .amc-funnel-item:nth-child(3){transition-delay:.24s}
-.amc-funnel-panel--drivers .amc-funnel-item:nth-child(4){transition-delay:.36s}
-@media(max-width:760px){
-  .amc-funnel-panel--drivers{width:80vw}.amc-funnel-panel--center{width:80vw}.amc-funnel-panel--outcomes{width:86vw}.amc-funnel-gap{width:44vw}
+.amc-funnel-panel--drivers .amc-funnel-item:nth-child(2){transition-delay:.08s}
+.amc-funnel-panel--drivers .amc-funnel-item:nth-child(3){transition-delay:.16s}
+.amc-funnel-panel--drivers .amc-funnel-item:nth-child(4){transition-delay:.24s}
+
+/* Narrow screens and short landscape phones: rows stack title over description. */
+@media(max-width:820px),(max-height:500px) and (orientation:landscape){
+  .amc-funnel-list{grid-template-columns:minmax(0,1fr)}
+  .amc-funnel-item{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-2) 0}
 }
+/* Very narrow phones: long titles may wrap rather than overflow. */
+@media(max-width:400px){.amc-funnel-item h3{white-space:normal}}
+/* Short landscape phones: tighter rows so less of the list needs panning. */
+@media(max-height:500px) and (orientation:landscape){
+  .amc-funnel-item{padding-block:var(--space-1)}
+  .amc-funnel-label{margin-bottom:var(--space-1)}
 }
 /* No motion: no pinning, panels stacked, lines hidden, everything shown. */
 @media(prefers-reduced-motion:reduce){
   .amc-funnel{height:auto!important}
   .amc-funnel-pin{position:static;height:auto;overflow:visible;padding:0}
-  .amc-funnel-track{flex-direction:column;align-items:stretch;gap:3rem;width:auto;transform:none!important;padding:var(--section) var(--pad)}
+  .amc-funnel-track{flex-direction:column;align-items:stretch;gap:var(--space-5);width:auto;transform:none!important;padding:var(--section) var(--pad)}
   .amc-funnel-gap,.amc-funnel-lines{display:none}
-  .amc-funnel-panel{width:auto!important}
+  .amc-funnel-panel{width:auto!important;opacity:1!important}
   .amc-funnel .amc-funnel-label,.amc-funnel .amc-funnel-item,.amc-funnel-msg{opacity:1;transform:none}
 }
 </style>
@@ -3728,80 +3737,84 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var btns=[].slice.call(block.querySelectorAll('[data-amc-set]'));
   var sec=block.querySelector('.amc-funnel'),pin=sec.querySelector('.amc-funnel-pin'),
       track=sec.querySelector('.amc-funnel-track'),svg=sec.querySelector('.amc-funnel-lines');
-  var dPanel=sec.querySelector('.amc-funnel-panel--drivers'),oPanel=sec.querySelector('.amc-funnel-panel--outcomes');
+  var dPanel=sec.querySelector('.amc-funnel-panel--drivers'),cPanel=sec.querySelector('.amc-funnel-panel--center'),oPanel=sec.querySelector('.amc-funnel-panel--outcomes');
   var drivers=[].slice.call(dPanel.querySelectorAll('.amc-funnel-item')),outcomes=[].slice.call(oPanel.querySelectorAll('.amc-funnel-item'));
-  var dLabel=dPanel.querySelector('.amc-funnel-label'),oLabel=oPanel.querySelector('.amc-funnel-label'),msg=sec.querySelector('.amc-funnel-msg');
+  var dLabel=dPanel.querySelector('.amc-funnel-label'),oLabel=oPanel.querySelector('.amc-funnel-label'),
+      msg=sec.querySelector('.amc-funnel-msg'),msgText=sec.querySelector('.amc-funnel-msg-text');
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
   var NS='http://www.w3.org/2000/svg';
-  var lines=[],dv=0,ov=0,lx1v=0,rx0v=0,vwNow=0,maxX=0,dwellA=0,travel=1,tipA=0,tipB=0,msgAt=0,outAt=0,raf=0;
+  // Scroll timeline: hold drivers, slide to message, hold, slide to outcomes, hold.
+  var lines=[],X=[0,0,0],T=[0,0,0,0,0],d1=0,d3=0,raf=0;
 
   function clamp(v,a,b){return v<a?a:v>b?b:v}
+  function lerp(a,b,t){return a+(b-a)*t}
+  function ease(t){return -(Math.cos(Math.PI*t)-1)/2}
   function opt(){return block.getAttribute('data-amc-option')}
   function rel(el){var r=el.getBoundingClientRect(),t=track.getBoundingClientRect();
-    return {l:r.left-t.left,r:r.right-t.left,cy:(r.top+r.bottom)/2-t.top}}
+    return {l:r.left-t.left,r:r.right-t.left,t:r.top-t.top,cy:(r.top+r.bottom)/2-t.top}}
   // Flat start, S-curve, flat end: the lead-line shape from the concept image.
   function curve(x0,y0,x1,y1,a,b){var w=x1-x0,xa=x0+w*a,xb=x0+w*b,xm=(xa+xb)/2;
     return 'M'+x0+' '+y0+'H'+xa+'C'+xm+' '+y0+' '+xm+' '+y1+' '+xb+' '+y1+'H'+x1}
-  function addLine(d,tone,x0,x1,target){
+  function addLine(d,tone,side,i,target){
     var p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('class',tone);
-    var c=document.createElementNS(NS,'circle');c.setAttribute('r','2.6');
-    svg.appendChild(p);svg.appendChild(c);
+    svg.appendChild(p);
     var len=p.getTotalLength();p.style.strokeDasharray=len;p.style.strokeDashoffset=len;p.style.visibility='hidden';
-    lines.push({p:p,c:c,len:len,x0:x0,x1:x1,target:target,f:-1});
+    lines.push({p:p,len:len,side:side,i:i,target:target,f:-1});
   }
 
   function layout(){
     if(opt()!=='2')return;
     svg.textContent='';lines=[];
     if(reduce.matches){sec.style.height='';track.style.transform='';return}
-    track.style.transform='translate3d(0,0,0)';sec.classList.add('is-measuring');
-    var vw=vwNow=pin.clientWidth,vh=pin.clientHeight,W=track.scrollWidth,H=track.clientHeight;
-    maxX=Math.max(0,W-vw);
-    dwellA=vh*.55;travel=Math.max(maxX*1.15,vh*1.2);
-    sec.style.height=Math.round(vh+dwellA+travel+vh*.35)+'px';
+    var nav=document.getElementById('range-nav');sec.style.setProperty('--amc-nav',((nav&&nav.offsetHeight)||30)+6+'px');
+    sec.classList.add('is-measuring');track.style.transform='none';
+    var vw=pin.clientWidth,vh=window.innerHeight,W=track.scrollWidth,H=track.clientHeight;
+    // Translate that centres each panel on screen.
+    [dPanel,cPanel,oPanel].forEach(function(el,i){X[i]=el.offsetLeft+el.offsetWidth/2-vw/2});
+    // Panels taller than the screen pan vertically while they are held (no type scaling).
+    var room=H-Math.min(110,H*.18);
+    d1=Math.max(0,dPanel.offsetHeight-room)/2;d3=Math.max(0,oPanel.offsetHeight-room)/2;
+    T[0]=vh*.35+d1*2.5;T[1]=Math.max(X[1]-X[0],vh*.9);T[2]=vh*.45;T[3]=Math.max(X[2]-X[1],vh*.9);T[4]=vh*.4+d3*2.5;
+    sec.style.height=Math.round(pin.offsetHeight+T[0]+T[1]+T[2]+T[3]+T[4])+'px';
     svg.setAttribute('width',W);svg.setAttribute('height',H);svg.setAttribute('viewBox','0 0 '+W+' '+H);
-    var d=rel(dPanel),m=rel(msg),gap=7;
-    var lx0=d.r+16,lx1=m.l-18,rx0=m.r+18,n=drivers.length,k=outcomes.length;
+    var d=rel(dPanel),m=rel(msgText),gap=8,n=drivers.length,k=outcomes.length;
+    var lx0=d.r+24,lx1=m.l-28,rx0=m.r+28;
     drivers.forEach(function(it,i){
-      var y0=rel(it).cy,y1=m.cy+(i-(n-1)/2)*gap;
-      addLine(curve(lx0,y0,lx1,y1,.12,.62),i%2?'is-teal':'is-slate',lx0+i*18,lx1,null);
+      addLine(curve(lx0,rel(it).cy,lx1,m.cy+(i-(n-1)/2)*gap,.1,.7),'is-in-line','in',i,null);
     });
-    var ox1=lx1;
     outcomes.forEach(function(it,i){
-      var h=rel(it.querySelector('h3')),x1=h.l-30,y0=m.cy+(i-(k-1)/2)*gap;
-      ox1=Math.max(ox1,x1);
-      addLine(curve(rx0,y0,x1,h.cy,.2,.78),i===k-1?'is-slate':'is-teal',rx0+i*22,x1,it);
+      var h=rel(it.querySelector('h3'));
+      addLine(curve(rx0,m.cy+(i-(k-1)/2)*gap,h.l-20,h.cy,.25,.85),'is-out-line','out',i,it);
     });
-    tipA=lx0;tipB=ox1+k*22;msgAt=lx1+(n-1)*18;outAt=rx0;lx1v=lx1;rx0v=rx0;
-    var room=H-120; // keeps panel edges clear of the nav and the selector
-   dv=Math.max(0,dPanel.offsetHeight-room)/2;ov=Math.max(0,oPanel.offsetHeight-room)/2;
     void sec.offsetWidth;sec.classList.remove('is-measuring');
+    lines.forEach(function(L){L.f=-1});
   }
 
   function update(){
     raf=0;
     if(opt()!=='2'||reduce.matches)return;
-    var r=sec.getBoundingClientRect(),vh=window.innerHeight;
-    var s=-r.top,p=clamp((s-dwellA)/travel,0,1),x=maxX*p,lead=vwNow*.7;
-    var tip=s<dwellA?tipA+(lead-tipA)*clamp(s/dwellA,0,1):x+lead;
-    if(p>=1)tip=Math.max(tip,tipB);
-    // Pan down a tall panel while its lines draw: drivers, then outcomes.
-    function seg(a,b){return clamp((tip-a)/Math.max(1,b-a),0,1)}
-    var y=tip<lx1v?dv-2*dv*seg(tipA,lx1v):tip<rx0v?-dv+(dv+ov)*seg(lx1v,rx0v):ov-2*ov*seg(rx0v,tipB);
+    var r=sec.getBoundingClientRect(),s=Math.max(0,-r.top),a=T[0],b=a+T[1],c=b+T[2],e=c+T[3];
+    var t1=ease(clamp((s-a)/T[1],0,1)),t2=ease(clamp((s-c)/T[3],0,1)),x,y;
+    if(s<a){x=X[0];y=lerp(d1,-d1,s/a)}
+    else if(s<b){x=lerp(X[0],X[1],t1);y=lerp(-d1,0,t1)}
+    else if(s<c){x=X[1];y=0}
+    else if(s<e){x=lerp(X[1],X[2],t2);y=lerp(0,d3,t2)}
+    else{x=X[2];y=lerp(d3,-d3,clamp((s-e)/T[4],0,1))}
     track.style.transform='translate3d('+(-x).toFixed(1)+'px,'+y.toFixed(1)+'px,0)';
     lines.forEach(function(L){
-      var f=clamp((tip-L.x0)/Math.max(1,L.x1-L.x0),0,1);
+      var f=L.side==='in'?clamp((t1-L.i*.05)/.85,0,1):clamp((t2-L.i*.07)/.79,0,1);
       if(Math.abs(f-L.f)<.0005)return;L.f=f;
       L.p.style.strokeDashoffset=(L.len*(1-f)).toFixed(1);L.p.style.visibility=f>0?'visible':'hidden';
-      var live=f>0&&f<1;L.c.classList.toggle('is-live',live);
-      if(live){var pt=L.p.getPointAtLength(L.len*f);L.c.setAttribute('cx',pt.x);L.c.setAttribute('cy',pt.y)}
       if(L.target)L.target.classList.toggle('is-in',f>=.97);
     });
-    var entered=r.top<vh*.6&&r.bottom>0;
+    // Each scene fades as it leaves, so only one message reads at a time.
+    dPanel.style.opacity=(1-clamp((t1-.2)/.55,0,1)).toFixed(3);
+    cPanel.style.opacity=(1-clamp((t2-.2)/.55,0,1)).toFixed(3);
+    var entered=r.top<window.innerHeight*.6&&r.bottom>0;
     dLabel.classList.toggle('is-in',entered);
     drivers.forEach(function(it){it.classList.toggle('is-in',entered)});
-    msg.classList.toggle('is-in',tip>=msgAt);
-    oLabel.classList.toggle('is-in',tip>=outAt);
+    msg.classList.toggle('is-in',t1>.8);
+    oLabel.classList.toggle('is-in',t2>.15);
   }
   function queue(){if(!raf)raf=requestAnimationFrame(update)}
 
@@ -3816,7 +3829,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   btns.forEach(function(b){b.addEventListener('click',function(){var v=b.getAttribute('data-amc-set');if(v!==opt())setOpt(v,true)})});
 
   var start='1';
-  try{var s=localStorage.getItem(KEY);if(s==='1'||s==='2')start=s}catch(e){}
+  try{var st=localStorage.getItem(KEY);if(st==='1'||st==='2')start=st}catch(e){}
   var q=/[?&]amc=([12])/.exec(location.search);if(q)start=q[1];
   setOpt(start,false);
 
@@ -3825,7 +3838,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }else if(sw){sw.classList.add('is-on')}
 
   window.addEventListener('scroll',queue,{passive:true});
-  var rt=0;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){layout();queue()},120)});
+  // Width changes re-layout; height-only changes (mobile URL bar) do not, to avoid jumps.
+  var lastW=window.innerWidth,lastH=window.innerHeight,rt=0;
+  window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){
+    if(window.innerWidth!==lastW||Math.abs(window.innerHeight-lastH)>120){lastW=window.innerWidth;lastH=window.innerHeight;layout()}queue()},150)});
   if(reduce.addEventListener)reduce.addEventListener('change',function(){layout();queue()});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){layout();queue()});
   window.addEventListener('load',function(){layout();queue()});
