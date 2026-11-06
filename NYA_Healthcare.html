@@ -834,6 +834,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   padding-bottom: .5rem;
 }
 .proof-ribbon .proof-set .proof:last-child { border-right: 0; }
+/* Larger proof-point text; the bar height is fixed above, so the bar does not grow. */
+.proof-ribbon .proof-v { font-size: clamp(1.4rem, 2.2vw, 2.1rem); line-height: 1.1; }
 @media (max-width: 760px) {
   .proof-ribbon .proof-set .proof { width: min(78vw, 20rem); }
 }
