@@ -1843,13 +1843,14 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .uci-team-media{margin:calc(clamp(var(--space-3),4vw,var(--space-5)) / 2) 0 0}
 /* Narrow screens crop the sides for a taller view of the campus; the focus stays on the entrance. */
 .uci-team-media img{display:block;width:100%;height:auto;aspect-ratio:2172/724;object-fit:cover;object-position:45% 50%}
-.uci-team-track{position:relative;margin-top:var(--space-2)}
+/* Centered timeline: the line runs down the middle; on desktop headings align right against it and body text left, so both sit the same distance from the line. */
+.uci-team-track{--uci-gap:calc(2*var(--space-4));position:relative;margin-top:var(--space-2)}
 /* --uci-end (set by the script) stops the line at the last dot. */
 .uci-team-line{position:absolute;top:0;height:var(--uci-end,100%);left:calc(50% - 1px);width:2px;background:var(--uci-line);transform-origin:top;z-index:1}
 .uci-team-steps{list-style:none;margin:0;padding:0}
-.uci-team-step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:calc(2*var(--space-4));padding-block:var(--space-4)}
+.uci-team-step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--uci-gap);padding-block:var(--space-4)}
 .uci-team-step+.uci-team-step{border-top:1px solid var(--uci-rule)}
-.uci-team-step h3{font-family:var(--display);font-size:var(--text-h2-lg);font-weight:400;line-height:1.08;color:var(--ink);max-width:14em}
+.uci-team-step h3{font-family:var(--display);font-size:var(--text-h2-lg);font-weight:400;line-height:1.08;color:var(--ink);max-width:14em;justify-self:end;text-align:right}
 .uci-team-step--outcome h3{color:var(--green-on-light)}
 .uci-team-body{max-width:42ch;font-size:var(--text-body);line-height:1.6;color:var(--ink2)}
 .uci-team-body p+p{margin-top:var(--space-1)}
@@ -1871,6 +1872,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 @media(max-width:900px) and (orientation:portrait){.uci-team-media img{aspect-ratio:2/1}}
 @media(max-width:900px){
   .uci-team-line{left:calc(.5rem - 1px)}
+  .uci-team-step h3{justify-self:start;text-align:left}
   .uci-team-step{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-3) 0 var(--space-3) calc(1rem + var(--space-2))}
   .uci-team-dot{left:0;top:calc(var(--space-3) + .54 * var(--text-h2-lg) - .5rem)}
 }
@@ -2647,7 +2649,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <div class="wrap">
     <p class="uci-team-intro">At UC Irvine Douglas Hospital, NYA worked with the project team and the California Department of Health Care Access and Information (HCAI) to help develop the then-novel approach of phased plan review. Together, we aligned design, permitting, and construction so work could begin before the entire hospital design was complete.</p>
   </div>
-  <figure class="uci-team-media"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucidouglaswhite.webp" width="2172" height="724" alt="The entrance of UC Irvine Douglas Hospital, with its sign, glass tower and palm trees" loading="lazy" decoding="async"></figure>
+  <figure class="uci-team-media"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucidouglaswhite.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/ucidouglaswhite.webp 2172w, https://www.nyase.com/wp-content/uploads/2026/11/ucidouglaswhite-1-scaled.webp 2560w, https://www.nyase.com/wp-content/uploads/2026/11/ucidouglaswhite-1.webp 2880w" sizes="100vw" width="2172" height="724" alt="The entrance of UC Irvine Douglas Hospital, with its sign, glass tower and palm trees" loading="lazy" decoding="async"></figure>
   <div class="wrap">
     <div class="uci-team-track">
       <span class="uci-team-line" aria-hidden="true"></span>
@@ -4259,10 +4261,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       listen(on);if(on)request();
     },{rootMargin:'200px 0px'}).observe(sec);
   }else listen(true);
-  window.addEventListener('resize',()=>{
-    clearTimeout(resizeT);
-    resizeT=setTimeout(()=>{measure();request()},150);
-  },{passive:true});
+  // Re-measure when the window or the track itself changes size (e.g. text-spacing overrides).
+  function remeasure(){clearTimeout(resizeT);resizeT=setTimeout(()=>{measure();request()},150)}
+  window.addEventListener('resize',remeasure,{passive:true});
+  if('ResizeObserver' in window)new ResizeObserver(remeasure).observe(track);
   if(reduced.addEventListener)reduced.addEventListener('change',setup);
   // Track the top nav so the pinned heading can cover the gap it leaves when it hides.
   function syncNav(){sec.classList.toggle('nav-off',!nav||!nav.classList.contains('is-on'))}
