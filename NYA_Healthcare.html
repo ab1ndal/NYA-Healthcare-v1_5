@@ -1484,6 +1484,25 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-media{order:2}
 }
 </style>
+<style id="ssi-results-style">
+/* SSI: three result columns under the comparison grid */
+.ssi-results{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,1.1fr);align-items:stretch;margin-top:clamp(2rem,3.6vw,3.6rem)}
+.ssi-results-lead{padding-right:clamp(1.2rem,2.6vw,2.8rem);min-width:0}
+.ssi-results-lead .eyebrow{margin-bottom:clamp(.8rem,1.6vw,1.4rem)}
+.ssi-results-lead h3{font-size:var(--text-h1);font-weight:300;line-height:1.02;letter-spacing:-.02em;color:#fff;margin:0}
+.ssi-result{padding:0 clamp(1.2rem,2.6vw,2.8rem);border-left:1px solid rgba(255,255,255,.4);min-width:0}
+.ssi-result:last-child{padding-right:0}
+.ssi-result-tag{font-family:var(--body);font-size:var(--text-eyebrow);letter-spacing:.17em;text-transform:uppercase;color:var(--text);line-height:1.3;margin-bottom:clamp(.6rem,1.2vw,1rem)}
+.ssi-result-figure{margin:0;font-family:var(--display);font-weight:500;font-size:clamp(2rem,1.1rem + 2.35vw,3.5rem);line-height:1.02;letter-spacing:-.01em;color:var(--gold)}
+.ssi-result-figure span{display:block;margin-top:.45rem;font-family:var(--body);font-weight:400;font-size:var(--text-h3);line-height:1.2;letter-spacing:0;color:var(--text)}
+.ssi-result-copy{margin:clamp(1rem,1.8vw,1.6rem) 0 0;font-size:clamp(.95rem,.82rem + .3vw,1.1rem);line-height:1.5;color:var(--text);opacity:.88;text-align:justify;text-align-last:left;hyphens:none;-webkit-hyphens:none}
+@media(max-width:980px){
+  .ssi-results{grid-template-columns:minmax(0,1fr)}
+  .ssi-results-lead{padding:0 0 clamp(1.4rem,4vw,2rem)}
+  .ssi-result{padding:clamp(1.4rem,4vw,2rem) 0 0;border-left:0;border-top:1px solid rgba(255,255,255,.4)}
+  .ssi-result + .ssi-result{margin-top:clamp(1.4rem,4vw,2rem)}
+}
+</style>
 
 <style id="nya-rel-scrollytelling-style">
 /* Relationships: large fixed intro copy crossfades to its small center counterpart.
@@ -2033,6 +2052,22 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
               <p><span class="ssi-reference-copy">Led by world leading expert, Professor Gazetas, responsible for pioneering the field</span></p>
             </div>
           </div>
+        </article>
+      </div>
+      <div class="ssi-results reveal">
+        <div class="ssi-results-lead">
+          <div class="eyebrow">Proven Results</div>
+          <h3 class="display" id="ssi-results-title">NYA SSI’s measurable outcomes</h3>
+        </div>
+        <article class="ssi-result" aria-labelledby="ssi-result-1">
+          <div class="ssi-result-tag">UCSF Helen Diller Hospital</div>
+          <p class="ssi-result-figure" id="ssi-result-1">20% Reduction in <span>foundation forces</span></p>
+          <p class="ssi-result-copy">SSI also reduced floor accelerations by up to 30%, resulting in substantial construction savings without adding physical components or affecting the schedule.</p>
+        </article>
+        <article class="ssi-result" aria-labelledby="ssi-result-2">
+          <div class="ssi-result-tag">UCLA 901 Levering</div>
+          <p class="ssi-result-figure" id="ssi-result-2">$2.8M in Savings</p>
+          <p class="ssi-result-copy">Advanced SSI reduced foundation costs by 15% and core-wall concrete by up to 35%, while recovering approximately 3,000 square feet of usable space.</p>
         </article>
       </div>
     </div>
