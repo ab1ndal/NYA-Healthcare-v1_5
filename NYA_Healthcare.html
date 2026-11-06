@@ -1771,7 +1771,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Keep "of only" at its original position; center the 1 and 5 on its natural width. */
 .nya-rel-stat strong.nya-rel-stat-three{display:inline-flex;gap:.3em;align-items:baseline;white-space:nowrap;}
 .nya-rel-stat-three span{display:block;}
-.nya-rel-stat small{display:block;font-family:var(--body);font-size:var(--text-eyebrow);font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--ink);margin-top:var(--space-1);line-height:1.5;}
+.nya-rel-stat small{display:block;font-family:var(--body);font-size:var(--text-eyebrow);font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--green-on-light);margin-top:var(--space-1);line-height:1.5;}
 .nya-rel-note--responsive{left:40px;top:790px;width:520px;}
 .nya-rel-note--responsive p,.nya-rel-note--team p{font-size:calc(var(--text-eyebrow) + 1px);line-height:1.47;}
 .nya-rel-note--responsive .nya-rel-stat{margin-top:10px;}
@@ -1781,7 +1781,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-note--team .nya-rel-stat small{margin-top:var(--space-1);}
 /* Equal top edges for the lower captions; matching statistic baselines. */
 .nya-rel-note--team{height:340px;display:block;}
-.nya-rel-note--team .nya-rel-stat{margin-top:10px;}
+.nya-rel-note--team .nya-rel-stat{margin-top:10px;text-align:right;}
 /* Left circle: text hugs the circle curve via float shapers; larger type fills the circle. */
 .nya-rel-note--responsive{height:340px;display:block;}
 .nya-rel-note--responsive h3{font-size:28px;}
@@ -2162,10 +2162,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
      everything from this comment to its END PART line. The case-study nav follows the page order. -->
 <section class="ucsf-proof" id="ucsf-case-study">
   <div id="depth-opt-wrap">
-  <style>#depth-opt-1[hidden],#depth-opt-2[hidden]{display:none!important}</style>
+  <style>#depth-opt-1[hidden],#depth-opt-2[hidden],#depth-opt-3[hidden]{display:none!important}</style>
   <div id="depth-opt-2">
 <style id="nya-depth-theme-matched-css">
-#nya-depth-scroll {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) {
   --bg:#0a0c0f;
   --text:#e8e6e0;
   --ink:#151515;
@@ -2187,22 +2187,22 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   line-height:1.7;
   color:var(--text);
 }
-#nya-depth-scroll, #nya-depth-scroll *, #nya-depth-scroll *::before,
-#nya-depth-scroll *::after {box-sizing:border-box;}
-#nya-depth-scroll h2, #nya-depth-scroll p {margin:0;padding:0;}
-#nya-depth-scroll img {display:block;}
-#nya-depth-scroll .nya-depth-eyebrow {
+:is(#nya-depth-scroll,#nya-depth-scroll-3), :is(#nya-depth-scroll,#nya-depth-scroll-3) *, :is(#nya-depth-scroll,#nya-depth-scroll-3) *::before,
+:is(#nya-depth-scroll,#nya-depth-scroll-3) *::after {box-sizing:border-box;}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) h2, :is(#nya-depth-scroll,#nya-depth-scroll-3) p {margin:0;padding:0;}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) img {display:block;}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-eyebrow {
   display:flex;align-items:center;gap:12px;
   letter-spacing:.22em;text-transform:uppercase;
   margin:0 0 1rem;
   font-family:var(--body);
   line-height:1.7;
 }
-#nya-depth-scroll .nya-depth-eyebrow::before {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-eyebrow::before {
   content:'';display:block;width:34px;height:1px;
   background:currentColor;flex:0 0 auto;
 }
-#nya-depth-scroll {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) {
   --nya-photo-opacity:0;
   --nya-sketch-ink-opacity:1;
   --nya-photo-ink-opacity:0;
@@ -2217,49 +2217,49 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   scroll-snap-stop:normal!important;
   isolation:isolate;
 }
-#nya-depth-scroll .nya-depth-stage {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-stage {
   position:sticky;top:0;
   width:100%;height:100svh;min-height:0;
   overflow:hidden;
   background:var(--bg);
   isolation:isolate;
 }
-#nya-depth-scroll .nya-depth-art {position:absolute;inset:0;overflow:hidden;}
-#nya-depth-scroll .nya-depth-img {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-art {position:absolute;inset:0;overflow:hidden;}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-img {
   position:absolute;inset:0;display:block;
   width:100%;height:100%;max-width:none;
   object-fit:cover;object-position:center;
   transform:none;filter:none;
   backface-visibility:hidden;
 }
-#nya-depth-scroll .nya-depth-img--sketch {z-index:0;}
-#nya-depth-scroll .nya-depth-img--photo {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-img--sketch {z-index:0;}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-img--photo {
   z-index:1;
   opacity:var(--nya-photo-opacity);
   will-change:opacity;
 }
-#nya-depth-scroll .nya-depth-text {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text {
   position:absolute;inset:0;z-index:2;
   pointer-events:none;
   padding:clamp(var(--space-3),4.8svh,var(--space-5)) var(--pad);
 }
-#nya-depth-scroll .nya-depth-text--sketch {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text--sketch {
   z-index:2;opacity:var(--nya-sketch-ink-opacity);
   color:var(--ink);
 }
-#nya-depth-scroll .nya-depth-text--photo {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text--photo {
   z-index:3;opacity:var(--nya-photo-ink-opacity);
   color:var(--text);
 }
-#nya-depth-scroll .nya-depth-eyebrow {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-eyebrow {
   font-family:var(--body);
   font-size:calc(var(--text-eyebrow) + 2pt) !important;
   font-weight:400;
   color:var(--gold);
 }
-#nya-depth-scroll .nya-depth-text--sketch .nya-depth-eyebrow {color:var(--green-on-light);}
-#nya-depth-scroll .nya-depth-text--photo .nya-depth-eyebrow {color:var(--gold);}
-#nya-depth-scroll .nya-depth-title {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text--sketch .nya-depth-eyebrow {color:var(--green-on-light);}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text--photo .nya-depth-eyebrow {color:var(--gold);}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-title {
   font-size:var(--text-display);
   font-family:var(--display);
   font-weight:300;
@@ -2268,13 +2268,13 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   max-width:min(85vw,82rem);
   color:inherit;
 }
-#nya-depth-scroll .nya-depth-title em {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-title em {
   font-weight:300;
   font-style:italic;
 }
-#nya-depth-scroll .nya-depth-text--sketch .nya-depth-title em {color:var(--green-on-light);}
-#nya-depth-scroll .nya-depth-text--photo .nya-depth-title em {color:var(--gold);}
-#nya-depth-scroll .nya-depth-paragraph {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text--sketch .nya-depth-title em {color:var(--green-on-light);}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text--photo .nya-depth-title em {color:var(--gold);}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-paragraph {
   position:absolute;
   right:var(--pad);
   bottom:clamp(var(--space-3),5.8svh,var(--space-5));
@@ -2291,15 +2291,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   text-shadow:0 2px 12px rgba(0,0,0,.6);
   will-change:opacity,transform;
 }
-#nya-depth-scroll .nya-depth-paragraph:before {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-paragraph:before {
   content:"";
   position:absolute;z-index:-1;
   inset:-1.2rem -1.6rem;
   background:linear-gradient(105deg,rgba(5,13,22,.05),rgba(5,13,22,.35));
   pointer-events:none;
 }
-#nya-depth-scroll .nya-depth-mobile-copy {display:none;}
-#nya-depth-scroll .nya-depth-scroll-hint {
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy {display:none;}
+:is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-scroll-hint {
   position:absolute;z-index:5;
   left:50%;bottom:1rem;
   transform:translateX(-50%);
@@ -2314,80 +2314,80 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   pointer-events:none;
 }
 @media(min-width:761px) and (max-height:620px) {
-  #nya-depth-scroll .nya-depth-text{padding-top:var(--space-2);}
-  #nya-depth-scroll .nya-depth-title{font-size:var(--text-h1);}
-  #nya-depth-scroll .nya-depth-paragraph{bottom:var(--space-2);line-height:1.45;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text{padding-top:var(--space-2);}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-title{font-size:var(--text-h1);}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-paragraph{bottom:var(--space-2);line-height:1.45;}
 }
 @media(max-width:760px) {
-  #nya-depth-scroll{height:300svh;}
-  #nya-depth-scroll .nya-depth-stage {
+  :is(#nya-depth-scroll,#nya-depth-scroll-3){height:300svh;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-stage {
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     padding:var(--space-2) var(--pad);
     gap:var(--space-3);
   }
-  #nya-depth-scroll .nya-depth-art {
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-art {
     position:relative;inset:auto;flex:0 0 auto;
     width:100%;max-width:44rem;aspect-ratio:1688/932;
     overflow:hidden;
   }
-  #nya-depth-scroll .nya-depth-img {object-fit:contain;}
-  #nya-depth-scroll .nya-depth-text {display:none;}
-  #nya-depth-scroll .nya-depth-mobile-copy {
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-img {object-fit:contain;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text {display:none;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy {
     display:block;position:relative;
     flex:0 1 auto;min-height:0;
     width:100%;max-width:44rem;
     color:var(--text);overflow-y:auto;
     scrollbar-width:thin;
   }
-  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-eyebrow{color:var(--gold);}
-  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title{
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy .nya-depth-eyebrow{color:var(--gold);}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy .nya-depth-title{
     max-width:100%;font-size:var(--text-display);line-height:1.03;
   }
-  #nya-depth-scroll .nya-depth-title br{display:none;}
-  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title em{color:var(--gold);}
-  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-paragraph{
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-title br{display:none;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy .nya-depth-title em{color:var(--gold);}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy .nya-depth-paragraph{
     position:relative;right:auto;bottom:auto;
     width:100%;max-width:100%;
     margin-top:var(--space-2);font-size:var(--text-body);
     line-height:1.6;text-shadow:none;
     max-height:var(--nya-mobile-lead-height,0px);overflow:hidden;
   }
-  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-paragraph:before{display:none;}
-  #nya-depth-scroll .nya-depth-scroll-hint {bottom:.35rem;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy .nya-depth-paragraph:before{display:none;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-scroll-hint {bottom:.35rem;}
 }
 @media(max-width:760px) and (max-height:620px) {
-  #nya-depth-scroll .nya-depth-stage{gap:var(--space-1);}
-  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title{font-size:var(--text-h1);}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-stage{gap:var(--space-1);}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy .nya-depth-title{font-size:var(--text-h1);}
 }
 @media(prefers-reduced-motion:reduce) {
-  #nya-depth-scroll{height:auto!important;min-height:0!important;}
-  #nya-depth-scroll .nya-depth-stage {
+  :is(#nya-depth-scroll,#nya-depth-scroll-3){height:auto!important;min-height:0!important;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-stage {
     position:relative!important;
     display:flex;flex-direction:column;align-items:center;
     height:auto!important;min-height:0!important;
     padding:var(--space-3) var(--pad);
     gap:var(--space-3);
   }
-  #nya-depth-scroll .nya-depth-art {
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-art {
     position:relative;inset:auto;
     aspect-ratio:1688/932;width:100%;max-width:80rem;
   }
-  #nya-depth-scroll .nya-depth-img--sketch{display:none;}
-  #nya-depth-scroll .nya-depth-img--photo{opacity:1!important;object-fit:contain;}
-  #nya-depth-scroll .nya-depth-text{display:none;}
-  #nya-depth-scroll .nya-depth-mobile-copy {
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-img--sketch{display:none;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-img--photo{opacity:1!important;object-fit:contain;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-text{display:none;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy {
     display:block;position:relative;width:100%;max-width:60rem;
     color:var(--text);overflow:visible;
   }
-  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title{font-size:var(--text-h1);color:var(--text);}
-  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title em{color:var(--gold);}
-  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-paragraph{
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy .nya-depth-title{font-size:var(--text-h1);color:var(--text);}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy .nya-depth-title em{color:var(--gold);}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-mobile-copy .nya-depth-paragraph{
     position:relative;right:auto;bottom:auto;width:100%;max-width:100%;
     font-size:var(--text-body);line-height:1.7;margin-top:var(--space-2);
     opacity:1!important;transform:none!important;color:var(--text);
     max-height:none!important;overflow:visible!important;
   }
-  #nya-depth-scroll .nya-depth-scroll-hint{display:none;}
+  :is(#nya-depth-scroll,#nya-depth-scroll-3) .nya-depth-scroll-hint{display:none;}
 }
 </style>
 <div aria-labelledby="nya-depth-headline" class="nya-depth-scroll" id="nya-depth-scroll">
@@ -2416,7 +2416,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 <script id="nya-depth-theme-matched-script">
 (function(){
   'use strict';
-  const root=document.getElementById('nya-depth-scroll');
+  function nyaDepthInit(){['nya-depth-scroll','nya-depth-scroll-3'].forEach(function(rootId){
+  const root=document.getElementById(rootId);
   if(!root)return;
   const mq=window.matchMedia('(prefers-reduced-motion: reduce)');
   const mobileLead=root.querySelector('.nya-depth-mobile-copy .nya-depth-paragraph');
@@ -2455,15 +2456,16 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   if(mq.addEventListener)mq.addEventListener('change',schedule);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(schedule);
   render();
+  });}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',nyaDepthInit);else nyaDepthInit();
 })();
 (function(){function init(){
   var sw=document.getElementById('depth-switch'),wrap=document.getElementById('depth-opt-wrap');
   if(!sw||!wrap)return;
   sw.addEventListener('click',function(e){
     var b=e.target.closest('button[data-depth-opt]');if(!b)return;
-    var two=b.getAttribute('data-depth-opt')==='2';
-    document.getElementById('depth-opt-2').hidden=!two;
-    document.getElementById('depth-opt-1').hidden=two;
+    var n=b.getAttribute('data-depth-opt');
+    ['1','2','3'].forEach(function(k){var el=document.getElementById('depth-opt-'+k);if(el)el.hidden=(k!==n);});
     sw.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
     window.dispatchEvent(new Event('resize'));
   });
@@ -2474,6 +2476,32 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
+  </div>
+
+  <div id="depth-opt-3" hidden>
+<div aria-labelledby="nya-depth-headline-3" class="nya-depth-scroll" id="nya-depth-scroll-3">
+<div class="nya-depth-stage">
+<div aria-label="The same hospital campus composition transitions from a graphite pencil sketch to a realistic twilight rendering" class="nya-depth-art" role="img">
+<img alt="" aria-hidden="true" class="nya-depth-img nya-depth-img--sketch" decoding="async" src="images/technical-depth-sketch.jpg"/>
+<img alt="" aria-hidden="true" class="nya-depth-img nya-depth-img--photo" decoding="async" src="images/technical-depth-render.jpg"/>
+</div>
+<div aria-hidden="true" class="nya-depth-text nya-depth-text--sketch">
+<div class="eyebrow nya-depth-eyebrow">Technical Expertise</div>
+<h2 class="display nya-depth-title">Technical depth that does<br/><em>more with less.</em></h2>
+</div>
+<div class="nya-depth-text nya-depth-text--photo">
+<div class="eyebrow nya-depth-eyebrow">Technical Expertise</div>
+<h2 class="display nya-depth-title" id="nya-depth-headline-3">Technical depth that does<br/><em>more with less.</em></h2>
+<p class="nya-depth-paragraph">Conventional approaches can leave significant savings undiscovered. NYA combines advanced analysis with proven engineering judgment to identify overlooked opportunities, eliminate unnecessary construction costs, and preserve architectural ambitions. Stanford Hospital and UCSF Helen Diller Hospital demonstrate this approach in practice.</p>
+</div>
+<div class="nya-depth-mobile-copy">
+<div class="eyebrow nya-depth-eyebrow">Technical Expertise</div>
+<h2 class="display nya-depth-title">Technical depth that does <em>more with less.</em></h2>
+<p class="nya-depth-paragraph">Conventional approaches can leave significant savings undiscovered. NYA combines advanced analysis with proven engineering judgment to identify overlooked opportunities, eliminate unnecessary construction costs, and preserve architectural ambitions. Stanford Hospital and UCSF Helen Diller Hospital demonstrate this approach in practice.</p>
+</div>
+<div aria-hidden="true" class="nya-depth-scroll-hint">Scroll to reveal</div>
+</div>
+</div>
   </div>
 
   <div id="depth-opt-1" hidden>
@@ -2496,6 +2524,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <span class="opt-switch-k" aria-hidden="true">Depth</span>
     <button type="button" data-depth-opt="2" aria-pressed="true">Option 2</button>
     <button type="button" data-depth-opt="1" aria-pressed="false">Option 1</button>
+    <button type="button" data-depth-opt="3" aria-pressed="false">Option 3</button>
   </div>
   </div>
 
