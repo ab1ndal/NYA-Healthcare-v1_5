@@ -1767,6 +1767,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-center{left:510px;top:523px;width:280px;text-align:left;opacity:0;}
 .nya-rel-center h2{font-family:var(--display);font-size:var(--text-h2);font-weight:300;line-height:1.02;letter-spacing:-.023em;color:var(--ink);}
 .nya-rel-center h2 span{display:block;white-space:normal;}
+.nya-rel-center h2{text-align:center;}
 .nya-rel-center p{color:var(--ink2);font-family:var(--body);font-size:var(--text-small);font-weight:400;line-height:1.18;letter-spacing:-.015em;margin-top:var(--space-1);}
 .nya-rel-note{opacity:0;}
 .nya-rel-note h3{font-family:var(--display);font-size:var(--text-h3);font-weight:300;line-height:1.06;letter-spacing:-.015em;color:var(--ink);}
@@ -1784,22 +1785,30 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-note--hcai>div:last-child{max-width:279px;}
 .nya-rel-note--hcai .nya-rel-stat{padding-top:0;transform:translate(26px,-20px);}
 /* Keep the longer "1 of only 5" entirely inside its own column using the theme scale. */
-.nya-rel-stat strong{font-family:var(--display);font-size:var(--text-h2-lg);font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--green-on-light);display:block;white-space:nowrap;}
+.nya-rel-stat strong{font-family:var(--display);font-size:45px;font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--green-on-light);display:block;white-space:nowrap;}
 /* Keep "of only" at its original position; center the 1 and 5 on its natural width. */
-.nya-rel-stat strong.nya-rel-stat-three{display:inline-grid;grid-template-columns:max-content;justify-items:center;text-align:left;}
+.nya-rel-stat strong.nya-rel-stat-three{display:inline-flex;gap:.3em;align-items:baseline;white-space:nowrap;}
 .nya-rel-stat-three span{display:block;}
 .nya-rel-stat small{display:block;font-family:var(--body);font-size:var(--text-eyebrow);font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--ink);margin-top:var(--space-1);line-height:1.5;}
-.nya-rel-note--responsive{left:115px;top:760px;width:245px;}
+.nya-rel-note--responsive{left:40px;top:790px;width:520px;}
 .nya-rel-note--responsive p,.nya-rel-note--team p{font-size:calc(var(--text-eyebrow) + 1px);line-height:1.47;}
-.nya-rel-note--responsive .nya-rel-stat{margin-top:var(--space-2);}
+.nya-rel-note--responsive .nya-rel-stat{margin-top:10px;}
 /* RFI caption inherits the same font, weight, tracking, uppercase and color as Average tenure. */
-.nya-rel-note--team{left:925px;top:775px;width:265px;}
+.nya-rel-note--team{left:740px;top:790px;width:520px;}
 .nya-rel-note--team .nya-rel-stat{margin-top:var(--space-2);}
 .nya-rel-note--team .nya-rel-stat small{margin-top:var(--space-1);}
 /* Equal top edges for the lower captions; matching statistic baselines. */
-.nya-rel-note--responsive,.nya-rel-note--team{height:320px;display:flex;flex-direction:column;}
-.nya-rel-note--responsive .nya-rel-stat,.nya-rel-note--team .nya-rel-stat{margin-top:auto;}
-.nya-rel-note--responsive .nya-rel-stat{padding-left:90px;width:390px;max-width:none;}
+.nya-rel-note--team{height:340px;display:block;}
+.nya-rel-note--team .nya-rel-stat{margin-top:10px;}
+/* Left circle: text hugs the circle curve via float shapers; larger type fills the circle. */
+.nya-rel-note--responsive{height:340px;display:block;}
+.nya-rel-note--responsive h3{font-size:28px;}
+.nya-rel-note--responsive p{font-size:15px;line-height:1.36;}
+.nya-rel-note--responsive .nya-rel-stat{margin-top:10px;}
+.nya-rel-shape{height:420px;}
+.nya-rel-shape--l{float:left;width:300px;shape-outside:polygon(0 0,10px 0,40px 100px,93px 200px,195px 300px,246px 340px,303px 380px,400px 420px,0 420px);}
+.nya-rel-shape--r{float:right;width:180px;shape-outside:polygon(180px 0,20px 0,56px 100px,109px 200px,140px 300px,180px 345px,180px 420px);}
+/* Right circle: mirror image of the left-circle shaping. */.nya-rel-note--team h3{font-size:28px;}.nya-rel-note--team p{font-size:15px;line-height:1.36;}.nya-rel-shape--tr{float:right;width:300px;shape-outside:polygon(300px 0,290px 0,260px 100px,207px 200px,105px 300px,54px 340px,0 380px,0 420px,300px 420px);}.nya-rel-shape--tl{float:left;width:180px;shape-outside:polygon(0 0,160px 0,124px 100px,71px 200px,40px 300px,0 345px,0 420px);}/* Top circle: larger type sized to the area clear of the two lower circles. */@media(min-width:721px){ .nya-rel-note--hcai{left:392px;top:132px;width:540px;grid-template-columns:max-content minmax(0,1fr);column-gap:22px;align-items:center;} .nya-rel-note--hcai h3{font-size:28px;} .nya-rel-note--hcai p{font-size:15px;line-height:1.36;} .nya-rel-note--hcai>div:last-child{max-width:none;} .nya-rel-note--hcai .nya-rel-stat{transform:none;}}
 
 .nya-rel-a11y{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);}
 @media(max-width:720px){
@@ -1807,10 +1816,11 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  .nya-rel-center{left:510px;top:523px;width:280px;}
  .nya-rel-note--hcai{left:445px;top:65px;width:350px;display:flex;flex-direction:column-reverse;gap:var(--space-1);}
  .nya-rel-note--hcai .nya-rel-stat{padding-top:0;transform:none;}
- .nya-rel-note--responsive{left:115px;top:760px;width:245px;}
+ .nya-rel-note--responsive{left:40px;top:790px;width:520px;}
  .nya-rel-note--responsive p,.nya-rel-note--team p{font-size:calc(var(--text-eyebrow) + 1px);}
- .nya-rel-note--team{left:925px;top:775px;width:265px;}
- .nya-rel-note--responsive,.nya-rel-note--team{height:320px;}
+ .nya-rel-note--team{left:740px;top:790px;width:520px;}
+ .nya-rel-note--team{height:340px;}
+ .nya-rel-note--responsive{height:340px;}
 
 }
 /* Keyboard/assistive/reduced-motion fallback provides ordinary readable text. */
@@ -2027,7 +2037,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
             <div class="nya-journey-chapter-heading">
               <span class="nya-journey-chapter-number" aria-hidden="true">2</span>
               <span class="nya-journey-chapter-line" aria-hidden="true"></span>
-              <h4 id="nya-journey-heading-2">Technical excellence</h4>
+              <h4 id="nya-journey-heading-2">Technical Excellence</h4>
             </div>
             <p>NYA combines decades of healthcare experience, advanced seismic analysis, and practical engineering judgement to deliver structural solutions that achieve demanding performance objectives, preserve architectural intent, and improve constructability.</p>
           </article>
@@ -2675,11 +2685,13 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      </div>
     </article>
     <article class="nya-rel-note nya-rel-note--responsive" data-rel-target="responsive">
+     <span class="nya-rel-shape nya-rel-shape--l" aria-hidden="true"></span><span class="nya-rel-shape nya-rel-shape--r" aria-hidden="true"></span>
      <h3>Responsiveness that earns trust.</h3>
      <p>NYA builds lasting relationships with architects and contractors by honoring our commitments. We stay accessible, understand what the field needs, and deliver clear, considered answers when they matter most. That reliability keeps questions from becoming delays.</p>
      <div class="nya-rel-stat"><strong>One day or less.</strong><small>49% of RFIs answered in one day or less.</small></div>
     </article>
     <article class="nya-rel-note nya-rel-note--team" data-rel-target="team">
+     <span class="nya-rel-shape nya-rel-shape--tr" aria-hidden="true"></span><span class="nya-rel-shape nya-rel-shape--tl" aria-hidden="true"></span>
      <h3>A team that stays in sync.</h3>
      <p>NYA’s low staff turnover gives our engineers years of shared experience. The people who understand the design, the decisions behind it, and the project’s history remain engaged, preserving knowledge, strengthening coordination, and keeping teams aligned from design through construction.</p>
      <div class="nya-rel-stat"><strong>20+ years</strong><small>Average tenure</small></div>
@@ -2692,7 +2704,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    <div class="nya-rel-a11y-grid">
     <article><h3>Working with HCAI, not around it.</h3><p>NYA partners with HCAI early, aligns on priorities, and works through technical questions together, securing approvals for innovative solutions, including AMCs.</p><p>1 of only 5 HCAI-approved plan-check firms</p></article>
     <article><h3>A team that stays in sync.</h3><p>NYA’s low staff turnover gives our engineers years of shared experience. The people who understand the design, the decisions behind it, and the project’s history remain engaged, preserving knowledge, strengthening coordination, and keeping teams aligned from design through construction.</p><p>20+ years average tenure</p></article>
-    <article><h3>Responsiveness that earns trust.</h3><p>NYA builds lasting relationships with architects and contractors by honoring our commitments. We stay accessible, understand what the field needs, and deliver clear, considered answers when they matter most. That reliability keeps questions from becoming delays.</p><p>49% of RFIs answered in one day or less</p></article>
+    <article>
+     <h3>Responsiveness that earns trust.</h3><p>NYA builds lasting relationships with architects and contractors by honoring our commitments. We stay accessible, understand what the field needs, and deliver clear, considered answers when they matter most. That reliability keeps questions from becoming delays.</p><p>49% of RFIs answered in one day or less</p></article>
    </div>
   </div>
  </div>
