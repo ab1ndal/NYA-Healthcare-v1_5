@@ -186,7 +186,7 @@ body,body *{font-variant-numeric:lining-nums}
 .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
 .cap{background:var(--surface);padding:1.7rem;min-height:215px}.cap-tag{font-family:var(--display);font-size:var(--text-h2);color:rgba(34,211,255,.48);margin-bottom:1.2rem}.cap h3{font-size:var(--text-h3);font-weight:500;color:#fff;margin-bottom:.55rem}.cap p{font-size:var(--text-body);color:var(--muted);line-height:1.65}
 
-.projects{padding:var(--section) 0;background:#0d1014;border-top:1px solid var(--line)}
+.projects{padding:var(--space-5) 0 var(--section);background:#0d1014;border-top:1px solid var(--line)}
 .projects-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:1.7rem}.projects h2{font-size:var(--text-display)}
 .projects-head h2 em{color:var(--gold);font-weight:300;font-style:italic}
 
@@ -1811,7 +1811,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    hides again when the line retracts past it. Rows keep their space while hidden, so nothing
    shifts. --uci-stick is set by the script to clear #range-nav. */
 .uci-team{--uci-stick:3.5rem;--uci-line:var(--green-on-light);--uci-rule:rgba(0,0,0,.12);
-  background:#fff;color:var(--ink);padding:var(--section) 0;scroll-margin-top:var(--uci-stick)}
+  background:#fff;color:var(--ink);padding:var(--section) 0 var(--space-3);scroll-margin-top:var(--uci-stick)}
 .uci-team .wrap{width:min(1500px,calc(100% - 2*var(--pad)))}
 .uci-team-head{position:sticky;top:var(--uci-stick);z-index:5;background:#fff;padding-block:var(--space-2)}
 /* Soft edge under the pinned heading so content fades as it scrolls beneath. */
@@ -1821,7 +1821,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .uci-team-intro{margin-top:var(--space-1);max-width:60ch;font-size:var(--text-body);line-height:1.65;color:var(--ink2)}
 .uci-team-media{margin:calc(clamp(var(--space-3),4vw,var(--space-5)) / 2) 0 0}
 .uci-team-media img{display:block;width:100%;height:auto;aspect-ratio:2172/724}
-.uci-team-track{position:relative;margin-top:var(--space-5)}
+.uci-team-track{position:relative;margin-top:var(--space-2)}
 .uci-team-line{position:absolute;top:0;bottom:0;left:calc(50% - 1px);width:2px;background:var(--uci-line);transform-origin:top;z-index:1}
 .uci-team-steps{list-style:none;margin:0;padding:0}
 .uci-team-step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:calc(2*var(--space-4));padding-block:var(--space-4)}
@@ -2613,7 +2613,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Collaboration with the project team and HCAI</h3><div class="uci-team-body"><p>NYA worked with the project team and HCAI to help develop the then-novel approach of phased plan review.</p></div></li>
         <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Get permits 12–18 months earlier</h3><div class="uci-team-body"><p>By separating early packages from later design work, the team secured permits for site preparation and the structure 12–18 months earlier.</p></div></li>
         <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Give design time without making construction wait</h3><div class="uci-team-body"><p>By coordinating separate review packages with designers, builders, and HCAI, the team kept construction moving while the more architecturally complex portions of the hospital were refined.</p></div></li>
-        <li class="uci-team-step uci-team-step--outcome"><span class="uci-team-dot" aria-hidden="true"></span><h3>On schedule. Within budget.</h3><div class="uci-team-body"><p>The first California hospital of its era to be delivered on schedule and within budget.</p><p>Helped establish the incremental plan-review process later used on California hospital projects.</p></div></li>
+        <li class="uci-team-step uci-team-step--outcome"><span class="uci-team-dot" aria-hidden="true"></span><h3>The first California hospital of its era to be delivered on schedule and within budget</h3><div class="uci-team-body"><p>Helped establish the incremental plan-review process later used on California hospital projects.</p></div></li>
       </ol>
     </div>
   </div>
