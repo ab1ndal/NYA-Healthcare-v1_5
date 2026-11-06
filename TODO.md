@@ -32,6 +32,12 @@ ffmpeg -i in.mp4 -vf "scale=-2:1080,fps=30" -c:v libx264 -crf 26 -preset slow -a
 |---|------|-------|--------|-------|
 | P1 | Make site root URL work (`index.html` redirect or rename page) | AB | Not started | Root URL currently 404s |
 
+## Images
+
+| # | Task | Owner | Status | Notes |
+|---|------|-------|--------|-------|
+| I1 | Upload `uci-douglas-white.webp` (UCI photo, sky replaced with white) to nyase.com WordPress, relink `#uci-delivery-proof` to the WordPress URL, then delete the file and its `!uci-douglas-white.webp` line in `.gitignore` | AB | Done | Uploaded 2026-11-06 as `2026/11/ucidouglaswhite.webp`; responsive `srcset` sizes still to add |
+
 ## Done
 
 | # | Task | Owner | Status |

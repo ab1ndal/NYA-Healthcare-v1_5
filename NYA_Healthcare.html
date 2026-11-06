@@ -427,85 +427,11 @@ section,.footer{position:relative;z-index:1}
 .amc-list li{display:grid;grid-template-columns:34px 1fr;gap:.65rem;font-size:var(--text-small);line-height:1.5;color:rgba(255,255,255,.78)}
 .amc-list b{font-family:var(--display);font-size:var(--text-h2);font-weight:300;color:rgba(34,211,255,.66);line-height:1.05}
 
-.delivery-proof{padding:clamp(2.8rem,4.4vw,4.8rem) 0;background:linear-gradient(135deg,#edf0f2,#e3e6e8);color:var(--ink);border-top:1px solid rgba(0,0,0,.12);border-bottom:1px solid rgba(0,0,0,.12)}
-.delivery-proof .wrap{width:min(1500px,calc(100% - 2*var(--pad)))}
-.delivery-proof .eyebrow{color:var(--green-on-light)}
-.delivery-proof-grid{--uci-h:clamp(620px,68svh,760px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);height:var(--uci-h);gap:1px;background:rgba(0,0,0,.14);border:1px solid rgba(0,0,0,.14);overflow:hidden;box-shadow:0 24px 60px rgba(26,38,48,.08)}
-.delivery-proof-media{height:100%;min-height:0;position:relative;overflow:hidden;background:#111}
-.delivery-proof-media img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.86) contrast(1.02);transition:transform 1s var(--ease)}
-.delivery-proof-media:hover img{transform:scale(1.035)}
-.delivery-proof-copy{
-  --uci-inset:clamp(1.7rem,min(2.8vw,4svh),3.2rem);
-  height:100%;min-height:0;background:#f7f6f2;
-  padding:var(--uci-inset);
-  display:flex;flex-direction:column;
-  overflow:hidden;
-}
-.delivery-proof-copy .eyebrow{margin-bottom:clamp(.6rem,1.25svh,1rem)}
-.delivery-proof-copy h2{
-  font-size:var(--text-h1);
-  line-height:.93;color:#111820;max-width:690px;
-}
-.delivery-proof-copy>p{
-  margin-top:clamp(.65rem,1.35svh,1rem);
-  color:#586169;
-  font-size:var(--text-body);
-  line-height:clamp(1.55,1.3 + .45svh,1.8);
-  max-width:650px;
-}
-.delivery-proof-points{
-  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
-  gap:1px;background:rgba(0,0,0,.13);
-  margin-top:clamp(1rem,2.2svh,2rem);
-  min-height:0;flex:1 1 auto;
-}
-.delivery-proof-point{
-  background:#fff;
-  padding:clamp(.85rem,min(1.25vw,1.8svh),1.2rem);
-  min-height:0;display:flex;flex-direction:column;justify-content:flex-start;
-  overflow:hidden;
-}
-.delivery-proof-point b{
-  display:block;
-  font-size:var(--text-small);
-  letter-spacing:.15em;text-transform:uppercase;color:var(--green-on-light);
-  margin-bottom:clamp(.35rem,.75svh,.55rem)
-}
-.delivery-proof-point span{
-  font-family:var(--display);
-  font-size:var(--text-h3);
-  line-height:1.1;color:#16202a;
-}
-@media(min-width:1800px){
-  .delivery-proof-grid{--uci-h:clamp(650px,62svh,720px)}
-  .delivery-proof-copy h2{font-size:var(--text-h1)}
-}
-@media(min-width:1400px) and (max-height:900px){
-  .delivery-proof-grid{--uci-h:clamp(600px,72svh,660px)}
-  .delivery-proof-copy{--uci-inset:clamp(1.3rem,min(2.15vw,3.2svh),2.15rem);padding:var(--uci-inset)}
-  .delivery-proof-copy h2{font-size:var(--text-h1)}
-  .delivery-proof-copy>p{font-size:var(--text-body);line-height:1.6;margin-top:.65rem}
-  .delivery-proof-points{margin-top:.9rem}
-  .delivery-proof-point{padding:.82rem .95rem}
-  .delivery-proof-point span{font-size:var(--text-h3)}
-}
 
 @media(max-width:1050px){
-  .ssi-compare-head,.ssi-detail,.delivery-proof-grid{grid-template-columns:1fr}
-  .delivery-proof-grid{height:auto;overflow:visible}
-  .delivery-proof-media{height:auto;aspect-ratio:1.035/1;min-height:430px}
-  .delivery-proof-copy{height:auto;overflow:visible}
-  .delivery-proof-copy h2{font-size:var(--text-h1)}
-  .delivery-proof-points{flex-basis:auto}
+  .ssi-compare-head,.ssi-detail{grid-template-columns:1fr}
   .ssi-modes{grid-template-columns:1fr}
   .amc-groups{grid-template-columns:1fr}
-}
-@media(max-width:760px){
-  .delivery-proof{padding:3rem 0}
-  .delivery-proof .wrap{width:calc(100% - 2rem)}
-  .delivery-proof-copy{--uci-inset:1.5rem;padding:var(--uci-inset)}
-  .delivery-proof-points{grid-template-columns:1fr}
-  .delivery-proof-point span{font-size:var(--text-h3)}
 }
 
 
@@ -560,60 +486,14 @@ section,.footer{position:relative;z-index:1}
 .audience .audience-proof-detail{margin-top:.45rem;font-size:var(--text-small);line-height:1.55}
 .audience-proof-detail strong{font-weight:500;color:var(--ink)}
 .audience-closing{display:flex;align-items:center;justify-content:center;gap:clamp(.5rem,1vw,1.4rem);margin-top:1.6rem;font-family:var(--display);font-size:clamp(1rem,.75rem + .75vw,1.75rem);font-weight:400;line-height:1.3;text-align:center;white-space:nowrap}.audience-closing::before,.audience-closing::after{content:"";flex:1 1 0;min-width:0;height:1px;background:var(--green-on-light);opacity:.95}
-.delivery-proof-copy--team{min-width:0;overflow-y:auto;scrollbar-width:thin}
-.delivery-proof-copy--team h2{font-size:var(--text-h2-lg);line-height:1.03;flex-shrink:0}
-.delivery-proof-copy--team h2 em{color:var(--green-on-light);font-weight:300}
-.delivery-proof-copy--team>.eyebrow{font-size:var(--text-eyebrow);letter-spacing:.19em;flex-shrink:0}
-.delivery-proof-copy--team>p{font-size:var(--text-body);line-height:1.6;margin-top:.8rem;flex-shrink:0}
-.delivery-proof-copy--team .delivery-proof-points{display:flex;flex-direction:column;flex:0 0 auto;gap:0;background:transparent;border-top:1px solid rgba(0,0,0,.16);margin-top:1rem}
-.delivery-proof-copy--team .delivery-proof-point{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.65fr);gap:1.2rem;background:transparent;padding:.9rem 0;border-bottom:1px solid rgba(0,0,0,.16);overflow:visible;flex-shrink:0}
-.delivery-proof-copy--team .delivery-proof-point h3{font-family:var(--display);font-size:var(--text-h3);font-weight:400;line-height:1.08;color:var(--ink)}
-.delivery-proof-copy--team .delivery-proof-point p{border-left:1px solid rgba(0,0,0,.16);padding-left:1.2rem;font-size:var(--text-small);line-height:1.55;color:#586169}
-.delivery-proof-outcome{margin-top:auto;padding-top:.85rem;flex-shrink:0}
-.delivery-proof-outcome h3{font-family:var(--display);font-size:var(--text-h2-lg);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--green-on-light)}
-.delivery-proof-outcome>p{font-size:var(--text-body);line-height:1.5;margin-top:.4rem;color:var(--ink)}
-.delivery-proof-outcome .delivery-proof-note{font-size:var(--text-small);line-height:1.5;color:#586169;margin-top:.5rem}
-@media(min-width:1800px){.delivery-proof-copy--team{--uci-inset:2rem}}
-@media(min-width:1051px) and (max-width:1399px){
-  .delivery-proof-copy--team{--uci-inset:1.5rem}
-  .delivery-proof-copy--team h2{font-size:var(--text-h2-lg)}
-  .delivery-proof-copy--team>p{font-size:var(--text-body);line-height:1.55}
-  .delivery-proof-copy--team .delivery-proof-point{gap:.85rem;padding:.8rem 0}
-  .delivery-proof-copy--team .delivery-proof-point h3{font-size:var(--text-h3)}
-  .delivery-proof-copy--team .delivery-proof-point p{font-size:var(--text-small);line-height:1.5;padding-left:.85rem}
-}
 @media(max-width:1100px){
   .audiences--relationships .audience-head{grid-template-columns:1fr;gap:1.4rem}
   .audiences--relationships .audience h3{max-width:650px}
   .audiences--relationships .audience p{max-width:780px}
 }
-@media(min-width:1051px) and (max-width:1199px){
-  .delivery-proof-copy--team{--uci-inset:1.2rem}
-  .delivery-proof-copy--team .delivery-proof-points{margin-top:.7rem}
-  .delivery-proof-copy--team .delivery-proof-point{grid-template-columns:1fr;gap:.35rem;padding:.6rem 0}
-  .delivery-proof-copy--team .delivery-proof-point p{padding-left:0;border-left:0}
-}
-@media(max-width:1050px){
-  #uci-delivery-proof .delivery-proof-grid{display:block}
-  #uci-delivery-proof .delivery-proof-media{width:100%;max-width:100%}
-  .delivery-proof-copy--team{width:100%;overflow:visible}
-  .delivery-proof-copy--team h2{font-size:var(--text-h2-lg)}
-  .delivery-proof-copy--team>.eyebrow{font-size:var(--text-eyebrow)}
-  .delivery-proof-copy--team>p{font-size:var(--text-body);line-height:1.75}
-  .delivery-proof-copy--team .delivery-proof-points{margin-top:1.5rem}
-  .delivery-proof-copy--team .delivery-proof-point{padding:1.3rem 0}
-  .delivery-proof-copy--team .delivery-proof-point h3{font-size:var(--text-h3)}
-  .delivery-proof-copy--team .delivery-proof-point p{font-size:var(--text-small);line-height:1.65}
-  .delivery-proof-outcome{padding-top:1.2rem}
-  .delivery-proof-outcome h3{font-size:var(--text-h2-lg)}
-  .delivery-proof-outcome>p{font-size:var(--text-body)}
-  .delivery-proof-outcome .delivery-proof-note{font-size:var(--text-small)}
-}
 @media(max-width:600px){
   .audiences--relationships .audience{padding:1.6rem}
   .audience-closing{display:block;text-align:left;white-space:normal}.audience-closing::before,.audience-closing::after{display:none}
-  .delivery-proof-copy--team .delivery-proof-point{grid-template-columns:1fr;gap:.7rem}
-  .delivery-proof-copy--team .delivery-proof-point p{padding-left:0;border-left:0}
 }
 
 
@@ -825,11 +705,6 @@ html,body{overflow-x:clip}
 /* Preserve the visitor's explicit reduced-motion setting, with the still-image fallback. */
 
 
-/* Type-safe layout: dense copy must expand instead of being clipped at zoom. */
-.delivery-proof-grid{height:auto;min-height:var(--uci-h);overflow:visible}
-.delivery-proof-media{height:auto;min-height:var(--uci-h)}
-.delivery-proof-copy,.delivery-proof-copy--team{height:auto;overflow:visible}
-@media(max-width:1050px){.delivery-proof-media{min-height:430px}}
 /* Keep the first screen compact when it fits, but allow extra height at zoom. */
 :root{--hero-proof-height:clamp(6.25rem,14svh,9.5rem)}
 .hero{height:auto;min-height:calc(100svh - var(--hero-proof-height))}
@@ -1184,24 +1059,6 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 /* Four screenshot-matched healthcare sections | 2026-11-03
    All type uses the NYA display/body families and shared responsive tokens. */
-/* UC Irvine – light editorial case study */
-.uci-reference{background:#f8f6f1;color:var(--ink);padding:clamp(2rem,4vw,4.5rem) 0;border-color:rgba(13,30,34,.10)}
-.uci-reference .wrap{width:min(1520px,calc(100% - 2*var(--pad)))}
-.uci-reference-grid{display:grid;grid-template-columns:minmax(0,.96fr) minmax(0,1.22fr);gap:clamp(1.6rem,3vw,3.4rem);align-items:stretch}
-.uci-reference-media{min-height:clamp(29rem,39vw,42rem);overflow:hidden;align-self:stretch;background:#d5e6e9}
-.uci-reference-media img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
-.uci-reference-content{display:flex;flex-direction:column;min-width:0;padding-block:clamp(.35rem,1.2vw,1rem)}
-.uci-reference .eyebrow{color:var(--green-on-light);margin-bottom:clamp(.7rem,1vw,1.1rem)}
-.uci-reference-content h2{font-family:var(--display);font-size:var(--text-h1);font-weight:300;color:#131a1f;line-height:1.03;letter-spacing:-.02em}
-.uci-reference-content h2 em{color:var(--green-on-light);font-style:italic;font-weight:300}
-.uci-reference-details{display:grid;grid-template-columns:minmax(0,1fr) minmax(6rem,.18fr);gap:clamp(1.15rem,2vw,2.25rem);margin-top:clamp(1rem,2vw,2rem);align-items:center}
-.uci-reference-details p{color:#30383a;font-size:var(--text-body);line-height:1.65}
-.uci-reference-callout{font-family:var(--display);font-size:var(--text-h2-lg);font-style:italic;color:var(--green-on-light);line-height:.95;border-left:1px solid rgba(13,30,34,.3);padding-left:clamp(.6rem,1.2vw,1.1rem)}
-.uci-reference-outcome{margin-top:auto;padding-top:clamp(1.3rem,2.5vw,2.3rem);border-top:1px solid rgba(0,122,158,.22)}
-.uci-reference-outcome h3{font-family:var(--display);font-weight:400;font-size:var(--text-h2-lg);line-height:1.05;color:var(--green-on-light);margin-bottom:.6rem}
-.uci-reference-outcome p{font-size:var(--text-body);line-height:1.64;color:#30383a}
-@media(max-width:1000px){.uci-reference-grid{grid-template-columns:1fr;gap:1.6rem}.uci-reference-media{height:clamp(18rem,56vw,33rem);min-height:0}.uci-reference-content{padding:0}.uci-reference-content h2 br{display:none}.uci-reference-outcome{margin-top:1.7rem}}
-@media(max-width:600px){.uci-reference{padding:var(--space-4) 0}.uci-reference-details{grid-template-columns:1fr}.uci-reference-callout{border-left:0;border-top:1px solid rgba(0,122,158,.35);padding:1rem 0 0}.uci-reference-callout br{display:none}}
 
 /* Delivered through collaboration – two equal panels and proof metrics */
 .nya-collaboration{background:#f8f6f1;color:var(--ink);padding:clamp(3rem,5vw,5.5rem) 0}
@@ -1836,11 +1693,6 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ucsf-story-frame{height:auto;aspect-ratio:4/3;max-height:calc(100svh - 4rem)}
   .ucsf-story-frame .ucsf-story-image,.ucsf-story-single img{object-fit:contain}
 }
-@media(max-width:1000px){
-  /* UC Irvine: the photo keeps its own shape. */
-  .uci-reference-media{height:auto;min-height:0}
-  .uci-reference-media img{height:auto}
-}
 </style>
 <style id="range-nav-style">
 /* Range nav: the case-study run, from the first linked part to the end of the last. Hidden
@@ -1929,6 +1781,56 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-s33.is-pinned.is-forced .nya-s33-line{transition:clip-path .28s cubic-bezier(.22,.7,.2,1)!important}
 .nya-s33.is-pinned.is-forced .nya-s33-hospital,.nya-s33.is-pinned.is-forced .nya-s33-tree{transition:opacity .25s linear,transform .25s linear!important}
 /* ==== NYA FINALE COMBINED END (CSS) ==== */
+</style>
+<style id="uci-team-style">
+/* Schedule and Project Delivery (UC Irvine): only the heading pins. Below the photo a center
+   line follows the scroll both ways; each point shows its dot, then heading, then text, and
+   hides again when the line retracts past it. Rows keep their space while hidden, so nothing
+   shifts. --uci-stick is set by the script to clear #range-nav. */
+.uci-team{--uci-stick:3.5rem;--uci-line:var(--green-on-light);--uci-rule:rgba(0,0,0,.12);
+  background:#fff;color:var(--ink);padding:var(--section) 0;scroll-margin-top:var(--uci-stick)}
+.uci-team .wrap{width:min(1500px,calc(100% - 2*var(--pad)))}
+.uci-team-head{position:sticky;top:var(--uci-stick);z-index:5;background:#fff;padding-block:var(--space-2)}
+/* Soft edge under the pinned heading so content fades as it scrolls beneath. */
+.uci-team-head::after{content:"";position:absolute;left:0;right:0;top:100%;height:var(--space-3);background:linear-gradient(#fff,rgba(255,255,255,0));pointer-events:none}
+.uci-team-head h2{font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--ink);max-width:26em;text-wrap:balance}
+.uci-team-head h2 em{font-style:normal;font-weight:300;color:var(--green-on-light)}
+.uci-team-intro{margin-top:var(--space-1);max-width:60ch;font-size:var(--text-body);line-height:1.65;color:var(--ink2)}
+.uci-team-media{margin:calc(clamp(var(--space-3),4vw,var(--space-5)) / 2) 0 0}
+.uci-team-media img{display:block;width:100%;height:auto;aspect-ratio:2172/724}
+.uci-team-track{position:relative;margin-top:var(--space-5)}
+.uci-team-line{position:absolute;top:0;bottom:0;left:calc(50% - 1px);width:2px;background:var(--uci-line);transform-origin:top;z-index:1}
+.uci-team-steps{list-style:none;margin:0;padding:0}
+.uci-team-step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:calc(2*var(--space-4));padding-block:var(--space-4)}
+.uci-team-step+.uci-team-step{border-top:1px solid var(--uci-rule)}
+.uci-team-step h3{font-family:var(--display);font-size:var(--text-h2-lg);font-weight:400;line-height:1.08;color:var(--ink);max-width:14em}
+.uci-team-step--outcome h3{color:var(--green-on-light)}
+.uci-team-body{max-width:42ch;font-size:var(--text-body);line-height:1.6;color:var(--ink2)}
+.uci-team-body p+p{margin-top:var(--space-1)}
+.uci-team-dot{position:absolute;z-index:2;left:calc(50% - .5rem);top:calc(var(--space-4) + .54 * var(--text-h2-lg) - .5rem);width:1rem;height:1rem;border-radius:50%;background:var(--uci-line)}
+/* Scroll reveal applies only once the script arms it, so content shows without JS. */
+.uci-team.is-armed .uci-team-line{transform:scaleY(var(--uci-p,0))}
+.uci-team.is-armed .uci-team-dot{transform:scale(0);transition:transform .3s var(--ease)}
+.uci-team.is-armed .uci-team-step h3,.uci-team.is-armed .uci-team-body{opacity:0;transform:translateY(14px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.uci-team.is-armed .uci-team-step.is-on .uci-team-dot{transform:none}
+.uci-team.is-armed .uci-team-step.is-on h3{opacity:1;transform:none;transition-delay:.15s}
+.uci-team.is-armed .uci-team-step.is-on .uci-team-body{opacity:1;transform:none;transition-delay:.35s}
+/* The heading stops pinning where it would take too much of the screen. */
+/* When #range-nav hides (end of the case-study run), fill the gap above the pinned heading
+   so the line and text never show above the title. */
+.uci-team.nav-off .uci-team-head::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:var(--uci-stick);background:#fff;pointer-events:none}
+.uci-team.no-stick .uci-team-head{position:static}
+.uci-team.no-stick .uci-team-head::after,.uci-team.no-stick .uci-team-head::before{display:none}
+@media(max-width:599px),(max-height:620px){.uci-team-head{position:static}.uci-team .uci-team-head::after,.uci-team .uci-team-head::before{display:none}}
+@media(max-width:760px){
+  .uci-team-line{left:calc(.5rem - 1px)}
+  .uci-team-step{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-3) 0 var(--space-3) calc(1rem + var(--space-2))}
+  .uci-team-dot{left:0;top:calc(var(--space-3) + .54 * var(--text-h2-lg) - .5rem)}
+}
+@media(prefers-reduced-motion:reduce){
+  .uci-team.is-armed .uci-team-line{transform:none}
+  .uci-team.is-armed .uci-team-dot,.uci-team.is-armed .uci-team-step h3,.uci-team.is-armed .uci-team-body{opacity:1;transform:none;transition:none}
+}
 </style>
 </head>
 <body id="top">
@@ -2670,25 +2572,28 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  </div>
 </section>
 
-<section class="delivery-proof uci-reference" id="uci-delivery-proof" aria-labelledby="uci-proof-title">
+<!-- ======== PART: Schedule and Project Delivery ======== -->
+<section class="uci-team" id="uci-delivery-proof" aria-labelledby="uci-proof-title">
+  <div class="uci-team-head">
+    <div class="wrap"><h2 class="display" id="uci-proof-title">Exceptional delivery starts with <em>how the team works together.</em></h2></div>
+  </div>
   <div class="wrap">
-    <div class="uci-reference-grid reveal">
-      <div class="uci-reference-media"><img src="https://www.nyase.com/wp-content/uploads/2026/11/uciirvinereference.webp" alt="Palm trees and the front entrance of UC Irvine Douglas Hospital" loading="lazy"></div>
-      <div class="uci-reference-content">
-        <div class="eyebrow">UC Irvine Douglas Hospital</div>
-        <h2 class="display" id="uci-proof-title">The collaboration that helped UCI<br> <em>finish on time and within budget</em></h2>
-        <div class="uci-reference-details">
-          <p>At UC Irvine Douglas Hospital, NYA helped align design, permitting, and construction around a then-novel phased review strategy. By separating early packages from later design work, the team secured permits for site preparation and the structure 12–18 months earlier. Coordinating these review packages with designers, builders, and regulators allowed construction to advance while more complex portions of the hospital were still being refined.</p>
-          <div class="uci-reference-callout">12–18<br> months<br> earlier</div>
-        </div>
-        <div class="uci-reference-outcome">
-          <h3>An exceptional outcome for UCI</h3>
-          <p>UCI Douglas Hospital became the first California hospital of its era to achieve both. The approach helped establish the incremental plan-review process later used on California hospital projects.</p>
-        </div>
-      </div>
+    <p class="uci-team-intro">At UC Irvine Douglas Hospital, NYA worked with the project team and the California Department of Health Care Access and Information (HCAI) to help develop the then-novel approach of phased plan review. Together, we aligned design, permitting, and construction so work could begin before the entire hospital design was complete.</p>
+  </div>
+  <figure class="uci-team-media"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucidouglaswhite.webp" width="2172" height="724" alt="The entrance of UC Irvine Douglas Hospital, with its sign, glass tower and palm trees" loading="lazy" decoding="async"></figure>
+  <div class="wrap">
+    <div class="uci-team-track">
+      <span class="uci-team-line" aria-hidden="true"></span>
+      <ol class="uci-team-steps">
+        <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Collaboration with the project team and HCAI</h3><div class="uci-team-body"><p>NYA worked with the project team and HCAI to help develop the then-novel approach of phased plan review.</p></div></li>
+        <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Get permits 12–18 months earlier</h3><div class="uci-team-body"><p>By separating early packages from later design work, the team secured permits for site preparation and the structure 12–18 months earlier.</p></div></li>
+        <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Give design time without making construction wait</h3><div class="uci-team-body"><p>By coordinating separate review packages with designers, builders, and HCAI, the team kept construction moving while the more architecturally complex portions of the hospital were refined.</p></div></li>
+        <li class="uci-team-step uci-team-step--outcome"><span class="uci-team-dot" aria-hidden="true"></span><h3>On schedule. Within budget.</h3><div class="uci-team-body"><p>The first California hospital of its era to be delivered on schedule and within budget.</p><p>Helped establish the incremental plan-review process later used on California hospital projects.</p></div></li>
+      </ol>
     </div>
   </div>
 </section>
+<!-- ======== END PART: Schedule and Project Delivery ======== -->
 
 <section class="projects" id="projects">
   <div class="wrap">
@@ -4216,5 +4121,86 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 })();
 </script>
 <!-- ==== NYA FINALE COMBINED END (JS) ==== -->
+<script id="uci-team-behavior">
+(function(){
+  'use strict';
+  const sec=document.getElementById('uci-delivery-proof');
+  if(!sec)return;
+  const track=sec.querySelector('.uci-team-track');
+  const head=sec.querySelector('.uci-team-head');
+  const steps=Array.from(sec.querySelectorAll('.uci-team-step'));
+  if(!track||!head||!steps.length)return;
+  const nav=document.getElementById('range-nav');
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  let marks=[],mids=[],trackH=1,raf=0,listening=false,resizeT=0;
+
+  // All reads first, then writes. Dot centers are measured relative to the track.
+  function measure(){
+    const navH=nav?nav.offsetHeight:0;
+    const headH=head.offsetHeight;
+    const t=track.getBoundingClientRect();
+    const tops=steps.map(s=>{
+      const r=(s.querySelector('.uci-team-dot')||s).getBoundingClientRect();
+      return r.top+r.height/2-t.top;
+    });
+    const halves=steps.map(s=>{const r=s.getBoundingClientRect();return r.top+r.height/2-t.top;});
+    trackH=Math.max(1,t.height);marks=tops;mids=halves;
+    sec.style.setProperty('--uci-stick',navH+'px');
+    sec.classList.toggle('no-stick',navH+headH>window.innerHeight*.4);
+  }
+  // Scroll-linked both ways. A point shows once half of its row is on screen
+  // (row middle above the viewport bottom) and hides again when scrolled back.
+  // The line tip is mapped so it reaches each dot at that same moment.
+  function update(){
+    raf=0;
+    const v=window.innerHeight-track.getBoundingClientRect().top;
+    let tip=trackH;
+    if(v<mids[0])tip=marks[0]*Math.max(0,v)/mids[0];
+    else{
+      for(let i=0;i<mids.length;i++){
+        const v1=i+1<mids.length?mids[i+1]:trackH+mids[0]-marks[0];
+        const m1=i+1<marks.length?marks[i+1]:trackH;
+        if(v<v1){tip=marks[i]+(m1-marks[i])*(v-mids[i])/(v1-mids[i]);break;}
+      }
+    }
+    sec.style.setProperty('--uci-p',Math.max(0,Math.min(1,tip/trackH)).toFixed(4));
+    steps.forEach((s,i)=>s.classList.toggle('is-on',v>=mids[i]));
+  }
+  function request(){if(!raf)raf=requestAnimationFrame(update)}
+  function listen(on){
+    if(on===listening)return;
+    listening=on;
+    if(on)window.addEventListener('scroll',request,{passive:true});
+    else window.removeEventListener('scroll',request);
+  }
+  function setup(){
+    if(reduced.matches){
+      listen(false);
+      sec.classList.remove('is-armed');
+      steps.forEach(s=>s.classList.add('is-on'));
+      measure();return;
+    }
+    sec.classList.add('is-armed');
+    measure();request();
+  }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(entries=>{
+      const on=entries[entries.length-1].isIntersecting&&!reduced.matches;
+      listen(on);if(on)request();
+    },{rootMargin:'200px 0px'}).observe(sec);
+  }else if(!reduced.matches){listen(true)}
+  window.addEventListener('resize',()=>{
+    clearTimeout(resizeT);
+    resizeT=setTimeout(()=>{measure();if(!reduced.matches)request()},150);
+  },{passive:true});
+  if(reduced.addEventListener)reduced.addEventListener('change',()=>{setup();if(!reduced.matches)listen(true)});
+  // Track the top nav so the pinned heading can cover the gap it leaves when it hides.
+  function syncNav(){sec.classList.toggle('nav-off',!nav||!nav.classList.contains('is-on'))}
+  if(nav&&'MutationObserver' in window)new MutationObserver(syncNav).observe(nav,{attributes:true,attributeFilter:['class']});
+  syncNav();
+  setup();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{measure();if(!reduced.matches)request()});
+})();
+</script>
 </body>
 </html>
