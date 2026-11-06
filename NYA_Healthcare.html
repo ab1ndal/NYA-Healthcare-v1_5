@@ -1000,7 +1000,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 .proof-ribbon .proof-set {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   width: 100%;
   min-width: 0;
   flex: none;
@@ -1022,6 +1022,24 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     width: min(78vw, 20rem);
     scroll-snap-align: start;
   }
+}
+/* Three equal, centred proof boxes with tighter vertical space. */
+:root { --hero-proof-height: clamp(4.25rem, 9svh, 5.5rem); }
+.proof-ribbon .proof-set {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  width: 100% !important;
+}
+.proof-ribbon .proof-set .proof {
+  width: auto;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+.proof-ribbon .proof-set .proof:last-child { border-right: 0; }
+@media (max-width: 760px) {
+  .proof-ribbon .proof-set .proof { width: min(78vw, 20rem); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero .ucsf-bg-media video { display: none !important; }
@@ -1650,6 +1668,13 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   display:block;width:100%;height:100%;object-fit:contain;object-position:center;
   background:#dcebf2;
 }
+/* Trim the empty light-blue bands: the media box now hugs the video's own proportions. */
+.ssi-compare--reference.ssi-video-design .ssi-reference-media{height:auto;aspect-ratio:369/406;align-self:center}
+.ssi-compare--reference.ssi-video-design .ssi-reference-video{height:100%;object-fit:cover}
+.ssi-compare--reference.ssi-video-design .ssi-reference-list{min-height:0;align-self:stretch}
+/* Right-justify the NYA Approach label and title. */
+.ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-tag,
+.ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced h3{text-align:right}
 /* On narrower desktop/tablet screens, keep each side internally aligned and legible. */
 @media(max-width:1320px){
   .ssi-compare--reference.ssi-video-design{--ssi-media-height:clamp(24rem,45vw,33rem)}
@@ -1966,10 +1991,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   <div class="proof-marquee">
     <div class="proof-track">
       <div class="proof-set" role="list">
-          <div class="proof" role="listitem"><div class="proof-k">Healthcare Track Record</div><div class="proof-v">35+ years of hospital experience</div></div>
-          <div class="proof" role="listitem"><div class="proof-k">UCSF Cost Proof</div><div class="proof-v">$2M+ steel-cost savings from one AMC</div></div>
-          <div class="proof" role="listitem"><div class="proof-k">UCSF Approval Proof</div><div class="proof-v">17 structural AMCs · 100% approved</div></div>
-          <div class="proof" role="listitem"><div class="proof-k">Experience at Scale</div><div class="proof-v">$4.3B UCSF Helen Diller Hospital</div></div>
+          <div class="proof" role="listitem"><div class="proof-v">35+ years of hospital experience</div></div>
+          <div class="proof" role="listitem"><div class="proof-v">16 OSHPD 1 projects</div></div>
+          <div class="proof" role="listitem"><div class="proof-v">67 university healthcare projects</div></div>
       </div>
 
     </div>
@@ -1992,9 +2016,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
             <div class="nya-journey-chapter-heading">
               <span class="nya-journey-chapter-number" aria-hidden="true">1</span>
               <span class="nya-journey-chapter-line" aria-hidden="true"></span>
-              <h4 id="nya-journey-heading-1">Cost optimization</h4>
+              <h4 id="nya-journey-heading-1">Cost Optimization</h4>
             </div>
-            <p>Rigorous evaluation of structural alternatives identifies opportunities to reduce unnecessary materials, minimize redesign, and establish greater cost certainty before critical design decisions are made.</p>
+            <p>NYA’s rigorous analysis delivers unprecedented insight early in design, bringing construction costs into focus far earlier than traditionally possible, minimizing redesign, and revealing opportunities to eliminate unnecessary steel, concrete, and foundation costs.</p>
           </article>
           <article class="nya-journey-chapter" id="nya-journey-chapter-2" aria-labelledby="nya-journey-heading-2" data-journey-index="1">
             <div class="nya-journey-chapter-heading">
@@ -2002,7 +2026,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
               <span class="nya-journey-chapter-line" aria-hidden="true"></span>
               <h4 id="nya-journey-heading-2">Technical excellence</h4>
             </div>
-            <p>NYA combines decades of healthcare experience, advanced seismic analysis, and practical engineering judgment to develop structural solutions that achieve demanding performance objectives, preserve architectural intent, and improve constructability.</p>
+            <p>NYA combines decades of healthcare experience, advanced seismic analysis, and practical engineering judgement to deliver structural solutions that achieve demanding performance objectives, preserve architectural intent, and improve constructability.</p>
           </article>
           <article class="nya-journey-chapter" id="nya-journey-chapter-3" aria-labelledby="nya-journey-heading-3" data-journey-index="2">
             <div class="nya-journey-chapter-heading">
@@ -2030,6 +2054,328 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
      UCSF / Stanford intro and the six-slide story. Self-contained: to reorder, move
      everything from this comment to its END PART line. The case-study nav follows the page order. -->
 <section class="ucsf-proof" id="ucsf-case-study">
+  <style>
+  .depth-opt-bar{display:flex;align-items:center;gap:.75rem;padding:.9rem var(--pad,2rem);background:#070a0d;border-bottom:1px solid var(--line);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .depth-opt-bar button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--text);background:transparent;border:1px solid rgba(255,255,255,.25);padding:.5rem 1rem;cursor:pointer;min-height:40px}
+  .depth-opt-bar button[aria-pressed="true"]{background:var(--gold);color:#111;border-color:var(--gold)}
+  #depth-opt-1[hidden],#depth-opt-2[hidden]{display:none!important}
+  </style>
+  <div class="depth-opt-bar" role="group" aria-label="Technical depth intro option">
+    <span>Intro:</span>
+    <button type="button" data-depth-opt="1" aria-pressed="true">Option 1</button>
+    <button type="button" data-depth-opt="2" aria-pressed="false">Option 2</button>
+  </div>
+
+  <div id="depth-opt-2" hidden>
+<style id="nya-depth-theme-matched-css">
+#nya-depth-scroll {
+  --bg:#0a0c0f;
+  --text:#e8e6e0;
+  --ink:#151515;
+  --gold:#22d3ff;
+  --green-on-light:#007a9e;
+  --display:'Cormorant Garamond',Georgia,serif;
+  --body:'DM Sans',sans-serif;
+  --pad:clamp(1.4rem,5vw,5rem);
+  --text-display:clamp(2.625rem,1.7rem + 4.1vw,6.5rem);
+  --text-h1:clamp(2rem,1.5rem + 2.3vw,4rem);
+  --text-body:max(16px,clamp(1.0625rem,.875rem + .25vw,1.25rem));
+  --text-eyebrow:max(12px,.8125rem);
+  --space-1:.5rem;
+  --space-2:1rem;
+  --space-3:1.5rem;
+  --space-5:4rem;
+  font-family:var(--body);
+  font-size:var(--text-body);
+  line-height:1.7;
+  color:var(--text);
+}
+#nya-depth-scroll, #nya-depth-scroll *, #nya-depth-scroll *::before,
+#nya-depth-scroll *::after {box-sizing:border-box;}
+#nya-depth-scroll h2, #nya-depth-scroll p {margin:0;padding:0;}
+#nya-depth-scroll img {display:block;}
+#nya-depth-scroll .nya-depth-eyebrow {
+  display:flex;align-items:center;gap:12px;
+  letter-spacing:.22em;text-transform:uppercase;
+  margin:0 0 1rem;
+  font-family:var(--body);
+  line-height:1.7;
+}
+#nya-depth-scroll .nya-depth-eyebrow::before {
+  content:'';display:block;width:34px;height:1px;
+  background:currentColor;flex:0 0 auto;
+}
+#nya-depth-scroll {
+  --nya-photo-opacity:0;
+  --nya-sketch-ink-opacity:1;
+  --nya-photo-ink-opacity:0;
+  --nya-paragraph-opacity:0;
+  --nya-paragraph-y:1.1rem;
+  --nya-cue-opacity:1;
+  position:relative;
+  display:block;
+  width:100%;height:320svh;min-height:0;
+  background:var(--bg);
+  scroll-snap-align:none!important;
+  scroll-snap-stop:normal!important;
+  isolation:isolate;
+}
+#nya-depth-scroll .nya-depth-stage {
+  position:sticky;top:0;
+  width:100%;height:100svh;min-height:0;
+  overflow:hidden;
+  background:var(--bg);
+  isolation:isolate;
+}
+#nya-depth-scroll .nya-depth-art {position:absolute;inset:0;overflow:hidden;}
+#nya-depth-scroll .nya-depth-img {
+  position:absolute;inset:0;display:block;
+  width:100%;height:100%;max-width:none;
+  object-fit:cover;object-position:center;
+  transform:none;filter:none;
+  backface-visibility:hidden;
+}
+#nya-depth-scroll .nya-depth-img--sketch {z-index:0;}
+#nya-depth-scroll .nya-depth-img--photo {
+  z-index:1;
+  opacity:var(--nya-photo-opacity);
+  will-change:opacity;
+}
+#nya-depth-scroll .nya-depth-text {
+  position:absolute;inset:0;z-index:2;
+  pointer-events:none;
+  padding:clamp(var(--space-3),4.8svh,var(--space-5)) var(--pad);
+}
+#nya-depth-scroll .nya-depth-text--sketch {
+  z-index:2;opacity:var(--nya-sketch-ink-opacity);
+  color:var(--ink);
+}
+#nya-depth-scroll .nya-depth-text--photo {
+  z-index:3;opacity:var(--nya-photo-ink-opacity);
+  color:var(--text);
+}
+#nya-depth-scroll .nya-depth-eyebrow {
+  font-family:var(--body);
+  font-size:calc(var(--text-eyebrow) + 2pt) !important;
+  font-weight:400;
+  color:var(--gold);
+}
+#nya-depth-scroll .nya-depth-text--sketch .nya-depth-eyebrow {color:var(--green-on-light);}
+#nya-depth-scroll .nya-depth-text--photo .nya-depth-eyebrow {color:var(--gold);}
+#nya-depth-scroll .nya-depth-title {
+  font-size:var(--text-display);
+  font-family:var(--display);
+  font-weight:300;
+  line-height:1.03;
+  letter-spacing:-.02em;
+  max-width:min(85vw,82rem);
+  color:inherit;
+}
+#nya-depth-scroll .nya-depth-title em {
+  font-weight:300;
+  font-style:italic;
+}
+#nya-depth-scroll .nya-depth-text--sketch .nya-depth-title em {color:var(--green-on-light);}
+#nya-depth-scroll .nya-depth-text--photo .nya-depth-title em {color:var(--gold);}
+#nya-depth-scroll .nya-depth-paragraph {
+  position:absolute;
+  right:var(--pad);
+  bottom:clamp(var(--space-3),5.8svh,var(--space-5));
+  width:min(48%,47rem);
+  max-width:calc(100% - var(--pad)*2);
+  margin:0;
+  font-family:var(--body);
+  font-size:var(--text-body);
+  font-weight:400;
+  line-height:1.7;
+  color:var(--text);
+  opacity:var(--nya-paragraph-opacity);
+  transform:translateY(var(--nya-paragraph-y));
+  text-shadow:0 2px 12px rgba(0,0,0,.6);
+  will-change:opacity,transform;
+}
+#nya-depth-scroll .nya-depth-paragraph:before {
+  content:"";
+  position:absolute;z-index:-1;
+  inset:-1.2rem -1.6rem;
+  background:linear-gradient(105deg,rgba(5,13,22,.05),rgba(5,13,22,.35));
+  pointer-events:none;
+}
+#nya-depth-scroll .nya-depth-mobile-copy {display:none;}
+#nya-depth-scroll .nya-depth-scroll-hint {
+  position:absolute;z-index:5;
+  left:50%;bottom:1rem;
+  transform:translateX(-50%);
+  color:var(--text);
+  font-size:var(--text-eyebrow);
+  font-family:var(--body);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  opacity:var(--nya-cue-opacity);
+  text-shadow:0 1px 6px rgba(0,0,0,.6);
+  pointer-events:none;
+}
+@media(min-width:761px) and (max-height:620px) {
+  #nya-depth-scroll .nya-depth-text{padding-top:var(--space-2);}
+  #nya-depth-scroll .nya-depth-title{font-size:var(--text-h1);}
+  #nya-depth-scroll .nya-depth-paragraph{bottom:var(--space-2);line-height:1.45;}
+}
+@media(max-width:760px) {
+  #nya-depth-scroll{height:300svh;}
+  #nya-depth-scroll .nya-depth-stage {
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:var(--space-2) var(--pad);
+    gap:var(--space-3);
+  }
+  #nya-depth-scroll .nya-depth-art {
+    position:relative;inset:auto;flex:0 0 auto;
+    width:100%;max-width:44rem;aspect-ratio:1688/932;
+    overflow:hidden;
+  }
+  #nya-depth-scroll .nya-depth-img {object-fit:contain;}
+  #nya-depth-scroll .nya-depth-text {display:none;}
+  #nya-depth-scroll .nya-depth-mobile-copy {
+    display:block;position:relative;
+    flex:0 1 auto;min-height:0;
+    width:100%;max-width:44rem;
+    color:var(--text);overflow-y:auto;
+    scrollbar-width:thin;
+  }
+  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-eyebrow{color:var(--gold);}
+  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title{
+    max-width:100%;font-size:var(--text-display);line-height:1.03;
+  }
+  #nya-depth-scroll .nya-depth-title br{display:none;}
+  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title em{color:var(--gold);}
+  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-paragraph{
+    position:relative;right:auto;bottom:auto;
+    width:100%;max-width:100%;
+    margin-top:var(--space-2);font-size:var(--text-body);
+    line-height:1.6;text-shadow:none;
+    max-height:var(--nya-mobile-lead-height,0px);overflow:hidden;
+  }
+  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-paragraph:before{display:none;}
+  #nya-depth-scroll .nya-depth-scroll-hint {bottom:.35rem;}
+}
+@media(max-width:760px) and (max-height:620px) {
+  #nya-depth-scroll .nya-depth-stage{gap:var(--space-1);}
+  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title{font-size:var(--text-h1);}
+}
+@media(prefers-reduced-motion:reduce) {
+  #nya-depth-scroll{height:auto!important;min-height:0!important;}
+  #nya-depth-scroll .nya-depth-stage {
+    position:relative!important;
+    display:flex;flex-direction:column;align-items:center;
+    height:auto!important;min-height:0!important;
+    padding:var(--space-3) var(--pad);
+    gap:var(--space-3);
+  }
+  #nya-depth-scroll .nya-depth-art {
+    position:relative;inset:auto;
+    aspect-ratio:1688/932;width:100%;max-width:80rem;
+  }
+  #nya-depth-scroll .nya-depth-img--sketch{display:none;}
+  #nya-depth-scroll .nya-depth-img--photo{opacity:1!important;object-fit:contain;}
+  #nya-depth-scroll .nya-depth-text{display:none;}
+  #nya-depth-scroll .nya-depth-mobile-copy {
+    display:block;position:relative;width:100%;max-width:60rem;
+    color:var(--text);overflow:visible;
+  }
+  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title{font-size:var(--text-h1);color:var(--text);}
+  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-title em{color:var(--gold);}
+  #nya-depth-scroll .nya-depth-mobile-copy .nya-depth-paragraph{
+    position:relative;right:auto;bottom:auto;width:100%;max-width:100%;
+    font-size:var(--text-body);line-height:1.7;margin-top:var(--space-2);
+    opacity:1!important;transform:none!important;color:var(--text);
+    max-height:none!important;overflow:visible!important;
+  }
+  #nya-depth-scroll .nya-depth-scroll-hint{display:none;}
+}
+</style>
+<div aria-labelledby="nya-depth-headline" class="nya-depth-scroll" id="nya-depth-scroll">
+<div class="nya-depth-stage">
+<div aria-label="The same Stanford and UCSF hospital composition transitions from an architectural colored-pencil sketch to a realistic rendering" class="nya-depth-art" role="img">
+<img alt="" aria-hidden="true" class="nya-depth-img nya-depth-img--sketch" decoding="async" src="https://www.nyase.com/wp-content/uploads/2026/11/coloredpencilhospitalcampusarchitecture.png"/>
+<img alt="" aria-hidden="true" class="nya-depth-img nya-depth-img--photo" decoding="async" src="https://www.nyase.com/wp-content/uploads/2026/11/goldenhourhospitalcampuspanorama.png"/>
+</div>
+<div aria-hidden="true" class="nya-depth-text nya-depth-text--sketch">
+<div class="eyebrow nya-depth-eyebrow">Why Healthcare Is Different</div>
+<h2 class="display nya-depth-title">Technical depth that does<br/><em>more with less.</em></h2>
+</div>
+<div class="nya-depth-text nya-depth-text--photo">
+<div class="eyebrow nya-depth-eyebrow">Why Healthcare Is Different</div>
+<h2 class="display nya-depth-title" id="nya-depth-headline">Technical depth that does<br/><em>more with less.</em></h2>
+<p class="nya-depth-paragraph">Conventional approaches can leave significant savings undiscovered. NYA combines advanced analysis with proven engineering judgment to identify overlooked opportunities, eliminate unnecessary construction costs, and preserve architectural ambitions. Stanford Hospital and UCSF Helen Diller Hospital demonstrate this approach in practice.</p>
+</div>
+<div class="nya-depth-mobile-copy">
+<div class="eyebrow nya-depth-eyebrow">Why Healthcare Is Different</div>
+<h2 class="display nya-depth-title">Technical depth that does <em>more with less.</em></h2>
+<p class="nya-depth-paragraph">Conventional approaches can leave significant savings undiscovered. NYA combines advanced analysis with proven engineering judgment to identify overlooked opportunities, eliminate unnecessary construction costs, and preserve architectural ambitions. Stanford Hospital and UCSF Helen Diller Hospital demonstrate this approach in practice.</p>
+</div>
+<div aria-hidden="true" class="nya-depth-scroll-hint">Scroll to reveal</div>
+</div>
+</div>
+<script id="nya-depth-theme-matched-script">
+(function(){
+  'use strict';
+  const root=document.getElementById('nya-depth-scroll');
+  if(!root)return;
+  const mq=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mobileLead=root.querySelector('.nya-depth-mobile-copy .nya-depth-paragraph');
+  const clamp=(v)=>Math.max(0,Math.min(1,v));
+  const smooth=(a,b,v)=>{const x=clamp((v-a)/(b-a));return x*x*(3-2*x);};
+  let ticking=false;
+  function render(){
+    ticking=false;
+    if(mq.matches){
+      root.style.setProperty('--nya-photo-opacity','1');
+      root.style.setProperty('--nya-sketch-ink-opacity','0');
+      root.style.setProperty('--nya-photo-ink-opacity','1');
+      root.style.setProperty('--nya-paragraph-opacity','1');
+      root.style.setProperty('--nya-paragraph-y','0rem');
+      root.style.setProperty('--nya-cue-opacity','0');
+      return;
+    }
+    const bounds=root.getBoundingClientRect();
+    const distance=Math.max(1,root.offsetHeight-window.innerHeight);
+    const progress=clamp(-bounds.top/distance);
+    const photo=smooth(.12,.78,progress);
+    const photoInk=smooth(.34,.49,progress);
+    const sketchInk=1-photoInk;
+    const lead=smooth(.78,.91,progress);
+    root.style.setProperty('--nya-photo-opacity',photo.toFixed(4));
+    root.style.setProperty('--nya-sketch-ink-opacity',sketchInk.toFixed(4));
+    root.style.setProperty('--nya-photo-ink-opacity',photoInk.toFixed(4));
+    root.style.setProperty('--nya-paragraph-opacity',lead.toFixed(4));
+    if(mobileLead) root.style.setProperty('--nya-mobile-lead-height',(mobileLead.scrollHeight*lead).toFixed(2)+'px');
+    root.style.setProperty('--nya-paragraph-y',((1-lead)*1.1).toFixed(3)+'rem');
+    root.style.setProperty('--nya-cue-opacity',(1-smooth(.01,.2,progress)).toFixed(4));
+  }
+  function schedule(){if(!ticking){ticking=true;requestAnimationFrame(render);}}
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule,{passive:true});
+  if(mq.addEventListener)mq.addEventListener('change',schedule);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(schedule);
+  render();
+})();
+(function(){
+  var bar=document.querySelector('.depth-opt-bar');
+  if(!bar)return;
+  bar.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-depth-opt]');if(!b)return;
+    var o1=document.getElementById('depth-opt-1'),o2=document.getElementById('depth-opt-2');
+    if(!o1||!o2)return;
+    var two=b.getAttribute('data-depth-opt')==='2';
+    o1.hidden=two;o2.hidden=!two;
+    bar.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    window.dispatchEvent(new Event('resize'));
+  });
+})();
+</script>
+  </div>
+
+  <div id="depth-opt-1">
   <div class="ucsf-proof-intro">
     <div class="ucsf-proof-copy reveal">
       <div class="eyebrow">Why Healthcare Is Different</div>
@@ -2042,6 +2388,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       </video>
     </div>
 
+  </div>
   </div>
 
   <div class="ucsf-story" id="ucsf-story">
@@ -2375,22 +2722,22 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     </div>
     <div class="project-grid" id="project-grid">
       <article class="project featured" tabindex="0" data-category="new-construction advanced-analysis" data-name="UCSF Health Helen Diller Hospital at Parnassus" data-tag="New Construction · PBSD · SSI" data-location="San Francisco, CA" data-role="Structural Engineer of Record" data-scale="15-story acute care hospital tower" data-focus="PBSD · SSI · Dampers · SidePlate™" data-link="https://www.nyase.com/ucsf-health-helen-diller-hospital-at-parnassus/" data-desc="NYA is serving as Structural Engineer of Record for the UCSF Health Helen Diller Hospital at Parnassus. The project combines performance-based seismic design, soil-structure interaction, nonlinear analysis, Special Steel Moment Frames with SidePlate™ connections, fluid viscous dampers, advanced coordination, and a demanding healthcare review environment." data-img="https://www.nyase.com/wp-content/uploads/2026/03/ucsfhelendillerhospitalstructuralengineering-3.jpg">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/03/ucsfhelendillerhospitalstructuralengineering-3.jpg" alt="UCSF Health Helen Diller Hospital at Parnassus" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction · PBSD · SSI</div><h3>UCSF Helen Diller Hospital</h3><div class="project-outcome">Nearly 1 million SF on a steep triangular site, with dramatic cantilevers maximizing space and nearly 200 dampers enhancing seismic performance</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/03/ucsfhelendillerhospitalstructuralengineering-3.jpg" alt="UCSF Health Helen Diller Hospital at Parnassus" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction – PBSD – SSI</div><h3>UCSF Health Helen Diller Hospital</h3><div class="project-outcome">Flagship 15 story healthcare case study: advanced analysis, material efficiency, HCAI navigation, and integrated coordination</div></div>
       </article>
       <article class="project std" tabindex="0" data-category="new-construction advanced-analysis" data-name="The New Stanford Hospital" data-tag="New Construction · Base Isolation" data-location="Palo Alto, CA" data-role="Structural Engineer of Record" data-scale="Four 7-story patient towers · 3-story podium" data-focus="Friction pendulum base isolation" data-link="https://www.nyase.com/the-new-stanford-hospital/" data-desc="NYA served as Structural Engineer of Record for The New Stanford Hospital, a $2 billion replacement healthcare facility with four seven-story patient towers rising from a three-story podium. The hospital uses advanced friction-pendulum base isolation and was engineered around the patient experience, including healing terraces, a 120-foot-diameter atrium, and a building configuration in which roughly one-third is cantilevered." data-img="https://www.nyase.com/wp-content/uploads/2026/07/new_stanford_hospital-scaled.jpg">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/07/stanfordhospital.png" alt="The New Stanford Hospital" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction · Base Isolation</div><h3>The New Stanford Hospital</h3><div class="project-meta">Stanford Medicine</div><div class="project-outcome">A base-isolated hospital with a spectacular 120-foot column-free atrium, engineered to maintain patient care after a major earthquake</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/07/stanfordhospital.png" alt="The New Stanford Hospital" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction – Base Isolation</div><h3>The New Stanford Hospital</h3><div class="project-outcome">Advanced base isolation – roughly one-third cantilevered – 120 foot diameter atrium – designed around the patient experience</div></div>
       </article>
       <article class="project std" tabindex="0" data-category="new-construction advanced-analysis" data-name="UC Irvine Douglas Hospital" data-tag="Healthcare Tower · HCAI / OSHPD" data-location="Irvine, CA" data-role="Structural Engineer of Record" data-scale="475,000 SF · 7 stories + basement" data-focus="Braced frames · shear walls · complex link" data-link="https://www.nyase.com/uc-irvine-douglas-hospital/" data-desc="NYA served as Structural Engineer of Record for UC Irvine Douglas Hospital, a 475,000-square-foot hospital tower with seven stories above grade and a full basement. The project is presented by NYA as California's first design-build hospital, among the first UC hospital projects delivered on schedule and within budget, with early OSHPD partnership enabling phased reviews and a faster construction start. The structural scope also includes a 92-foot 1A Link elevator tower supporting a 45-foot cantilevered corridor." data-img="https://www.nyase.com/wp-content/uploads/2026/03/ucirvinedouglashospitalstructuralengineering-5-scaled.jpg">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/07/uci-3.png" alt="UC Irvine Douglas Hospital" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Healthcare Tower · HCAI / OSHPD</div><h3>UC Irvine Douglas Hospital</h3><div class="project-meta">475,000 SF</div><div class="project-outcome">California's first design-build hospital pioneered phased structural approvals, delivering the project on schedule and within budget</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/07/uci-3.png" alt="UC Irvine Douglas Hospital" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Healthcare Tower – HCAI/OSHPD</div><h3>UC Irvine Douglas Hospital</h3><div class="project-outcome">California’s first design-build hospital – on-time/on-budget delivery – phased OSHPD review strategy</div></div>
       </article>
       <article class="project wide" tabindex="0" data-category="sb-1953 seismic-retrofit" data-name="Cedars-Sinai Medical Center" data-tag="Campus Projects · SB 1953" data-location="Los Angeles, CA" data-role="Seismic evaluation + ongoing campus work" data-scale="Multiple healthcare campus projects" data-focus="SB 1953 · seismic compliance" data-link="https://www.nyase.com/cedars-sinai-medical-center/" data-desc="NYA has provided structural engineering services for multiple projects at Cedars-Sinai Medical Center, supporting facility expansions and seismic compliance efforts across the campus, including seismic evaluation of the original 1970s main hospital building in accordance with California Senate Bill 1953 requirements." data-img="https://www.nyase.com/wp-content/uploads/2026/03/dscn-scaled.jpg">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/07/cedarssinai.png" alt="Cedars-Sinai Medical Center" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Campus Projects · SB 1953</div><h3>Cedars-Sinai Medical Center</h3><div class="project-meta">Healthcare Campus</div><div class="project-outcome">Advanced seismic analysis proved a costly structural retrofit unnecessary, avoiding major construction and disruption to hospital operations</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/07/cedarssinai.png" alt="Cedars-Sinai Medical Center" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Campus Projects – SB 1953</div><h3>Cedars-Sinai Medical Center</h3><div class="project-outcome">Various campus projects – Structural evaluation</div></div>
       </article>
       <article class="project wide" tabindex="0" data-category="sb-1953 seismic-retrofit" data-name="UCSD Hillcrest Medical Center" data-tag="Seismic Evaluation · SB 1953" data-location="San Diego, CA" data-role="Structural evaluation + upgrade planning" data-scale="Multi-building hospital campus" data-focus="SB 1953 · carbon fiber strengthening" data-link="https://www.nyase.com/ucsd-hillcrest-medical-center/" data-desc="NYA performed structural evaluation and seismic upgrade planning for UC San Diego Medical Center Hillcrest, including SB 1953 compliance analysis, carbon fiber column strengthening, and hospital structural upgrades across buildings constructed during different periods." data-img="https://www.nyase.com/wp-content/uploads/2026/03/hillcrest.jpg">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/07/ucsdmedicalcenterhillcrest-1.png" alt="UCSD Hillcrest Medical Center" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Evaluation · SB 1953</div><h3>UCSD Hillcrest Medical Center</h3><div class="project-meta">Seismic Upgrade Planning</div><div class="project-outcome">A two-month carbon-fiber seismic retrofit at less than one-tenth the cost of conventional strengthening, while the hospital remained operational</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/07/ucsdmedicalcenterhillcrest-1.png" alt="UCSD Hillcrest Medical Center" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Evaluation – SB 1953</div><h3>UCSD Hillcrest Medical Center</h3><div class="project-outcome">Seismic Upgrade Planning – Structural evaluation – Carbon fiber strengthening</div></div>
       </article>
       <article class="project wide" tabindex="0" data-category="seismic-retrofit sb-1953" data-name="Century City Hospital Seismic Upgrade" data-tag="Seismic Upgrade · OSHPD" data-location="Los Angeles, CA" data-role="SPC-2 / NPC-2 upgrades" data-scale="Main hospital + central plant" data-focus="Concrete shear walls · roof diaphragm strengthening" data-link="https://www.nyase.com/century-city-hospital-seismic-upgrade/" data-desc="NYA provided SPC-2 and NPC-2 upgrades for the Century City Hospital main hospital building and central plant. The upgrade used new concrete shear walls and strengthening of the existing roof diaphragm, with OSHPD acceptance for HAZUS SPC-2 compliance and construction completed in 2014." data-img="https://www.nyase.com/wp-content/uploads/2026/03/centurycityhospital.jpg">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/07/centurycitymedicalcenter.png" alt="Century City Hospital Seismic Upgrade" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Upgrade · OSHPD</div><h3>Century City Hospital Upgrade</h3><div class="project-meta">Completed 2014</div><div class="project-outcome">Seismic upgrades helped transform a shuttered hospital into a 138-bed rehabilitation center, bringing an existing facility back into service</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/07/centurycitymedicalcenter.png" alt="Century City Hospital Seismic Upgrade" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Upgrade - OSHPD</div><h3>Century City Hospital</h3><div class="project-outcome">Seismic upgrade planning for hospital and central plant</div></div>
       </article>
     </div>
   </div>
