@@ -1298,11 +1298,11 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   --journey-line:rgba(12,18,20,.16);
   --journey-accent:var(--green-on-light);
   position:relative;z-index:1;isolation:isolate;
-  color:var(--ink);background:var(--light);
+  color:var(--ink);background:#fff;
   border-block:1px solid var(--journey-line);
 }
 .nya-journey *{box-sizing:border-box}
-.nya-journey-stage{position:relative;min-height:100svh;background:var(--light)}
+.nya-journey-stage{position:relative;min-height:100svh;background:#fff}
 .nya-journey-layout{
   position:relative;max-width:1700px;margin-inline:auto;width:100%;
   min-height:100svh;padding:clamp(var(--space-3),4svh,var(--space-5)) var(--pad);
@@ -1760,7 +1760,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 <style id="nya-closing-style">
 /* ==== NYA FINALE COMBINED START (CSS) ==== The supplied artwork is the section; words sit between its posts and its cable draws itself with the scroll. */
 .nya-s33{
-  --paper:#fcf3ea;--s33-ink:#14191e;--s33-body:#2b3237;--k:1cqw;
+  --paper:#fff;--s33-ink:#14191e;--s33-body:#2b3237;--k:1cqw;
   position:relative;isolation:isolate;color:var(--s33-ink);background:var(--paper);
   border-top:1px solid rgba(16,18,22,.10);border-bottom:1px solid rgba(16,18,22,.10);
 }
@@ -1815,14 +1815,18 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .uci-team .wrap{width:min(1500px,calc(100% - 2*var(--pad)))}
 .uci-team-head{position:sticky;top:var(--uci-stick);z-index:5;background:#fff;padding-block:var(--space-2)}
 /* Soft edge under the pinned heading so content fades as it scrolls beneath. */
-.uci-team-head::after{content:"";position:absolute;left:0;right:0;top:100%;height:var(--space-3);background:linear-gradient(#fff,rgba(255,255,255,0));pointer-events:none}
+.uci-team-head::after{content:"";position:absolute;left:0;right:0;top:100%;height:var(--space-3);background:linear-gradient(#fff,rgba(255,255,255,0));pointer-events:none;transition:opacity .2s}
+/* The fade is for text only; the script turns it off while the photo passes beneath. */
+.uci-team.fade-off .uci-team-head::after{opacity:0}
 .uci-team-head h2{font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--ink);max-width:26em;text-wrap:balance}
 .uci-team-head h2 em{font-style:normal;font-weight:300;color:var(--green-on-light)}
 .uci-team-intro{margin-top:var(--space-1);max-width:60ch;font-size:var(--text-body);line-height:1.65;color:var(--ink2)}
 .uci-team-media{margin:calc(clamp(var(--space-3),4vw,var(--space-5)) / 2) 0 0}
-.uci-team-media img{display:block;width:100%;height:auto;aspect-ratio:2172/724}
+/* Narrow screens crop the sides for a taller view of the campus; the focus stays on the entrance. */
+.uci-team-media img{display:block;width:100%;height:auto;aspect-ratio:2172/724;object-fit:cover;object-position:45% 50%}
 .uci-team-track{position:relative;margin-top:var(--space-2)}
-.uci-team-line{position:absolute;top:0;bottom:0;left:calc(50% - 1px);width:2px;background:var(--uci-line);transform-origin:top;z-index:1}
+/* --uci-end (set by the script) stops the line at the last dot. */
+.uci-team-line{position:absolute;top:0;height:var(--uci-end,100%);left:calc(50% - 1px);width:2px;background:var(--uci-line);transform-origin:top;z-index:1}
 .uci-team-steps{list-style:none;margin:0;padding:0}
 .uci-team-step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:calc(2*var(--space-4));padding-block:var(--space-4)}
 .uci-team-step+.uci-team-step{border-top:1px solid var(--uci-rule)}
@@ -1845,12 +1849,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .uci-team.no-stick .uci-team-head{position:static}
 .uci-team.no-stick .uci-team-head::after,.uci-team.no-stick .uci-team-head::before{display:none}
 @media(max-width:599px),(max-height:620px){.uci-team-head{position:static}.uci-team .uci-team-head::after,.uci-team .uci-team-head::before{display:none}}
-@media(max-width:760px){
+@media(max-width:900px) and (orientation:portrait){.uci-team-media img{aspect-ratio:2/1}}
+@media(max-width:900px){
   .uci-team-line{left:calc(.5rem - 1px)}
   .uci-team-step{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-3) 0 var(--space-3) calc(1rem + var(--space-2))}
   .uci-team-dot{left:0;top:calc(var(--space-3) + .54 * var(--text-h2-lg) - .5rem)}
 }
+@media(max-width:599px) and (orientation:portrait){.uci-team-media img{aspect-ratio:3/2}}
 @media(prefers-reduced-motion:reduce){
+  .uci-team-head::after{transition:none}
   .uci-team.is-armed .uci-team-line{transform:none}
   .uci-team.is-armed .uci-team-dot,.uci-team.is-armed .uci-team-step h3,.uci-team.is-armed .uci-team-body{opacity:1;transform:none;transition:none}
 }
@@ -2610,10 +2617,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="uci-team-track">
       <span class="uci-team-line" aria-hidden="true"></span>
       <ol class="uci-team-steps">
-        <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Collaboration with the project team and HCAI</h3><div class="uci-team-body"><p>NYA worked with the project team and HCAI to help develop the then-novel approach of phased plan review.</p></div></li>
-        <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Get permits 12–18 months earlier</h3><div class="uci-team-body"><p>By separating early packages from later design work, the team secured permits for site preparation and the structure 12–18 months earlier.</p></div></li>
-        <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Give design time without making construction wait</h3><div class="uci-team-body"><p>By coordinating separate review packages with designers, builders, and HCAI, the team kept construction moving while the more architecturally complex portions of the hospital were refined.</p></div></li>
-        <li class="uci-team-step uci-team-step--outcome"><span class="uci-team-dot" aria-hidden="true"></span><h3>The first California hospital of its era to be delivered on schedule and within budget</h3><div class="uci-team-body"><p>Helped establish the incremental plan-review process later used on California hospital projects.</p></div></li>
+        <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>A new approach to hospital approvals</h3><div class="uci-team-body"><p>NYA worked with the owner, architect, contractor, and HCAI to develop the then-novel approach of phased plan review, which aligned the entire team around a new approach to hospital delivery.</p></div></li>
+        <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>A 12–18 month head start</h3><div class="uci-team-body"><p>Close coordination between structural engineers, architects, contractors, and HCAI allowed the team to identify which portions of the design could be completed, reviewed, and permitted independently. This strategic separation secured site preparation and structural permits 12–18 months earlier.</p></div></li>
+        <li class="uci-team-step"><span class="uci-team-dot" aria-hidden="true"></span><h3>Design freedom without construction delays</h3><div class="uci-team-body"><p>Ongoing coordination between the design and construction teams allowed construction work to advance while architects continued refining more complex portions of the hospital, preserving architectural flexibility.</p></div></li>
+        <li class="uci-team-step uci-team-step--outcome"><span class="uci-team-dot" aria-hidden="true"></span><h3>On schedule. Within budget.</h3><div class="uci-team-body"><p>The team’s shared commitment, coordinated decision-making, and proactive resolution of challenges helped deliver UC Irvine Douglas Hospital on schedule and within budget, demonstrating the lasting value of an integrated approach to hospital delivery.</p></div></li>
       </ol>
     </div>
   </div>
@@ -4153,11 +4160,12 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   if(!sec)return;
   const track=sec.querySelector('.uci-team-track');
   const head=sec.querySelector('.uci-team-head');
+  const media=sec.querySelector('.uci-team-media');
   const steps=Array.from(sec.querySelectorAll('.uci-team-step'));
   if(!track||!head||!steps.length)return;
   const nav=document.getElementById('range-nav');
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
-  let marks=[],mids=[],trackH=1,raf=0,listening=false,resizeT=0;
+  let marks=[],mids=[],lineH=1,fadeH=0,raf=0,listening=false,resizeT=0;
 
   // All reads first, then writes. Dot centers are measured relative to the track.
   function measure(){
@@ -4169,26 +4177,30 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       return r.top+r.height/2-t.top;
     });
     const halves=steps.map(s=>{const r=s.getBoundingClientRect();return r.top+r.height/2-t.top;});
-    trackH=Math.max(1,t.height);marks=tops;mids=halves;
+    fadeH=parseFloat(getComputedStyle(head,'::after').height)||0;
+    marks=tops;mids=halves;lineH=Math.max(1,tops[tops.length-1]);
     sec.style.setProperty('--uci-stick',navH+'px');
+    sec.style.setProperty('--uci-end',lineH+'px');
     sec.classList.toggle('no-stick',navH+headH>window.innerHeight*.4);
   }
   // Scroll-linked both ways. A point shows once half of its row is on screen
   // (row middle above the viewport bottom) and hides again when scrolled back.
-  // The line tip is mapped so it reaches each dot at that same moment.
+  // The line tip is mapped so it reaches each dot at that same moment, ending at the last one.
+  // Also hides the heading's fade while the photo is in the fade band.
   function update(){
     raf=0;
     const v=window.innerHeight-track.getBoundingClientRect().top;
-    let tip=trackH;
+    const hb=head.getBoundingClientRect().bottom;
+    const m=media?media.getBoundingClientRect():null;
+    if(m)sec.classList.toggle('fade-off',m.bottom>hb&&m.top<hb+fadeH);
+    if(reduced.matches)return;
+    const last=marks.length-1;
+    let tip=marks[last];
     if(v<mids[0])tip=marks[0]*Math.max(0,v)/mids[0];
-    else{
-      for(let i=0;i<mids.length;i++){
-        const v1=i+1<mids.length?mids[i+1]:trackH+mids[0]-marks[0];
-        const m1=i+1<marks.length?marks[i+1]:trackH;
-        if(v<v1){tip=marks[i]+(m1-marks[i])*(v-mids[i])/(v1-mids[i]);break;}
-      }
+    else for(let i=0;i<last;i++){
+      if(v<mids[i+1]){tip=marks[i]+(marks[i+1]-marks[i])*(v-mids[i])/(mids[i+1]-mids[i]);break;}
     }
-    sec.style.setProperty('--uci-p',Math.max(0,Math.min(1,tip/trackH)).toFixed(4));
+    sec.style.setProperty('--uci-p',Math.max(0,Math.min(1,tip/lineH)).toFixed(4));
     steps.forEach((s,i)=>s.classList.toggle('is-on',v>=mids[i]));
   }
   function request(){if(!raf)raf=requestAnimationFrame(update)}
@@ -4200,31 +4212,29 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
   function setup(){
     if(reduced.matches){
-      listen(false);
       sec.classList.remove('is-armed');
       steps.forEach(s=>s.classList.add('is-on'));
-      measure();return;
-    }
-    sec.classList.add('is-armed');
+    }else sec.classList.add('is-armed');
     measure();request();
   }
+  // Scroll updates run while the section is near (also with reduced motion, for the fade).
   if('IntersectionObserver' in window){
     new IntersectionObserver(entries=>{
-      const on=entries[entries.length-1].isIntersecting&&!reduced.matches;
+      const on=entries[entries.length-1].isIntersecting;
       listen(on);if(on)request();
     },{rootMargin:'200px 0px'}).observe(sec);
-  }else if(!reduced.matches){listen(true)}
+  }else listen(true);
   window.addEventListener('resize',()=>{
     clearTimeout(resizeT);
-    resizeT=setTimeout(()=>{measure();if(!reduced.matches)request()},150);
+    resizeT=setTimeout(()=>{measure();request()},150);
   },{passive:true});
-  if(reduced.addEventListener)reduced.addEventListener('change',()=>{setup();if(!reduced.matches)listen(true)});
+  if(reduced.addEventListener)reduced.addEventListener('change',setup);
   // Track the top nav so the pinned heading can cover the gap it leaves when it hides.
   function syncNav(){sec.classList.toggle('nav-off',!nav||!nav.classList.contains('is-on'))}
   if(nav&&'MutationObserver' in window)new MutationObserver(syncNav).observe(nav,{attributes:true,attributeFilter:['class']});
   syncNav();
   setup();
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{measure();if(!reduced.matches)request()});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{measure();request()});
 })();
 </script>
 </body>
