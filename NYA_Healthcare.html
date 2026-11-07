@@ -3429,7 +3429,7 @@ function initArcsChart(svg){
   const clickMode=()=>interactive()&&(compactMode||!hoverMQ.matches);
   const captionText=()=>opt===2?'Conceptual illustration of anticipated structural cost ranges':
     'Conceptual illustration of anticipated structural cost ranges. '+
-    (clickMode()?(hoverMQ.matches?'Click':'Tap'):'Hover')+' the chart to compare.';
+    (clickMode()?(hoverMQ.matches?'Click':'Tap'):'Hover over')+' the chart to compare.';
 
   const show=()=>svg.classList.add('is-locked');
   const hide=()=>svg.classList.remove('is-locked');
