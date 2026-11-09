@@ -1,0 +1,37 @@
+name: Deploy to hospitals.nyase.com
+
+on:
+  push:
+    branches: [main]
+    paths: [NYA_Healthcare.html]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Optional approval gate: in GitHub > Settings > Environments > "production",
+    # add "Required reviewers". Remove this line to deploy on every push with no approval.
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload NYA_Healthcare.html as index.html (FTPS)
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_PATH: ${{ secrets.FTP_REMOTE_PATH }}
+        run: |
+          set -euo pipefail
+          # Normalise the remote folder: "/" or empty means the account's own root.
+          DIR="${FTP_REMOTE_PATH#/}"; DIR="${DIR%/}"
+          if [ -n "$DIR" ]; then TARGET="ftp://$FTP_HOST/$DIR/index.html"; else TARGET="ftp://$FTP_HOST/index.html"; fi
+          curl --fail --show-error --ssl-reqd --ftp-create-dirs \
+            --user "$FTP_USER:$FTP_PASSWORD" \
+            -T NYA_Healthcare.html \
+            "$TARGET"
+          echo "Deployed to https://hospitals.nyase.com/"
