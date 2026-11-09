@@ -1512,7 +1512,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Relationships: large fixed intro copy crossfades to its small center counterpart.
    The camera reveals three equal circles, using the existing page typography. */
 @supports (overflow:clip) {body{overflow-x:clip;}}
-.nya-rel-story{position:relative;height:850svh;background:#fff;color:var(--ink);isolation:isolate;}
+.nya-rel-story{position:relative;height:603svh;background:#fff;color:var(--ink);isolation:isolate;}
 .nya-rel-pin{position:sticky;top:0;height:100svh;width:100%;overflow:hidden;background:#fff;contain:paint;}
 .nya-rel-viewport{position:relative;width:100%;height:100%;overflow:hidden;}
 /* The larger, fixed-size opening message is a separate visual layer.
@@ -1611,7 +1611,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 .nya-rel-a11y{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);}
 @media(max-width:720px){
- .nya-rel-story{height:850svh;}
+ .nya-rel-story{height:603svh;}
  .nya-rel-center{left:510px;top:523px;width:280px;}
  .nya-rel-note--hcai{left:445px;top:65px;width:350px;display:flex;flex-direction:column-reverse;gap:var(--space-1);}
  .nya-rel-note--hcai .nya-rel-stat{padding-top:0;transform:none;}
@@ -3279,7 +3279,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   if(reduced.matches)return;
   const rect=story.getBoundingClientRect();
   const extent=Math.max(1,story.offsetHeight-innerHeight);
-  const progress=clamp(-rect.top/extent);
+  const rawProgress=clamp(-rect.top/extent);
+  // Opening stage (old 0-.20) now takes half the scroll; later stages keep their length.
+  const OPEN=.111;
+  const progress=rawProgress<=OPEN?rawProgress/OPEN*.20:.20+(rawProgress-OPEN)/(1-OPEN)*.80;
   desired=sample(progress);
   desired.fit=getFit();
   // The opening message is large and fixed-size. It crossfades with the
