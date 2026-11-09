@@ -1309,7 +1309,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-journey-layout{
   position:relative;max-width:1700px;margin-inline:auto;width:100%;
   min-height:100svh;padding:clamp(var(--space-3),4svh,var(--space-5)) var(--pad);
-  display:grid;grid-template-columns:minmax(0,.48fr) minmax(0,.52fr);
+  display:grid;grid-template-columns:minmax(0,.3fr) minmax(0,.7fr);
   gap:clamp(var(--space-2),3.4vw,var(--space-5));
 }
 .nya-journey-left{
@@ -1324,21 +1324,21 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 .nya-journey-eyebrow::before{content:"";width:2rem;height:1px;background:currentColor;flex-shrink:0}
 .nya-journey-promise h2{
-  font-family:var(--display);font-size:var(--text-display);font-weight:300;
-  line-height:.94;letter-spacing:-.025em;color:var(--ink);
+  font-family:var(--display);font-size:min(calc(var(--text-h2-lg)*1.3*1.4),9svh);font-weight:300;
+  line-height:.98;letter-spacing:-.025em;color:var(--ink);
   max-width:none;text-wrap:balance;
 }
 /* The reference headline is uniform black, not accented per word. */
 .nya-journey-promise h2 em{color:inherit;font-weight:inherit;font-style:normal}
 .nya-journey-problem{
-  font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.06;
-  font-weight:300;color:var(--ink);max-width:36rem;margin-bottom:calc(var(--space-3) + 1.06em);
+  font-family:var(--display);font-size:min(calc(var(--text-h2-lg)*1.3),5.6svh);line-height:1.06;
+  font-weight:300;color:var(--ink);max-width:44rem;margin-bottom:calc(var(--space-3) + .53em);
 }
 .nya-journey-right{min-width:0;display:flex;align-items:center;padding:0;}
 .nya-journey-chapters{display:flex;flex-direction:column;justify-content:center;width:100%;min-width:0;min-height:0;max-height:100%;}
 .nya-journey-chapter{
   position:relative;display:grid;
-  grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+  grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
   align-items:center;gap:clamp(var(--space-2),2vw,var(--space-4));
   padding:clamp(.65rem,1.4svh,1rem) 0;
   border-bottom:1px solid var(--journey-line);min-width:0;
@@ -1359,7 +1359,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   line-height:1.03;letter-spacing:-.022em;color:var(--ink);margin:0;
 }
 .nya-journey-chapter p{
-  font-family:var(--body);font-size:var(--text-body);font-weight:400;
+  font-family:var(--body);font-size:calc(var(--text-body)*1.15 + 1px);font-weight:400;
   line-height:1.47;color:var(--ink2);margin:0;
   text-align:left;hyphens:none;-webkit-hyphens:none;
 }
@@ -1370,8 +1370,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-journey.is-pinned .nya-journey-layout{height:100%;min-height:0}
 .nya-journey.is-pinned .nya-journey-chapters{height:100%}
 .nya-journey.is-pinned .nya-journey-chapter{flex:1 1 0;min-height:0}
-.nya-journey.is-pinned .nya-journey-eyebrow,.nya-journey.is-pinned .nya-journey-problem{transition:transform .7s cubic-bezier(.22,.7,.2,1)}
-.nya-journey.is-pinned.is-lifted .nya-journey-eyebrow,.nya-journey.is-pinned.is-lifted .nya-journey-problem{transform:translateY(-5svh)}
+.nya-journey.is-pinned .nya-journey-left{justify-content:flex-start;padding-top:clamp(var(--space-3),6svh,5rem)}
+.nya-journey.is-pinned .nya-journey-promise{opacity:0;transform:translateY(2.5svh);transition:opacity .6s ease,transform .6s cubic-bezier(.22,.7,.2,1)}
+.nya-journey.is-pinned.is-promise .nya-journey-promise{opacity:1;transform:none}
 .nya-journey:not(.is-static) .nya-journey-chapter{
   opacity:0;transform:translateY(14px);visibility:hidden;
   transition:opacity .55s var(--ease),transform .55s var(--ease),visibility 0s linear .55s;
@@ -3032,6 +3033,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   if(!story)return;
   const rows=Array.from(story.querySelectorAll('.nya-journey-chapter'));
   const right=story.querySelector('.nya-journey-right');
+  const left=story.querySelector('.nya-journey-left');
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
   const narrow=window.matchMedia('(max-width: 899px), (max-height: 620px)');
   const clamp=v=>Math.max(0,Math.min(1,v));
@@ -3060,12 +3062,12 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     const progress=clamp(-r.top/length);
     // Show only the NYA statement on entry. Reveal 1 after a small scroll,
     // then add 2, 3 and 4; never hide an earlier point.
-    story.classList.toggle('is-lifted',progress>.015);
-    revealThrough(progress<.08?-1:progress<.28?0:progress<.51?1:progress<.74?2:3);
+    story.classList.toggle('is-promise',progress>=.04);
+    revealThrough(progress<.16?-1:progress<.34?0:progress<.54?1:progress<.76?2:3);
   }
   function request(){if(!raf)raf=requestAnimationFrame(onProgress)}
   function setFlow(){
-    story.classList.remove('is-pinned');story.classList.add('is-flow');mode='flow';story.classList.remove('is-lifted');
+    story.classList.remove('is-pinned');story.classList.add('is-flow');mode='flow';story.classList.remove('is-promise');
     rows.forEach(row=>row.classList.remove('is-revealed'));
     if(reduced.matches){story.classList.add('is-static');rows.forEach(row=>row.classList.add('is-revealed'));return;}
     story.classList.remove('is-static');
@@ -3077,7 +3079,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     revealThrough(-1);
     // Respect theme font sizes: switch to progressive flow when four rows cannot fit.
     const overflowing=rows.some(row=>row.scrollHeight>row.clientHeight+4) ||
-      (right && right.scrollHeight>right.clientHeight+24);
+      (right && right.scrollHeight>right.clientHeight+24) ||
+      (left && left.scrollHeight>left.clientHeight+4);
     if(overflowing){setFlow();return;}
     request();
   }
