@@ -37,7 +37,7 @@ ffmpeg -i in.mp4 -vf "scale=-2:1080,fps=30" -c:v libx264 -crf 26 -preset slow -a
 | # | Task | Owner | Status | Notes |
 |---|------|-------|--------|-------|
 | I1 | Upload `uci-douglas-white.webp` (UCI photo, sky replaced with white) to nyase.com WordPress, relink `#uci-delivery-proof` to the WordPress URL, then delete the file and its `!uci-douglas-white.webp` line in `.gitignore` | AB | Done | Uploaded 2026-11-06 as `2026/11/ucidouglaswhite.webp`; `srcset` added with the 2880w upscale `ucidouglaswhite-1.webp` (+ WordPress `-1-scaled` 2560w) |
-| I2 | Upload `nya-closing-hospital-whole.webp` and `nya-closing-tree-whole.webp` (closing section: whole building on the canopy, right-hand tree) to nyase.com WordPress, relink `.nya-s33-hospital` and `.nya-s33-tree` to the WordPress URLs, then delete both files and their `!` lines in `.gitignore`. The old `nyaclosinghospital.webp` / `nyaclosingtree.webp` crops no longer fit the layout | MB | Not started | Base and line art are unchanged and already linked to WordPress |
+| I2 | Upload the four closing-section layers `nya-closing-base-v3.webp`, `nya-closing-line-v3.webp`, `nya-closing-hospital-v3.webp` and `nya-closing-tree-v3.webp` (cut from the new 1672 x 941 drawing) to nyase.com WordPress, relink `.nya-s33-base`, `.nya-s33-line`, `.nya-s33-hospital` and `.nya-s33-tree` to the WordPress URLs, then delete the four files and their `!` lines in `.gitignore`. The older `nyaclosing*.webp` files on WordPress belong to the previous drawing and no longer fit the layout | MB | Not started | |
 
 ## Done
 
