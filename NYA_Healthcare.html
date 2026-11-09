@@ -1365,11 +1365,13 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 /* Start with the NYA statement alone. Reveal point 1 after the user scrolls,
    followed by points 2-4, keeping earlier rows visible. */
-.nya-journey.is-pinned{height:205svh}
+.nya-journey.is-pinned{height:270svh}
 .nya-journey.is-pinned .nya-journey-stage{position:sticky;top:0;height:100svh;min-height:0;overflow:hidden}
 .nya-journey.is-pinned .nya-journey-layout{height:100%;min-height:0}
 .nya-journey.is-pinned .nya-journey-chapters{height:100%}
 .nya-journey.is-pinned .nya-journey-chapter{flex:1 1 0;min-height:0}
+.nya-journey.is-pinned .nya-journey-eyebrow,.nya-journey.is-pinned .nya-journey-problem{transition:transform .7s cubic-bezier(.22,.7,.2,1)}
+.nya-journey.is-pinned.is-lifted .nya-journey-eyebrow,.nya-journey.is-pinned.is-lifted .nya-journey-problem{transform:translateY(-5svh)}
 .nya-journey:not(.is-static) .nya-journey-chapter{
   opacity:0;transform:translateY(14px);visibility:hidden;
   transition:opacity .55s var(--ease),transform .55s var(--ease),visibility 0s linear .55s;
@@ -1931,7 +1933,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     </video>
   </div>
   <div class="hero-content reveal">
-    <h1 class="display">Hospital projects are high-stakes.<br><em>NYA reduces the risk.</em></h1>
+    <h1 class="display">Hospital projects are high-stakes.<br><em>NYA Reduces The Risk.</em></h1>
   </div>
   <div class="hero-dots" aria-label="Healthcare project images">
     <button class="hero-dot active" type="button" data-index="0" aria-label="Show Stanford hospital image"></button>
@@ -1945,9 +1947,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   <div class="proof-marquee">
     <div class="proof-track">
       <div class="proof-set" role="list">
-          <div class="proof" role="listitem"><div class="proof-v">35+ years of hospital experience</div></div>
-          <div class="proof" role="listitem"><div class="proof-v">16 OSHPD 1 projects</div></div>
-          <div class="proof" role="listitem"><div class="proof-v">67 university healthcare projects</div></div>
+          <div class="proof" role="listitem"><div class="proof-v">35+ Years Of Hospital Experience</div></div>
+          <div class="proof" role="listitem"><div class="proof-v">16 OSHPD 1 Projects</div></div>
+          <div class="proof" role="listitem"><div class="proof-v">67 University Healthcare Projects</div></div>
       </div>
 
     </div>
@@ -3069,11 +3071,12 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     const progress=clamp(-r.top/length);
     // Show only the NYA statement on entry. Reveal 1 after a small scroll,
     // then add 2, 3 and 4; never hide an earlier point.
+    story.classList.toggle('is-lifted',progress>.015);
     revealThrough(progress<.08?-1:progress<.28?0:progress<.51?1:progress<.74?2:3);
   }
   function request(){if(!raf)raf=requestAnimationFrame(onProgress)}
   function setFlow(){
-    story.classList.remove('is-pinned');story.classList.add('is-flow');mode='flow';
+    story.classList.remove('is-pinned');story.classList.add('is-flow');mode='flow';story.classList.remove('is-lifted');
     rows.forEach(row=>row.classList.remove('is-revealed'));
     if(reduced.matches){story.classList.add('is-static');rows.forEach(row=>row.classList.add('is-revealed'));return;}
     story.classList.remove('is-static');
