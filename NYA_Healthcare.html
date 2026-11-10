@@ -966,11 +966,11 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   background:rgba(1,12,17,.23);
 }
 .financial-risk--arcs .financial-chart {width:100%;min-width:0;display:block;}
-.financial-risk--arcs .arcs-cost-chart {width:100%;height:auto;display:block;aspect-ratio:1400/395;overflow:visible;}
+.financial-risk--arcs .arcs-cost-chart {width:100%;height:auto;display:block;aspect-ratio:1400/435;overflow:visible;}
 .financial-risk--arcs .arcs-lock {opacity:0;transition:opacity .25s ease;}
-/* Readout appears on its own 500ms after the chart scrolls into view; no hover or tap. */
-.financial-risk--arcs .financial-graphic.is-visible .arcs-lock {opacity:1;transition-delay:.5s;}
-.financial-risk--arcs .arcs-caption {display:none;margin-top:.6rem;font-size:.875rem;line-height:1.5;color:#dce2e5;}
+/* Readout appears on its own 1s after the chart scrolls into view; no hover or tap. */
+.financial-risk--arcs .financial-graphic.is-visible .arcs-lock {opacity:1;transition-delay:1s;}
+.financial-risk--arcs .arcs-caption {display:none;margin-top:.6rem;font-size:.6125rem;line-height:1.5;color:#dce2e5;text-wrap:balance;}
 .financial-risk--arcs .financial-graphic.is-compact .arcs-caption {display:block;}
 @media (prefers-reduced-motion: reduce) {
   .financial-risk--arcs .arcs-lock {transition:none;}
@@ -2010,25 +2010,11 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
         <p class="financial-intro reveal">NYA’s Advanced Rapid Concept Studies (ARCS) bring Design Development-level precision into the earliest design stages. Combining advanced technology with extensive hospital experience, ARCS reveals cost and performance implications long before critical decisions are made.</p>
       </div>
       <div class="financial-graphic reveal">
-        <div class="financial-chart" role="img" aria-label="Conceptual illustration of anticipated structural cost ranges from concept through construction documents. Both approaches start with the same wide range. With ARCS the range narrows sharply during concept, so by the start of schematic design it is as certain as the typical approach becomes late in design development, one phase sooner, and it ends at a lower cost.">
-          <!-- Everything but <defs> is drawn by the script below, in one of two layouts:
-               desktop (fixed 1400x395 viewBox) or compact (viewBox = container width in px,
+        <div class="financial-chart" role="img" aria-label="Conceptual illustration of anticipated structural cost ranges over the project timeline. Both approaches start with the same wide range. With NYA&#8217;s ARCS workflow the range narrows sharply early, reaching the same cost certainty the typical approach only reaches much later, and it ends lower.">
+          <!-- Everything is drawn by the script below, in one of two layouts:
+               desktop (fixed 1400x435 viewBox) or compact (viewBox = container width in px,
                so chart text stays at true pixel size on phones). -->
-          <svg class="arcs-cost-chart" data-option="1" viewBox="0 0 1400 395" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <defs>
-              <linearGradient id="arcsOrangeBand-1" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#f77b3b" stop-opacity=".29"/>
-                <stop offset="100%" stop-color="#f77b3b" stop-opacity=".04"/>
-              </linearGradient>
-              <linearGradient id="arcsTealBand-1" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#24e8d6" stop-opacity=".24"/>
-                <stop offset="100%" stop-color="#24e8d6" stop-opacity=".035"/>
-              </linearGradient>
-              <filter id="arcsSoftGlow-1" x="-25%" y="-25%" width="150%" height="150%">
-                <feGaussianBlur stdDeviation="2" result="glow"/>
-                <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
+          <svg class="arcs-cost-chart" data-option="1" viewBox="0 0 1400 435" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
           </svg>
         </div>
         <p class="arcs-caption">Conceptual illustration of anticipated structural cost ranges.</p>
@@ -3320,9 +3306,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    option 1 (data-option="1"); option 2 (OPT2) is the static over-time concept. Option 1:
    both approaches start with the same cost range. The typical range
    narrows steadily; the ARCS range drops sharply during concept, then tapers.
-   Once the chart is revealed, a snapshot fades in (CSS, 500ms delay): at the start of
-   schematic design ARCS already matches the certainty the typical approach only reaches
-   late in design development. */
+   Once the chart is revealed, a snapshot fades in (CSS, 1s delay): early on, the NYA
+   range is already as narrow as the typical range becomes much later. */
 function initArcsChart(svg){
   const chart=svg.closest('.financial-chart');
   const graphic=svg.closest('.financial-graphic');
@@ -3336,7 +3321,9 @@ function initArcsChart(svg){
   const shortLandscapeMQ=window.matchMedia('(orientation: landscape) and (max-height: 500px)');
 
   const K=12, FLOOR=.4, LOCK_T=.25, N=160;
-  const LOCK_1='REDUCED UNCERTAINTY', LOCK_2='ONE PHASE SOONER';
+  // The two equal bars show 'the same cost certainty'; the arrow back along the timeline shows 'sooner'.
+  const LOCK_LABEL='NYA reaches the same cost certainty sooner';
+  const TYP_C='#ff7930', ARCS_C='#00ebe2', AXIS_C='#8a949b', BAND_OPACITY=.1;
   // Fraction of the starting range still open (1 at concept, 0 at the end).
   const fTyp=t=>1-t;
   const fArcs=t=>(FLOOR+(1-FLOOR)*Math.exp(-K*t))*(1-t);
@@ -3345,15 +3332,16 @@ function initArcsChart(svg){
   const ts=Array.from({length:N+1},(_,i)=>i/N);
 
   const DESKTOP={
-    W:1400,H:395,X0:72,X1:1330,TOP:100,BOT:290,END_TYP:184,END_ARCS:246,
-    axisY:316,yTip:70,yHead:[8,13],xEnd:1359,xHead:[6,13],dot:8,
-    sw:{top:2.7,bot:2,pill:5,axis:2,legend:3,glow:2},
+    W:1400,H:435,X0:72,X1:1330,TOP:100,BOT:330,END_TYP:202,END_ARCS:277,
+    axisY:356,yTip:79,dot:6,
+    sw:{line:2,pill:3,axis:1,callout:1},
     title:{x:66,size:14,ls:2,lines:[[51,'ESTIMATED STRUCTURAL COST']]},
-    phases:{y:348,size:14,ls:2.2},
-    lock:{arrowY:58,l1:51,l2:75,size:13,ls:2.2,head:14},
-    legend:{len:50,textDx:65,rows:[[1155,60],[1155,91]],dy:6,size:16},
-    caption:{x:67,y:381,size:15},
-    time:{x:713,y:354,size:15,ls:2.2}
+    phases:{y:388,size:14,ls:2.2},
+    lock:{arrowY:76,l1:63,size:15,head:10},
+    // Wide layout labels each band at its end instead of using a legend.
+    direct:{size:16,dx:-14,above:-20,below:34},
+    caption:{x:67,y:421,size:10.5},
+    time:{x:701,y:388,size:15,ls:2.2}
   };
 
   /* Option 2 (from the full page): the typical range starts higher and wider than the
@@ -3369,38 +3357,35 @@ function initArcsChart(svg){
     arcsBot:'M72 252 C228 252 423 255 635 258 C814 250 1070 246 1330 246'
   };
   const opt=svg.dataset.option==='2'?2:1;
-  // Gradient/filter ids in the markup carry the option number so the two charts don't clash.
-  const ref=id=>'url(#'+id+'-'+opt+')';
-  // n1/n2: how many lines each callout label wraps to (see fitLock); the plot moves
+  // n1: how many lines the callout label wraps to (see fitLock); the plot moves
   // down by the extra lines so the callout never runs into the bands.
-  // maxH (short landscape only): squeeze the plot so the whole drawing fits that height,
-  // and move the legend to the empty top-right corner to free rows below the axis.
-  const compact=(W,n1=1,n2=1,maxH=0)=>{
+  // maxH (short landscape only): squeeze the plot so the whole drawing fits that height.
+  // Wide enough (tablets) to name each band at its end like desktop; phones keep a legend.
+  const compact=(W,n1=1,maxH=0)=>{
     // Plot grows with width so tablets don't get a long flat strip; labels step up a size there too.
-    const big=W>=560, fs=big?12.5:11, lh=Math.round(fs*1.4);
-    const l1=big?46:44, arrowY=l1+(n1-1)*lh+(big?8:7), l2=arrowY+(big?17:15);
+    const big=W>=560, fs=big?12.5:11, lockFs=big?14:13, lh=Math.round(lockFs*1.35);
+    const l1=big?46:44, arrowY=l1+(n1-1)*lh+(big?8:7);
     // Axis title sits right on top of the y-axis; the legend goes below the phase labels
     // so it never comes between the axis and its label.
     // Option 2 has no callout, so the plot starts right under the axis tip.
     // Plot height follows plot width so the curves keep roughly their desktop shape
     // (desktop plot is 6.6:1). A fixed tall floor on a narrow plot made the bands fat.
-    const TOP=opt===2?(big?48:44):l2+(n2-1)*lh+(big?22:20);
-    const sideLeg=maxH>0&&big, legSize=big?14:13;
+    const TOP=opt===2?(big?48:44):arrowY+(big?16:14);
     let plotH=Math.max(90,Math.min(180,Math.round((W-36)*.34)));
-    if(sideLeg) plotH=Math.max(60,Math.min(plotH,maxH-(TOP+22+24+12)));
+    if(maxH>0&&big) plotH=Math.max(60,Math.min(plotH,maxH-(TOP+22+24+12)));
     const BOT=TOP+plotH, axisY=BOT+22, legY=axisY+56;
-    const legRows=sideLeg?[[W-150,14],[W-150,36]]:W<290?[[0,legY],[0,legY+22]]:[[0,legY],[big?172:156,legY]];
+    const legRows=W<290?[[0,legY],[0,legY+22]]:[[0,legY],[156,legY]];
     return {
-      W,H:sideLeg?axisY+24+12:legRows[1][1]+12,X0:10,X1:W-26,TOP,BOT,
+      W,H:big?axisY+24+12:legRows[1][1]+12,X0:10,X1:W-26,TOP,BOT,
       END_TYP:TOP+(BOT-TOP)*(84/190),END_ARCS:TOP+(BOT-TOP)*(146/190),
-      axisY,yTip:24,yHead:[6,10],xEnd:W-4,xHead:[5,10],dot:4.5,
+      axisY,yTip:31,dot:4,
       // Thinner marks than desktop: the narrow chart is drawn at true px, so desktop
-      // weights (2.7px glowing lines, 5px bars) look heavy against a ~300px plot.
-      sw:{top:1.6,bot:1.1,pill:3,axis:1.5,legend:2,glow:1},
+      // weights (2px lines, 3px bars) look heavy against a ~300px plot.
+      sw:{line:1.3,pill:2,axis:1,callout:1,legend:2},
       title:{x:0,size:fs,ls:1.4,lines:[[big?14:12,'ESTIMATED STRUCTURAL COST']]},
       phases:{y:axisY+24,size:fs,ls:1.4},
-      lock:{arrowY,l1,l2,lh,size:fs,ls:big?1.6:1.4,head:big?11:10},
-      legend:{len:24,textDx:32,rows:legRows,dy:5,size:legSize},
+      lock:{arrowY,l1,lh,size:lockFs,head:big?8:7,dx:10},
+      ...(big?{direct:{size:14,dx:-10,above:-16,below:26}}:{legend:{len:24,textDx:32,rows:legRows,dy:5,size:13}}),
       time:{x:(10+W-4)/2,y:axisY+24,size:fs,ls:1.4},
       caption:null // shown as HTML below the chart instead, so it can wrap
     };
@@ -3418,9 +3403,8 @@ function initArcsChart(svg){
 
   function render(L){
     compactMode=!L.caption;
-    Array.from(svg.childNodes).forEach(n=>{if(n.nodeName!=='defs') svg.removeChild(n);});
+    Array.from(svg.childNodes).forEach(n=>svg.removeChild(n));
     svg.setAttribute('viewBox','0 0 '+L.W+' '+L.H);
-    const blur=svg.querySelector('feGaussianBlur'); if(blur) blur.setAttribute('stdDeviation',L.sw.glow);
     svg.style.aspectRatio=L.W+' / '+L.H;
     const {X0,X1,TOP,BOT,END_TYP,END_ARCS,axisY}=L;
     const x=t=>X0+t*(X1-X0);
@@ -3432,67 +3416,66 @@ function initArcsChart(svg){
     const title=el('g',{fill:'#f0f4f6','font-family':FONT,'font-size':L.title.size,'letter-spacing':L.title.ls});
     L.title.lines.forEach(([y,s])=>el('text',{x:L.title.x,y},title,s));
 
-    const [yh,yl]=L.yHead, [xh,xl]=L.xHead;
-    el('path',{d:'M'+X0+' '+axisY+' V'+(L.yTip+yl/2),fill:'none',stroke:'#fff','stroke-width':L.sw.axis});
-    el('path',{d:'M'+(X0-yh)+' '+(L.yTip+yl)+' L'+X0+' '+L.yTip+' L'+(X0+yh)+' '+(L.yTip+yl)+' Z',fill:'#fff'});
-    el('path',{d:'M'+X0+' '+axisY+' H'+(L.xEnd-xl/2),fill:'none',stroke:'#fff','stroke-width':L.sw.axis});
-    el('path',{d:'M'+(L.xEnd-xl)+' '+(axisY-xh)+' L'+L.xEnd+' '+axisY+' L'+(L.xEnd-xl)+' '+(axisY+xh)+' Z',fill:'#fff'});
+    el('path',{d:'M'+X0+' '+L.yTip+' V'+axisY+' H'+X1,fill:'none',stroke:AXIS_C,'stroke-width':L.sw.axis});
 
     if(opt===2){ renderOpt2(L); return; }
     // X-axis: a single label, no phase ticks or grid.
     el('text',{x:(X0+X1)/2,y:L.phases.y,fill:'#edf1f3','font-family':FONT,'font-size':L.phases.size,'letter-spacing':L.phases.ls,'text-anchor':'middle'},null,'PROJECT TIMELINE');
 
-    el('path',{d:band(typ),fill:ref('arcsOrangeBand')});
-    el('path',{d:band(arcs),fill:ref('arcsTealBand')});
-    el('path',{d:line(typ,0),fill:'none',stroke:'#ff7930','stroke-width':L.sw.top,'stroke-linecap':'round',filter:ref('arcsSoftGlow')});
-    el('path',{d:line(typ,1),fill:'none',stroke:'#ff7930','stroke-width':L.sw.bot,'stroke-linecap':'round'});
-    el('path',{d:line(arcs,0),fill:'none',stroke:'#00ebe2','stroke-width':L.sw.top,'stroke-linecap':'round',filter:ref('arcsSoftGlow')});
-    el('path',{d:line(arcs,1),fill:'none',stroke:'#00ebe2','stroke-width':L.sw.bot,'stroke-linecap':'round'});
-    el('circle',{cx:X1,cy:END_TYP,r:L.dot,fill:'#ff7930'});
-    el('circle',{cx:X1,cy:END_ARCS,r:L.dot,fill:'#00ebe2'});
+    el('path',{d:band(typ),fill:TYP_C,'fill-opacity':BAND_OPACITY});
+    el('path',{d:band(arcs),fill:ARCS_C,'fill-opacity':BAND_OPACITY});
+    [[typ,TYP_C],[arcs,ARCS_C]].forEach(([fn,c])=>[0,1].forEach(i=>
+      el('path',{d:line(fn,i),fill:'none',stroke:c,'stroke-width':L.sw.line,'stroke-linecap':'round'})));
+    el('circle',{cx:X1,cy:END_TYP,r:L.dot,fill:TYP_C});
+    el('circle',{cx:X1,cy:END_ARCS,r:L.dot,fill:ARCS_C});
 
-    // Lock: ARCS at the start of SD matches the typical range late in DD.
+    // Lock: early on, the NYA range is already as narrow as the typical range becomes much later.
     const lk=L.lock, xa=x(LOCK_T), tb=matchT(LOCK_T), xb=x(tb), ra=arcs(LOCK_T), rb=typ(tb);
-    const lock=el('g',{class:'arcs-lock','pointer-events':'none'});
+    const lock=el('g',{class:'arcs-lock'});
     const guides=el('g',{stroke:'rgba(237,241,243,.55)','stroke-width':1,'stroke-dasharray':'4 4'},lock);
     el('line',{x1:xa,x2:xa,y1:lk.arrowY,y2:ra[0]-3},guides);
     el('line',{x1:xb,x2:xb,y1:lk.arrowY,y2:rb[0]-3},guides);
-    el('line',{x1:xa+lk.head-2,x2:xb,y1:lk.arrowY,y2:lk.arrowY,stroke:'#edf1f3','stroke-width':L.sw.axis},lock);
-    el('path',{d:'M'+xa+' '+lk.arrowY+' L'+(xa+lk.head)+' '+(lk.arrowY-lk.head/2)+' L'+(xa+lk.head)+' '+(lk.arrowY+lk.head/2)+' Z',fill:'#edf1f3'},lock);
-    const lbl=el('g',{fill:'#edf1f3','font-family':FONT,'font-size':lk.size,'letter-spacing':lk.ls,'text-anchor':'middle'},lock);
-    (lk.lines1||[LOCK_1]).forEach((s,i)=>el('text',{x:(xa+xb)/2,y:lk.l1+i*(lk.lh||0)},lbl,s));
-    (lk.lines2||[LOCK_2]).forEach((s,i)=>el('text',{x:(xa+xb)/2,y:lk.l2+i*(lk.lh||0)},lbl,s));
-    el('line',{x1:xb,x2:xb,y1:rb[0],y2:rb[1],stroke:'#ff7930','stroke-width':L.sw.pill,'stroke-linecap':'round'},lock);
-    el('line',{x1:xa,x2:xa,y1:ra[0],y2:ra[1],stroke:'#00ebe2','stroke-width':L.sw.pill,'stroke-linecap':'round'},lock);
+    const tip=xa+4; // small gap so the head reads separately from the teal guide
+    el('line',{x1:tip+lk.head-2,x2:xb,y1:lk.arrowY,y2:lk.arrowY,stroke:'#edf1f3','stroke-opacity':.65,'stroke-width':L.sw.callout},lock);
+    el('path',{d:'M'+tip+' '+lk.arrowY+' L'+(tip+lk.head)+' '+(lk.arrowY-lk.head/2)+' L'+(tip+lk.head)+' '+(lk.arrowY+lk.head/2)+' Z',fill:'#edf1f3','fill-opacity':.65},lock);
+    const lbl=el('g',{fill:'#edf1f3','fill-opacity':.85,'font-family':FONT,'font-size':lk.size},lock);
+    (lk.lines||[LOCK_LABEL]).forEach((s,i)=>el('text',{x:xa+(lk.dx||0),y:lk.l1+i*(lk.lh||0)},lbl,s));
+    el('line',{x1:xb,x2:xb,y1:rb[0],y2:rb[1],stroke:TYP_C,'stroke-width':L.sw.pill,'stroke-linecap':'round'},lock);
+    el('line',{x1:xa,x2:xa,y1:ra[0],y2:ra[1],stroke:ARCS_C,'stroke-width':L.sw.pill,'stroke-linecap':'round'},lock);
     finish(L);
   }
 
   function renderOpt2(L){
     const {X0,X1,TOP,BOT}=L;
-    // Desktop units -> this layout. Identity on desktop.
+    // Original 190-unit-tall drawing -> this layout's plot.
     const mx=v=>X0+(v-72)*(X1-X0)/1258, my=v=>TOP+(v-100)*(BOT-TOP)/190;
     const map=d=>d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g,(_,a,b)=>+mx(+a).toFixed(1)+' '+(+my(+b).toFixed(1)));
-    el('path',{d:map(OPT2.typBand),fill:ref('arcsOrangeBand')});
-    el('path',{d:map(OPT2.arcsBand),fill:ref('arcsTealBand')});
-    el('path',{d:map(OPT2.typTop),fill:'none',stroke:'#ff7930','stroke-width':L.sw.top,'stroke-linecap':'round',filter:ref('arcsSoftGlow')});
-    el('path',{d:map(OPT2.typBot),fill:'none',stroke:'#ff7930','stroke-width':L.sw.bot,'stroke-linecap':'round'});
-    el('path',{d:map(OPT2.arcsTop),fill:'none',stroke:'#00ebe2','stroke-width':L.sw.top,'stroke-linecap':'round',filter:ref('arcsSoftGlow')});
-    el('path',{d:map(OPT2.arcsBot),fill:'none',stroke:'#00ebe2','stroke-width':L.sw.bot,'stroke-linecap':'round'});
-    el('circle',{cx:X1,cy:my(184),r:L.dot,fill:'#ff7930'});
-    el('circle',{cx:X1,cy:my(246),r:L.dot,fill:'#00ebe2'});
+    el('path',{d:map(OPT2.typBand),fill:TYP_C,'fill-opacity':BAND_OPACITY});
+    el('path',{d:map(OPT2.arcsBand),fill:ARCS_C,'fill-opacity':BAND_OPACITY});
+    [[OPT2.typTop,TYP_C],[OPT2.typBot,TYP_C],[OPT2.arcsTop,ARCS_C],[OPT2.arcsBot,ARCS_C]].forEach(([d,c])=>
+      el('path',{d:map(d),fill:'none',stroke:c,'stroke-width':L.sw.line,'stroke-linecap':'round'}));
+    el('circle',{cx:X1,cy:my(184),r:L.dot,fill:TYP_C});
+    el('circle',{cx:X1,cy:my(246),r:L.dot,fill:ARCS_C});
     const tm=L.time;
     el('text',{x:tm.x,y:tm.y,'text-anchor':'middle',fill:'#edf1f3','font-family':FONT,'font-size':tm.size,'letter-spacing':tm.ls},null,'TIME');
     finish(L);
   }
 
   function finish(L){
-    const lg=L.legend, leg=el('g',{'font-family':FONT,'font-size':lg.size,fill:'#edf1f3','pointer-events':'none'});
-    [['#ff7930','Typical approach'],['#00ebe2','NYA with ARCS']].forEach(([c,s],i)=>{
-      const [lx,y]=lg.rows[i];
-      el('line',{x1:lx,y1:y,x2:lx+lg.len,y2:y,stroke:c,'stroke-width':L.sw.legend},leg);
-      el('text',{x:lx+lg.textDx,y:y+lg.dy},leg,s);
-    });
-    if(L.caption) el('text',{x:L.caption.x,y:L.caption.y,fill:'#dce2e5','font-family':FONT,'font-size':L.caption.size,'pointer-events':'none'},null,captionText());
+    const series=[[TYP_C,'Typical approach'],[ARCS_C,'NYA with ARCS']];
+    if(L.direct){
+      // Typical sits above its band end, ARCS below its own, so each name touches its data.
+      const d=L.direct, g=el('g',{'font-family':FONT,'font-size':d.size,'text-anchor':'end'});
+      [[L.END_TYP+d.above],[L.END_ARCS+d.below]].forEach(([y],i)=>el('text',{x:L.X1+d.dx,y,fill:series[i][0]},g,series[i][1]));
+    }else{
+      const lg=L.legend, leg=el('g',{'font-family':FONT,'font-size':lg.size,fill:'#edf1f3'});
+      series.forEach(([c,s],i)=>{
+        const [lx,y]=lg.rows[i];
+        el('line',{x1:lx,y1:y,x2:lx+lg.len,y2:y,stroke:c,'stroke-width':L.sw.legend},leg);
+        el('text',{x:lx+lg.textDx,y:y+lg.dy},leg,s);
+      });
+    }
+    if(L.caption) el('text',{x:L.caption.x,y:L.caption.y,fill:'#dce2e5','font-family':FONT,'font-size':L.caption.size},null,captionText());
     if(caption) caption.textContent=captionText();
     if(graphic) graphic.classList.toggle('is-compact',compactMode);
   }
@@ -3507,7 +3490,7 @@ function initArcsChart(svg){
     if(key===lastKey) return;
     lastKey=key;
     const W=Math.max(240,w);
-    render(!isCompact?DESKTOP:opt===1?fitLock(W,maxH):compact(W,1,1,maxH));
+    render(!isCompact?DESKTOP:opt===1?fitLock(W,maxH):compact(W,1,maxH));
     // The HTML caption only shows once compact; its height changes what fits, so retry.
     if(maxH&&fitHeight()!==maxH) layout();
   }
@@ -3525,22 +3508,30 @@ function initArcsChart(svg){
     if(caption&&caption.offsetHeight) used+=caption.offsetHeight+(parseFloat(getComputedStyle(caption).marginTop)||0);
     return Math.floor((window.innerHeight-used)/10)*10;
   }
-  // Wrap each callout label to the width between the two dashed guides, so it shrinks
-  // onto more lines as the chart narrows instead of spilling past the arrow.
+  // Wrap the callout label to the plot width right of the teal guide, so it shrinks onto
+  // more lines as the chart narrows.
   function fitLock(W,maxH=0){
-    const L0=compact(W,1,1,maxH), lk=L0.lock;
-    const span=(matchT(LOCK_T)-LOCK_T)*(L0.X1-L0.X0)-12; // keep clear of the guide lines
-    const probe=el('text',{'font-family':FONT,'font-size':lk.size,'letter-spacing':lk.ls,visibility:'hidden'});
+    const L0=compact(W,1,maxH), lk=L0.lock;
+    const span=L0.X1-(L0.X0+LOCK_T*(L0.X1-L0.X0)+(lk.dx||0));
+    const probe=el('text',{'font-family':FONT,'font-size':lk.size,visibility:'hidden'});
     const width=s=>{probe.textContent=s;try{return probe.getBBox().width;}catch(e){return 0;}};
-    const wrap=s=>s.split(' ').reduce((out,word)=>{
+    const wrap=(s,max)=>s.split(' ').reduce((out,word)=>{
       const last=out[out.length-1];
-      if(last&&width(last+' '+word)<=span) out[out.length-1]=last+' '+word; else out.push(word);
+      if(last&&width(last+' '+word)<=max) out[out.length-1]=last+' '+word; else out.push(word);
       return out;
     },[]);
-    const lines1=wrap(LOCK_1), lines2=wrap(LOCK_2);
+    // Fewest lines that fit, then the narrowest width that keeps that count, so the lines
+    // come out even instead of leaving one word alone on the last line. No line can be
+    // narrower than the label's width split evenly, so the search starts there.
+    let lines=wrap(LOCK_LABEL,span);
+    const n=lines.length;
+    if(n>1) for(let max=Math.ceil(width(LOCK_LABEL)/n);max<span;max+=4){
+      const next=wrap(LOCK_LABEL,max);
+      if(next.length<=n){lines=next;break;}
+    }
     probe.remove();
-    const L=compact(W,lines1.length,lines2.length,maxH);
-    L.lock.lines1=lines1; L.lock.lines2=lines2;
+    const L=compact(W,lines.length,maxH);
+    L.lock.lines=lines;
     return L;
   }
   layout();
