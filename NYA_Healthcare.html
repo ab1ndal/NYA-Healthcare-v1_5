@@ -1824,12 +1824,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Desktop (class is-pinned, the canopy layout): the artwork sits at the bottom of the stage and the words and cards are placed on it.
    All sizes follow its width, so the words stay between its posts. The section scrolls normally; the script sets the stage height
    so it is only as tall as its content (a set margin above the heading). */
-/* Desktop: the stage is held (sticky) while the cards and then the building come up, with its foot on the bottom edge of the
-   screen; the script makes the section the stage's height plus the hold and sets --hold-top (screen height minus stage height).
-   The drawing may reach above the stage (its tree), clipped only by the section, so while held the tree shows above the words
-   instead of being cut off in a straight line. overflow:clip keeps the hold working (it is not a scroll container). */
-.nya-s33.is-pinned{overflow:clip}
-.nya-s33.is-pinned .nya-s33-stage{position:sticky;top:var(--hold-top,0px);height:100svh;padding:0;overflow:visible}
+.nya-s33.is-pinned .nya-s33-stage{position:relative;height:100svh;padding:0;overflow:hidden}
 .is-pinned .nya-s33-art{position:absolute;left:0;right:0;bottom:0;margin:0;z-index:1}
 /* The building is the whole hospital from the newer drawing (2000 x 667, with its own lawn and tree). It builds up slowly with the
    scroll (--hp runs 0 to 1); where it stands depends on the screen (see below). */
@@ -1897,6 +1892,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    runs 0 to 1 per card, set by the script). While the script measures the layout (is-fitting) the cards sit in place. */
 .is-live .nya-s33-step{opacity:var(--cp,0);transform:translateY(calc((1 - var(--cp,0))*2.5rem));transition:opacity .25s linear,transform .25s linear}
 .nya-s33.is-live.is-forced .nya-s33-step{transition:opacity .25s linear,transform .25s linear!important}
+/* Desktop: the cards and then the building play in by themselves once the cards come into view (set by the script),
+   so their transitions are longer and eased: each card 0.6s, the building 1s. */
+.nya-s33.is-live.is-forced.is-pinned .nya-s33-step{transition:opacity .6s ease-out,transform .6s ease-out!important}
+.nya-s33.is-live.is-forced.is-pinned .nya-s33-full{transition:opacity 1s ease-out,transform 1s ease-out!important}
 .nya-s33.is-live.is-forced.is-fitting .nya-s33-step,.nya-s33.is-fitting .nya-s33-step{transform:none!important;transition:none!important}
 /* ==== NYA FINALE COMBINED END (CSS) ==== */
 </style>
@@ -4167,15 +4166,18 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         prevUp=cp>=1;
       });
     }
-    // Desktop, where the cards stand over the drawing: card 1 to card 6 come up one by one, then the building appears behind them.
-    // It starts as the cards' row comes into view (its top at 85% of the screen) and runs on while the section is held at the
-    // bottom of the screen, ending when the hold ends (section top at holdTop-hold). The cards take the first 70% of that scroll,
-    // one after another, and the building the rest.
+    // Desktop, where the cards stand over the drawing: once the cards' row comes into view (its top at 85% of the screen), card 1
+    // to card 6 come up by themselves one after another, half a second apart, then the building fades in behind them. It plays once
+    // (shown counts the cards that are up; built says the building is in).
     if(pinned){
-      const s=section.getBoundingClientRect().top,off=section.querySelector('.nya-s33-steps').offsetTop,from=vh*.85-off;
-      const q=end?1:clamp((from-s)/Math.max(1,from-holdTop+hold)),all=[...section.querySelectorAll('.nya-s33-step')];
-      all.forEach((li,i)=>li.style.setProperty('--cp',clamp(q/.7*all.length-i).toFixed(4)));
-      section.style.setProperty('--hp',clamp((q-.7)/.3).toFixed(4));
+      const all=[...section.querySelectorAll('.nya-s33-step')];
+      if(!played&&section.querySelector('.nya-s33-steps').getBoundingClientRect().top<vh*.85){
+        played=true;
+        all.forEach((li,i)=>setTimeout(()=>{shown=Math.max(shown,i+1);request()},i*500));
+        setTimeout(()=>{built=true;request()},all.length*500+200);
+      }
+      all.forEach((li,i)=>li.style.setProperty('--cp',i<shown?'1':'0'));
+      section.style.setProperty('--hp',built?'1':'0');
     }
   }
   // Keep the heading block close above the canopy: measure where it starts and move the words down to it.
@@ -4293,21 +4295,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       fitIntro();
     }
   }
-  // The hold: how far the page scrolls while the section stays put, its foot on the bottom of the screen (1.3 screen-heights).
-  let hold=0,holdTop=0;
-  function setHold(){
-    section.style.height='';
-    section.style.removeProperty('--hold-top');
-    hold=0;holdTop=0;
-    if(!pinned)return;
-    hold=Math.round(innerHeight*1.3);
-    holdTop=innerHeight-stage.offsetHeight;
-    section.style.height=(stage.offsetHeight+hold)+'px';
-    section.style.setProperty('--hold-top',holdTop+'px');
-  }
+  // The desktop reveal: whether it has started, how many cards are up, and whether the building is in.
+  let played=false,shown=0,built=false;
   function setup(){
     section.classList.add('is-fitting');
-    section.style.height='';
     stage.style.height='';
     pinned=PIN&&roomy.matches;
     section.classList.toggle('is-pinned',pinned);
@@ -4320,7 +4311,6 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     if(pinned)for(const f of [.95,.9,.85]){if(cardsFit())break;section.style.setProperty('--fit',f)}
     if(pinned&&!cardsFit()){pinned=false;section.classList.remove('is-pinned');section.style.removeProperty('--fit');fitIntro()}
     fitStage();
-    setHold();
     section.classList.remove('is-fitting');
     request();
   }
