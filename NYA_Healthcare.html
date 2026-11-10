@@ -4162,6 +4162,15 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         prevUp=cp>=1;
       });
     }
+    // Desktop, where the cards stand over the drawing: the cards come up one by one first, then the building appears behind them,
+    // fully in by the end of the page. q runs from the cards' top at the bottom of the screen (0) to the end of the page (1);
+    // the cards take the first 70% of it, one after another, and the building the rest.
+    if(pinned){
+      const st=section.querySelector('.nya-s33-steps').getBoundingClientRect(),toEnd=Math.max(0,document.documentElement.scrollHeight-vh-scrollY);
+      const q=end?1:clamp((vh-st.top)/Math.max(1,vh-st.top+toEnd)),all=[...section.querySelectorAll('.nya-s33-step')];
+      all.forEach((li,i)=>li.style.setProperty('--cp',clamp(q/.7*all.length-i).toFixed(4)));
+      section.style.setProperty('--hp',clamp((q-.7)/.3).toFixed(4));
+    }
   }
   // Keep the heading block close above the canopy: measure where it starts and move the words down to it.
   const intro=section.querySelector('.nya-s33-intro'),stage=section.querySelector('.nya-s33-stage'),art=section.querySelector('.nya-s33-art'),building=section.querySelector('.nya-s33-full');
