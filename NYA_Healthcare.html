@@ -1824,9 +1824,12 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Desktop (class is-pinned, the canopy layout): the artwork sits at the bottom of the stage and the words and cards are placed on it.
    All sizes follow its width, so the words stay between its posts. The section scrolls normally; the script sets the stage height
    so it is only as tall as its content (a set margin above the heading). */
-/* Desktop: the stage is held (sticky) while the cards and then the building come up; the script makes the section the stage's
-   height plus the hold, and sets --hold-top (0, or less when the stage is taller than the screen so its foot stays in view). */
-.nya-s33.is-pinned .nya-s33-stage{position:sticky;top:var(--hold-top,0px);height:100svh;padding:0;overflow:hidden}
+/* Desktop: the stage is held (sticky) while the cards and then the building come up, with its foot on the bottom edge of the
+   screen; the script makes the section the stage's height plus the hold and sets --hold-top (screen height minus stage height).
+   The drawing may reach above the stage (its tree), clipped only by the section, so while held the tree shows above the words
+   instead of being cut off in a straight line. overflow:clip keeps the hold working (it is not a scroll container). */
+.nya-s33.is-pinned{overflow:clip}
+.nya-s33.is-pinned .nya-s33-stage{position:sticky;top:var(--hold-top,0px);height:100svh;padding:0;overflow:visible}
 .is-pinned .nya-s33-art{position:absolute;left:0;right:0;bottom:0;margin:0;z-index:1}
 /* The building is the whole hospital from the newer drawing (2000 x 667, with its own lawn and tree). It builds up slowly with the
    scroll (--hp runs 0 to 1); where it stands depends on the screen (see below). */
@@ -4165,11 +4168,12 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       });
     }
     // Desktop, where the cards stand over the drawing: card 1 to card 6 come up one by one, then the building appears behind them.
-    // It starts as the cards' row comes into view (its top at 85% of the screen) and runs on while the section is held at the top,
-    // ending when the hold ends. The cards take the first 70% of that scroll, one after another, and the building the rest.
+    // It starts as the cards' row comes into view (its top at 85% of the screen) and runs on while the section is held at the
+    // bottom of the screen, ending when the hold ends (section top at holdTop-hold). The cards take the first 70% of that scroll,
+    // one after another, and the building the rest.
     if(pinned){
       const s=section.getBoundingClientRect().top,off=section.querySelector('.nya-s33-steps').offsetTop,from=vh*.85-off;
-      const q=end?1:clamp((from-s)/Math.max(1,from+hold)),all=[...section.querySelectorAll('.nya-s33-step')];
+      const q=end?1:clamp((from-s)/Math.max(1,from-holdTop+hold)),all=[...section.querySelectorAll('.nya-s33-step')];
       all.forEach((li,i)=>li.style.setProperty('--cp',clamp(q/.7*all.length-i).toFixed(4)));
       section.style.setProperty('--hp',clamp((q-.7)/.3).toFixed(4));
     }
@@ -4289,16 +4293,17 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       fitIntro();
     }
   }
-  // The hold: how far the page scrolls while the section stays put at the top (1.3 screen-heights).
-  let hold=0;
+  // The hold: how far the page scrolls while the section stays put, its foot on the bottom of the screen (1.3 screen-heights).
+  let hold=0,holdTop=0;
   function setHold(){
     section.style.height='';
     section.style.removeProperty('--hold-top');
-    hold=0;
+    hold=0;holdTop=0;
     if(!pinned)return;
     hold=Math.round(innerHeight*1.3);
+    holdTop=innerHeight-stage.offsetHeight;
     section.style.height=(stage.offsetHeight+hold)+'px';
-    section.style.setProperty('--hold-top',Math.min(0,innerHeight-stage.offsetHeight)+'px');
+    section.style.setProperty('--hold-top',holdTop+'px');
   }
   function setup(){
     section.classList.add('is-fitting');
