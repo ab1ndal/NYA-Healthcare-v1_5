@@ -39,3 +39,19 @@ All images and videos are hosted on nyase.com WordPress and linked by URL. On 20
 - **Images:** WebP, quality ~80, max 2400px wide (no wider than they display at 2x). Exception: full-bleed photos may go to 2880px for 1440px laptops at 2x (e.g. the UCI photo `ucidouglaswhite-1.webp`).
 - **Videos:** H.264 MP4, no audio, `+faststart`, scaled to display size (command in `TODO.md`). Every `<video>` keeps a `poster` image so phones don't show a blank box.
 - **Uploading:** add as new files in WordPress, never replace existing ones (other pages may use them). WordPress renames images on upload, removing hyphens and trailing numbers (e.g. `nya-closing-base.webp` → `nyaclosingbase.webp`). Copy the final URL from the Media Library, not the local filename.
+
+## Scroll regression check
+
+Run this before publishing changes to scroll-driven sections. It checks every way a visitor can scroll at the top, bottom and the start, middle and end of each pinned section: arrow keys, Space, Shift+Space, PageUp/PageDown, Home/End, mouse wheel, slow trackpad and touch swipes, scrollbar track click and press-and-hold. It also checks that the project pop-up locks the page while open.
+
+```
+npm install                                        # once
+defaults write -g AppleShowScrollBars -string Always   # macOS only, once: scrollbar checks need visible scrollbars
+npm run test:scroll
+```
+
+Takes about 80 seconds, opens Chrome windows, and does not use your mouse or keyboard. It serves this folder itself; pass a URL to test elsewhere (`npm run test:scroll -- https://...`). To undo the scrollbar setting: `defaults delete -g AppleShowScrollBars`.
+
+**Don't add `scroll-snap-type` to `html` or `body`.** In Chrome it stops scrollbar clicks from scrolling and makes slow trackpad swipes snap back (removed on 2026-11-09 for this reason). The test fails if it comes back.
+
+Not covered: real Safari, phone layouts, Windows scrollbar arrow buttons, and trackpad momentum. Check those by hand.
