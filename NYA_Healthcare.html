@@ -1826,7 +1826,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    so it is only as tall as its content (a set margin above the heading). */
 .nya-s33.is-pinned .nya-s33-stage{position:relative;height:100svh;padding:0;overflow:hidden}
 .is-pinned .nya-s33-art{position:absolute;left:0;right:0;bottom:0;margin:0;z-index:1}
-/* The building is the whole hospital from the newer drawing (800 x 349, with its own lawn and tree). It builds up slowly with the
+/* The building is the whole hospital from the newer drawing (2000 x 667, with its own lawn and tree). It builds up slowly with the
    scroll (--hp runs 0 to 1); where it stands depends on the screen (see below). */
 .is-live .nya-s33-art .nya-s33-full{opacity:var(--hp,0);transform:translateY(calc((1 - var(--hp,0))*1.2*var(--k)));transition:opacity .25s linear,transform .25s linear}
 .is-pinned .nya-s33-intro{position:absolute;left:calc(2.8*var(--k));top:min(calc(2.4*var(--k)),4.2svh);z-index:4;padding:0}
@@ -1859,18 +1859,18 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 @media(max-width:559px){.nya-s33-steps{grid-template-columns:1fr;gap:1.8rem}}
 /* Review option, opened with ?canopy=none: no canopy (roof, posts, cable, ground line and plants); the building and cards stay. */
 .nya-s33.is-no-canopy .nya-s33-base,.nya-s33.is-no-canopy .nya-s33-line{display:none}
-/* Wherever the pillars show (900px and wider) the drawing spans the full width with its lawn (row 320) on the canopy ground line,
+/* Wherever the pillars show (900px and wider) the drawing spans the full width with its lawn (row 615 of 667) on the canopy ground line,
    behind the posts, cable and cards. */
-@media(min-width:900px){.nya-s33-art .nya-s33-full{top:auto;bottom:calc(-1.47*var(--k));height:auto}}
+@media(min-width:900px){.nya-s33-art .nya-s33-full{top:auto;bottom:calc(-.45*var(--k));height:auto}}
 /* Unpinned, 900px and wider: the drawing's top rows are empty sky down to the hospital drawing's tree (about row 190), so the
    drawing tucks further up under the words: 11% of the width = 185 rows; 6.3% (105 rows) for Larger, whose tree starts higher.
    The script (fitArt) then pulls it up further, as far as the words allow. The drawing never takes clicks meant for the words. */
 .nya-s33-art{pointer-events:none}
 @media(min-width:900px){.nya-s33:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 11%)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 6.3%)}}
-/* Review option, ?building=larger: the same drawing 1.3x larger, right-aligned. It grows downward: the red tower's top stays where it
-   is at normal size (drawing row 501; the image starts at row 156 = 16.58%), so nothing new rises into the words; the lower floors
-   run down behind the cards and the image is cut off at the canopy's ground line (row 905, 21% up from its bottom). */
-@media(min-width:900px){.nya-s33.is-full-large .nya-s33-art .nya-s33-full{left:auto;right:0;width:130%;max-width:none;top:16.58%;bottom:auto;clip-path:inset(0 0 21% 0)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+/* Review option, ?building=larger: the same drawing 1.3x larger, right-aligned. It grows downward: the red tower's top (row 236 of 667) stays
+   where it is at normal size (canopy row 588; the image starts at row 332 = 35.25%), so nothing new rises into the words; the lower
+   floors run down behind the cards and the image is cut off at the canopy's ground line (row 905, 20.9% up from its bottom). */
+@media(min-width:900px){.nya-s33.is-full-large .nya-s33-art .nya-s33-full{left:auto;right:0;width:130%;max-width:none;top:35.25%;bottom:auto;clip-path:inset(0 0 20.9% 0)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{overflow:hidden}}
 /* The option bar for review: bottom of the window while this section is on screen, 900px and wider (set up by the script). */
 .nya-s33-options{position:fixed;left:50%;bottom:16px;z-index:60;display:none;align-items:center;padding:5px 6px;border-radius:999px;background:rgba(20,25,30,.92);color:#fff;font:500 13px/1 var(--body);box-shadow:0 6px 24px rgba(0,0,0,.25);opacity:0;transform:translate(-50%,8px);pointer-events:none;transition:opacity .2s,transform .2s}
 @media(min-width:900px){.nya-s33-options{display:flex}}
@@ -1884,15 +1884,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-s33-options button:focus-visible{outline:2px solid #fff;outline-offset:2px}
 /* The building sits a little above the canopy's ground line (2.5 units, about 47px on a 1920px screen).
    The larger new drawing is anchored at its top, so it moves up with a negative top margin and its cut stays on the ground line. */
-@media(min-width:900px){.nya-s33-art .nya-s33-full{margin-bottom:calc(2.5*var(--k))}.nya-s33.is-full-large .nya-s33-art .nya-s33-full{margin-bottom:0;margin-top:calc(-2.5*var(--k));clip-path:inset(0 0 16.58% 0)}}
+@media(min-width:900px){.nya-s33-art .nya-s33-full{margin-bottom:calc(2.5*var(--k))}.nya-s33.is-full-large .nya-s33-art .nya-s33-full{margin-bottom:0;margin-top:calc(-2.5*var(--k));clip-path:inset(0 0 15.15% 0)}}
 /* Canopy off, 900px and wider: the hospital drawing fills the section. It is 4% wider and set past the right edge by its own empty
-   margin (the building ends at column 788 of 800), so the building reaches the side, and its lawn (row 320 of 349) sits on the bottom edge (the 29 empty rows under it hang below and are clipped).
+   margin (the building ends at column 1973 of 2000), so the building reaches the side, and its lawn (row 615 of 667) sits on the bottom edge (the 52 empty rows under it hang below and are clipped).
    Larger keeps its own size and top and simply runs to the bottom edge. */
-@media(min-width:900px){.nya-s33.is-no-canopy .nya-s33-art .nya-s33-full{left:auto;right:-1.45%;width:104%;max-width:none;bottom:calc(-3.77*var(--k));margin-bottom:0}.nya-s33.is-no-canopy.is-full-large .nya-s33-art .nya-s33-full{right:-1.8%;width:130%;top:16.58%;bottom:auto;clip-path:none}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+@media(min-width:900px){.nya-s33.is-no-canopy .nya-s33-art .nya-s33-full{left:auto;right:-1.4%;width:104%;max-width:none;bottom:calc(-2.7*var(--k));margin-bottom:0}.nya-s33.is-no-canopy.is-full-large .nya-s33-art .nya-s33-full{right:-1.76%;width:130%;top:35.25%;bottom:auto;clip-path:none}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{overflow:hidden}}
 /* Phones and portrait tablets: no pillars. Only rows 76 to 528 of the canopy drawing (941 rows) show: the roof, with the hospital
-   drawing standing on it (its lawn on row 488, at 63% of the width so it fits the 412 rows above the roof, right-aligned),
+   drawing standing on it (its lawn on row 488, at 80% of the width so its 615 rows fit the 412 above the roof, right-aligned),
    without the empty bays below. The cable hangs between the pillars, so it goes with them. */
-@media(max-width:899px){.nya-s33-art{aspect-ratio:1672/452;margin-top:1.5rem;overflow:hidden}.nya-s33-art .nya-s33-base{top:-16.81%;height:208.19%}.nya-s33-art .nya-s33-line{display:none}.nya-s33-art .nya-s33-full{left:auto;right:0;bottom:auto;width:62.98%;height:auto;top:-2.04%}}
+@media(max-width:899px){.nya-s33-art{aspect-ratio:1672/452;margin-top:1.5rem;overflow:hidden}.nya-s33-art .nya-s33-base{top:-16.81%;height:208.19%}.nya-s33-art .nya-s33-line{display:none}.nya-s33-art .nya-s33-full{left:auto;right:0;bottom:auto;width:80.14%;height:auto;top:0}}
 /* Phones: crop it further to the building end (x 38% to 100%) and show it larger. */
 @media(max-width:699px){.nya-s33-stage{overflow-x:clip}.nya-s33-art{width:161.3%;margin-left:-61.3%}}
 /* Keeps this section's scroll motion smooth over the page-wide reduced-motion rule. */
@@ -2554,7 +2554,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       <p class="nya-s33-lede">Hospitals are too complex, too costly, and too important to tolerate unnecessary project risk. NYA brings the technical expertise, experience, and judgment to reduce those risks at every stage. From realizing ambitious designs and eliminating unnecessary construction costs to navigating approvals and protecting schedules, our approach delivers more than exceptional engineering. It delivers greater certainty, fewer costly compromises, and better outcomes for the entire project.</p>
     </div>
     <div class="nya-s33-art" aria-hidden="true">
-      <img class="nya-s33-full" src="https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfull.webp" alt="" decoding="async">
+      <img class="nya-s33-full" src="nya-closing-hospital-full-v2.webp" alt="" decoding="async">
       <img class="nya-s33-base" src="nya-closing-base-v3.webp" alt="" decoding="async">
       <img class="nya-s33-line" src="nya-closing-line-v3.webp" alt="" decoding="async">
     </div>
@@ -4137,11 +4137,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // Measured on the artwork in 2000-wide units (the drawing is 1672 x 941, so 1px = 1.196 units): the canopy top is at row 584,
   // and the right-hand tree spans x 1525+, rows 96 to 365.
   const title=intro.querySelector('h2');
-  // Top outline of the hospital drawing (800 x 349), per 20 columns, as [from column, to column, top row]; it includes its tree.
+  // Top outline of the hospital drawing (2000 x 667), per 50 columns, as [from column, to column, top row]; it includes its tree.
   // outline() gives it on screen (viewport px) as [left, right, top], from where the CSS places it; its rise is a transform, so it does not count.
-  const FULL=[[0,20,227],[20,40,225],[40,60,221],[60,80,227],[80,100,229],[100,120,229],[120,140,229],[140,160,229],[160,180,229],[180,200,229],[200,220,229],[220,240,228],[240,260,228],[260,280,218],[280,300,213],[300,320,211],[320,340,212],[340,360,212],[360,380,182],[380,400,178],[400,420,166],[420,440,162],[440,460,159],[460,480,146],[480,500,142],[500,520,137],[520,540,57],[540,560,49],[560,580,36],[580,600,43],[600,620,50],[620,640,36],[640,660,32],[660,680,19],[680,700,8],[700,720,10],[720,740,8],[740,760,7],[760,780,10],[780,800,7]];
+  const FULL=[[0,50,552],[50,100,527],[100,150,513],[150,200,489],[200,250,454],[250,300,438],[300,350,432],[350,400,420],[400,450,423],[450,500,428],[500,550,420],[550,600,427],[600,650,434],[650,700,434],[700,750,434],[750,800,434],[800,850,434],[850,900,434],[900,950,434],[950,1000,410],[1000,1050,400],[1050,1100,400],[1100,1150,366],[1150,1200,338],[1200,1250,312],[1250,1300,302],[1300,1350,298],[1350,1400,265],[1400,1450,254],[1450,1500,94],[1500,1550,59],[1550,1600,60],[1600,1650,66],[1650,1700,50],[1700,1750,26],[1750,1800,5],[1800,1850,7],[1850,1900,2],[1900,1950,7],[1950,2000,0]];
   function outline(a){
-    const s=building.offsetHeight/349,l=a.left+building.offsetLeft,t=a.top+building.offsetTop;
+    const s=building.offsetHeight/667,l=a.left+building.offsetLeft,t=a.top+building.offsetTop;
     return FULL.map(([b0,b1,r])=>[l+b0*s,l+b1*s,t+r*s]);
   }
   // The line the words stay above (viewport px): the canopy roof; with the canopy off, the top of the card panels (canopy layout)
