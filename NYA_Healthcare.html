@@ -1930,8 +1930,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 </style>
 <style id="ucsf-story-head-style">
-/* Technical Excellence header: eyebrow + title + paragraph arrive together; after a second scroll the paragraph
-   collapses and the eyebrow + title stay pinned above the media for all six slides. */
+/* Technical Excellence header: eyebrow + title + paragraph arrive together; after a second scroll the eyebrow and
+   paragraph fade, the title slides up into the eyebrow's place, and only the title stays pinned above the media. */
 .ucsf-story{--ucsf-head-h:0px}
 .ucsf-story-head{grid-column:1 / -1;display:block;padding-top:clamp(3rem,6vw,5rem);margin-bottom:0}
 .ucsf-story-head .eyebrow{margin-bottom:.7rem}
@@ -1948,9 +1948,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   /* The paragraph fades without changing the header's height, so nothing below it shifts while scrolling. */
   .ucsf-story-head .value-note{transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear 0s}
   .ucsf-story.is-note-off .ucsf-story-head .value-note{opacity:0!important;transform:translateY(-.6rem)!important;visibility:hidden;pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear .45s}
+  /* Eyebrow fades in place; the title moves up by the eyebrow's height (--ucsf-eyebrow-h, set by script). */
+  .ucsf-story.is-note-off .ucsf-story-head .eyebrow{opacity:0!important;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
+  .ucsf-story.is-note-off .ucsf-story-head h2{transform:translateY(calc(-1 * var(--ucsf-eyebrow-h,0px)))!important;transition:transform .5s var(--ease)}
   .ucsf-story-media{top:var(--ucsf-head-h);height:calc(100svh - var(--ucsf-head-h));padding-top:1rem;padding-bottom:1.5rem;transition:top .5s var(--ease),height .5s var(--ease)}
   .ucsf-story.is-note-off .ucsf-story-media{top:var(--ucsf-head-h-short,var(--ucsf-head-h));height:calc(100svh - var(--ucsf-head-h-short,var(--ucsf-head-h)))}
   .ucsf-story-frame{height:100%;max-height:760px}
+  /* A step with data-frame-ratio gives the frame that shape (--ucsf-frame-ratio, set by script). A landscape photo
+     then keeps its full height and only its sides are trimmed, instead of the tall default frame zooming into it. */
+  .ucsf-story-frame.is-ratio-set{height:auto;aspect-ratio:var(--ucsf-frame-ratio);max-height:100%}
   .ucsf-story-steps::before{top:0}
   /* Shorter slide blocks: the empty band between one slide's text and the next is much smaller. */
   .ucsf-step{min-height:62svh;padding:3rem 0}
@@ -2177,7 +2183,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 <section class="ucsf-proof" id="ucsf-case-study">
   <div class="ucsf-story" id="ucsf-story">
     <div class="projects-head ucsf-story-head">
-      <div class="eyebrow reveal">Technical Expertise</div>
+      <div class="eyebrow reveal">Technical Excellence</div>
       <h2 class="display reveal">Technical depth that turns engineering insight <em>into savings</em></h2>
       <p class="value-note reveal">NYA combines advanced analysis with proven engineering judgment to reduce the risk of redesign, added cost, and delay, as demonstrated on two of our flagship projects: The Stanford Adult Hospital and UCSF’s Helen Diller Hospital.</p>
     </div>
@@ -2242,7 +2248,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       </div>
     </div>
     <div class="ucsf-story-steps">
-            <article class="ucsf-step is-active" data-image="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" data-fit="cover" data-alt="Stanford hospital patient towers with long cantilevered floors at dusk" data-label="Structural ingenuity"><div class="eyebrow">Structural Ingenuity</div>
+            <article class="ucsf-step is-active" data-image="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" data-fit="cover" data-frame-ratio="4 / 3" data-alt="Stanford hospital patient towers with long cantilevered floors at dusk" data-label="Structural ingenuity"><div class="eyebrow">Structural Ingenuity</div>
         <h3>Making Stanford’s complex patient towers <em>a reality</em></h3>
         <p>Stanford’s vision called for four patient towers cantilevered nearly 30 feet beyond their supporting columns, creating demanding structural and vibration challenges.</p>
         <p>NYA had to carefully balance the weight of the projecting floors, control vibration, and integrate the towers with the hospital’s seismic system. Through advanced analysis and engineering judgment, NYA developed a multi-story steel framing solution that met these competing demands.</p>
@@ -2483,6 +2489,12 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     ucsfSingle.hidden = false;
     ucsfSingle.classList.add('is-visible');
   }
+  function setUcsfFrameRatio(step) {
+    if (!ucsfFrame) return;
+    var ratio = step.dataset.frameRatio;
+    if (ratio) ucsfFrame.style.setProperty('--ucsf-frame-ratio', ratio);
+    ucsfFrame.classList.toggle('is-ratio-set', !!ratio);
+  }
   function setUcsfStep(index) {
     if (!ucsfSteps.length || index < 0 || index >= ucsfSteps.length || index === ucsfIndex) return;
     var step = ucsfSteps[index];
@@ -2533,6 +2545,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     }
     if (ucsfProgress) ucsfProgress.style.transform = 'translateY(' + (index * 100) + '%)';
     ucsfIndex = index;
+    setUcsfFrameRatio(step);
   }
   if (ucsfSteps.length) {
     var updateUcsfOnScroll = function(){
@@ -3643,18 +3656,27 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel-lines path{fill:none;stroke-width:1;stroke-linecap:round}
 .amc-funnel-lines .is-in-line{stroke:rgba(21,21,21,.3)}
 .amc-funnel-lines .is-out-line{stroke:var(--green-on-light)}
-.amc-funnel-panel{position:relative;z-index:1;flex:none;width:min(1120px,calc(100vw - 2 * var(--pad)))}
+/* Side panels shrink-wrap their list so the dividers end where the text does; the script
+   centres panels by their own width, so centring and lead lines follow. */
+.amc-funnel-panel{position:relative;z-index:1;flex:none;width:fit-content;max-width:calc(100vw - 2 * var(--pad))}
 .amc-funnel-panel--center{width:min(980px,calc(100vw - 2 * var(--pad)));text-align:center}
 .amc-funnel-gap{flex:none;width:clamp(180px,34vw,560px)}
 .amc-funnel-label{margin-bottom:var(--space-3)}
 .amc-funnel-label::before{display:none}
 
 /* Drivers and outcomes share one row style: title column + description column, aligned
-   across rows (subgrid), hairline dividers like the page's evidence grids. */
-.amc-funnel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:var(--space-5);border-top:1px solid rgba(0,0,0,.15)}
+   across rows (subgrid), hairline dividers like the page's evidence grids.
+   Description column is measured in em so text wraps identically at every zoom and screen
+   size. Measures are tuned to the current copy (one-line lengths: drivers 40-67em,
+   outcomes 55-81em) so lines fill most of the column; re-tune if copy changes. Wrap is
+   'pretty' (fill lines, no lone last word), not 'balance': balance split the longest
+   rows into four short lines. */
+.amc-funnel-panel--drivers{--amc-measure:25em}
+.amc-funnel-panel--outcomes{--amc-measure:29em}
+.amc-funnel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:max-content minmax(0,var(--amc-measure));column-gap:var(--space-5);border-top:1px solid rgba(0,0,0,.15)}
 .amc-funnel-item{display:grid;grid-column:1/-1;grid-template-columns:subgrid;align-items:baseline;padding:var(--space-3) 0;border-bottom:1px solid rgba(0,0,0,.15)}
 .amc-funnel-item h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2-lg);line-height:1.1;color:var(--ink);white-space:nowrap}
-.amc-funnel-item p{margin:0;max-width:40em;color:var(--ink2)}
+.amc-funnel-item p{margin:0;max-width:40em;color:var(--ink2);text-wrap:pretty}
 .amc-funnel-msg{font-family:var(--display);font-weight:300;font-size:var(--text-display);line-height:1.03;letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
 .amc-funnel-msg em{color:var(--green-on-light)}
 
@@ -4064,20 +4086,22 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var head=story&&story.querySelector('.ucsf-story-head');
   if(!head)return;
   var note=head.querySelector('.value-note');
+  var brow=head.querySelector('.eyebrow');
   function setH(){
     var h=head.offsetHeight;
     story.style.setProperty('--ucsf-head-h',h+'px');
-    if(note){
-      var mt=parseFloat(getComputedStyle(note).marginTop)||0;
-      story.style.setProperty('--ucsf-head-h-short',Math.max(0,h-note.offsetHeight-mt)+'px');
-    }
+    // Pinned height = header minus the paragraph and minus the eyebrow the title slides up over.
+    var eh=brow?brow.offsetHeight+(parseFloat(getComputedStyle(brow).marginBottom)||0):0;
+    story.style.setProperty('--ucsf-eyebrow-h',eh+'px');
+    var mt=note?parseFloat(getComputedStyle(note).marginTop)||0:0;
+    story.style.setProperty('--ucsf-head-h-short',Math.max(0,h-(note?note.offsetHeight+mt:0)-eh)+'px');
   }
   if('ResizeObserver' in window)new ResizeObserver(setH).observe(head);
   setH();addEventListener('resize',setH,{passive:true});
   var off=false,tick=false;
   function update(){
     tick=false;
-    // Second scroll: once the header has pinned and the reader has moved a little further, hide the paragraph only.
+    // Second scroll: once the header has pinned and the reader has moved a little further, hide the eyebrow and paragraph.
     var gone=-story.getBoundingClientRect().top>innerHeight*.3;
     if(gone!==off){
       off=gone;story.classList.toggle('is-note-off',off);
