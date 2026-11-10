@@ -163,11 +163,11 @@ body,body *{font-variant-numeric:lining-nums}
 .ucsf-step-points span{display:flex;gap:.7rem;align-items:flex-start;color:rgba(255,255,255,.8);font-size:var(--text-body);line-height:1.55}
 .ucsf-step-points span:before{content:"";width:7px;height:7px;border:1px solid var(--gold);margin-top:.46rem;flex:0 0 auto}
 
-@media(max-width:1100px){
+@media (max-width:1100px), (max-width:1100px) and (orientation:portrait){
   .ucsf-proof-intro{grid-template-columns:1fr}.ucsf-proof-video{min-height:540px}.ucsf-proof-copy{background:linear-gradient(180deg,rgba(6,9,12,.98),rgba(6,9,12,.72))}
   .ucsf-story{grid-template-columns:1fr}.ucsf-story-media{position:sticky;top:0;height:58svh;padding:1.2rem 0;z-index:4;background:#070a0d}.ucsf-story-frame{height:100%}.ucsf-story-steps{border-left:0;padding-left:0}.ucsf-story-steps::before{display:none}.ucsf-step{min-height:72svh;padding:5rem 0}
 }
-@media(max-width:760px){
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){
   .ucsf-proof-metrics{grid-template-columns:1fr 1fr}.ucsf-metric:nth-child(2){border-right:0}.ucsf-metric:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .ucsf-story{padding:0 var(--pad)}.ucsf-story-media{height:48svh}.ucsf-story-hud{inset:auto .65rem .65rem;padding:.75rem}.ucsf-step{min-height:auto;padding:4.7rem 0}
   .ucsf-proof-video{min-height:420px}
@@ -208,8 +208,8 @@ body,body *{font-variant-numeric:lining-nums}
 
 .modal{position:fixed;inset:0;z-index:100;display:flex;opacity:0;pointer-events:none;transition:.3s}.modal.open{opacity:1;pointer-events:auto}.modal-backdrop{position:absolute;inset:0;background:rgba(4,5,7,.78);backdrop-filter:blur(6px)}.modal-panel{position:relative;margin-left:auto;width:min(600px,96vw);height:100%;overflow:auto;overscroll-behavior:contain;background:var(--card);border-left:1px solid var(--line);transform:translateX(45px);transition:.45s var(--ease);z-index:2}.modal.open .modal-panel{transform:none}.modal-hero{height:300px;background-size:cover;background-position:center;position:relative}.modal-hero:after{content:"";position:absolute;inset:auto 0 0;height:120px;background:linear-gradient(transparent,var(--card))}.modal-close{position:absolute;top:1.1rem;right:1.1rem;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;font-size:var(--text-h3);cursor:pointer;z-index:3}.modal-body{padding:2rem 2rem 3rem}.modal-tag{font-size:var(--text-eyebrow);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}.modal-title{font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.05;font-weight:300;color:#fff;margin-bottom:1.4rem}.modal-specs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:1.4rem}.modal-spec{background:var(--surface);padding:1rem}.modal-spec-k{font-size:var(--text-eyebrow);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}.modal-spec-v{font-size:var(--text-small);color:#fff}.modal-desc{font-size:var(--text-body);color:rgba(255,255,255,.78);line-height:1.75;margin-bottom:1.5rem}.modal-link{display:inline-flex;align-items:center;gap:8px;font-size:var(--text-eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(34,211,255,.45)}
 
-@media(max-width:1100px){.calibration-grid,.reliability-grid{grid-template-columns:repeat(2,1fr)}.authority-grid{grid-template-columns:1fr}.proof-grid,.value-grid{grid-template-columns:repeat(2,1fr)}.proof:nth-child(2){border-right:0}.proof:nth-child(-n+2){border-bottom:1px solid var(--line)}.pressures{grid-template-columns:repeat(2,1fr)}.pressure:nth-child(2){border-right:0}.pressure:nth-child(-n+2){border-bottom:1px solid rgba(0,0,0,.16)}.flagship{grid-template-columns:1fr}.flagship-media{min-height:520px}.flagship-media:after{background:linear-gradient(0deg,rgba(8,10,13,.95),transparent 55%)}.audience-grid{grid-template-columns:1fr}.audience{min-height:auto}.cap-grid{grid-template-columns:repeat(2,1fr)}.project.featured,.project.std,.project.wide{grid-column:span 12;grid-row:auto;min-height:420px}.footer-cols{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:760px){:root{--pad:1.25rem;--section:4.5rem}.calibration-head,.authority-head{grid-template-columns:1fr;gap:1.4rem}.calibration-grid,.reliability-grid{grid-template-columns:1fr}.authority-card{min-height:auto}.hero{min-height:720px}.hero h1{font-size:var(--text-display)}.hero-copy{font-size:var(--text-body)}.hero-dots{display:none}.proof-grid,.pressures,.value-grid,.cap-grid{grid-template-columns:1fr}.proof{border-right:0;border-bottom:1px solid var(--line)}.proof:last-child{border-bottom:0}.pressure{border-right:0;border-bottom:1px solid rgba(0,0,0,.16)}.difference-head,.cap-head{grid-template-columns:1fr;gap:1.4rem}.value-head,.projects-head{align-items:flex-start;flex-direction:column}.flagship-media{min-height:400px}.flagship-point{grid-template-columns:55px 1fr}.project.featured,.project.std,.project.wide{min-height:360px}.footer-cols{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:.5rem}.modal-specs{grid-template-columns:1fr}}
+@media (max-width:1100px), (max-width:1100px) and (orientation:portrait){.calibration-grid,.reliability-grid{grid-template-columns:repeat(2,1fr)}.authority-grid{grid-template-columns:1fr}.proof-grid,.value-grid{grid-template-columns:repeat(2,1fr)}.proof:nth-child(2){border-right:0}.proof:nth-child(-n+2){border-bottom:1px solid var(--line)}.pressures{grid-template-columns:repeat(2,1fr)}.pressure:nth-child(2){border-right:0}.pressure:nth-child(-n+2){border-bottom:1px solid rgba(0,0,0,.16)}.flagship{grid-template-columns:1fr}.flagship-media{min-height:520px}.flagship-media:after{background:linear-gradient(0deg,rgba(8,10,13,.95),transparent 55%)}.audience-grid{grid-template-columns:1fr}.audience{min-height:auto}.cap-grid{grid-template-columns:repeat(2,1fr)}.project.featured,.project.std,.project.wide{grid-column:span 12;grid-row:auto;min-height:420px}.footer-cols{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){:root{--pad:1.25rem;--section:4.5rem}.calibration-head,.authority-head{grid-template-columns:1fr;gap:1.4rem}.calibration-grid,.reliability-grid{grid-template-columns:1fr}.authority-card{min-height:auto}.hero{min-height:720px}.hero h1{font-size:var(--text-display)}.hero-copy{font-size:var(--text-body)}.hero-dots{display:none}.proof-grid,.pressures,.value-grid,.cap-grid{grid-template-columns:1fr}.proof{border-right:0;border-bottom:1px solid var(--line)}.proof:last-child{border-bottom:0}.pressure{border-right:0;border-bottom:1px solid rgba(0,0,0,.16)}.difference-head,.cap-head{grid-template-columns:1fr;gap:1.4rem}.value-head,.projects-head{align-items:flex-start;flex-direction:column}.flagship-media{min-height:400px}.flagship-point{grid-template-columns:55px 1fr}.project.featured,.project.std,.project.wide{min-height:360px}.footer-cols{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:.5rem}.modal-specs{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.reveal,.project{opacity:1!important;transform:none!important}.hero-frame{transform:none!important}}
 
 .webgl-shell{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(circle at 76% 38%,#354657 0%,#202d39 24%,#111820 58%,#090c10 100%);opacity:0;transition:opacity .7s var(--ease)}
@@ -311,13 +311,13 @@ section,.footer{position:relative;z-index:1}
   background:linear-gradient(145deg,rgba(25,34,44,.96),rgba(16,23,31,.94));
 }
 
-@media (max-width:900px){
+@media (max-width:900px), (max-width:1100px) and (orientation:portrait){
   .ucsf-bg-media{inset:0;}
   .ucsf-bg-media video{object-position:center;filter:brightness(.67) contrast(1.17) saturate(.77)}
   .webgl-vignette{background:linear-gradient(90deg,rgba(5,8,12,.80) 0%,rgba(6,10,15,.57) 58%,rgba(6,10,15,.16) 100%),linear-gradient(0deg,rgba(5,7,10,.37),transparent 52%)}
   .webgl-blueprint{opacity:.08}
 }
-@media (max-width:760px){
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){
   #nya-webgl{display:none}
   .webgl-scan{display:none}
   .ucsf-bg-media video{filter:brightness(.59) contrast(1.14) saturate(.72)}
@@ -364,7 +364,7 @@ section,.footer{position:relative;z-index:1}
   70%{opacity:1}
   100%{transform:translateY(21px);opacity:0}
 }
-@media(max-width:760px){
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){
   .nyp-scroll-cue{right:16px;bottom:16px;width:32px;height:52px;padding-top:9px}
 }
 @media(prefers-reduced-motion:reduce){
@@ -387,7 +387,7 @@ section,.footer{position:relative;z-index:1}
 .ucla-ssi-stat span{display:block;margin-top:.65rem;font-size:var(--text-eyebrow);letter-spacing:.14em;text-transform:uppercase;line-height:1.5;color:rgba(255,255,255,.62)}
 .ucla-ssi-note{margin-top:1rem;font-size:var(--text-small);letter-spacing:.06em;color:rgba(255,255,255,.5)}
 .ssi-campus-case-study .ucla-ssi{margin-top:0;border-left:0;border-right:0}
-@media(max-width:1050px){.ssi-campus-case-study .ucla-ssi{grid-template-columns:1fr}}
+@media (max-width:1050px), (max-width:1100px) and (orientation:portrait){.ssi-campus-case-study .ucla-ssi{grid-template-columns:1fr}}
 
 .ssi-compare{padding:clamp(4rem,7vw,7rem) 0;background:#090d12;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .ssi-compare-head{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(2rem,6vw,6rem);align-items:end;margin-bottom:2.4rem}
@@ -429,7 +429,7 @@ section,.footer{position:relative;z-index:1}
 .amc-list b{font-family:var(--display);font-size:var(--text-h2);font-weight:300;color:rgba(34,211,255,.66);line-height:1.05}
 
 
-@media(max-width:1050px){
+@media (max-width:1050px), (max-width:1100px) and (orientation:portrait){
   .ssi-compare-head,.ssi-detail{grid-template-columns:1fr}
   .ssi-modes{grid-template-columns:1fr}
   .amc-groups{grid-template-columns:1fr}
@@ -450,8 +450,8 @@ section,.footer{position:relative;z-index:1}
 .financial-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding-top:1.6rem}
 .financial-benefit{padding:0 clamp(1.2rem,2.4vw,2.6rem);min-height:136px;border-right:1px solid rgba(221,233,238,.22)}.financial-benefit:first-child{padding-left:0}.financial-benefit:last-child{border-right:0}
 .financial-number{display:block;font-family:var(--display);font-size:var(--text-h2-lg);font-weight:300;color:rgba(34,211,255,.42);line-height:1.05;margin-bottom:.8rem}.financial-benefit h3{font-family:var(--display);font-size:var(--text-h2);font-weight:300;line-height:1.05;color:#fff}.financial-benefit p{color:rgba(221,233,238,.72);font-size:var(--text-body);line-height:1.6;margin-top:.65rem;max-width:320px}
-@media(max-width:950px){.financial-header{grid-template-columns:1fr;gap:1.4rem}.financial-intro{border-left:0;padding-left:0}.financial-graphic{grid-template-columns:1fr}.financial-callout{border-left:0;border-top:1px solid rgba(221,233,238,.2);margin-top:1rem}}
-@media(max-width:650px){.financial-benefits{grid-template-columns:1fr}.financial-benefit,.financial-benefit:first-child{padding:1.3rem 0;border-right:0;border-bottom:1px solid rgba(221,233,238,.2)}.financial-benefit:last-child{border-bottom:0}.financial-graphic{padding:.65rem}.financial-chart svg,.financial-chart img{min-width:0}.financial-chart-caption{padding:0 .5rem}.financial-callout{padding:1.5rem .5rem}.financial-header h2{font-size:var(--text-h1)}}
+@media (max-width:950px), (max-width:1100px) and (orientation:portrait){.financial-header{grid-template-columns:1fr;gap:1.4rem}.financial-intro{border-left:0;padding-left:0}.financial-graphic{grid-template-columns:1fr}.financial-callout{border-left:0;border-top:1px solid rgba(221,233,238,.2);margin-top:1rem}}
+@media (max-width:650px), (max-width:1100px) and (orientation:portrait){.financial-benefits{grid-template-columns:1fr}.financial-benefit,.financial-benefit:first-child{padding:1.3rem 0;border-right:0;border-bottom:1px solid rgba(221,233,238,.2)}.financial-benefit:last-child{border-bottom:0}.financial-graphic{padding:.65rem}.financial-chart svg,.financial-chart img{min-width:0}.financial-chart-caption{padding:0 .5rem}.financial-callout{padding:1.5rem .5rem}.financial-header h2{font-size:var(--text-h1)}}
 
 
 /* Match the highlighted heading phrase to the site's dark-section cyan emphasis. */
@@ -490,12 +490,12 @@ section,.footer{position:relative;z-index:1}
 .audience .audience-proof-detail{margin-top:.45rem;font-size:var(--text-small);line-height:1.55}
 .audience-proof-detail strong{font-weight:500;color:var(--ink)}
 .audience-closing{display:flex;align-items:center;justify-content:center;gap:clamp(.5rem,1vw,1.4rem);margin-top:1.6rem;font-family:var(--display);font-size:clamp(1rem,.75rem + .75vw,1.75rem);font-weight:400;line-height:1.3;text-align:center;white-space:nowrap}.audience-closing::before,.audience-closing::after{content:"";flex:1 1 0;min-width:0;height:1px;background:var(--green-on-light);opacity:.95}
-@media(max-width:1100px){
+@media (max-width:1100px), (max-width:1100px) and (orientation:portrait){
   .audiences--relationships .audience-head{grid-template-columns:1fr;gap:1.4rem}
   .audiences--relationships .audience h3{max-width:650px}
   .audiences--relationships .audience p{max-width:780px}
 }
-@media(max-width:600px){
+@media (max-width:600px), (max-width:1100px) and (orientation:portrait){
   .audiences--relationships .audience{padding:1.6rem}
   .audience-closing{display:block;text-align:left;white-space:normal}.audience-closing::before,.audience-closing::after{display:none}
 }
@@ -615,14 +615,14 @@ section,.footer{position:relative;z-index:1}
   line-height:1.52;
   margin:0;
 }
-@media(max-width:1100px){
+@media (max-width:1100px), (max-width:1100px) and (orientation:portrait){
   .difference h2{font-size:var(--text-h1)}
   .difference .pressures{grid-template-columns:repeat(2,minmax(0,1fr))}
   .difference .pressure:nth-child(2){border-right:0}
   .difference .pressure:nth-child(-n+2){border-bottom:1px solid rgba(0,0,0,.16)}
   .difference .pressure h3{font-size:var(--text-h2-lg)}
 }
-@media(max-width:760px){
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){
   .difference{padding:3rem 0}
   .difference-head{grid-template-columns:1fr;gap:2rem;margin-bottom:2.2rem}
   .difference-problem{padding:0}
@@ -666,7 +666,7 @@ section,.footer{position:relative;z-index:1}
 .proof-ribbon .proof-v{font-size:var(--text-h2)}
 /* Keep the visual scroll prompt inside the Hero instead of covering the ribbon. */
 .nyp-scroll-cue{bottom:calc(var(--hero-proof-height) + 18px)}
-@media(max-width:760px){
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){
   .hero{height:calc(100svh - var(--hero-proof-height));min-height:0}
   .hero h1{font-size:var(--text-display)}
   .hero-content{padding-bottom:calc(clamp(1.6rem,4.5svh,3rem) + clamp(2.7rem,12.6vw,5.3rem))}
@@ -693,7 +693,7 @@ section,.footer{position:relative;z-index:1}
     .difference .pressure h3{min-height:3.05em}
     .difference .pressure .pressure-lead{min-height:2.5em}
   }
-  @media(min-width:761px) and (max-width:1100px){
+  @media (min-width:761px) and (max-width:1100px) and (orientation:landscape){
     .difference .pressure h3{min-height:2.1em}
     .difference .pressure .pressure-lead{min-height:2.5em}
   }
@@ -714,7 +714,7 @@ html,body{overflow-x:clip}
 .hero{height:auto;min-height:calc(100svh - var(--hero-proof-height))}
 /* One display-font line of additional bottom padding lifts the Hero headline. */
 .hero-content{padding-bottom:calc(clamp(var(--space-4), 8svh, var(--space-6)) + var(--text-display))}
-@media(max-width:760px){.hero{height:auto;min-height:calc(100svh - var(--hero-proof-height))}.hero-content{padding-bottom:calc(clamp(var(--space-3), 6svh, var(--space-5)) + var(--text-display))}}
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){.hero{height:auto;min-height:calc(100svh - var(--hero-proof-height))}.hero-content{padding-bottom:calc(clamp(var(--space-3), 6svh, var(--space-5)) + var(--text-display))}}
 @media(max-height:520px){.hero-content{padding-top:var(--space-6)}}
 
 /* Hero adjustments: natural-speed video, no full-screen darkening, headline-only shade. */
@@ -733,7 +733,7 @@ html,body{overflow-x:clip}
     rgba(3, 7, 13, 0.10) 56%,
     rgba(3, 7, 13, 0) 66%) !important;
 }
-@media (max-width: 760px) {
+@media (max-width: 760px), (max-width:1100px) and (orientation:portrait){
   .hero .hero-overlay {
     background: linear-gradient(90deg,
       rgba(3, 7, 13, 0.78) 0%,
@@ -816,7 +816,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   min-width: 0;
   flex: none;
 }
-@media (max-width: 760px) {
+@media (max-width: 760px), (max-width:1100px) and (orientation:portrait){
   .proof-ribbon .proof-marquee {
     overflow-x: auto;
     overflow-y: hidden;
@@ -850,7 +850,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .proof-ribbon .proof-set .proof .proof-v { color: #fff; }
 /* Each proof point is a left-aligned block (eyebrow and text share one left edge), centred as a block in its column. */
 .proof-ribbon .proof-set .proof{display:grid;grid-template-columns:minmax(0,max-content);justify-content:center;justify-items:start;align-content:center;text-align:left}
-@media (max-width: 760px) {
+@media (max-width: 760px), (max-width:1100px) and (orientation:portrait){
   .proof-ribbon .proof-set .proof { width: min(78vw, 20rem); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -893,7 +893,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   outline: 2px solid var(--gold);
   outline-offset: -3px;
 }
-@media (max-width: 760px) {
+@media (max-width: 760px), (max-width:1100px) and (orientation:portrait){
   .ucsf-proof-metrics .ucsf-metric:nth-child(2) {border-right:0}
   .ucsf-proof-metrics .ucsf-metric:nth-child(-n+2) {border-bottom:1px solid var(--line)}
   .ucsf-proof-metrics .ucsf-metric {min-height:155px}
@@ -1031,13 +1031,13 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   line-height:1.65;
   max-width:30rem;
 }
-@media(max-width:1080px) {
+@media (max-width:1080px), (max-width:1100px) and (orientation:portrait){
   .financial-risk--arcs .financial-header {grid-template-columns:1fr;gap:1.5rem;}
   .financial-risk--arcs .financial-header h2 em {white-space:normal;}
   .financial-risk--arcs .financial-intro {margin-left:clamp(.5rem,1.05vw,1.2rem);}
   .financial-risk--arcs .financial-benefit {padding-inline:clamp(1rem,2vw,1.5rem);}
 }
-@media(max-width:700px) {
+@media (max-width:700px), (max-width:1100px) and (orientation:portrait){
   .financial-risk--arcs {padding-block:var(--space-4);}
   .financial-risk--arcs .financial-header h2 {font-size:var(--text-h1);line-height:1.06;}
   .financial-risk--arcs .financial-intro {padding-left:1rem;line-height:1.7;}
@@ -1059,7 +1059,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 /* Match all three ARCS benefit descriptions on one shared baseline.
    The tallest headline sets the height for the heading row, including at zoom. */
-@media (min-width:701px) {
+@media (min-width:1101px), (min-width:701px) and (orientation:landscape){
   .financial-risk--arcs .financial-benefits {
     grid-template-rows: auto auto;
   }
@@ -1073,7 +1073,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .financial-risk--arcs .financial-benefit h3 { margin-bottom: 0; }
 }
 @supports not (grid-template-rows: subgrid) {
-  @media (min-width:701px) {
+  @media (min-width:1101px), (min-width:701px) and (orientation:landscape){
     .financial-risk--arcs .financial-benefit {
       display: flex;
       flex-direction: column;
@@ -1109,8 +1109,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-collaboration .collaboration-response+.collaboration-response{border-left:1px solid rgba(15,25,29,.32);padding-left:clamp(.7rem,1.5vw,1.5rem)}
 .nya-collaboration .collaboration-response .collaboration-figure{font-size:var(--text-h1)}
 .nya-collaboration .collaboration-response span{font-size:var(--text-small);line-height:1.42;color:#1c2430}
-@media(max-width:1040px){.nya-collaboration .collaboration-head{grid-template-columns:1fr;gap:1rem}.nya-collaboration .collaboration-intro{border-left:0;padding:0}.nya-collaboration .collaboration-card{min-height:0}.nya-collaboration .collaboration-grid{grid-template-columns:1fr}.nya-collaboration .collaboration-card+.collaboration-card{border-left:0;border-top:1px solid rgba(21,27,29,.2)}.nya-collaboration .collaboration-metrics{padding-top:2.4rem}}
-@media(max-width:650px){.nya-collaboration .collaboration-head h2 br{display:none}.nya-collaboration .collaboration-card{padding:1.4rem}.nya-collaboration .collaboration-metrics--response{flex-wrap:wrap;gap:1.1rem}.nya-collaboration .collaboration-response+.collaboration-response{border-left:0;padding-left:0}.nya-collaboration .collaboration-response{flex-basis:100%}}
+@media (max-width:1040px), (max-width:1100px) and (orientation:portrait){.nya-collaboration .collaboration-head{grid-template-columns:1fr;gap:1rem}.nya-collaboration .collaboration-intro{border-left:0;padding:0}.nya-collaboration .collaboration-card{min-height:0}.nya-collaboration .collaboration-grid{grid-template-columns:1fr}.nya-collaboration .collaboration-card+.collaboration-card{border-left:0;border-top:1px solid rgba(21,27,29,.2)}.nya-collaboration .collaboration-metrics{padding-top:2.4rem}}
+@media (max-width:650px), (max-width:1100px) and (orientation:portrait){.nya-collaboration .collaboration-head h2 br{display:none}.nya-collaboration .collaboration-card{padding:1.4rem}.nya-collaboration .collaboration-metrics--response{flex-wrap:wrap;gap:1.1rem}.nya-collaboration .collaboration-response+.collaboration-response{border-left:0;padding-left:0}.nya-collaboration .collaboration-response{flex-basis:100%}}
 
 /* Basic vs NYA comprehensive soil-structure interaction – reference comparison */
 .ssi-compare--reference{background:radial-gradient(ellipse at 50% 42%,#042027 0%,#03151b 45%,#010a0f 100%);border-color:rgba(0,235,242,.18);padding:clamp(3rem,4.8vw,5rem) 0;color:#fff}
@@ -1134,7 +1134,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .ssi-compare--reference .ssi-reference-list strong{font-weight:600;color:#fff}
 .ssi-compare--reference .ssi-reference-diagram{display:block;width:100%;height:auto;max-height:clamp(19rem,32vw,31rem);object-fit:contain;object-position:center}
 @media(max-width:1170px){.ssi-compare--reference .ssi-reference-grid{grid-template-columns:1fr}.ssi-compare--reference .ssi-reference-panel+.ssi-reference-panel{border-left:0;border-top:1px solid var(--gold)}.ssi-compare--reference .ssi-reference-body{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}.ssi-compare--reference .ssi-reference-diagram{max-height:30rem}}
-@media(max-width:600px){.ssi-compare--reference .ssi-reference-heading br{display:none}.ssi-compare--reference .ssi-reference-body,.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body{grid-template-columns:1fr;gap:1.15rem}.ssi-compare--reference .ssi-reference-diagram{max-height:23rem;width:min(100%,22rem);margin:auto}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body .ssi-reference-diagram{order:2}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body .ssi-reference-list{order:1}.ssi-compare--reference .ssi-reference-list p{padding:.8rem 0}}
+@media (max-width:600px), (max-width:1100px) and (orientation:portrait){.ssi-compare--reference .ssi-reference-heading br{display:none}.ssi-compare--reference .ssi-reference-body,.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body{grid-template-columns:1fr;gap:1.15rem}.ssi-compare--reference .ssi-reference-diagram{max-height:23rem;width:min(100%,22rem);margin:auto}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body .ssi-reference-diagram{order:2}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body .ssi-reference-list{order:1}.ssi-compare--reference .ssi-reference-list p{padding:.8rem 0}}
 
 /* ARCS copy and three benefits from the supplied final reference – preserve SVG chart. */
 .financial-risk--arcs .financial-header h2{font-family:var(--display);font-size:var(--text-h1);line-height:1.03}
@@ -1144,8 +1144,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .financial-risk--arcs .financial-benefit h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2);line-height:1.07}
 .financial-risk--arcs .financial-benefit p{color:rgba(242,246,248,.83);font-size:var(--text-body);line-height:1.65}
 .financial-risk--arcs .financial-benefit{min-height:0;padding-bottom:.5rem}
-@media(min-width:701px){.financial-risk--arcs .financial-benefits{grid-template-rows:auto auto auto}.financial-risk--arcs .financial-benefit{grid-row:span 3;grid-template-rows:subgrid;row-gap:.65rem;align-content:start}.financial-risk--arcs .financial-benefit h3{margin-bottom:0}}
-@media(max-width:700px){.financial-risk--arcs .financial-benefit{padding-top:1.4rem}.financial-risk--arcs .financial-header h2 br{display:none}}
+@media (min-width:1101px), (min-width:701px) and (orientation:landscape){.financial-risk--arcs .financial-benefits{grid-template-rows:auto auto auto}.financial-risk--arcs .financial-benefit{grid-row:span 3;grid-template-rows:subgrid;row-gap:.65rem;align-content:start}.financial-risk--arcs .financial-benefit h3{margin-bottom:0}}
+@media (max-width:700px), (max-width:1100px) and (orientation:portrait){.financial-risk--arcs .financial-benefit{padding-top:1.4rem}.financial-risk--arcs .financial-header h2 br{display:none}}
 
 </style>
 
@@ -1310,7 +1310,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 .ucsf-story-animation .iso-name,
 .ucsf-story-animation .iso-strip-label {font-family:var(--body,'DM Sans',system-ui,sans-serif);}
-@media(max-width:760px) {
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){
  .ucsf-story-animation{padding:.25rem;}
  .ucsf-story-animation .iso-film{--film-max-h:calc(100cqh - .6rem);row-gap:.45rem;}
  .ucsf-story-animation .iso-strip{row-gap:.2rem;padding-top:.2rem;}
@@ -1425,10 +1425,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-journey.is-flow .nya-journey-chapter{
   min-height:clamp(12rem,25svh,20rem);padding:var(--space-3) 0;
 }
-@media(max-width:1099px){
+@media (max-width:1099px), (max-width:1100px) and (orientation:portrait){
   .nya-journey.is-flow .nya-journey-chapter{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 }
-@media(max-width:640px){
+@media (max-width:640px), (max-width:1100px) and (orientation:portrait){
   .nya-journey-eyebrow{margin-bottom:var(--space-2)}
   .nya-journey-problem{font-size:var(--text-h2)}
   .nya-journey.is-flow .nya-journey-chapter{display:block;min-height:0;padding:var(--space-3) 0 var(--space-4)}
@@ -1505,7 +1505,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   }
 }
-@media(max-width:640px){
+@media (max-width:640px), (max-width:1100px) and (orientation:portrait){
   .ssi-compare--reference.ssi-video-design{--ssi-media-height:clamp(21rem,114vw,33rem)}
   .ssi-compare--reference.ssi-video-design .ssi-reference-body,
   .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-body{
@@ -1534,7 +1534,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .ssi-result-figure{margin:0;font-family:var(--display);font-weight:500;font-size:clamp(2rem,1.1rem + 2.35vw,3.5rem);line-height:1.02;letter-spacing:-.01em;color:var(--gold)}
 .ssi-result-figure span{display:block;margin-top:.45rem;font-family:var(--body);font-weight:400;font-size:var(--text-h3);line-height:1.2;letter-spacing:0;color:#fff}
 .ssi-result-copy{margin:clamp(1rem,1.8vw,1.6rem) 0 0;font-size:clamp(.95rem,.82rem + .3vw,1.1rem);line-height:1.5;color:var(--text);opacity:.88;text-align:left;hyphens:none;-webkit-hyphens:none}
-@media(max-width:980px){
+@media (max-width:980px), (max-width:1100px) and (orientation:portrait){
   .ssi-results{grid-template-columns:minmax(0,1fr)}
   .ssi-results-lead{padding:0 0 clamp(1.4rem,4vw,2rem)}
   .ssi-result{padding:clamp(1.4rem,4vw,2rem) 0 0;border-left:0;border-top:1px solid rgba(255,255,255,.4)}
@@ -1569,11 +1569,11 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   font-weight:400;line-height:1.48;letter-spacing:-.015em;color:var(--ink2);
   text-align:justify;text-align-last:center;hyphens:none;-webkit-hyphens:none;word-break:normal;overflow-wrap:normal;
 }
-@media(max-width:1040px){
+@media (max-width:1040px), (max-width:1100px) and (orientation:portrait){
  .nya-rel-intro h2{white-space:normal;font-size:clamp(2.75rem,5.1vw,3.8rem);}
  .nya-rel-intro p{font-size:clamp(1.15rem,2vw,1.55rem);}
 }
-@media(max-width:620px){
+@media (max-width:620px), (max-width:1100px) and (orientation:portrait){
  .nya-rel-intro{padding:1.5rem;}
  .nya-rel-intro__copy{transform:translateY(-0.5rem);}
  .nya-rel-intro h2{font-size:clamp(2.65rem,10vw,3.5rem);line-height:1.08;}
@@ -1643,10 +1643,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-shape--l{float:left;width:300px;shape-outside:polygon(0 0,10px 0,40px 100px,93px 200px,195px 300px,246px 340px,303px 380px,400px 420px,0 420px);}
 .nya-rel-shape--r{float:right;width:180px;shape-outside:polygon(180px 0,20px 0,56px 100px,109px 200px,140px 300px,180px 345px,180px 420px);}
 /* Right circle: mirror image of the left-circle shaping. */.nya-rel-note--team h3{font-size:28px;}.nya-rel-note--team p{font-size:15px;line-height:1.36;}.nya-rel-shape--tr{float:right;width:300px;shape-outside:polygon(300px 0,290px 0,260px 100px,207px 200px,105px 300px,54px 340px,0 380px,0 420px,300px 420px);}.nya-rel-shape--tl{float:left;width:180px;shape-outside:polygon(0 0,160px 0,124px 100px,71px 200px,40px 300px,0 345px,0 420px);}/* Top circle: larger type sized to the area clear of the two lower circles. */.nya-rel-shape--hr,.nya-rel-shape--hl{display:none}
-@media(min-width:721px){ .nya-rel-note--hcai{left:330px;top:92px;width:710px;display:block;} .nya-rel-note--hcai h3{font-size:40px;line-height:1.05;text-align:center;margin:0;padding:0;} .nya-rel-note--hcai p{font-size:22px;line-height:1.34;margin:40px 0 0;} .nya-rel-note--hcai>div:last-child{max-width:none;margin-left:0;} .nya-rel-note--hcai .nya-rel-stat{position:static;float:left;clear:left;margin:15px 22px 0 -10px;transform:none;} .nya-rel-note--hcai .nya-rel-stat small span{display:block;} .nya-rel-note--hcai .nya-rel-cap1{margin-left:-30px;} .nya-rel-note--hcai .nya-rel-cap2{margin-left:-42px;} .nya-rel-shape--hl{display:block;float:left;width:113px;height:82px;shape-outside:polygon(0px 0px,106px 0px,94px 8px,83px 16px,73px 24px,63px 32px,54px 40px,45px 48px,37px 56px,29px 64px,22px 72px,15px 80px,13px 82px,0px 82px);} .nya-rel-shape--hr{display:block;float:right;width:183px;height:214px;shape-outside:polygon(183px 0px,7px 0px,19px 8px,30px 16px,40px 24px,50px 32px,59px 40px,68px 48px,76px 56px,84px 64px,91px 72px,98px 80px,105px 88px,111px 96px,117px 104px,123px 112px,128px 120px,134px 128px,139px 136px,143px 144px,148px 152px,152px 160px,156px 168px,160px 176px,163px 184px,167px 192px,170px 200px,173px 208px,175px 214px,183px 214px);}}
+@media (min-width:1101px), (min-width:721px) and (orientation:landscape){ .nya-rel-note--hcai{left:330px;top:92px;width:710px;display:block;} .nya-rel-note--hcai h3{font-size:40px;line-height:1.05;text-align:center;margin:0;padding:0;} .nya-rel-note--hcai p{font-size:22px;line-height:1.34;margin:40px 0 0;} .nya-rel-note--hcai>div:last-child{max-width:none;margin-left:0;} .nya-rel-note--hcai .nya-rel-stat{position:static;float:left;clear:left;margin:15px 22px 0 -10px;transform:none;} .nya-rel-note--hcai .nya-rel-stat small span{display:block;} .nya-rel-note--hcai .nya-rel-cap1{margin-left:-30px;} .nya-rel-note--hcai .nya-rel-cap2{margin-left:-42px;} .nya-rel-shape--hl{display:block;float:left;width:113px;height:82px;shape-outside:polygon(0px 0px,106px 0px,94px 8px,83px 16px,73px 24px,63px 32px,54px 40px,45px 48px,37px 56px,29px 64px,22px 72px,15px 80px,13px 82px,0px 82px);} .nya-rel-shape--hr{display:block;float:right;width:183px;height:214px;shape-outside:polygon(183px 0px,7px 0px,19px 8px,30px 16px,40px 24px,50px 32px,59px 40px,68px 48px,76px 56px,84px 64px,91px 72px,98px 80px,105px 88px,111px 96px,117px 104px,123px 112px,128px 120px,134px 128px,139px 136px,143px 144px,148px 152px,152px 160px,156px 168px,160px 176px,163px 184px,167px 192px,170px 200px,173px 208px,175px 214px,183px 214px);}}
 
 .nya-rel-a11y{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);}
-@media(max-width:720px){
+@media (max-width:720px), (max-width:1100px) and (orientation:portrait){
  .nya-rel-story{height:575svh;}
  .nya-rel-center{left:510px;top:523px;width:280px;}
  .nya-rel-note--hcai{left:445px;top:65px;width:350px;display:flex;flex-direction:column-reverse;gap:var(--space-1);}
@@ -1695,13 +1695,13 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  .nya-rel-a11y h3{font-family:var(--display);font-size:var(--text-h2);font-weight:300;}
  .nya-rel-a11y article p{font-size:var(--text-body);line-height:1.6;margin-top:var(--space-1);text-align:justify;text-align-last:left;hyphens:none;-webkit-hyphens:none;word-break:normal;overflow-wrap:normal;}
 }
-@media(prefers-reduced-motion:reduce) and (max-width:800px){.nya-rel-a11y-grid{grid-template-columns:1fr;}}
+@media (prefers-reduced-motion:reduce) and (max-width:800px), (max-width:1100px) and (orientation:portrait) and (prefers-reduced-motion:reduce){.nya-rel-a11y-grid{grid-template-columns:1fr;}}
 </style>
 
 <style id="nya-ucsf-one-screen-snap">
 /* UCSF/Stanford technical-depth introduction: one viewport before the six-slide story.
    Continue using the page's own responsive type tokens, without scaling multipliers. */
-@media (min-width: 851px) and (min-height: 640px) {
+@media (min-width:1101px) and (min-height:640px), (min-width:851px) and (min-height:640px) and (orientation:landscape){
   .ucsf-proof-intro {
     height: 100svh;
     min-height: 100svh;
@@ -1726,7 +1726,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    content rather than forcing it into a cropped viewport. */
 .ucsf-proof-intro.needs-flow {height:auto;min-height:100svh;}
 .ucsf-proof-intro.needs-flow .ucsf-proof-copy {padding-block:var(--space-4);}
-@media (max-width:850px), (max-height:639px) {
+@media (max-width:850px), (max-height:639px), (max-width:1100px) and (orientation:portrait){
   .ucsf-proof-intro {height:auto;min-height:0;}
   .ucsf-proof-intro .ucsf-proof-copy {padding-block:var(--space-4);}
   .ucsf-proof-intro .ucsf-proof-video {height:auto;min-height:clamp(16rem,48svh,30rem);}
@@ -1762,7 +1762,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 </style>
 <style id="narrow-screens">
 /* Narrow screens: photos are shown whole, never cropped. */
-@media(max-width:1100px){
+@media (max-width:1100px), (max-width:1100px) and (orientation:portrait){
   /* UCSF / Stanford story: the frame takes a 4:3 shape (most story photos are 4:3) and every
      photo is fitted inside it, so wider ones get thin bars instead of losing their edges. */
   .ucsf-story-media{height:auto}
@@ -1812,7 +1812,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Phones: just the current part's name over one track that fills across the whole run
    (--overall, 0 to 1). The four links are left out. */
 .rn-overall{display:none}
-@media(max-width:760px){
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){
   .range-nav{grid-template-columns:1fr;row-gap:5px;padding:6px var(--space-2,16px) 0}
   .range-nav a{display:none}
   .rn-current{display:flex;color:var(--rn-on);font-size:.6875rem;line-height:1.2;letter-spacing:.12em;text-transform:uppercase}
@@ -1875,34 +1875,34 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 @media(min-aspect-ratio:21/10){.is-pinned .nya-s33-lede{max-width:calc(54*var(--k))}}
 @media(min-aspect-ratio:22/10){.is-pinned .nya-s33-intro{top:2.6svh}.is-pinned .nya-s33-lede{font-size:max(15px,2.1svh)}}
-@media(max-width:899px){.nya-s33-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 2rem}}
+@media (max-width:899px), (max-width:1100px) and (orientation:portrait){.nya-s33-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 2rem}}
 @media(max-width:559px){.nya-s33-steps{grid-template-columns:1fr;gap:1.8rem}}
 /* No canopy (class is-no-canopy on the section): the roof, posts, cable, ground line and plants are not shown; the building and cards stay. */
 .nya-s33.is-no-canopy .nya-s33-base,.nya-s33.is-no-canopy .nya-s33-line{display:none}
 /* Wherever the pillars show (900px and wider) the drawing spans the full width with its lawn (row 615 of 667) on the canopy ground line,
    behind the posts, cable and cards. */
 /* Zoomed 1.25x (Nov 10): 125% of the width, right-aligned so the building and tree stay in view; the extra runs off the left. */
-@media(min-width:900px){.nya-s33-art .nya-s33-full{top:auto;left:auto;right:0;width:125%;max-width:none;bottom:calc(-1.09*var(--k));height:auto}.nya-s33:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33-art .nya-s33-full{top:auto;left:auto;right:0;width:125%;max-width:none;bottom:calc(-1.09*var(--k));height:auto}.nya-s33:not(.is-pinned) .nya-s33-art{overflow:hidden}}
 /* Unpinned, 900px and wider: the drawing's top rows are empty sky down to the hospital drawing's tree (about row 190), so the
    drawing tucks further up under the words: 11% of the width = 185 rows; 6.3% (105 rows) for Larger, whose tree starts higher.
    The script (fitArt) then pulls it up further, as far as the words allow. The drawing never takes clicks meant for the words. */
 .nya-s33-art{pointer-events:none}
-@media(min-width:900px){.nya-s33:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 11%)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 6.3%)}}
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 11%)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 6.3%)}}
 /* Review option, ?building=larger: the same drawing 1.3x larger again (162.5% wide), right-aligned. It grows downward: the red tower's top (row 236 of 667) stays
    where it is at normal size (canopy row 509; the image starts at row 188 = 20.01%), so nothing new rises into the words; the lower
    floors run down behind the cards and the image is cut off at the canopy's ground line (row 905, 20.9% up from its bottom). */
-@media(min-width:900px){.nya-s33.is-full-large .nya-s33-art .nya-s33-full{left:auto;right:0;width:162.5%;max-width:none;top:20.01%;bottom:auto;clip-path:inset(0 0 20.9% 0)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33.is-full-large .nya-s33-art .nya-s33-full{left:auto;right:0;width:162.5%;max-width:none;top:20.01%;bottom:auto;clip-path:inset(0 0 20.9% 0)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{overflow:hidden}}
 /* The building sits a little above the canopy's ground line (2.5 units, about 47px on a 1920px screen).
    The larger new drawing is anchored at its top, so it moves up with a negative top margin and its cut stays on the ground line. */
-@media(min-width:900px){.nya-s33-art .nya-s33-full{margin-bottom:calc(2.5*var(--k))}.nya-s33.is-full-large .nya-s33-art .nya-s33-full{margin-bottom:0;margin-top:calc(-2.5*var(--k));clip-path:inset(0 0 16.29% 0)}}
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33-art .nya-s33-full{margin-bottom:calc(2.5*var(--k))}.nya-s33.is-full-large .nya-s33-art .nya-s33-full{margin-bottom:0;margin-top:calc(-2.5*var(--k));clip-path:inset(0 0 16.29% 0)}}
 /* Canopy off, 900px and wider: the hospital drawing fills the section. It is 4% wider and set past the right edge by its own empty
    margin (the building ends at column 1973 of 2000), so the building reaches the side, and its lawn (row 615 of 667) sits on the bottom edge (the 52 empty rows under it hang below and are clipped).
    Larger keeps its own size and top and simply runs to the bottom edge. */
-@media(min-width:900px){.nya-s33.is-no-canopy .nya-s33-art .nya-s33-full{left:auto;right:-1.76%;width:130%;max-width:none;bottom:calc(-3.38*var(--k));margin-bottom:0}.nya-s33.is-no-canopy.is-full-large .nya-s33-art .nya-s33-full{right:-2.19%;width:162.5%;top:20.01%;bottom:auto;clip-path:none}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33.is-no-canopy .nya-s33-art .nya-s33-full{left:auto;right:-1.76%;width:130%;max-width:none;bottom:calc(-3.38*var(--k));margin-bottom:0}.nya-s33.is-no-canopy.is-full-large .nya-s33-art .nya-s33-full{right:-2.19%;width:162.5%;top:20.01%;bottom:auto;clip-path:none}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{overflow:hidden}}
 /* Phones and portrait tablets: no pillars. Only rows 76 to 528 of the canopy drawing (941 rows) show: the roof, with the hospital
    drawing standing on it (its lawn on row 488, at 80% of the width so its 615 rows fit the 412 above the roof, right-aligned),
    without the empty bays below. The cable hangs between the pillars, so it goes with them. */
-@media(max-width:899px){.nya-s33-art{aspect-ratio:1672/452;margin-top:1.5rem;overflow:hidden}.nya-s33-art .nya-s33-base{top:-16.81%;height:208.19%}.nya-s33-art .nya-s33-line{display:none}.nya-s33-art .nya-s33-full{left:auto;right:0;bottom:auto;width:80.14%;height:auto;top:0}}
+@media (max-width:899px), (max-width:1100px) and (orientation:portrait){.nya-s33-art{aspect-ratio:1672/452;margin-top:1.5rem;overflow:hidden}.nya-s33-art .nya-s33-base{top:-16.81%;height:208.19%}.nya-s33-art .nya-s33-line{display:none}.nya-s33-art .nya-s33-full{left:auto;right:0;bottom:auto;width:80.14%;height:auto;top:0}}
 /* Phones: crop it further to the building end (x 38% to 100%) and show it larger. */
 @media(max-width:699px){.nya-s33-stage{overflow-x:clip}.nya-s33-art{width:161.3%;margin-left:-61.3%}}
 /* Phones and tablets: the drawing's blank strip right of the building (columns 1973-2000 of 2000) is pushed past the screen edge,
@@ -1915,7 +1915,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Laptops in the flowing layout (900px and wider, where the cards don't fit over the drawing): the frame is only as tall as the
    drawing down to its lawn, with the drawing at its top, so the tree starts just below the cards instead of after an empty band
    (the drawing is 130% of the frame wide, so its lawn, row 615 of 667, is 130% x 615/2000 = 40% of the frame width down). */
-@media(min-width:900px){.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{aspect-ratio:2480/1000}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art .nya-s33-full{top:0;bottom:auto}}
+@media(min-width:1101px),(min-width:900px) and (orientation:landscape){.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{aspect-ratio:2480/1000}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art .nya-s33-full{top:0;bottom:auto}}
 /* Flowing layout (phones, tablets, and laptops where the cards don't fit over the drawing): the drawing comes last, after the
    six cards, as the conclusion; the building fades in as it scrolls into view. */
 .nya-s33:not(.is-pinned) .nya-s33-stage{display:flex;flex-direction:column}
@@ -2000,9 +2000,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .uci-team.nav-off .uci-team-head::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:var(--uci-stick);background:#fff;pointer-events:none}
 .uci-team.no-stick .uci-team-head{position:static}
 .uci-team.no-stick .uci-team-head::after,.uci-team.no-stick .uci-team-head::before{display:none}
-@media(max-width:599px),(max-height:620px){.uci-team-head{position:static}.uci-team .uci-team-head::after,.uci-team .uci-team-head::before{display:none}}
-@media(max-width:900px) and (orientation:portrait){.uci-team-media img{aspect-ratio:2/1}.uci-team-media{margin-top:calc(var(--space-1) - 50 / 1448 * 100%)}}
-@media(max-width:900px){
+@media (max-width:599px), (max-height:620px){.uci-team-head{position:static}.uci-team .uci-team-head::after,.uci-team .uci-team-head::before{display:none}}
+@media (max-width:1100px) and (orientation:portrait){.uci-team-media img{aspect-ratio:2/1}.uci-team-media{margin-top:calc(var(--space-1) - 50 / 1448 * 100%)}}
+@media (max-width:900px), (max-width:1100px) and (orientation:portrait){
   /* Stacked rows are already tall, so the extra reading pace of --uci-pad isn't needed here. */
   .uci-team-track{--uci-pad:var(--space-3)}
   .uci-team-line{left:calc(.5rem - 1px)}
@@ -2063,7 +2063,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 <style id="hero-mobile-landscape">
 /* Portrait phones: show the hero video at its true 16:9 ratio (no stretching or cropping),
    with the headline on a dark panel directly below it. */
-@media (max-width: 760px) and (orientation: portrait) {
+@media (max-width: 1100px) and (orientation: portrait) {
   .hero { display: block; height: auto; min-height: 0; background: #070a0d; overflow: visible; }
   .hero .hero-frames, .hero .hero-dots { display: none !important; }
   .hero .ucsf-bg-media {
@@ -2088,7 +2088,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 <style id="proof-mobile-marquee">
 /* Phones: the three proof points glide across continuously (second set is a hidden copy for a seamless loop). */
 .proof-ribbon .proof-set--loop { display: none; }
-@media (max-width: 760px) {
+@media (max-width: 760px), (max-width:1100px) and (orientation:portrait){
   .proof-ribbon .proof-marquee { overflow: hidden !important; scroll-snap-type: none; }
   .proof-ribbon .proof-track {
     display: flex !important; width: max-content !important; max-width: none !important;
@@ -2103,7 +2103,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     border-right: 1px solid var(--line) !important;
   }
 }
-@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+@media (max-width: 760px) and (prefers-reduced-motion: reduce), (max-width:1100px) and (orientation:portrait) and (prefers-reduced-motion:reduce){
   .proof-ribbon .proof-track { animation: none !important; }
   .proof-ribbon .proof-marquee { overflow-x: auto !important; }
   .proof-ribbon .proof-set--loop { display: none !important; }
@@ -2114,7 +2114,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-final{position:absolute;inset:0;z-index:5;display:none;opacity:0;visibility:hidden;pointer-events:none;background:#fff;
   grid-template-columns:minmax(0,1.045fr) minmax(0,.955fr);align-items:center;gap:clamp(2rem,6vw,7rem);
   padding:clamp(.8rem,2.5svh,2rem) clamp(1.25rem,4vw,4.5rem)}
-@media(min-width:901px){.nya-rel-final{display:grid}}
+@media (min-width:1101px), (min-width:901px) and (orientation:landscape){.nya-rel-final{display:grid}}
 .nya-rel-final__diagram{position:relative;justify-self:center;width:min(100%,calc((100svh - 2.5rem) * 1300 / 1180));aspect-ratio:1300 / 1180;container-type:inline-size}
 .nya-rel-final__diagram svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .nya-rel-final__diagram circle{fill:none;stroke:var(--ink);stroke-opacity:.82;stroke-width:1.25;vector-effect:non-scaling-stroke}
@@ -2153,21 +2153,22 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-after .nya-rel-final__panel li p{margin:clamp(.3rem,.9svh,.6rem) 0 0;font-family:var(--body);font-size:clamp(.78rem,min(.92vw,1.75svh),.95rem);line-height:1.46;color:var(--ink2)}
 </style>
 <style id="nya-rel-tablet-story">
-@media(min-width:721px) and (max-width:900px){.nya-rel-story{height:575svh}}
+@media (min-width:721px) and (max-width:900px) and (orientation:landscape){.nya-rel-story{height:575svh}}
 </style>
 <style id="nya-rel-after-style">
 /* Phones: instead of the cramped zoomed-out diagram, a clean diagram followed by the numbered list. */
 .nya-rel-after{display:none}
-@media(max-width:900px){
+@media (max-width:900px), (max-width:1100px) and (orientation:portrait){
   .nya-rel-after{display:block;background:#fff;color:var(--ink);padding:clamp(1.5rem,6vw,2.5rem) var(--pad) clamp(2rem,8vw,3.5rem)}
-  .nya-rel-after__inner{display:block;max-width:34rem;margin:0 auto}
-  .nya-rel-after .nya-rel-final__diagram{width:100%;margin:0 auto}
+  /* Anchored to the page margin like every other section (phone-style layout on tablets too): diagram and text are left-aligned, not floated in a centred column. */
+  .nya-rel-after__inner{display:block;max-width:none;margin:0}
+  .nya-rel-after .nya-rel-final__diagram{width:min(100%,40rem);margin:0 auto;justify-self:center}
   .nya-rel-after .fl-title{font-size:3.7cqw}
   .nya-rel-after .fl-stat{font-size:4.7cqw}
   .nya-rel-after .fl-cap{font-size:1.75cqw;letter-spacing:.08em;width:24cqw!important}
   .nya-rel-after .fl-cap[style*="left:50%"]{width:36cqw!important}
   .nya-rel-after .fl-center{font-size:3.7cqw}
-  .nya-rel-after .nya-rel-final__panel{margin-top:clamp(1.6rem,7vw,2.6rem);max-width:none}
+  .nya-rel-after .nya-rel-final__panel{margin-top:clamp(1.6rem,7vw,2.6rem);max-width:46rem;margin-left:0}
   .nya-rel-after .nya-rel-final__panel h2{font-size:var(--text-h1);white-space:normal;text-wrap:balance}
   .nya-rel-after .nya-rel-final__panel .lead{font-size:.95rem;line-height:1.55}
   .nya-rel-after .nya-rel-final__panel li{grid-template-columns:2.2rem minmax(0,1fr);gap:.8rem;padding:1rem 0}
@@ -2177,7 +2178,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 </style>
 <style id="nya-rel-phone-final">
-@media(max-width:900px){
+@media (max-width:900px), (max-width:1100px) and (orientation:portrait){
   .nya-rel-final{display:flex;align-items:center;justify-content:center;padding:var(--pad)}
   .nya-rel-final .nya-rel-final__panel{display:none}
   .nya-rel-final .nya-rel-final__diagram{width:100%}
@@ -2195,7 +2196,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 <style id="nya-rel-after-reveal">
 /* Phones: the three points under the diagram appear one by one as they scroll into view (same reveal as the UC Irvine
    points: the title rises in first, then the text) but with no timeline line or dots. */
-@media(max-width:900px) and (prefers-reduced-motion:no-preference){
+@media (prefers-reduced-motion:no-preference){
   .nya-rel-after.is-armed li .n,
   .nya-rel-after.is-armed li h3,
   .nya-rel-after.is-armed li p{opacity:0;transform:translateY(14px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
@@ -2205,8 +2206,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 </style>
 <style id="nya-rel-phone-start">
-/* Phones (720px and under): no pinned zoom story. The section simply starts at the clean diagram, followed by the numbered list. */
-@media(max-width:720px){
+/* Phones and tablets (900px and under, or portrait up to 1100px): no pinned zoom story. The section simply starts at the clean diagram, followed by the numbered list. */
+@media (max-width:900px), (max-width:1100px) and (orientation:portrait){
   .nya-rel-story{height:auto!important;min-height:0}
   .nya-rel-pin{position:static;height:auto;min-height:0;overflow:hidden;contain:none}
   .nya-rel-intro,.nya-rel-viewport{display:none!important}
@@ -2216,9 +2217,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 </style>
 <style id="ssi-mobile-left-title">
 /* Phones: the "The NYA Approach" label and "NYA's Comprehensive SSI" title are left-aligned like everything else. */
-@media(max-width:720px){
+@media (max-width:720px), (max-width:1100px) and (orientation:portrait){
   .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-tag,
   .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced h3{text-align:left}
+}
+</style>
+<style id="tablet-page-margins">
+/* Upright tablets use the phone LAYOUT, but keep tablet-sized page margins and section spacing (the 1.25rem phone margin is for phones only). */
+@media (min-width:761px) and (max-width:1100px) and (orientation:portrait){
+  :root{--pad:clamp(1.4rem,5vw,5rem);--section:clamp(4.5rem,8vw,8rem)}
 }
 </style>
 </head>
@@ -3430,7 +3437,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   const right=story.querySelector('.nya-journey-right');
   const left=story.querySelector('.nya-journey-left');
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
-  const narrow=window.matchMedia('(max-width: 899px), (max-height: 620px)');
+  const narrow=window.matchMedia('(max-width: 899px), (max-height: 620px), (max-width:1100px) and (orientation:portrait)');
   const clamp=v=>Math.max(0,Math.min(1,v));
   let mode='',raf=0;
   function revealThrough(index){
@@ -3515,7 +3522,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   const intro = document.querySelector('.ucsf-proof-intro');
   const copy = intro && intro.querySelector('.ucsf-proof-copy');
   if (!intro || !copy) return;
-  const fitQuery = matchMedia('(min-width: 851px) and (min-height: 640px)');
+  const fitQuery = matchMedia('(min-width:1101px) and (min-height:640px), (min-width:851px) and (min-height:640px) and (orientation:landscape)');
   function checkFit(){
     intro.classList.remove('needs-flow');
     if (!fitQuery.matches) return;
@@ -3678,7 +3685,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  }
  function getFit(){return Math.min((innerWidth-36)/1300,(innerHeight-44)/1180);}
  function capture(){
-  if(reduced.matches||innerWidth<=720)return;
+  if(reduced.matches||matchMedia('(max-width:900px), (max-width:1100px) and (orientation:portrait)').matches)return;
   const rect=story.getBoundingClientRect();
   const extent=Math.max(1,story.offsetHeight-innerHeight);
   const rawProgress=clamp(-rect.top/extent);
@@ -4094,7 +4101,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
    (~1140px at a 16px default font; em so it follows the user's font size), and on short
    landscape phones. The column stays at the measure so wrapping and divider ends match
    the two-column layout. */
-@media(max-width:71.25em),(max-height:500px) and (orientation:landscape){
+@media (max-width:71.25em), (max-height:500px) and (orientation:landscape){
   .amc-funnel-list{grid-template-columns:minmax(0,var(--amc-measure))}
   .amc-funnel-item{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-2) 0}
 }
@@ -4671,7 +4678,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 (function(){
   var box=document.querySelector('.nya-rel-after');
   if(!box)return;
-  var mq=window.matchMedia('(max-width:900px)'),rm=window.matchMedia('(prefers-reduced-motion:reduce)');
+  var mq=window.matchMedia('(max-width:900px), (max-width:1100px) and (orientation:portrait)'),rm=window.matchMedia('(prefers-reduced-motion:reduce)');
   var items=[].slice.call(box.querySelectorAll('.nya-rel-final__panel li'));
   var tick=false;
   function update(){
