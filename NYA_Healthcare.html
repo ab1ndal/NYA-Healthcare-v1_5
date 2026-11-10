@@ -4269,23 +4269,18 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     const lp=p/.5,hp=(p-.3)/.65,atEnd=scrollY+vh>=document.documentElement.scrollHeight-2;
     section.style.setProperty('--lp',atEnd?'1':clamp(lp).toFixed(4));
     section.style.setProperty('--hp',atEnd?'1':clamp(hp).toFixed(4));
-    // Cards come up one after another: as a row's top (where it sits, not where it is mid-rise) moves from the bottom of the screen
-    // to half way up, its cards rise in turn from the left, each starting when the one before has finished. At the very end of the
-    // page every card is fully in.
+    // Cards come up as they scroll into view: as a row's top (where it sits, not where it is mid-rise) moves from the bottom of the
+    // screen to a quarter of the way up, its cards rise in turn from the left. Each row goes by its own place on the screen, so a
+    // card is fully in soon after it enters and the screen never shows an empty space where cards should be. At the very end of
+    // the page every card is fully in.
     const end=scrollY+vh>=document.documentElement.scrollHeight-2,rows=[];
     for(const li of section.querySelectorAll('.nya-s33-step')){
       const top=li.offsetParent.getBoundingClientRect().top+li.offsetTop,row=rows[rows.length-1];
       if(row&&Math.abs(top-row.top)<2)row.cards.push(li);else rows.push({top,cards:[li]});
     }
-    // Across rows too: a card waits until the card before it is fully up.
-    let prevUp=true;
     for(const {top,cards} of rows){
-      const p=clamp((vh-top)/(vh*.5));
-      cards.forEach((li,i)=>{
-        const cp=end?1:prevUp?clamp(p*cards.length-i):0;
-        li.style.setProperty('--cp',cp.toFixed(4));
-        prevUp=cp>=1;
-      });
+      const p=clamp((vh-top)/(vh*.25));
+      cards.forEach((li,i)=>li.style.setProperty('--cp',(end?1:clamp(p*cards.length-i)).toFixed(4)));
     }
     // Desktop, where the cards stand over the drawing: the scroll sets the target. q runs from the cards' row top at the bottom of
     // the screen (0) to the end of the page (1); card k is due once q passes the start of its slot in the first 80%, and the
