@@ -40,7 +40,8 @@
   --space-6: 6.5rem;
   --ease:cubic-bezier(.16,1,.3,1);--pad:clamp(1.4rem,5vw,5rem);--section:clamp(4.5rem,8vw,8rem)
 }
-html{scroll-behavior:smooth} body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:var(--text-body);line-height:1.7;overflow-x:hidden}
+/* Dark gutter + mid-grey thumb: default light scrollbar blended into the white sections. */
+html{scroll-behavior:smooth;scrollbar-color:#6b7280 var(--bg)} body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:var(--text-body);line-height:1.7;overflow-x:hidden}
 a{color:inherit;text-decoration:none} img{display:block;max-width:100%} button{font:inherit}
 .wrap{width:min(1620px,calc(100% - 2*var(--pad)));margin-inline:auto}
 /* Page-wide lining numerals, matching the NYA approach section (Cormorant defaults to old-style figures). */
