@@ -1889,14 +1889,27 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 </style>
 <style id="ucsf-story-head-style">
-/* Section header at the top of the Structural Ingenuity slide: same pattern as "Your hospital deserves proven hands" */
-.ucsf-story-head{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(380px,.94fr);align-items:start;gap:0;padding-top:clamp(4rem,8vw,7rem);margin-bottom:0}
-.ucsf-story-head .eyebrow{grid-column:1;grid-row:1}
-.ucsf-story-head h2{grid-column:1;grid-row:2;margin:0}
-.ucsf-story-head .value-note{grid-column:2;grid-row:2;max-width:none;margin:.5rem 0 0;padding-left:clamp(2rem,5vw,5rem);text-align:justify;text-align-last:left;hyphens:none;-webkit-hyphens:none}
-.ucsf-story-head h2{font-size:var(--text-h1)}
-@media(max-width:1100px){.ucsf-story-head{grid-template-columns:minmax(0,1fr)}.ucsf-story-head .value-note{grid-column:1;grid-row:3;padding-left:0;margin-top:1.2rem;max-width:44rem}}
-@media(max-width:760px){.ucsf-story-head{padding-top:3.5rem}}
+/* Technical Excellence header: eyebrow + title + paragraph arrive together; after a second scroll the paragraph
+   collapses and the eyebrow + title stay pinned above the media for all six slides. */
+.ucsf-story{--ucsf-head-h:0px}
+.ucsf-story-head{grid-column:1 / -1;display:block;padding-top:clamp(3rem,6vw,5rem);margin-bottom:0}
+.ucsf-story-head .eyebrow{margin-bottom:.7rem}
+.ucsf-story-head h2{margin:0;font-size:var(--text-h1)}
+.ucsf-story-head h2 br{display:none}
+.ucsf-story-head .value-note{max-width:62rem;margin:1rem auto 0;padding:0;text-align:justify;text-align-last:center;hyphens:none;-webkit-hyphens:none}
+.ucsf-step h3{font-size:var(--text-h2-lg)}
+@media(min-width:1101px){
+  .ucsf-story-head{position:sticky;top:0;z-index:6;background:#070a0d;padding-top:clamp(1.2rem,3svh,2.2rem);padding-bottom:clamp(.8rem,2svh,1.4rem);box-shadow:0 0 0 100vmax #070a0d;clip-path:inset(0 -100vmax)}
+  .ucsf-story{padding-top:clamp(3rem,6vw,5rem)}
+  /* The paragraph fades without changing the header's height, so nothing below it shifts while scrolling. */
+  .ucsf-story-head .value-note{transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear 0s}
+  .ucsf-story.is-note-off .ucsf-story-head .value-note{opacity:0!important;transform:translateY(-.6rem)!important;visibility:hidden;pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear .45s}
+  .ucsf-story-media{top:var(--ucsf-head-h);height:calc(100svh - var(--ucsf-head-h));padding-top:1rem;padding-bottom:1.5rem}
+  .ucsf-story-frame{height:100%;max-height:760px}
+  .ucsf-story-steps::before{top:0}
+  .ucsf-step{padding-top:calc(var(--ucsf-head-h) + clamp(2.5rem,6svh,4.5rem));padding-bottom:3rem}
+  .ucsf-story-media{padding-top:clamp(1.5rem,4svh,2.5rem)}
+}
 </style>
 </head>
 <body id="top">
@@ -3927,6 +3940,27 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   syncNav();
   setup();
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{measure();request()});
+})();
+</script>
+<script id="ucsf-story-head-script">
+(function(){
+  var story=document.getElementById('ucsf-story');
+  var head=story&&story.querySelector('.ucsf-story-head');
+  if(!head)return;
+  function setH(){story.style.setProperty('--ucsf-head-h',head.offsetHeight+'px')}
+  if('ResizeObserver' in window)new ResizeObserver(setH).observe(head);
+  setH();addEventListener('resize',setH,{passive:true});
+  var off=false,tick=false;
+  function update(){
+    tick=false;
+    // Second scroll: once the header has pinned and the reader has moved a little further, hide the paragraph only.
+    var gone=-story.getBoundingClientRect().top>innerHeight*.3;
+    if(gone!==off){
+      off=gone;story.classList.toggle('is-note-off',off);
+    }
+  }
+  addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(update)}},{passive:true});
+  update();
 })();
 </script>
 </body>
