@@ -1985,10 +1985,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .ucsf-step h3{font-size:var(--text-h2-lg)}
 @media(min-width:1101px){
   /* Desktop only: the centred, justified block under the title. Phones and tablets stay left-aligned. */
+  /* Desktop: the eyebrow stays at the left; the title and the paragraph are centred on the page. */
+  .ucsf-story-head h2{text-align:center}
   .ucsf-story-head .value-note{text-align:justify;text-align-last:center}
-  /* Desktop: eyebrow, title and paragraph are all centred on the page. */
-  .ucsf-story-head{text-align:center}
-  .ucsf-story-head .eyebrow{justify-content:center}
   .ucsf-story-head{position:sticky;top:0;z-index:6;padding-top:clamp(1.2rem,3svh,2.2rem);padding-bottom:clamp(.8rem,2svh,1.4rem);pointer-events:none}
   /* Black backdrop is its own layer: its height shrinks when the paragraph fades; the header's layout box never changes. */
   .ucsf-story-head::before{content:"";position:absolute;z-index:-1;top:0;left:calc(50% - 50vw);width:100vw;height:100%;background:#070a0d;transition:height .5s var(--ease)}
@@ -4492,7 +4491,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   if(!head)return;
   var note=head.querySelector('.value-note');
   var h2=head.querySelector('h2');
-  // Desktop: centre the paragraph under the title (as a block about 86% of the title's width).
+  // Desktop: centre the paragraph under the title (a block about 86% of the title's width).
   function alignNote(){
     if(!note||!h2)return;
     note.style.marginLeft='';note.style.maxWidth='';
