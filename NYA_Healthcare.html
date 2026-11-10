@@ -2029,12 +2029,13 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .ucsf-story-head h2 br{display:none}
 .ucsf-story-head .value-note{max-width:none;margin:1rem 0 0;padding:0;text-align:left;text-align-last:left;hyphens:none;-webkit-hyphens:none}
 .ucsf-step h3{font-size:var(--text-h2-lg)}
+@media(max-width:1100px){.ucsf-story-media{top:var(--ucsf-nav,0px)}}
 @media(min-width:1101px){
   /* Desktop only: the centred, justified block under the title. Phones and tablets stay left-aligned. */
   /* Desktop: the eyebrow stays at the left; the title and the paragraph are centred on the page. */
   .ucsf-story-head h2{text-align:center}
   .ucsf-story-head .value-note{text-align:justify;text-align-last:center}
-  .ucsf-story-head{position:sticky;top:0;z-index:6;padding-top:clamp(1.2rem,3svh,2.2rem);padding-bottom:clamp(.8rem,2svh,1.4rem);pointer-events:none}
+  .ucsf-story-head{position:sticky;top:var(--ucsf-nav,0px);z-index:6;padding-top:clamp(1.2rem,3svh,2.2rem);padding-bottom:clamp(.8rem,2svh,1.4rem);pointer-events:none}
   /* Black backdrop is its own layer: its height shrinks when the paragraph fades; the header's layout box never changes. */
   .ucsf-story-head::before{content:"";position:absolute;z-index:-1;top:0;left:calc(50% - 50vw);width:100vw;height:100%;background:#070a0d;transition:height .5s var(--ease)}
   .ucsf-story.is-note-off .ucsf-story-head::before{height:var(--ucsf-head-h-short,100%)}
@@ -2045,15 +2046,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   /* Eyebrow fades in place; the title moves up by the eyebrow's height (--ucsf-eyebrow-h, set by script). */
   .ucsf-story.is-note-off .ucsf-story-head .eyebrow{opacity:0!important;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
   .ucsf-story.is-note-off .ucsf-story-head h2{transform:translateY(calc(-1 * var(--ucsf-eyebrow-h,0px)))!important;transition:transform .5s var(--ease)}
-  .ucsf-story-media{top:var(--ucsf-head-h);height:calc(100svh - var(--ucsf-head-h));padding-top:1rem;padding-bottom:1.5rem;transition:top .5s var(--ease),height .5s var(--ease)}
-  .ucsf-story.is-note-off .ucsf-story-media{top:var(--ucsf-head-h-short,var(--ucsf-head-h));height:calc(100svh - var(--ucsf-head-h-short,var(--ucsf-head-h)))}
+  .ucsf-story-media{top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h));height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h));padding-top:1rem;padding-bottom:1.5rem;transition:top .5s var(--ease),height .5s var(--ease)}
+  .ucsf-story.is-note-off .ucsf-story-media{top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h-short,var(--ucsf-head-h)));height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h-short,var(--ucsf-head-h)))}
   .ucsf-story-frame{height:100%;max-height:760px}
   /* A step with data-frame-ratio gives the frame that shape (--ucsf-frame-ratio, set by script). A landscape photo
      then keeps its full height and only its sides are trimmed, instead of the tall default frame zooming into it. */
   /* Space left for the picture = window height - header - the media block's own padding. The picture keeps its 4:3 shape
      and shrinks in WIDTH to fit that space (it used to be clamped in height only, which squashed it and cropped the animations). */
-  .ucsf-story{--ucsf-media-pad:calc(clamp(1.5rem,4svh,2.5rem) + 1.5rem);--ucsf-avail-h:calc(100svh - var(--ucsf-head-h) - var(--ucsf-media-pad))}
-  .ucsf-story.is-note-off{--ucsf-avail-h:calc(100svh - var(--ucsf-head-h-short,var(--ucsf-head-h)) - var(--ucsf-media-pad))}
+  .ucsf-story{--ucsf-media-pad:calc(clamp(1.5rem,4svh,2.5rem) + 1.5rem);--ucsf-avail-h:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h) - var(--ucsf-media-pad))}
+  .ucsf-story.is-note-off{--ucsf-avail-h:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h-short,var(--ucsf-head-h)) - var(--ucsf-media-pad))}
   .ucsf-story-frame.is-ratio-set{height:auto;aspect-ratio:var(--ucsf-frame-ratio);max-height:none;width:min(100%,calc(var(--ucsf-avail-h) * 4 / 3));transition:width .5s var(--ease)}
   .ucsf-story-steps::before{top:0}
   /* Shorter slide blocks: the empty band between one slide's text and the next is much smaller. */
@@ -4639,12 +4640,18 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){alignNote();setH()});
   addEventListener('load',function(){alignNote();setH()});
   var brow=head.querySelector('.eyebrow');
+  var navEl=document.getElementById('range-nav');
   function setH(){
     var h=head.offsetHeight;
+    // The section bar is fixed over the top of the window: pinned things start below it, with a gap.
+    story.style.setProperty('--ucsf-nav',(navEl&&getComputedStyle(navEl).position==='fixed'?navEl.offsetHeight:0)+'px');
     story.style.setProperty('--ucsf-head-h',h+'px');
     // Pinned height = header minus the paragraph and minus the eyebrow the title slides up over.
     // Exact distance the title has to travel to sit where the eyebrow was (never more, so it can't leave the header).
     var eh=(brow&&h2)?Math.max(0,h2.offsetTop-brow.offsetTop):0;
+    // After the fade the title rests 2 header paddings below the bar: it travels up by the eyebrow's distance minus one padding
+    // (negative would simply lower it), and the pinned backdrop below is sized from the same number.
+    eh=eh-1*(parseFloat(getComputedStyle(head).paddingTop)||0);
     story.style.setProperty('--ucsf-eyebrow-h',eh+'px');
     var mt=note?parseFloat(getComputedStyle(note).marginTop)||0:0;
     story.style.setProperty('--ucsf-head-h-short',Math.max(0,h-(note?note.offsetHeight+mt:0)-eh)+'px');
