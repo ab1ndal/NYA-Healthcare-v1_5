@@ -1986,6 +1986,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 @media(min-width:1101px){
   /* Desktop only: the centred, justified block under the title. Phones and tablets stay left-aligned. */
   .ucsf-story-head .value-note{text-align:justify;text-align-last:center}
+  /* Desktop: eyebrow, title and paragraph are all centred on the page. */
+  .ucsf-story-head{text-align:center}
+  .ucsf-story-head .eyebrow{justify-content:center}
   .ucsf-story-head{position:sticky;top:0;z-index:6;padding-top:clamp(1.2rem,3svh,2.2rem);padding-bottom:clamp(.8rem,2svh,1.4rem);pointer-events:none}
   /* Black backdrop is its own layer: its height shrinks when the paragraph fades; the header's layout box never changes. */
   .ucsf-story-head::before{content:"";position:absolute;z-index:-1;top:0;left:calc(50% - 50vw);width:100vw;height:100%;background:#070a0d;transition:height .5s var(--ease)}
@@ -2149,6 +2152,23 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .nya-rel-after.is-armed li.is-on .n,
   .nya-rel-after.is-armed li.is-on h3{opacity:1;transform:none;transition-delay:.15s}
   .nya-rel-after.is-armed li.is-on p{opacity:1;transform:none;transition-delay:.35s}
+}
+</style>
+<style id="nya-rel-phone-start">
+/* Phones (720px and under): no pinned zoom story. The section simply starts at the clean diagram, followed by the numbered list. */
+@media(max-width:720px){
+  .nya-rel-story{height:auto!important;min-height:0}
+  .nya-rel-pin{position:static;height:auto;min-height:0;overflow:hidden;contain:none}
+  .nya-rel-intro,.nya-rel-viewport{display:none!important}
+  .nya-rel-after{margin-top:0;padding-top:clamp(2rem,8vw,3rem)}
+  .nya-rel-after .nya-rel-final__diagram{display:block}
+}
+</style>
+<style id="ssi-mobile-left-title">
+/* Phones: the "The NYA Approach" label and "NYA's Comprehensive SSI" title are left-aligned like everything else. */
+@media(max-width:720px){
+  .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-tag,
+  .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced h3{text-align:left}
 }
 </style>
 </head>
@@ -3566,7 +3586,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  }
  function getFit(){return Math.min((innerWidth-36)/1300,(innerHeight-44)/1180);}
  function capture(){
-  if(reduced.matches)return;
+  if(reduced.matches||innerWidth<=720)return;
   const rect=story.getBoundingClientRect();
   const extent=Math.max(1,story.offsetHeight-innerHeight);
   const rawProgress=clamp(-rect.top/extent);
