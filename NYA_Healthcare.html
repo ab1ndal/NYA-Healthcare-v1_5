@@ -1637,7 +1637,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 .nya-rel-a11y{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);}
 @media(max-width:720px){
- .nya-rel-story{height:603svh;}
+ .nya-rel-story{height:575svh;}
  .nya-rel-center{left:510px;top:523px;width:280px;}
  .nya-rel-note--hcai{left:445px;top:65px;width:350px;display:flex;flex-direction:column-reverse;gap:var(--space-1);}
  .nya-rel-note--hcai .nya-rel-stat{padding-top:0;transform:none;}
@@ -2105,6 +2105,34 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .nya-rel-after .nya-rel-final__panel .n{font-size:2.6rem}
   .nya-rel-after .nya-rel-final__panel h3{font-size:1.35rem}
   .nya-rel-after .nya-rel-final__panel li p{font-size:.9rem;line-height:1.5}
+}
+</style>
+<style id="nya-rel-phone-final">
+@media(max-width:720px){
+  .nya-rel-final{display:flex;align-items:center;justify-content:center;padding:var(--pad)}
+  .nya-rel-final .nya-rel-final__panel{display:none}
+  .nya-rel-final .nya-rel-final__diagram{width:100%}
+  .nya-rel-final .fl-title{font-size:3.7cqw}
+  .nya-rel-final .fl-stat{font-size:4.7cqw}
+  .nya-rel-final .fl-cap{font-size:1.75cqw;letter-spacing:.08em;width:24cqw!important}
+  .nya-rel-final .fl-cap[style*="left:50%"]{width:36cqw!important}
+  .nya-rel-final .fl-center{font-size:3.7cqw}
+  /* the list block follows directly under the pinned diagram, tucked up into its bottom margin */
+  .nya-rel-after{position:relative;z-index:2;margin-top:-16svh}
+  .nya-rel-after .nya-rel-final__diagram{display:none}
+  .nya-rel-after{padding-top:1rem}
+}
+</style>
+<style id="nya-rel-after-reveal">
+/* Phones: the three points under the diagram appear one by one as they scroll into view (same reveal as the UC Irvine
+   points: the title rises in first, then the text) but with no timeline line or dots. */
+@media(max-width:720px) and (prefers-reduced-motion:no-preference){
+  .nya-rel-after.is-armed li .n,
+  .nya-rel-after.is-armed li h3,
+  .nya-rel-after.is-armed li p{opacity:0;transform:translateY(14px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+  .nya-rel-after.is-armed li.is-on .n,
+  .nya-rel-after.is-armed li.is-on h3{opacity:1;transform:none;transition-delay:.15s}
+  .nya-rel-after.is-armed li.is-on p{opacity:1;transform:none;transition-delay:.35s}
 }
 </style>
 </head>
@@ -3497,6 +3525,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   if(s.name==='responsive-text') return {...s,x:370,y:900,z:2.0};
   if(s.name==='team') return {...s,x:930,y:900,z:1.9};
   if(s.name==='team-text') return {...s,x:930,y:900,z:2.0};
+  // Phones never show the zoomed-out overview: the camera stays on the Team message while the world fades out.
+  if(s.name==='overview') return {...s,x:930,y:900,z:2.0,name:'team-text'};
   return {...s,z:1};
  });
  let current=null,desired=null,ticking=false,running=false;
@@ -3527,7 +3557,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   // center message as the same camera moves from the intro toward the rings.
   // Neither headline nor paragraph changes font size during the transition.
   desired.introOpacity=1-ease((progress-.09)/.07);
-  desired.ring=innerWidth<=720 ? ease((progress-.93)/.045) : ease((progress-.145)/.145);
+  desired.ring=innerWidth<=720 ? 0 : ease((progress-.145)/.145);
   const overview=ease((progress-.935)/.06);
   // Bring in the smaller, theme-formatted copy as the introduction fades;
   // hide it during peripheral closeups, then reveal it for the full diagram.
@@ -3541,8 +3571,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   desired.teamOpacity=Math.max(overview,ease((progress-.71)/.06));
   // After the Team close-up the page goes straight to the final screen (no paragraph-filled overview in between):
   // the diagram fades away first, then the final screen fades in.
-  desired.worldOpacity=innerWidth<=720?1-ease((progress-.925)/.06):1-ease((progress-.925)/.035);
-  desired.finalOpacity=innerWidth<=720?0:ease((progress-.955)/.035);
+  desired.worldOpacity=innerWidth<=720?1-ease((progress-.9)/.05):1-ease((progress-.925)/.035);
+  desired.finalOpacity=innerWidth<=720?ease((progress-.935)/.045):ease((progress-.955)/.035);
   story.dataset.cameraScene=desired.name;
   if(!running){running=true;requestAnimationFrame(frame);}
  }
@@ -4461,6 +4491,26 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   addEventListener('resize',later,{passive:true});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
   addEventListener('load',fit);fit();
+})();
+</script>
+<script id="nya-rel-after-reveal-script">
+(function(){
+  var box=document.querySelector('.nya-rel-after');
+  if(!box)return;
+  var mq=window.matchMedia('(max-width:720px)'),rm=window.matchMedia('(prefers-reduced-motion:reduce)');
+  var items=[].slice.call(box.querySelectorAll('.nya-rel-final__panel li'));
+  var tick=false;
+  function update(){
+    tick=false;
+    if(!mq.matches||rm.matches){box.classList.remove('is-armed');return}
+    box.classList.add('is-armed');
+    var line=innerHeight*.84;
+    items.forEach(function(li){li.classList.toggle('is-on',li.getBoundingClientRect().top<line)});
+  }
+  function req(){update()}
+  addEventListener('scroll',req,{passive:true});addEventListener('resize',req,{passive:true});
+  if(mq.addEventListener)mq.addEventListener('change',req);
+  update();
 })();
 </script>
 </body>
