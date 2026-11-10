@@ -1367,7 +1367,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-journey.is-pinned .nya-journey-layout{height:100%;min-height:0}
 .nya-journey.is-pinned .nya-journey-chapters{height:100%}
 .nya-journey.is-pinned .nya-journey-chapter{flex:1 1 0;min-height:0}
-.nya-journey.is-pinned .nya-journey-left{justify-content:flex-start;padding-top:clamp(var(--space-3),6svh,5rem)}
+/* Same top margin as the ARCS section's eyebrow (var(--section)). */
+/* The label starts level with the top of the vertical divider. */
+.nya-journey.is-pinned .nya-journey-left{justify-content:flex-start;padding-top:0}
 .nya-journey.is-pinned .nya-journey-promise{opacity:0;transform:translateY(2.5svh);transition:opacity .6s ease,transform .6s cubic-bezier(.22,.7,.2,1)}
 .nya-journey.is-pinned.is-promise .nya-journey-promise{opacity:1;transform:none}
 .nya-journey:not(.is-static) .nya-journey-chapter{
