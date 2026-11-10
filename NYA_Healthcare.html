@@ -1637,7 +1637,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 .nya-rel-a11y{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);}
 @media(max-width:720px){
- .nya-rel-story{height:660svh;}
+ .nya-rel-story{height:603svh;}
  .nya-rel-center{left:510px;top:523px;width:280px;}
  .nya-rel-note--hcai{left:445px;top:65px;width:350px;display:flex;flex-direction:column-reverse;gap:var(--space-1);}
  .nya-rel-note--hcai .nya-rel-stat{padding-top:0;transform:none;}
@@ -2046,7 +2046,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 <style id="nya-rel-final-style">
 /* Last screen after the full-diagram zoom-out: a clean diagram on the left, the numbered summary on the right. */
 .nya-rel-final{position:absolute;inset:0;z-index:5;display:none;opacity:0;visibility:hidden;pointer-events:none;background:#fff;
-  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:clamp(1rem,3vw,3.5rem);
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:clamp(2rem,7vw,8rem);
   padding:clamp(.8rem,2.5svh,2rem) clamp(1.25rem,4vw,4.5rem)}
 @media(min-width:721px){.nya-rel-final{display:grid}}
 .nya-rel-final__diagram{position:relative;justify-self:center;width:min(100%,calc((100svh - 2.5rem) * 1300 / 1180));aspect-ratio:1300 / 1180;container-type:inline-size}
@@ -2067,6 +2067,45 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-final__panel .n{font-family:var(--display);font-weight:300;font-size:clamp(2.6rem,min(4.6vw,8svh),4.6rem);line-height:.9;color:var(--green-on-light)}
 .nya-rel-final__panel h3{font-family:var(--display);font-weight:400;font-size:clamp(1.35rem,min(2.5vw,4.4svh),2.5rem);line-height:1.04;letter-spacing:-.015em;color:var(--ink);margin:0}
 .nya-rel-final__panel li p{margin:clamp(.3rem,.9svh,.6rem) 0 0;font-family:var(--body);font-size:clamp(.78rem,min(.92vw,1.75svh),.95rem);line-height:1.46;color:var(--ink2)}
+.nya-rel-after .nya-rel-final__diagram{position:relative;justify-self:center;width:min(100%,calc((100svh - 2.5rem) * 1300 / 1180));aspect-ratio:1300 / 1180;container-type:inline-size}
+.nya-rel-after .nya-rel-final__diagram svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.nya-rel-after .nya-rel-final__diagram circle{fill:none;stroke:var(--ink);stroke-opacity:.82;stroke-width:1.25;vector-effect:non-scaling-stroke}
+.nya-rel-after .fl{position:absolute;transform:translate(-50%,-50%);text-align:center;color:var(--ink)}
+.nya-rel-after .fl-title{font-family:var(--display);font-weight:300;font-size:3.6cqw;line-height:1.08;letter-spacing:-.015em;white-space:nowrap}
+.nya-rel-after .fl[style*="width"].fl-title{white-space:normal}
+.nya-rel-after .fl-stat{font-family:var(--display);font-weight:300;font-size:5cqw;line-height:1;letter-spacing:-.02em;color:var(--green-on-light);white-space:nowrap}
+.nya-rel-after .fl-cap{font-family:var(--body);font-weight:500;font-size:1.6cqw;line-height:1.5;letter-spacing:.13em;text-transform:uppercase;color:var(--green-on-light)}
+.nya-rel-after .fl-center{font-family:var(--display);font-weight:400;font-size:2.9cqw;line-height:1.12;letter-spacing:-.01em}
+.nya-rel-after .nya-rel-final__panel{min-width:0;max-width:44rem}
+.nya-rel-after .nya-rel-final__panel h2{font-family:var(--display);font-weight:300;font-size:clamp(1.7rem,min(2.7vw,4.6svh),2.9rem);line-height:1.04;letter-spacing:-.02em;color:var(--ink);margin:0;text-wrap:balance}
+.nya-rel-after .nya-rel-final__panel .lead{margin:clamp(.6rem,1.6svh,1rem) 0 0;font-family:var(--body);font-size:clamp(.82rem,min(1vw,1.9svh),1.02rem);line-height:1.5;color:var(--ink2)}
+.nya-rel-after .nya-rel-final__panel ol{list-style:none;margin:clamp(.7rem,2svh,1.3rem) 0 0;padding:0;border-top:1px solid rgba(21,21,21,.18)}
+.nya-rel-after .nya-rel-final__panel li{display:grid;grid-template-columns:clamp(2.2rem,4vw,3.6rem) minmax(0,1fr);gap:clamp(.7rem,1.6vw,1.5rem);align-items:start;padding:clamp(.7rem,2svh,1.3rem) 0;border-bottom:1px solid rgba(21,21,21,.18)}
+.nya-rel-after .nya-rel-final__panel li:last-child{border-bottom:0}
+.nya-rel-after .nya-rel-final__panel .n{font-family:var(--display);font-weight:300;font-size:clamp(2.6rem,min(4.6vw,8svh),4.6rem);line-height:.9;color:var(--green-on-light)}
+.nya-rel-after .nya-rel-final__panel h3{font-family:var(--display);font-weight:400;font-size:clamp(1.35rem,min(2.5vw,4.4svh),2.5rem);line-height:1.04;letter-spacing:-.015em;color:var(--ink);margin:0}
+.nya-rel-after .nya-rel-final__panel li p{margin:clamp(.3rem,.9svh,.6rem) 0 0;font-family:var(--body);font-size:clamp(.78rem,min(.92vw,1.75svh),.95rem);line-height:1.46;color:var(--ink2)}
+</style>
+<style id="nya-rel-after-style">
+/* Phones: instead of the cramped zoomed-out diagram, a clean diagram followed by the numbered list. */
+.nya-rel-after{display:none}
+@media(max-width:720px){
+  .nya-rel-after{display:block;background:#fff;color:var(--ink);padding:clamp(1.5rem,6vw,2.5rem) var(--pad) clamp(2rem,8vw,3.5rem)}
+  .nya-rel-after__inner{display:block;max-width:34rem;margin:0 auto}
+  .nya-rel-after .nya-rel-final__diagram{width:100%;margin:0 auto}
+  .nya-rel-after .fl-title{font-size:3.7cqw}
+  .nya-rel-after .fl-stat{font-size:4.7cqw}
+  .nya-rel-after .fl-cap{font-size:1.75cqw;letter-spacing:.08em;width:24cqw!important}
+  .nya-rel-after .fl-cap[style*="left:50%"]{width:36cqw!important}
+  .nya-rel-after .fl-center{font-size:3cqw}
+  .nya-rel-after .nya-rel-final__panel{margin-top:clamp(1.6rem,7vw,2.6rem);max-width:none}
+  .nya-rel-after .nya-rel-final__panel h2{font-size:clamp(1.7rem,7.2vw,2.3rem)}
+  .nya-rel-after .nya-rel-final__panel .lead{font-size:.95rem;line-height:1.55}
+  .nya-rel-after .nya-rel-final__panel li{grid-template-columns:2.2rem minmax(0,1fr);gap:.8rem;padding:1rem 0}
+  .nya-rel-after .nya-rel-final__panel .n{font-size:2.6rem}
+  .nya-rel-after .nya-rel-final__panel h3{font-size:1.45rem}
+  .nya-rel-after .nya-rel-final__panel li p{font-size:.9rem;line-height:1.5}
+}
 </style>
 </head>
 <body id="top">
@@ -2448,8 +2487,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
      <div class="fl fl-cap" style="left:50%;top:24.3%;width:24cqw">HCAI-approved plan check firms</div>
      <div class="fl fl-center" style="left:50%;top:58.5%;width:28cqw">The relationships that define how we deliver</div>
      <div class="fl fl-title" style="left:18.5%;top:68.6%;width:26cqw">Responsiveness that earns trust</div>
-     <div class="fl fl-stat" style="left:23.5%;top:83%">One day or less</div>
-     <div class="fl fl-cap" style="left:25.5%;top:89.8%;width:22cqw">49% of RFIs answered in one day or less.</div>
+     <div class="fl fl-stat" style="left:22%;top:83%">One day or less</div>
+     <div class="fl fl-cap" style="left:27.5%;top:89.8%;width:22cqw">49% of RFIs answered in one day or less.</div>
      <div class="fl fl-title" style="left:83.5%;top:68.6%;width:22cqw">A team that stays in sync</div>
      <div class="fl fl-stat" style="left:77%;top:83.6%">20+ years</div>
      <div class="fl fl-cap" style="left:77%;top:89.2%">Median tenure</div>
@@ -2477,6 +2516,33 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   </div>
  </div>
 </section>
+<section class="nya-rel-after" aria-hidden="true">
+  <div class="nya-rel-after__inner">
+    <div class="nya-rel-final__diagram">
+     <svg viewBox="0 0 1300 1180" focusable="false"><circle cx="650" cy="445" r="420"/><circle cx="450" cy="745" r="420"/><circle cx="850" cy="745" r="420"/></svg>
+     <div class="fl fl-title" style="left:50%;top:11.5%">Partnering with HCAI</div>
+     <div class="fl fl-stat" style="left:50%;top:18.2%">1 of only 5</div>
+     <div class="fl fl-cap" style="left:50%;top:24.3%;width:24cqw">HCAI-approved plan check firms</div>
+     <div class="fl fl-center" style="left:50%;top:58.5%;width:28cqw">The relationships that define how we deliver</div>
+     <div class="fl fl-title" style="left:18.5%;top:68.6%;width:26cqw">Responsiveness that earns trust</div>
+     <div class="fl fl-stat" style="left:23.2%;top:83%">One day or less</div>
+     <div class="fl fl-cap" style="left:27.5%;top:89.8%;width:22cqw">49% of RFIs answered in one day or less.</div>
+     <div class="fl fl-title" style="left:83.5%;top:68.6%;width:22cqw">A team that stays in sync</div>
+     <div class="fl fl-stat" style="left:77%;top:83.6%">20+ years</div>
+     <div class="fl fl-cap" style="left:77%;top:89.2%">Median tenure</div>
+    </div>
+    <div class="nya-rel-final__panel">
+     <h2>The relationships that define how we deliver</h2>
+     <p class="lead">Established working relationships reduce the uncertainty that puts hospital projects at risk. NYA combines a cohesive, experienced team with close HCAI collaboration and a commitment to architects and contractors, keeping decisions consistent, approvals advancing, and construction moving.</p>
+     <ol>
+      <li><span class="n">1</span><div><h3>Partnering with HCAI</h3><p>NYA partners with HCAI early, aligns on priorities, and works through technical questions together, securing approvals for innovative solutions, including AMCs.</p></div></li>
+      <li><span class="n">2</span><div><h3>Responsiveness that earns trust</h3><p>NYA builds lasting relationships with architects and contractors by honoring our commitments. We stay accessible, understand what the field needs, and deliver clear, considered answers when they matter most. That reliability keeps questions from becoming delays.</p></div></li>
+      <li><span class="n">3</span><div><h3>A team that stays in sync</h3><p>NYA’s low staff turnover gives our engineers years of shared experience. The people who understand the design, the decisions behind it, and the project’s history remain engaged, preserving knowledge, strengthening coordination, and keeping teams aligned from design through construction.</p></div></li>
+     </ol>
+    </div>
+  </div>
+</section>
+
 
 <!-- ======== PART: Schedule and Project Delivery ======== -->
 <section class="uci-team" id="uci-delivery-proof" aria-labelledby="uci-proof-title">
@@ -3454,7 +3520,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   const OPEN=.111;
   const progress0=rawProgress<=OPEN?rawProgress/OPEN*.20:.20+(rawProgress-OPEN)/(1-OPEN)*.80;
   // Earlier stages keep their length; the final screen then holds for the remaining ~8% of the scroll.
-  const progress=clamp(progress0/.915);
+  const progress=clamp(progress0/(innerWidth<=720?1:.915));
   desired=sample(progress);
   desired.fit=getFit();
   // The opening message is large and fixed-size. It crossfades with the
@@ -3475,7 +3541,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   desired.teamOpacity=Math.max(overview,ease((progress-.71)/.06));
   // After the Team close-up the page goes straight to the final screen (no paragraph-filled overview in between):
   // the diagram fades away first, then the final screen fades in.
-  desired.worldOpacity=innerWidth<=720?1:1-ease((progress-.925)/.035);
+  desired.worldOpacity=innerWidth<=720?1-ease((progress-.925)/.06):1-ease((progress-.925)/.035);
   desired.finalOpacity=innerWidth<=720?0:ease((progress-.955)/.035);
   story.dataset.cameraScene=desired.name;
   if(!running){running=true;requestAnimationFrame(frame);}
