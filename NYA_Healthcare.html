@@ -3643,18 +3643,27 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel-lines path{fill:none;stroke-width:1;stroke-linecap:round}
 .amc-funnel-lines .is-in-line{stroke:rgba(21,21,21,.3)}
 .amc-funnel-lines .is-out-line{stroke:var(--green-on-light)}
-.amc-funnel-panel{position:relative;z-index:1;flex:none;width:min(1120px,calc(100vw - 2 * var(--pad)))}
+/* Side panels shrink-wrap their list so the dividers end where the text does; the script
+   centres panels by their own width, so centring and lead lines follow. */
+.amc-funnel-panel{position:relative;z-index:1;flex:none;width:fit-content;max-width:calc(100vw - 2 * var(--pad))}
 .amc-funnel-panel--center{width:min(980px,calc(100vw - 2 * var(--pad)));text-align:center}
 .amc-funnel-gap{flex:none;width:clamp(180px,34vw,560px)}
 .amc-funnel-label{margin-bottom:var(--space-3)}
 .amc-funnel-label::before{display:none}
 
 /* Drivers and outcomes share one row style: title column + description column, aligned
-   across rows (subgrid), hairline dividers like the page's evidence grids. */
-.amc-funnel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:var(--space-5);border-top:1px solid rgba(0,0,0,.15)}
+   across rows (subgrid), hairline dividers like the page's evidence grids.
+   Description column is measured in em so text wraps identically at every zoom and screen
+   size. Measures are tuned to the current copy (one-line lengths: drivers 40-67em,
+   outcomes 55-81em) so lines fill most of the column; re-tune if copy changes. Wrap is
+   'pretty' (fill lines, no lone last word), not 'balance': balance split the longest
+   rows into four short lines. */
+.amc-funnel-panel--drivers{--amc-measure:25em}
+.amc-funnel-panel--outcomes{--amc-measure:29em}
+.amc-funnel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:max-content minmax(0,var(--amc-measure));column-gap:var(--space-5);border-top:1px solid rgba(0,0,0,.15)}
 .amc-funnel-item{display:grid;grid-column:1/-1;grid-template-columns:subgrid;align-items:baseline;padding:var(--space-3) 0;border-bottom:1px solid rgba(0,0,0,.15)}
 .amc-funnel-item h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2-lg);line-height:1.1;color:var(--ink);white-space:nowrap}
-.amc-funnel-item p{margin:0;max-width:40em;color:var(--ink2)}
+.amc-funnel-item p{margin:0;max-width:40em;color:var(--ink2);text-wrap:pretty}
 .amc-funnel-msg{font-family:var(--display);font-weight:300;font-size:var(--text-display);line-height:1.03;letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
 .amc-funnel-msg em{color:var(--green-on-light)}
 
