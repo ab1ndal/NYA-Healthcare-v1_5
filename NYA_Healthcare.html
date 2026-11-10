@@ -1810,55 +1810,81 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Default layout: everything visible, so phones, tablets and no-JS read it in order. */
 .nya-s33-stage{position:relative;container-type:inline-size;padding-top:var(--section)}
 .nya-s33-intro{padding-inline:var(--pad)}
-.nya-s33-intro h2{font-family:var(--display);font-size:var(--text-display);font-weight:300;line-height:1.03;letter-spacing:-.02em;color:var(--s33-ink)}
+.nya-s33-intro h2{font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:1.03;letter-spacing:-.02em;color:var(--s33-ink)}
 .nya-s33-lede{margin-top:1rem;max-width:45em;color:var(--s33-body);font-size:var(--text-body);font-weight:400;line-height:1.7}
 /* The top 8% of the drawing is empty sky, so it tucks up under the words (4.5% of the width = 8% of the drawing height). */
 .nya-s33-art{position:relative;width:100%;aspect-ratio:1672/941;margin-top:calc(.5rem - 4.5%)}
 .nya-s33-art img{position:absolute;inset:0;width:100%;height:100%}
 .nya-s33-steps{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6rem 1.4rem;margin:1.6rem var(--pad) 0;padding-bottom:var(--section)}
 .nya-s33-copy h3{font-family:var(--display);font-size:clamp(1.5rem,1.1rem + 1vw,2rem);font-weight:600;line-height:1.05;letter-spacing:0;color:var(--s33-ink);margin-bottom:.9rem}
-.nya-s33-copy h3::after{content:'';display:block;width:2.5rem;height:2px;margin-top:.7rem;background:var(--s33-accent)}
 .nya-s33-copy p{font-size:var(--text-small);font-weight:400;line-height:1.55;color:var(--s33-body)}
 
-/* Desktop: the artwork fills the section from the bottom edge. All sizes follow its width, so the words stay between its posts. */
-.nya-s33.is-pinned{height:300svh}
-.nya-s33.is-pinned .nya-s33-stage{position:sticky;top:0;height:100svh;padding:0;overflow:hidden}
+/* Desktop (class is-pinned, the canopy layout): the artwork sits at the bottom of the stage and the words and cards are placed on it.
+   All sizes follow its width, so the words stay between its posts. The section scrolls normally; the script sets the stage height
+   so it is only as tall as its content (a set margin above the heading). */
+.nya-s33.is-pinned .nya-s33-stage{position:relative;height:100svh;padding:0;overflow:hidden}
 .is-pinned .nya-s33-art{position:absolute;left:0;right:0;bottom:0;margin:0;z-index:1}
-/* The whole building and the right-hand tree, cut from the drawing (1672 x 941): building rows 298 to 488, tree x 1275+, rows 80 to 305.
-   The building stands where drawn, on the canopy roof, and on desktop builds up slowly with the scroll (--hp runs 0 to 1). */
-.nya-s33-art .nya-s33-hospital{top:31.668%;height:auto}
-.nya-s33-art .nya-s33-tree{left:auto;right:0;top:8.502%;width:23.744%;height:auto}
-.is-live .nya-s33-art .nya-s33-hospital{opacity:var(--hp,0);transform:translateY(calc((1 - var(--hp,0))*1.2*var(--k)));transition:opacity .25s linear,transform .25s linear}
-.is-live .nya-s33-art .nya-s33-tree{opacity:var(--hp,0);transition:opacity .25s linear}
+/* The building is the whole hospital from the newer drawing (800 x 349, with its own lawn and tree). It builds up slowly with the
+   scroll (--hp runs 0 to 1); where it stands depends on the screen (see below). */
+.is-live .nya-s33-art .nya-s33-full{opacity:var(--hp,0);transform:translateY(calc((1 - var(--hp,0))*1.2*var(--k)));transition:opacity .25s linear,transform .25s linear}
 .is-pinned .nya-s33-intro{position:absolute;left:calc(2.8*var(--k));top:min(calc(2.4*var(--k)),4.2svh);z-index:4;padding:0}
-.is-pinned .nya-s33-intro h2{font-size:min(var(--text-display),9.6svh,calc(5.5*var(--k)));white-space:nowrap}.nya-s33:not(.is-stacked) .nya-s33-intro h2 br{display:none}
+.is-pinned .nya-s33-intro h2{white-space:nowrap}.nya-s33:not(.is-stacked) .nya-s33-intro h2 br{display:none}
+/* Desktop: the paragraph wraps around the drawing. The script draws the building's and tree's outline into this right float's shape
+   (--wrap-w, --wrap-h, --wrap), so each line ends just short of the drawing at its height and the edge follows the roofline. */
+.is-pinned .nya-s33-lede::before{content:'';float:right;width:var(--wrap-w,0);height:var(--wrap-h,0);shape-outside:var(--wrap,none)}
 .is-pinned .nya-s33-lede{margin-top:min(calc(1.1*var(--k)),1.9svh);max-width:calc(65*var(--k));font-size:var(--text-body);line-height:1.7}
 
 /* The angled line is the artwork's own line, lifted out and uncovered up to the right with the scroll (--lp runs 0 to 1). */
 .is-live .nya-s33-line{clip-path:inset(0 calc(94.8% - 94.8%*var(--lp,0)) 0 0);transition:clip-path .28s cubic-bezier(.22,.7,.2,1)}
 
-/* Six columns set to the artwork's own post spacing. */
-.is-pinned .nya-s33-steps{position:absolute;left:calc(4.43*var(--k));right:calc(4.25*var(--k));top:calc(100% - 18.65*var(--k));bottom:calc(3*var(--k));z-index:3;margin:0;padding:0;gap:0;grid-template-columns:264fr 248fr 254fr 252fr 258fr 251fr}
-.is-pinned .nya-s33-copy{padding:0 calc(1.45*var(--k)) 0 calc(1.6*var(--k))}@media(max-width:1365px){.is-pinned .nya-s33-copy{padding:0 calc(1.05*var(--k)) 0 calc(1.3*var(--k))}.nya-s33.is-pinned .nya-s33-copy p{line-height:1.42}}
-.is-pinned .nya-s33-copy h3{font-weight:600;font-size:max(1.15rem,calc(1.9*var(--k)));margin-bottom:calc(.8*var(--k));white-space:nowrap}.is-pinned .nya-s33-copy h3::after{content:'';display:block;width:calc(2.6*var(--k));height:max(2px,calc(.15*var(--k)));margin-top:calc(.7*var(--k));background:var(--s33-accent)}
-.is-pinned .nya-s33-copy p{font-size:max(14px,calc(1.05*var(--k)));line-height:1.5;text-wrap:pretty}
+/* Six columns set to the artwork's own post spacing. The cards start just under the canopy roof (text at drawing row 556, the panel
+   top 8 rows under the roof at 527), so the angled cable runs behind their upper part. The cards are only as tall as the longest
+   card's text (all six the same), standing on the ground line, so shorter copy leaves no empty band inside them. */
+.is-pinned .nya-s33-steps{position:absolute;left:calc(4.43*var(--k));right:calc(4.25*var(--k));top:calc(100% - 23*var(--k));bottom:calc(3*var(--k));z-index:3;margin:0;padding:0;gap:0;align-content:end;grid-template-columns:minmax(0,264fr) minmax(0,248fr) minmax(0,254fr) minmax(0,252fr) minmax(0,258fr) minmax(0,251fr)}
+.is-pinned .nya-s33-copy{padding:0 calc(1.45*var(--k)) 0 calc(1.6*var(--k))}@media(max-width:1365px){.is-pinned .nya-s33-copy{padding:0 calc(1.05*var(--k)) 0 calc(1.3*var(--k))}.nya-s33.is-pinned .nya-s33-copy p{line-height:1.36}}
+.is-pinned .nya-s33-copy h3{font-weight:600;font-size:max(1.15rem,calc(1.78*var(--k)));margin-bottom:calc(.6*var(--k));white-space:nowrap}
+.is-pinned .nya-s33-copy p{font-size:max(14px,calc(1.05*var(--k)*var(--fit,1)));line-height:1.42;text-wrap:pretty}
 /* Each column sits on a paper panel, post to post and all the same height, so the words stay readable over the building.
    The panels fade in ahead of the building as it rises. */
 .is-pinned .nya-s33-step{position:relative;isolation:isolate}
-.is-pinned .nya-s33-step::before{content:'';position:absolute;z-index:-1;inset:calc(-1.3*var(--k)) calc(.7*var(--k)) calc(.35*var(--k));border-radius:calc(.3*var(--k));background:rgba(255,252,247,.62);border:1px solid rgba(255,255,255,.7);box-shadow:0 calc(.2*var(--k)) calc(1.2*var(--k)) rgba(60,40,25,.07);opacity:min(1,calc(var(--hp,0)*1.6));transition:opacity .25s linear;pointer-events:none}
+/* Room under the text inside each card, matching the space above the title (the panel ends .35 units above the card's foot). */
+.nya-s33.is-pinned .nya-s33-copy{padding-bottom:calc(1.35*var(--k))}
+.is-pinned .nya-s33-step::before{content:'';position:absolute;z-index:-1;inset:calc(-1.3*var(--k)) calc(.7*var(--k)) calc(.35*var(--k));border-radius:calc(.3*var(--k));background:rgba(255,252,247,.78);border:1px solid rgba(255,255,255,.7);box-shadow:0 calc(.2*var(--k)) calc(1.2*var(--k)) rgba(60,40,25,.07);opacity:min(1,calc(var(--hp,0)*1.6));transition:opacity .25s linear;pointer-events:none}
 
 @media(min-aspect-ratio:21/10){.is-pinned .nya-s33-lede{max-width:calc(54*var(--k))}}
-@media(min-aspect-ratio:22/10){.is-pinned .nya-s33-intro{top:2.6svh}.is-pinned .nya-s33-intro h2{font-size:7.4svh}.is-pinned .nya-s33-lede{font-size:max(15px,2.1svh)}}
+@media(min-aspect-ratio:22/10){.is-pinned .nya-s33-intro{top:2.6svh}.is-pinned .nya-s33-lede{font-size:max(15px,2.1svh)}}
 @media(max-width:899px){.nya-s33-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 2rem}}
 @media(max-width:559px){.nya-s33-steps{grid-template-columns:1fr;gap:1.8rem}}
-/* Phones and portrait tablets: no pillars. Only rows 76 to 528 of the drawing (941 rows) show: the tree, the building and the
-   canopy roof, without the empty sky above or the bays below. The cable hangs between the pillars, so it goes with them. */
-@media(max-width:899px){.nya-s33-art{aspect-ratio:1672/452;margin-top:1.5rem;overflow:hidden}.nya-s33-art .nya-s33-base{top:-16.81%;height:208.19%}.nya-s33-art .nya-s33-line{display:none}.nya-s33-art .nya-s33-hospital{top:49.12%}.nya-s33-art .nya-s33-tree{top:.88%}}
+/* No canopy (class is-no-canopy on the section): the roof, posts, cable, ground line and plants are not shown; the building and cards stay. */
+.nya-s33.is-no-canopy .nya-s33-base,.nya-s33.is-no-canopy .nya-s33-line{display:none}
+/* Wherever the pillars show (900px and wider) the drawing spans the full width with its lawn (row 320) on the canopy ground line,
+   behind the posts, cable and cards. */
+@media(min-width:900px){.nya-s33-art .nya-s33-full{top:auto;bottom:calc(-1.47*var(--k));height:auto}}
+/* Unpinned, 900px and wider: the drawing's top rows are empty sky down to the hospital drawing's tree (about row 190), so the
+   drawing tucks further up under the words: 11% of the width = 185 rows; 6.3% (105 rows) for Larger, whose tree starts higher.
+   The script (fitArt) then pulls it up further, as far as the words allow. The drawing never takes clicks meant for the words. */
+.nya-s33-art{pointer-events:none}
+@media(min-width:900px){.nya-s33:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 11%)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 6.3%)}}
+/* Larger building (class is-full-large on the section): the drawing 1.3x larger, right-aligned. It grows downward: the red tower's top stays where it
+   is at normal size (drawing row 501; the image starts at row 156 = 16.58%), so nothing new rises into the words; the lower floors
+   run down behind the cards and the image is cut off at the canopy's ground line (row 905, 21% up from its bottom). */
+@media(min-width:900px){.nya-s33.is-full-large .nya-s33-art .nya-s33-full{left:auto;right:0;width:130%;max-width:none;top:16.58%;bottom:auto;clip-path:inset(0 0 21% 0)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+/* The building sits a little above the canopy's ground line (2.5 units, about 47px on a 1920px screen).
+   The larger new drawing is anchored at its top, so it moves up with a negative top margin and its cut stays on the ground line. */
+@media(min-width:900px){.nya-s33-art .nya-s33-full{margin-bottom:calc(2.5*var(--k))}.nya-s33.is-full-large .nya-s33-art .nya-s33-full{margin-bottom:0;margin-top:calc(-2.5*var(--k));clip-path:inset(0 0 16.58% 0)}}
+/* Canopy off, 900px and wider: the hospital drawing fills the section. It is 4% wider and set past the right edge by its own empty
+   margin (the building ends at column 788 of 800), so the building reaches the side, and its lawn (row 320 of 349) sits on the bottom edge (the 29 empty rows under it hang below and are clipped).
+   Larger keeps its own size and top and simply runs to the bottom edge. */
+@media(min-width:900px){.nya-s33.is-no-canopy .nya-s33-art .nya-s33-full{left:auto;right:-1.45%;width:104%;max-width:none;bottom:calc(-3.77*var(--k));margin-bottom:0}.nya-s33.is-no-canopy.is-full-large .nya-s33-art .nya-s33-full{right:-1.8%;width:130%;top:16.58%;bottom:auto;clip-path:none}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+/* Phones and portrait tablets: no pillars. Only rows 76 to 528 of the canopy drawing (941 rows) show: the roof, with the hospital
+   drawing standing on it (its lawn on row 488, at 63% of the width so it fits the 412 rows above the roof, right-aligned),
+   without the empty bays below. The cable hangs between the pillars, so it goes with them. */
+@media(max-width:899px){.nya-s33-art{aspect-ratio:1672/452;margin-top:1.5rem;overflow:hidden}.nya-s33-art .nya-s33-base{top:-16.81%;height:208.19%}.nya-s33-art .nya-s33-line{display:none}.nya-s33-art .nya-s33-full{left:auto;right:0;bottom:auto;width:62.98%;height:auto;top:-2.04%}}
 /* Phones: crop it further to the building end (x 38% to 100%) and show it larger. */
 @media(max-width:699px){.nya-s33-stage{overflow-x:clip}.nya-s33-art{width:161.3%;margin-left:-61.3%}}
 /* Keeps this section's scroll motion smooth over the page-wide reduced-motion rule. */
 .nya-s33.is-live.is-forced .nya-s33-line{transition:clip-path .28s cubic-bezier(.22,.7,.2,1)!important}
-.nya-s33.is-live.is-forced .nya-s33-hospital,.nya-s33.is-live.is-forced .nya-s33-tree{transition:opacity .25s linear,transform .25s linear!important}
+.nya-s33.is-live.is-forced .nya-s33-full{transition:opacity .25s linear,transform .25s linear!important}
 /* ==== NYA FINALE COMBINED END (CSS) ==== */
 </style>
 <style id="uci-team-style">
@@ -2142,8 +2168,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       </div>
       <div class="financial-benefits">
         <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Rapid Evaluation</div><h3>Compare options with confidence</h3><p>ARCS rapidly explores multiple structural systems, including moment frames, braced frames, dampers, and base isolation, allowing the team to compare alternatives and identify the best approach while design flexibility is greatest.</p></article>
-        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Advanced Analysis</div><h3>DD-level detail in SD</h3><p>NYA’s in-house computational capabilities and nonlinear time-history analysis deliver detailed seismic performance, material quantities, and reliable cost information typically unavailable until later design phases, providing a sound basis for early decisions.</p></article>
-        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Real-World Experience</div><h3>Proven at Stanford and UCSF</h3><p>Developed at Stanford Adult Hospital, ARCS enabled cost-informed comparisons of structural systems with and without base isolation. At UCSF Helen Diller Hospital, it informed the selection of a damped moment frame balancing seismic performance, architectural flexibility, and budget.</p></article>
+        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Advanced Analysis</div><h3>DD level detail in SD</h3><p>NYA’s in-house computational capabilities and nonlinear time history analysis deliver detailed seismic performance, material quantities, and reliable cost information typically unavailable until later design phases, providing a more sound basis for early decisions.</p></article>
+        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Real-World Experience</div><h3>Proven at Stanford and UCSF</h3><p>Developed during the Stanford Adult Hospital Project, ARCS enabled cost informed comparisons of structural systems with and without base isolation. It was fully implemented during the UCSF Helen Diller Hospital project, it expedited the selection of a damped moment frame maximizing seismic performance, architectural flexibility, and budget.</p></article>
       </div>
     </div>
   </section>
@@ -2454,25 +2480,22 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 </section>
 
 <!-- ==== NYA FINALE COMBINED START (HTML) ==== The chosen artwork, split into structure, hospital and cable layers that rebuild it exactly. -->
-<section class="nya-s33" id="nya-s33" aria-labelledby="nya-s33-title">
+<section class="nya-s33 is-full-large is-no-canopy" id="nya-s33" aria-labelledby="nya-s33-title">
   <div class="nya-s33-stage">
     <div class="nya-s33-intro">
-      <h2 id="nya-s33-title">Your hospital deserves<br> proven hands</h2>
-      <p class="nya-s33-lede">NYA brings technical ingenuity, cost insight, and close collaboration to the decisions that put hospital projects at risk. From the first structural concept through construction, we turn that expertise into lower costs, fewer surprises, and greater confidence in delivery.</p>
+      <h2 id="nya-s33-title">The NYA difference<br> is in the results</h2>
+      <p class="nya-s33-lede">Hospitals are too complex, too costly, and too important to tolerate unnecessary project risk. NYA brings the technical expertise, experience, and judgment to reduce those risks at every stage. From realizing ambitious designs and eliminating unnecessary construction costs to navigating approvals and protecting schedules, our approach delivers more than exceptional engineering. It delivers greater certainty, fewer costly compromises, and better outcomes for the entire project.</p>
     </div>
     <div class="nya-s33-art" aria-hidden="true">
-      <img class="nya-s33-hospital" src="nya-closing-hospital-v3.webp" alt="" decoding="async">
-      <img class="nya-s33-tree" src="nya-closing-tree-v3.webp" alt="" decoding="async">
-      <img class="nya-s33-base" src="nya-closing-base-v3.webp" alt="" decoding="async">
-      <img class="nya-s33-line" src="nya-closing-line-v3.webp" alt="" decoding="async">
+      <img class="nya-s33-full" src="nya-closing-hospital-full.webp" alt="" decoding="async">
     </div>
     <ol class="nya-s33-steps">
-      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Technical<br>ingenuity</h3><p>Creative engineering that protects seismic performance, preserves design ambition, and reduces material demands.</p></div></li>
-      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Cost<br>confidence</h3><p>Early analysis that reveals savings and establishes structural cost before major decisions are locked in.</p></div></li>
-      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>HCAI<br>fluency</h3><p>Well-supported solutions developed with HCAI to uphold safety and move approvals forward.</p></div></li>
-      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Reliable<br>delivery</h3><p>Structural decisions and review packages coordinated with the sequence of construction.</p></div></li>
-      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Collaboration<br>that delivers</h3><p>Owners, architects, builders, and MEP teams brought together to resolve challenges early.</p></div></li>
-      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Responsiveness<br>that earns trust</h3><p>Long-serving teams preserve project knowledge and deliver timely answers that keep work moving.</p></div></li>
+      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Technical<br>Edge</h3><p>From Stanford’s base isolation and column-free atrium to UCSF’s complex cantilevers, NYA delivers sophisticated engineering solutions that go beyond conventional approaches, without compromising seismic performance or constructability.</p></div></li>
+      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Cost<br>Advantage</h3><p>NYA’s advanced analysis and innovative solutions uncover savings conventional approaches miss, eliminating unnecessary construction costs and delivering measurable results.</p></div></li>
+      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>HCAI<br>Fluency</h3><p>NYA’s established technical credibility with HCAI helps turn innovative engineering approaches into approved solutions, reducing regulatory uncertainty and unlocking opportunities for cost savings and improved seismic performance.</p></div></li>
+      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Responsiveness<br>That Earns Trust</h3><p>NYA delivers timely, informed answers when decisions cannot wait, resolving challenges quickly and keeping projects moving from design through construction.</p></div></li>
+      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Collaboration<br>that delivers</h3><p>NYA brings owners, architects, builders, and MEP teams together to resolve challenges early, avoid costly construction conflicts, and keep projects moving.</p></div></li>
+      <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Delivery Standards<br>Redefined</h3><p>NYA’s proactive planning, phased approvals, and timely decisions help prevent costly delays and keep construction on track, as demonstrated by UCI Douglas Hospital’s on-time, on-budget delivery.</p></div></li>
     </ol>
   </div>
 </section>
@@ -3944,116 +3967,160 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   'use strict';
   const section=document.getElementById('nya-s33');
   if(!section)return;
-  const roomy=matchMedia('(min-width: 1280px) and (min-height: 640px)');
+  const roomy=matchMedia('(min-width: 1280px)');
+  // Desktop uses the canopy layout (class is-pinned): the cards between the posts. Where a screen is too small for the cards to fit
+  // above the ground line, setup() falls back to the flowing layout (cards below the drawing). Set PIN to false to always use that.
+  const PIN=true;
+  // The design is fixed in the markup: larger building (is-full-large), no canopy (is-no-canopy), the Updated text.
   // This motion only ever follows the reader's own scrolling, so it runs for everyone, including with system animations off.
   // Scroll progress: the line climbs, then the hospital builds up slowly behind the words. The words stay solid throughout.
-  const LINE_FROM=.03,LINE_TO=.42,ART_FROM=.3,ART_TO=.96;
   const clamp=v=>Math.max(0,Math.min(1,v));
   let pinned=false,frame=0;
   function draw(){
     frame=0;
-    let lp,hp;
-    if(pinned){
-      const length=Math.max(1,section.offsetHeight-innerHeight);
-      const p=clamp(-section.getBoundingClientRect().top/length);
-      lp=(p-LINE_FROM)/(LINE_TO-LINE_FROM);hp=(p-ART_FROM)/(ART_TO-ART_FROM);
-    }else{
-      // Smaller screens scroll straight through: the cable draws as the drawing comes into view,
-      // then the building and tree build up, complete once the whole drawing is on screen.
-      const a=art.getBoundingClientRect(),vh=innerHeight;
-      const p=clamp((vh-a.top)/Math.max(1,a.height+vh*.1));
-      lp=p/.5;hp=(p-.3)/.65;
-    }
+    // The section scrolls straight through: the cable draws as the drawing comes into view, then the building builds up,
+    // complete once the whole drawing is on screen.
+    const a=art.getBoundingClientRect(),vh=innerHeight;
+    const p=clamp((vh-a.top)/Math.max(1,a.height+vh*.1));
+    const lp=p/.5,hp=(p-.3)/.65;
     section.style.setProperty('--lp',clamp(lp).toFixed(4));
     section.style.setProperty('--hp',clamp(hp).toFixed(4));
   }
   // Keep the heading block close above the canopy: measure where it starts and move the words down to it.
-  const intro=section.querySelector('.nya-s33-intro'),stage=section.querySelector('.nya-s33-stage'),art=section.querySelector('.nya-s33-art'),building=section.querySelector('.nya-s33-hospital');
+  const intro=section.querySelector('.nya-s33-intro'),stage=section.querySelector('.nya-s33-stage'),art=section.querySelector('.nya-s33-art'),building=section.querySelector('.nya-s33-full');
   // Measured on the artwork in 2000-wide units (the drawing is 1672 x 941, so 1px = 1.196 units): the canopy top is at row 584,
-  // the building strip is 227 units tall, and the right-hand tree spans x 1525+, rows 96 to 365.
+  // and the right-hand tree spans x 1525+, rows 96 to 365.
   const title=intro.querySelector('h2');
-  // Top outline of the building layer, in units below its top edge, per 100-unit column (227 = nothing above the canopy).
-  const OUTLINE=[227,227,201,182,179,178,191,191,191,175,160,105,75,39,19,1,5,17,74,51];
-  // Top of the building layer as placed by the CSS (viewport px; its rise animation is a transform, so it does not count).
-  function buildingTop(a){return a.top+building.offsetTop}
-  // The lowest point the words may reach (stage px): the canopy, or the building wherever it stands above the canopy under the words.
-  function floorY(st,a,u){
-    let y=a.top+584*u;
-    const top=buildingTop(a);
-    const r=intro.getBoundingClientRect();
-    const from=Math.max(0,Math.floor((r.left-a.left)/u/100)),to=Math.min(19,Math.floor((r.right-a.left)/u/100));
-    for(let i=from;i<=to;i++)y=Math.min(y,top+OUTLINE[i]*u);
-    return y-st.top;
+  // Top outline of the hospital drawing (800 x 349), per 20 columns, as [from column, to column, top row]; it includes its tree.
+  // outline() gives it on screen (viewport px) as [left, right, top], from where the CSS places it; its rise is a transform, so it does not count.
+  const FULL=[[0,20,227],[20,40,225],[40,60,221],[60,80,227],[80,100,229],[100,120,229],[120,140,229],[140,160,229],[160,180,229],[180,200,229],[200,220,229],[220,240,228],[240,260,228],[260,280,218],[280,300,213],[300,320,211],[320,340,212],[340,360,212],[360,380,182],[380,400,178],[400,420,166],[420,440,162],[440,460,159],[460,480,146],[480,500,142],[500,520,137],[520,540,57],[540,560,49],[560,580,36],[580,600,43],[600,620,50],[620,640,36],[640,660,32],[660,680,19],[680,700,8],[700,720,10],[720,740,8],[740,760,7],[760,780,10],[780,800,7]];
+  function outline(a){
+    const s=building.offsetHeight/349,l=a.left+building.offsetLeft,t=a.top+building.offsetTop;
+    return FULL.map(([b0,b1,r])=>[l+b0*s,l+b1*s,t+r*s]);
   }
-  // On desktop the heading breaks onto two lines and grows to fill the band above the canopy, leaving a small margin at the top.
-  // Where two lines would have to be much smaller than the normal one-line size, it stays on one line.
-  function sizeTitle(){
-    title.style.fontSize='';
-    section.classList.remove('is-stacked');
-    if(!pinned)return;
-    const st=stage.getBoundingClientRect(),a=art.getBoundingClientRect(),u=a.width/2000;
-    const base=parseFloat(getComputedStyle(title).fontSize);
-    section.classList.add('is-stacked');
-    const lines=title.getBoundingClientRect().height/base;
-    const rest=intro.getBoundingClientRect().height-title.getBoundingClientRect().height;
-    const gap=Math.max(18,innerHeight*.035),margin=Math.max(28,innerHeight*.05);
-    const band=floorY(st,a,u)-gap-margin-rest;
-    let size=Math.min(band/lines,innerHeight*.14,st.width*.075);
-    title.style.fontSize=size+'px';
-    // Keep the longer line clear of the right-hand tree when the heading reaches up beside it.
-    const hr=title.getBoundingClientRect(),limit=a.left+1525*u-24;
-    const top=floorY(st,a,u)+st.top-gap-intro.getBoundingClientRect().height;
-    if(top<a.top+365*u&&hr.right>limit){size*=(limit-hr.left)/hr.width;title.style.fontSize=size+'px'}
-    if(size<base*.75){title.style.fontSize='';section.classList.remove('is-stacked')}
+  // The line the words stay above (viewport px): the canopy roof; with the canopy off, the top of the card panels (canopy layout)
+  // or the foot of the drawing (flowing layout), so no empty band is left where the roof would be.
+  function baseY(a,u){
+    if(!section.classList.contains('is-no-canopy'))return a.top+584*u;
+    if(!pinned)return a.bottom;
+    return section.querySelector('.nya-s33-step').getBoundingClientRect().top-1.3*a.width/100;
   }
+  // The heading keeps the page's section-title size (--text-h1), like the other sections.
   const lede=intro.querySelector('.nya-s33-lede');
+  const lineRects=el=>{const g=document.createRange();g.selectNodeContents(el);return [...g.getClientRects()]};
+  const textBottom=()=>Math.max(...lineRects(title).map(r=>r.bottom),...lineRects(lede).map(r=>r.bottom));
+  // How far a line box would have to rise to stay a gap clear of the drawing (0 when it is already clear).
+  function clash(bands,r,gap){
+    let lift=0;
+    for(const [l,rt,t] of bands)if(rt>r.left-gap&&l<r.right+gap)lift=Math.max(lift,r.bottom+gap-t);
+    return lift;
+  }
+  // Shape the paragraph's right float to the drawing: at each half line, the text may run to just short of the leftmost part of the
+  // building or tree that reaches above that line. The left part of the paragraph (at least 42% or 320px) always stays free.
+  function wrapLede(bands,gap){
+    lede.style.removeProperty('--wrap');lede.style.removeProperty('--wrap-w');lede.style.removeProperty('--wrap-h');
+    const L=lede.getBoundingClientRect(),lh=parseFloat(getComputedStyle(lede).lineHeight)||24,free=Math.min(L.width,Math.max(320,L.width*.42));
+    const H=L.height+lh*4,step=lh/2,pts=[[L.width,0]];
+    for(let y=0;y<H;y+=step){
+      let x=L.right;
+      for(const [l,rt,t] of bands)if(rt>L.left&&t<L.top+y+lh+gap)x=Math.min(x,l-gap);
+      x=Math.max(x,L.left+free)-L.left;
+      pts.push([x,y],[x,y+step]);
+    }
+    pts.push([L.width,H]);
+    lede.style.setProperty('--wrap-w',L.width+'px');
+    lede.style.setProperty('--wrap-h',H+'px');
+    lede.style.setProperty('--wrap','polygon('+pts.map(([x,y])=>x.toFixed(1)+'px '+y.toFixed(1)+'px').join(',')+')');
+  }
+  // Desktop: place the words so their last line sits a gap above the line they stay above (baseY), or above the drawing where it
+  // rises under the paragraph's free left part, then wrap the paragraph to the drawing; repeat as the wrap changes its height.
+  function placeWords(){
+    const a=art.getBoundingClientRect(),u=a.width/2000,gap=Math.max(18,innerHeight*.035),bands=outline(a),base=baseY(a,u);
+    const settle=()=>{
+      for(let n=0;n<4;n++){
+        const L=lede.getBoundingClientRect(),free=Math.min(L.width,Math.max(320,L.width*.42));
+        let floor=base;
+        for(const [l,rt,t] of bands)if(rt>L.left&&l<L.left+free)floor=Math.min(floor,t);
+        const st=stage.getBoundingClientRect(),top=intro.getBoundingClientRect().top-st.top;
+        intro.style.top=(top+floor-gap-textBottom())+'px';
+        wrapLede(bands,gap);
+      }
+    };
+    settle();
+    // The heading stays on one line unless that line would run into the drawing; if even two lines would, the words rise until clear.
+    const lift=()=>Math.max(0,...lineRects(title).map(r=>clash(bands,r,gap)));
+    if(lift()>0){section.classList.add('is-stacked');settle();}
+    const up=lift();
+    if(up>0){
+      const st=stage.getBoundingClientRect();
+      intro.style.top=(intro.getBoundingClientRect().top-st.top-up)+'px';
+      wrapLede(bands,gap);
+    }
+  }
+  // Unpinned, 900px and wider: pull the drawing up under the words as far as they allow, so the canopy roof ends a set gap below
+  // the paragraph and the hospital drawing and its tree stay that gap clear of every line of the heading and paragraph.
+  function fitArt(){
+    art.style.marginTop='';
+    if(pinned||innerWidth<900)return;
+    const a=art.getBoundingClientRect(),u=a.width/2000,gap=Math.max(18,innerHeight*.035),roof=baseY(a,u),shape=outline(a);
+    let room=Infinity;
+    for(const el of [title,lede])for(const r of lineRects(el)){
+      room=Math.min(room,roof-r.bottom);
+      for(const [l,rt,t] of shape)if(rt>r.left&&l<r.right)room=Math.min(room,t-r.bottom);
+    }
+    if(room-gap>0)art.style.marginTop=(parseFloat(getComputedStyle(art).marginTop)-(room-gap))+'px';
+  }
   function fitIntro(){
     intro.style.top='';
     intro.style.left='';
     lede.style.maxWidth='';
-    sizeTitle();
-    if(!pinned)return;
-    // Where the paragraph would run down into the building, end it before that part of the building, so the words stay on clear paper.
-    {
-      const a=art.getBoundingClientRect(),u=a.width/2000,gap=Math.max(18,innerHeight*.035);
-      for(let n=0;n<3;n++){
-        const lr=lede.getBoundingClientRect();
-        let edge=Infinity;
-        for(let i=Math.max(0,Math.floor((lr.left-a.left)/u/100));i<20;i++){
-          const x=a.left+i*100*u;
-          if(x>lr.right)break;
-          if(buildingTop(a)+OUTLINE[i]*u<lr.bottom+gap){edge=x;break}
-        }
-        if(edge===Infinity||edge-lr.left<lr.width*.5)break;
-        lede.style.maxWidth=(edge-24-lr.left)+'px';
-        sizeTitle();
-      }
-    }
-    const st=stage.getBoundingClientRect(),ir=intro.getBoundingClientRect(),a=art.getBoundingClientRect(),u=a.width/2000;
-    const floor=floorY(st,a,u);
-    const gap=Math.max(18,innerHeight*.035);
-    const move=floor-gap-(ir.bottom-st.top);
-    // Never move the heading down into the tree's leaves.
-    const hr=intro.querySelector('h2').getBoundingClientRect();
-    const room=hr.right>a.left+1525*u?a.top+96*u-hr.bottom-8:Infinity;
-    const step=Math.min(move,room);
-    if(step>0)intro.style.top=(ir.top-st.top+step)+'px';
+    title.style.fontSize='';
+    section.classList.remove('is-stacked');
+    lede.style.removeProperty('--wrap');lede.style.removeProperty('--wrap-w');lede.style.removeProperty('--wrap-h');
+    fitArt();
+    if(pinned)placeWords();
   }
   function request(){if(!frame)frame=requestAnimationFrame(draw)}
+  const steps=section.querySelector('.nya-s33-steps');
+  // Does the row of cards fit between the roof and the ground? The cards stand on the ground line and grow upward with their text,
+  // so they fit while the row's top stays at or below the top of the card area (just under the roof).
+  function cardsFit(){
+    const top=steps.getBoundingClientRect().top;
+    return [...steps.children].every(li=>li.getBoundingClientRect().top>=top-1);
+  }
+  // Canopy layout: make the stage only as tall as its content, so the heading starts a set margin below the section top.
+  // Shortening the stage lifts the drawing (it sits at the bottom), so the words are placed again and the height is checked once more.
+  function fitStage(){
+    stage.style.height='';
+    if(!pinned)return;
+    const pad=Math.max(48,innerHeight*.06);
+    for(let n=0;n<3;n++){
+      const st=stage.getBoundingClientRect(),extra=intro.getBoundingClientRect().top-st.top-pad;
+      if(Math.abs(extra)<2)break;
+      stage.style.height=(st.height-extra)+'px';
+      fitIntro();
+    }
+  }
   function setup(){
-    pinned=roomy.matches;
+    stage.style.height='';
+    pinned=PIN&&roomy.matches;
     section.classList.toggle('is-pinned',pinned);
     section.classList.add('is-live','is-forced');
     section.style.setProperty('--lp','0');
     section.style.setProperty('--hp','0');
     fitIntro();
+    // Longer card copy: shrink the card text in small steps (--fit), only as far as this screen needs, then fall back to scrolling.
+    section.style.removeProperty('--fit');
+    if(pinned)for(const f of [.95,.9,.85]){if(cardsFit())break;section.style.setProperty('--fit',f)}
+    if(pinned&&!cardsFit()){pinned=false;section.classList.remove('is-pinned');section.style.removeProperty('--fit');fitIntro()}
+    fitStage();
     request();
   }
   addEventListener('scroll',request,{passive:true});
-  addEventListener('resize',()=>{fitIntro();request()},{passive:true});
-  building.addEventListener('load',fitIntro);
-  addEventListener('load',fitIntro);
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitIntro);
+  addEventListener('resize',setup,{passive:true});
+  building.addEventListener('load',setup);
+  addEventListener('load',setup);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(setup);
   roomy.addEventListener('change',setup);
   setup();
 })();
