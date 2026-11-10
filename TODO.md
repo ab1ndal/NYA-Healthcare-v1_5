@@ -37,7 +37,7 @@ ffmpeg -i in.mp4 -vf "scale=-2:1080,fps=30" -c:v libx264 -crf 26 -preset slow -a
 | # | Task | Owner | Status | Notes |
 |---|------|-------|--------|-------|
 | I1 | Upload `uci-douglas-white.webp` (UCI photo, sky replaced with white) to nyase.com WordPress, relink `#uci-delivery-proof` to the WordPress URL, then delete the file and its `!uci-douglas-white.webp` line in `.gitignore` | AB | Done | Uploaded 2026-11-06 as `2026/11/ucidouglaswhite.webp`; `srcset` added with the 2880w upscale `ucidouglaswhite-1.webp` (+ WordPress `-1-scaled` 2560w) |
-| I2 | Upload `nya-closing-hospital-full.webp` (the closing section's hospital drawing) to nyase.com WordPress, relink `.nya-s33-full` to the WordPress URL, then delete the file and its `!` line in `.gitignore`. Until then the live site (deploy uploads only NYA_Healthcare.html) shows the closing section without its building | MB | Not started | |
+| I2 | Upload `nya-closing-hospital-full.webp` (the closing section's hospital drawing) to nyase.com WordPress and relink `.nya-s33-full` | MB | Done | Uploaded 2026-11-10 as `2026/11/nyaclosinghospitalfull.webp`; local file removed |
 
 ## Done
 
