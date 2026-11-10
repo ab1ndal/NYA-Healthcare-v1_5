@@ -1930,8 +1930,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 </style>
 <style id="ucsf-story-head-style">
-/* Technical Excellence header: eyebrow + title + paragraph arrive together; after a second scroll the paragraph
-   collapses and the eyebrow + title stay pinned above the media for all six slides. */
+/* Technical Excellence header: eyebrow + title + paragraph arrive together; after a second scroll the eyebrow and
+   paragraph fade, the title slides up into the eyebrow's place, and only the title stays pinned above the media. */
 .ucsf-story{--ucsf-head-h:0px}
 .ucsf-story-head{grid-column:1 / -1;display:block;padding-top:clamp(3rem,6vw,5rem);margin-bottom:0}
 .ucsf-story-head .eyebrow{margin-bottom:.7rem}
@@ -1948,6 +1948,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   /* The paragraph fades without changing the header's height, so nothing below it shifts while scrolling. */
   .ucsf-story-head .value-note{transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear 0s}
   .ucsf-story.is-note-off .ucsf-story-head .value-note{opacity:0!important;transform:translateY(-.6rem)!important;visibility:hidden;pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear .45s}
+  /* Eyebrow fades in place; the title moves up by the eyebrow's height (--ucsf-eyebrow-h, set by script). */
+  .ucsf-story.is-note-off .ucsf-story-head .eyebrow{opacity:0!important;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
+  .ucsf-story.is-note-off .ucsf-story-head h2{transform:translateY(calc(-1 * var(--ucsf-eyebrow-h,0px)))!important;transition:transform .5s var(--ease)}
   .ucsf-story-media{top:var(--ucsf-head-h);height:calc(100svh - var(--ucsf-head-h));padding-top:1rem;padding-bottom:1.5rem;transition:top .5s var(--ease),height .5s var(--ease)}
   .ucsf-story.is-note-off .ucsf-story-media{top:var(--ucsf-head-h-short,var(--ucsf-head-h));height:calc(100svh - var(--ucsf-head-h-short,var(--ucsf-head-h)))}
   .ucsf-story-frame{height:100%;max-height:760px}
@@ -2177,7 +2180,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 <section class="ucsf-proof" id="ucsf-case-study">
   <div class="ucsf-story" id="ucsf-story">
     <div class="projects-head ucsf-story-head">
-      <div class="eyebrow reveal">Technical Expertise</div>
+      <div class="eyebrow reveal">Technical Excellence</div>
       <h2 class="display reveal">Technical depth that turns engineering insight <em>into savings</em></h2>
       <p class="value-note reveal">NYA combines advanced analysis with proven engineering judgment to reduce the risk of redesign, added cost, and delay, as demonstrated on two of our flagship projects: The Stanford Adult Hospital and UCSF’s Helen Diller Hospital.</p>
     </div>
@@ -4073,20 +4076,22 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var head=story&&story.querySelector('.ucsf-story-head');
   if(!head)return;
   var note=head.querySelector('.value-note');
+  var brow=head.querySelector('.eyebrow');
   function setH(){
     var h=head.offsetHeight;
     story.style.setProperty('--ucsf-head-h',h+'px');
-    if(note){
-      var mt=parseFloat(getComputedStyle(note).marginTop)||0;
-      story.style.setProperty('--ucsf-head-h-short',Math.max(0,h-note.offsetHeight-mt)+'px');
-    }
+    // Pinned height = header minus the paragraph and minus the eyebrow the title slides up over.
+    var eh=brow?brow.offsetHeight+(parseFloat(getComputedStyle(brow).marginBottom)||0):0;
+    story.style.setProperty('--ucsf-eyebrow-h',eh+'px');
+    var mt=note?parseFloat(getComputedStyle(note).marginTop)||0:0;
+    story.style.setProperty('--ucsf-head-h-short',Math.max(0,h-(note?note.offsetHeight+mt:0)-eh)+'px');
   }
   if('ResizeObserver' in window)new ResizeObserver(setH).observe(head);
   setH();addEventListener('resize',setH,{passive:true});
   var off=false,tick=false;
   function update(){
     tick=false;
-    // Second scroll: once the header has pinned and the reader has moved a little further, hide the paragraph only.
+    // Second scroll: once the header has pinned and the reader has moved a little further, hide the eyebrow and paragraph.
     var gone=-story.getBoundingClientRect().top>innerHeight*.3;
     if(gone!==off){
       off=gone;story.classList.toggle('is-note-off',off);
