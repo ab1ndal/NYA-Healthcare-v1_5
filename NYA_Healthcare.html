@@ -1909,6 +1909,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 @media(max-width:599px),(max-height:620px){.uci-team-head{position:static}.uci-team .uci-team-head::after,.uci-team .uci-team-head::before{display:none}}
 @media(max-width:900px) and (orientation:portrait){.uci-team-media img{aspect-ratio:2/1}.uci-team-media{margin-top:calc(var(--space-1) - 50 / 1448 * 100%)}}
 @media(max-width:900px){
+  /* Stacked rows are already tall, so the extra reading pace of --uci-pad isn't needed here. */
+  .uci-team-track{--uci-pad:var(--space-3)}
   .uci-team-line{left:calc(.5rem - 1px)}
   .uci-team-step h3{justify-self:start;text-align:left}
   .uci-team-step{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--uci-pad) 0 var(--uci-pad) calc(1rem + var(--space-2))}
