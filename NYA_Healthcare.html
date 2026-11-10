@@ -968,12 +968,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .financial-risk--arcs .financial-chart {width:100%;min-width:0;display:block;}
 .financial-risk--arcs .arcs-cost-chart {width:100%;height:auto;display:block;aspect-ratio:1400/395;overflow:visible;}
 .financial-risk--arcs .arcs-lock {opacity:0;transition:opacity .25s ease;}
-.financial-risk--arcs .arcs-cost-chart.is-locked .arcs-lock {opacity:1;}
-.financial-risk--arcs .arcs-hit {cursor:default;}
-.financial-risk--arcs .financial-chart {-webkit-tap-highlight-color:transparent;}
-.financial-risk--arcs .financial-chart.is-clickable {cursor:pointer;}
-.financial-risk--arcs .financial-chart:focus {outline:none;}
-.financial-risk--arcs .financial-chart:focus-visible {outline:2px solid var(--gold);outline-offset:4px;}
+/* Readout appears on its own 500ms after the chart scrolls into view; no hover or tap. */
+.financial-risk--arcs .financial-graphic.is-visible .arcs-lock {opacity:1;transition-delay:.5s;}
 .financial-risk--arcs .arcs-caption {display:none;margin-top:.6rem;font-size:.875rem;line-height:1.5;color:#dce2e5;}
 .financial-risk--arcs .financial-graphic.is-compact .arcs-caption {display:block;}
 @media (prefers-reduced-motion: reduce) {
@@ -2014,7 +2010,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
         <p class="financial-intro reveal">NYA’s Advanced Rapid Concept Studies (ARCS) bring Design Development-level precision into the earliest design stages. Combining advanced technology with extensive hospital experience, ARCS reveals cost and performance implications long before critical decisions are made.</p>
       </div>
       <div class="financial-graphic reveal">
-        <div class="financial-chart" role="img" tabindex="0" aria-label="Conceptual illustration of anticipated structural cost ranges from concept through construction documents. Both approaches start with the same wide range. With ARCS the range narrows sharply during concept, so by the start of schematic design it is as certain as the typical approach becomes late in design development, one phase sooner, and it ends at a lower cost.">
+        <div class="financial-chart" role="img" aria-label="Conceptual illustration of anticipated structural cost ranges from concept through construction documents. Both approaches start with the same wide range. With ARCS the range narrows sharply during concept, so by the start of schematic design it is as certain as the typical approach becomes late in design development, one phase sooner, and it ends at a lower cost.">
           <!-- Everything but <defs> is drawn by the script below, in one of two layouts:
                desktop (fixed 1400x395 viewBox) or compact (viewBox = container width in px,
                so chart text stays at true pixel size on phones). -->
@@ -3324,9 +3320,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    option 1 (data-option="1"); option 2 (OPT2) is the static over-time concept. Option 1:
    both approaches start with the same cost range. The typical range
    narrows steadily; the ARCS range drops sharply during concept, then tapers.
-   Hovering the plot (wide layout, mouse) or tapping it (narrow layout or touch) shows one snapshot: at the start of schematic design ARCS
-   already matches the certainty the typical approach only reaches late in
-   design development. */
+   Once the chart is revealed, a snapshot fades in (CSS, 500ms delay): at the start of
+   schematic design ARCS already matches the certainty the typical approach only reaches
+   late in design development. */
 function initArcsChart(svg){
   const chart=svg.closest('.financial-chart');
   const graphic=svg.closest('.financial-graphic');
@@ -3336,7 +3332,6 @@ function initArcsChart(svg){
   // Below this container width the 1400-unit desktop drawing shrinks text under ~9px,
   // so switch to the compact layout drawn at 1 unit = 1 CSS px.
   const COMPACT_BELOW=960;
-  const hoverMQ=window.matchMedia('(hover: hover) and (pointer: fine)');
   // Phone held sideways: the chart must fit the screen height, not just its width.
   const shortLandscapeMQ=window.matchMedia('(orientation: landscape) and (max-height: 500px)');
 
@@ -3353,10 +3348,9 @@ function initArcsChart(svg){
     W:1400,H:395,X0:72,X1:1330,TOP:100,BOT:290,END_TYP:184,END_ARCS:246,
     axisY:316,yTip:70,yHead:[8,13],xEnd:1359,xHead:[6,13],dot:8,
     sw:{top:2.7,bot:2,pill:5,axis:2,legend:3,glow:2},
-    title:{x:66,size:14,ls:2,lines:[[30,'ESTIMATED'],[51,'STRUCTURAL COST']]},
+    title:{x:66,size:14,ls:2,lines:[[51,'ESTIMATED STRUCTURAL COST']]},
     phases:{y:348,size:14,ls:2.2},
-    lock:{arrowY:58,l1:44,l2:80,size:13,ls:2.2,head:14},
-    hit:{y:60,h:270},
+    lock:{arrowY:58,l1:51,l2:75,size:13,ls:2.2,head:14},
     legend:{len:50,textDx:65,rows:[[1155,60],[1155,91]],dy:6,size:16},
     caption:{x:67,y:381,size:15},
     time:{x:713,y:354,size:15,ls:2.2}
@@ -3384,7 +3378,7 @@ function initArcsChart(svg){
   const compact=(W,n1=1,n2=1,maxH=0)=>{
     // Plot grows with width so tablets don't get a long flat strip; labels step up a size there too.
     const big=W>=560, fs=big?12.5:11, lh=Math.round(fs*1.4);
-    const l1=big?46:44, arrowY=l1+(n1-1)*lh+(big?14:12), l2=arrowY+(big?22:20);
+    const l1=big?46:44, arrowY=l1+(n1-1)*lh+(big?8:7), l2=arrowY+(big?17:15);
     // Axis title sits right on top of the y-axis; the legend goes below the phase labels
     // so it never comes between the axis and its label.
     // Option 2 has no callout, so the plot starts right under the axis tip.
@@ -3406,7 +3400,6 @@ function initArcsChart(svg){
       title:{x:0,size:fs,ls:1.4,lines:[[big?14:12,'ESTIMATED STRUCTURAL COST']]},
       phases:{y:axisY+24,size:fs,ls:1.4},
       lock:{arrowY,l1,l2,lh,size:fs,ls:big?1.6:1.4,head:big?11:10},
-      hit:{y:24,h:axisY+14-24},
       legend:{len:24,textDx:32,rows:legRows,dy:5,size:legSize},
       time:{x:(10+W-4)/2,y:axisY+24,size:fs,ls:1.4},
       caption:null // shown as HTML below the chart instead, so it can wrap
@@ -3420,19 +3413,8 @@ function initArcsChart(svg){
     (parent||svg).appendChild(n);
     return n;
   };
-  // Narrow layout (phones, tablets) or no mouse hover: click/tap toggles the readout.
-  // Wide layout with a mouse: hover shows it.
   let compactMode=false;
-  // Option 2 has no readout, so neither mode applies to it.
-  const interactive=()=>opt===1;
-  const clickMode=()=>interactive()&&(compactMode||!hoverMQ.matches);
-  const captionText=()=>opt===2?'Conceptual illustration of anticipated structural cost ranges':
-    'Conceptual illustration of anticipated structural cost ranges. '+
-    (clickMode()?(hoverMQ.matches?'Click':'Tap'):'Hover over')+' the chart to compare.';
-
-  const show=()=>svg.classList.add('is-locked');
-  const hide=()=>svg.classList.remove('is-locked');
-  let hit=null;
+  const captionText=()=>'Conceptual illustration of anticipated structural cost ranges';
 
   function render(L){
     compactMode=!L.caption;
@@ -3482,10 +3464,6 @@ function initArcsChart(svg){
     (lk.lines2||[LOCK_2]).forEach((s,i)=>el('text',{x:(xa+xb)/2,y:lk.l2+i*(lk.lh||0)},lbl,s));
     el('line',{x1:xb,x2:xb,y1:rb[0],y2:rb[1],stroke:'#ff7930','stroke-width':L.sw.pill,'stroke-linecap':'round'},lock);
     el('line',{x1:xa,x2:xa,y1:ra[0],y2:ra[1],stroke:'#00ebe2','stroke-width':L.sw.pill,'stroke-linecap':'round'},lock);
-
-    hit=el('rect',{class:'arcs-hit',x:X0,y:L.hit.y,width:X1-X0+12,height:L.hit.h,fill:'transparent'});
-    hit.addEventListener('pointerenter',e=>{if(!clickMode()&&e.pointerType==='mouse') show();});
-    hit.addEventListener('pointerleave',e=>{if(!clickMode()&&e.pointerType==='mouse') hide();});
     finish(L);
   }
 
@@ -3504,12 +3482,10 @@ function initArcsChart(svg){
     el('circle',{cx:X1,cy:my(246),r:L.dot,fill:'#00ebe2'});
     const tm=L.time;
     el('text',{x:tm.x,y:tm.y,'text-anchor':'middle',fill:'#edf1f3','font-family':FONT,'font-size':tm.size,'letter-spacing':tm.ls},null,'TIME');
-    hit=null;
     finish(L);
   }
 
   function finish(L){
-    // Legend ignores the pointer so hovering it doesn't drop the readout.
     const lg=L.legend, leg=el('g',{'font-family':FONT,'font-size':lg.size,fill:'#edf1f3','pointer-events':'none'});
     [['#ff7930','Typical approach'],['#00ebe2','NYA with ARCS']].forEach(([c,s],i)=>{
       const [lx,y]=lg.rows[i];
@@ -3519,7 +3495,6 @@ function initArcsChart(svg){
     if(L.caption) el('text',{x:L.caption.x,y:L.caption.y,fill:'#dce2e5','font-family':FONT,'font-size':L.caption.size,'pointer-events':'none'},null,captionText());
     if(caption) caption.textContent=captionText();
     if(graphic) graphic.classList.toggle('is-compact',compactMode);
-    if(chart) chart.classList.toggle('is-clickable',clickMode());
   }
 
   let lastKey='';
@@ -3578,31 +3553,6 @@ function initArcsChart(svg){
   // Height-only changes (rotation, browser bars) don't resize the chart's width.
   window.addEventListener('resize',layout);
   if(!lastKey) render(DESKTOP); // hidden at load: draw something
-
-  // Click mode: a tap on the chart toggles; a tap anywhere else closes.
-  if(chart) chart.addEventListener('click',()=>{if(clickMode()) svg.classList.toggle('is-locked');});
-  // Outside taps are caught with pointerdown/pointerup rather than 'click', because iOS
-  // Safari doesn't send 'click' for taps on plain text. A scroll ends in pointercancel
-  // (or moves), so scrolling past the chart never closes it.
-  let down=null;
-  document.addEventListener('pointerdown',e=>{
-    down={x:e.clientX,y:e.clientY};
-    if(!clickMode()&&e.target!==hit) hide(); // hover mode: pressing off the plot hides it
-  });
-  document.addEventListener('pointercancel',()=>{down=null;});
-  document.addEventListener('pointerup',e=>{
-    const d=down; down=null;
-    if(!d||!clickMode()||!chart||chart.contains(e.target)) return;
-    if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<10) hide();
-  });
-  // Keyboard: Enter/Space toggles in click mode; focus shows it in hover mode.
-  if(chart){
-    chart.addEventListener('keydown',e=>{
-      if(clickMode()&&(e.key==='Enter'||e.key===' ')){e.preventDefault();svg.classList.toggle('is-locked');}
-    });
-    chart.addEventListener('focus',()=>{if(interactive()&&!clickMode()) show();});
-    chart.addEventListener('blur',hide);
-  }
 }
 document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 </script>
