@@ -4091,7 +4091,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')+location.hash);
     setup();
   });
-  section.append(bar);
+  // On the page itself, not in the section: the section is its own layer (isolation), so content after it, like the copyright
+  // line, would otherwise sit on top of the bar.
+  document.body.append(bar);
   new IntersectionObserver(([e])=>bar.classList.toggle('is-shown',e.isIntersecting)).observe(section);
   // This motion only ever follows the reader's own scrolling, so it runs for everyone, including with system animations off.
   // Scroll progress: the line climbs, then the hospital builds up slowly behind the words. The words stay solid throughout.
