@@ -1916,15 +1916,21 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .ucsf-story-head .value-note{max-width:62rem;margin:1rem auto 0;padding:0;text-align:justify;text-align-last:center;hyphens:none;-webkit-hyphens:none}
 .ucsf-step h3{font-size:var(--text-h2-lg)}
 @media(min-width:1101px){
-  .ucsf-story-head{position:sticky;top:0;z-index:6;background:#070a0d;padding-top:clamp(1.2rem,3svh,2.2rem);padding-bottom:clamp(.8rem,2svh,1.4rem);box-shadow:0 0 0 100vmax #070a0d;clip-path:inset(0 -100vmax)}
+  .ucsf-story-head{position:sticky;top:0;z-index:6;padding-top:clamp(1.2rem,3svh,2.2rem);padding-bottom:clamp(.8rem,2svh,1.4rem);pointer-events:none}
+  /* Black backdrop is its own layer: its height shrinks when the paragraph fades; the header's layout box never changes. */
+  .ucsf-story-head::before{content:"";position:absolute;z-index:-1;top:0;left:calc(50% - 50vw);width:100vw;height:100%;background:#070a0d;transition:height .5s var(--ease)}
+  .ucsf-story.is-note-off .ucsf-story-head::before{height:var(--ucsf-head-h-short,100%)}
   .ucsf-story{padding-top:clamp(3rem,6vw,5rem)}
   /* The paragraph fades without changing the header's height, so nothing below it shifts while scrolling. */
   .ucsf-story-head .value-note{transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear 0s}
   .ucsf-story.is-note-off .ucsf-story-head .value-note{opacity:0!important;transform:translateY(-.6rem)!important;visibility:hidden;pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear .45s}
-  .ucsf-story-media{top:var(--ucsf-head-h);height:calc(100svh - var(--ucsf-head-h));padding-top:1rem;padding-bottom:1.5rem}
+  .ucsf-story-media{top:var(--ucsf-head-h);height:calc(100svh - var(--ucsf-head-h));padding-top:1rem;padding-bottom:1.5rem;transition:top .5s var(--ease),height .5s var(--ease)}
+  .ucsf-story.is-note-off .ucsf-story-media{top:var(--ucsf-head-h-short,var(--ucsf-head-h));height:calc(100svh - var(--ucsf-head-h-short,var(--ucsf-head-h)))}
   .ucsf-story-frame{height:100%;max-height:760px}
   .ucsf-story-steps::before{top:0}
-  .ucsf-step{padding-top:calc(var(--ucsf-head-h) + clamp(2.5rem,6svh,4.5rem));padding-bottom:3rem}
+  /* Shorter slide blocks: the empty band between one slide's text and the next is much smaller. */
+  .ucsf-step{min-height:62svh;padding:3rem 0}
+  .ucsf-step:first-child{padding-top:calc(var(--ucsf-head-h-short,var(--ucsf-head-h)) + 3rem)}
   .ucsf-story-media{padding-top:clamp(1.5rem,4svh,2.5rem)}
 }
 </style>
@@ -2148,7 +2154,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   <div class="ucsf-story" id="ucsf-story">
     <div class="projects-head ucsf-story-head">
       <div class="eyebrow reveal">Technical Expertise</div>
-      <h2 class="display reveal">Technical depth that turns<br>engineering insight <em>into savings</em></h2>
+      <h2 class="display reveal">Technical depth that turns engineering insight <em>into savings</em></h2>
       <p class="value-note reveal">NYA combines advanced analysis with proven engineering judgment to reduce the risk of redesign, added cost, and delay, as demonstrated on two of our flagship projects: The Stanford Adult Hospital and UCSF’s Helen Diller Hospital.</p>
     </div>
     <div class="ucsf-story-media" aria-live="polite">
@@ -3975,7 +3981,15 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var story=document.getElementById('ucsf-story');
   var head=story&&story.querySelector('.ucsf-story-head');
   if(!head)return;
-  function setH(){story.style.setProperty('--ucsf-head-h',head.offsetHeight+'px')}
+  var note=head.querySelector('.value-note');
+  function setH(){
+    var h=head.offsetHeight;
+    story.style.setProperty('--ucsf-head-h',h+'px');
+    if(note){
+      var mt=parseFloat(getComputedStyle(note).marginTop)||0;
+      story.style.setProperty('--ucsf-head-h-short',Math.max(0,h-note.offsetHeight-mt)+'px');
+    }
+  }
   if('ResizeObserver' in window)new ResizeObserver(setH).observe(head);
   setH();addEventListener('resize',setH,{passive:true});
   var off=false,tick=false;
