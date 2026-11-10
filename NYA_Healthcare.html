@@ -2235,6 +2235,17 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-final__panel{transform-origin:left center}
 .nya-rel-final.is-compact .nya-rel-final__panel .lead{display:none}
 .nya-rel-final.is-scaled .nya-rel-final__panel h2{white-space:normal}
+/* Short landscape screens: the pinned overview is too short for readable text. The story ends on the last message, then the
+   overview follows as page content: the diagram stays in view on the left while the numbered list scrolls past on the right. */
+@media (orientation:landscape) and (max-height:500px){
+  .nya-rel-final{display:none!important}
+  .nya-rel-after{display:block;background:#fff;color:var(--ink);padding:var(--space-3) clamp(1.25rem,4vw,4.5rem) var(--space-5)}
+  .nya-rel-after__inner{display:grid;grid-template-columns:minmax(0,1.045fr) minmax(0,.955fr);gap:clamp(2rem,6vw,7rem);align-items:start}
+  .nya-rel-after .nya-rel-final__diagram{position:sticky;top:calc(var(--nav-inset,0px) + var(--space-2));justify-self:start;transform:translateX(-2.31%)}
+  .nya-rel-after .nya-rel-final__panel h2{white-space:normal;font-size:var(--text-h2)}
+  .nya-rel-after .nya-rel-final__panel h3{font-size:var(--text-h3)}
+  .nya-rel-after .nya-rel-final__panel .lead,.nya-rel-after .nya-rel-final__panel li p{font-size:var(--text-small);line-height:1.5}
+}
 </style>
 </head>
 <body id="top">
@@ -3626,6 +3637,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  const team=story.querySelector('.nya-rel-note--team');
   const finalEl=story.querySelector('.nya-rel-final');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+ // Short landscape screens end on the last message; the overview follows as page content (see nya-rel-final-fit).
+ const shortLandscape=window.matchMedia('(orientation:landscape) and (max-height:500px)');
  const clamp=x=>Math.max(0,Math.min(1,x));
  const ease=x=>{let t=clamp(x);return t*t*(3-2*t);};
  const lerp=(a,b,t)=>a+(b-a)*t;
@@ -3676,7 +3689,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  });
  let current=null,desired=null,ticking=false,running=false;
  function sample(p){
-  const scenes=desktop;
+  const scenes=shortLandscape.matches?tablet:desktop;
   for(let i=1;i<scenes.length;i++){
    const a=scenes[i-1],b=scenes[i];
    if(p<=b.p){let t=ease((p-a.p)/Math.max(.00001,b.p-a.p));
@@ -3727,7 +3740,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   desired.teamOpacity=Math.max(overview,ease((progress-.71)/.06));
   // After the Team close-up the page goes straight to the final screen (no paragraph-filled overview in between):
   // the diagram fades away first, then the final screen fades in.
-  desired.worldOpacity=1-ease((progress-.925)/.035);
+  desired.worldOpacity=shortLandscape.matches?1:1-ease((progress-.925)/.035);
   desired.finalOpacity=ease((progress-.955)/.035);
   story.dataset.cameraScene=desired.name;
   if(!running){running=true;requestAnimationFrame(frame);}
@@ -4720,6 +4733,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   if(!pn)return;
   var MIN=.7;
   var nav=document.getElementById('range-nav');
+  var after=document.querySelector('.nya-rel-after');
   function reset(){pn.style.transform='';pn.style.width='';pn.style.maxWidth='';fin.classList.remove('is-scaled');}
   function solve(avail,colW){
     // Scale s shrinks the text column; widening it by 1/s keeps its on-screen width, which also shortens it, so iterate.
@@ -4735,10 +4749,12 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
   function fit(){
     reset();fin.classList.remove('is-compact');
+    // The fixed case-study bar sits over the top of this screen; keep the content below it.
+    var inset=(nav&&getComputedStyle(nav).position==='fixed'?nav.offsetHeight:0)+'px';
+    fin.style.setProperty('--nav-inset',inset);
+    if(after)after.style.setProperty('--nav-inset',inset);
     var cs=getComputedStyle(fin);
     if(cs.display==='none')return;
-    // The fixed case-study bar sits over the top of this screen; keep the content below it.
-    fin.style.setProperty('--nav-inset',(nav&&getComputedStyle(nav).position==='fixed'?nav.offsetHeight:0)+'px');
     cs=getComputedStyle(fin);
     var avail=fin.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
     var colW=pn.getBoundingClientRect().width;
