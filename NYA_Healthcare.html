@@ -1108,7 +1108,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 @media(max-width:650px){.nya-collaboration .collaboration-head h2 br{display:none}.nya-collaboration .collaboration-card{padding:1.4rem}.nya-collaboration .collaboration-metrics--response{flex-wrap:wrap;gap:1.1rem}.nya-collaboration .collaboration-response+.collaboration-response{border-left:0;padding-left:0}.nya-collaboration .collaboration-response{flex-basis:100%}}
 
 /* Basic vs NYA comprehensive soil-structure interaction – reference comparison */
-.ssi-compare--reference{background:radial-gradient(ellipse at 50% 50%,#003542 0%,#00212d 48%,#00151f 100%);border-color:rgba(0,235,242,.18);padding:clamp(3rem,4.8vw,5rem) 0;color:#fff}
+.ssi-compare--reference{background:radial-gradient(ellipse at 50% 42%,#042027 0%,#03151b 45%,#010a0f 100%);border-color:rgba(0,235,242,.18);padding:clamp(3rem,4.8vw,5rem) 0;color:#fff}
+/* Same dark overlay as the other dark sections (.value) while the page background video plays. */
+.webgl-ready .ssi-compare--reference,.ucsf-bg-ready .ssi-compare--reference{background:linear-gradient(90deg,rgba(6,10,15,.83) 0%,rgba(7,11,16,.72) 48%,rgba(8,13,19,.54) 100%)}
 .ssi-compare--reference .wrap{width:min(1640px,calc(100% - 2*var(--pad)))}
 .ssi-compare--reference .eyebrow{color:var(--gold);margin-bottom:clamp(.8rem,1.4vw,1.4rem)}
 .ssi-compare--reference .ssi-reference-heading{font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:.96;letter-spacing:-.025em;color:#fff;margin:0 0 clamp(1.7rem,2.5vw,2.7rem)}
@@ -1150,8 +1152,6 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     --accent: #c9470f;
     --lake-500: #108e83;
     --radius: 2px;
-    --font-heading: 'Red Hat Display', system-ui, sans-serif;
-    --font-mono: 'Montserrat', system-ui, sans-serif;
     --film-max-h: calc(100svh - 5rem);
     display: grid;
     row-gap: 1rem;
@@ -1169,9 +1169,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   /* Building headings, matching the supplied reference text. */
   .iso-name {
     margin: 0;
-    font-family: var(--font-heading);
+    font-family: var(--body);
     font-size: clamp(1.25rem, 1.05rem + 0.5vw, 1.75rem);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.25;
     text-wrap: balance;
   }
@@ -1252,9 +1252,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .iso-strip { display: grid; row-gap: 0.5rem; padding-top: 1rem; align-content: start; }
   .iso-strip-label {
     margin: 0;
-    font-family: var(--font-heading);
+    font-family: var(--body);
     font-size: clamp(12px, 1.45cqw, 19px);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.35;
     letter-spacing: normal;
     text-transform: none;
