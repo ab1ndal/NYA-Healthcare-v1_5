@@ -1857,7 +1857,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 @media(min-aspect-ratio:22/10){.is-pinned .nya-s33-intro{top:2.6svh}.is-pinned .nya-s33-lede{font-size:max(15px,2.1svh)}}
 @media(max-width:899px){.nya-s33-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 2rem}}
 @media(max-width:559px){.nya-s33-steps{grid-template-columns:1fr;gap:1.8rem}}
-/* No canopy (class is-no-canopy on the section): the roof, posts, cable, ground line and plants are not shown; the building and cards stay. */
+/* Review option, opened with ?canopy=none: no canopy (roof, posts, cable, ground line and plants); the building and cards stay. */
 .nya-s33.is-no-canopy .nya-s33-base,.nya-s33.is-no-canopy .nya-s33-line{display:none}
 /* Wherever the pillars show (900px and wider) the drawing spans the full width with its lawn (row 320) on the canopy ground line,
    behind the posts, cable and cards. */
@@ -1867,10 +1867,21 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    The script (fitArt) then pulls it up further, as far as the words allow. The drawing never takes clicks meant for the words. */
 .nya-s33-art{pointer-events:none}
 @media(min-width:900px){.nya-s33:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 11%)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 6.3%)}}
-/* Larger building (class is-full-large on the section): the drawing 1.3x larger, right-aligned. It grows downward: the red tower's top stays where it
+/* Review option, ?building=larger: the same drawing 1.3x larger, right-aligned. It grows downward: the red tower's top stays where it
    is at normal size (drawing row 501; the image starts at row 156 = 16.58%), so nothing new rises into the words; the lower floors
    run down behind the cards and the image is cut off at the canopy's ground line (row 905, 21% up from its bottom). */
 @media(min-width:900px){.nya-s33.is-full-large .nya-s33-art .nya-s33-full{left:auto;right:0;width:130%;max-width:none;top:16.58%;bottom:auto;clip-path:inset(0 0 21% 0)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+/* The option bar for review: bottom of the window while this section is on screen, 900px and wider (set up by the script). */
+.nya-s33-options{position:fixed;left:50%;bottom:16px;z-index:60;display:none;align-items:center;padding:5px 6px;border-radius:999px;background:rgba(20,25,30,.92);color:#fff;font:500 13px/1 var(--body);box-shadow:0 6px 24px rgba(0,0,0,.25);opacity:0;transform:translate(-50%,8px);pointer-events:none;transition:opacity .2s,transform .2s}
+@media(min-width:900px){.nya-s33-options{display:flex}}
+.nya-s33-options.is-shown{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.nya-s33-opt-group{display:flex;align-items:center;gap:2px;padding:0 4px 0 10px}
+.nya-s33-opt-group+.nya-s33-opt-group{border-left:1px solid rgba(255,255,255,.22)}
+.nya-s33-opt-label{margin-right:6px;opacity:.7}
+.nya-s33-options button{font:inherit;color:inherit;background:transparent;border:0;border-radius:999px;padding:7px 12px;cursor:pointer}
+.nya-s33-options button:hover{background:rgba(255,255,255,.12)}
+.nya-s33-options button[aria-pressed="true"]{background:#fff;color:#14191e}
+.nya-s33-options button:focus-visible{outline:2px solid #fff;outline-offset:2px}
 /* The building sits a little above the canopy's ground line (2.5 units, about 47px on a 1920px screen).
    The larger new drawing is anchored at its top, so it moves up with a negative top margin and its cut stays on the ground line. */
 @media(min-width:900px){.nya-s33-art .nya-s33-full{margin-bottom:calc(2.5*var(--k))}.nya-s33.is-full-large .nya-s33-art .nya-s33-full{margin-bottom:0;margin-top:calc(-2.5*var(--k));clip-path:inset(0 0 16.58% 0)}}
@@ -2531,7 +2542,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 </section>
 
 <!-- ==== NYA FINALE COMBINED START (HTML) ==== The chosen artwork, split into structure, hospital and cable layers that rebuild it exactly. -->
-<section class="nya-s33 is-full-large is-no-canopy" id="nya-s33" aria-labelledby="nya-s33-title">
+<section class="nya-s33" id="nya-s33" aria-labelledby="nya-s33-title">
   <div class="nya-s33-stage">
     <div class="nya-s33-intro">
       <h2 id="nya-s33-title">The NYA difference<br> is in the results</h2>
@@ -2539,6 +2550,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     </div>
     <div class="nya-s33-art" aria-hidden="true">
       <img class="nya-s33-full" src="https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfull.webp" alt="" decoding="async">
+      <img class="nya-s33-base" src="nya-closing-base-v3.webp" alt="" decoding="async">
+      <img class="nya-s33-line" src="nya-closing-line-v3.webp" alt="" decoding="async">
     </div>
     <ol class="nya-s33-steps">
       <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Technical<br>Edge</h3><p>From Stanford’s base isolation and column-free atrium to UCSF’s complex cantilevers, NYA delivers sophisticated engineering solutions that go beyond conventional approaches, without compromising seismic performance or constructability.</p></div></li>
@@ -4028,7 +4041,58 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // Desktop uses the canopy layout (class is-pinned): the cards between the posts. Where a screen is too small for the cards to fit
   // above the ground line, setup() falls back to the flowing layout (cards below the drawing). Set PIN to false to always use that.
   const PIN=true;
-  // The design is fixed in the markup: larger building (is-full-large), no canopy (is-no-canopy), the Updated text.
+  // Review options, from the address (?building=larger, ?canopy=none, ?text=original) or the option bar shown while this section is on screen.
+  // Building: Normal is the hospital drawing as placed, Larger is it at 1.3x. Older links with building=fullbig mean Larger.
+  const OPTIONS={building:['Building',[['','Normal'],['larger','Larger']],{larger:'is-full-large'}],
+    canopy:['Canopy',[['','On'],['none','Off']],{none:'is-no-canopy'}],
+    text:['Text',[['','Updated'],['original','Original']],{}]};
+  // Text: Updated is the copy in the HTML; Original is the earlier copy, kept here for comparison. Only the words change.
+  const ORIGINAL_TEXT={"h2": "The NYA difference<br> is in the results", "lede": "Hospitals are too complex, too costly, and too important to tolerate unnecessary project risk. NYA brings technical ingenuity, cost insight, and close collaboration to the decisions that put hospital projects at risk. From the first structural concept through construction, we turn that expertise into lower costs, fewer surprises, and greater confidence in delivery.", "cards": [["Technical<br>ingenuity", "Creative engineering that protects seismic performance, preserves design ambition, and reduces material demands."], ["Cost<br>confidence", "Early analysis that reveals savings and establishes structural cost before major decisions are locked in."], ["HCAI<br>fluency", "Well-supported solutions developed with HCAI to uphold safety and move approvals forward."], ["Reliable<br>delivery", "Structural decisions and review packages coordinated with the sequence of construction."], ["Collaboration<br>that delivers", "Owners, architects, builders, and MEP teams brought together to resolve challenges early."], ["Responsiveness<br>that earns trust", "Long-serving teams preserve project knowledge and deliver timely answers that keep work moving."]]};
+  const textParts=()=>({h2:section.querySelector('#nya-s33-title'),lede:section.querySelector('.nya-s33-lede'),
+    cards:[...section.querySelectorAll('.nya-s33-copy')].map(c=>[c.querySelector('h3'),c.querySelector('p')])});
+  const UPDATED_TEXT=(p=>({h2:p.h2.innerHTML,lede:p.lede.innerHTML,cards:p.cards.map(([h,t])=>[h.innerHTML,t.innerHTML])}))(textParts());
+  function setText(val){
+    const src=val==='original'?ORIGINAL_TEXT:UPDATED_TEXT,p=textParts();
+    p.h2.innerHTML=src.h2;p.lede.innerHTML=src.lede;
+    p.cards.forEach(([h,t],i)=>{h.innerHTML=src.cards[i][0];t.innerHTML=src.cards[i][1]});
+  }
+  const review=new URLSearchParams(location.search);
+  if(review.get('building')==='fullbig')review.set('building','larger');
+  function choose(key,val){
+    const classes=OPTIONS[key][2];
+    for(const c of Object.values(classes))section.classList.remove(...c.split(' '));
+    if(classes[val])section.classList.add(...classes[val].split(' '));
+    if(key==='text')setText(val);
+  }
+  const bar=document.createElement('div');
+  bar.className='nya-s33-options';
+  bar.setAttribute('role','group');
+  bar.setAttribute('aria-label','Closing section options for review');
+  for(const [key,[name,list,classes]] of Object.entries(OPTIONS)){
+    const now=list.some(([v])=>v&&v===review.get(key))?review.get(key):'';
+    choose(key,now);
+    const group=document.createElement('span'),label=document.createElement('span');
+    group.className='nya-s33-opt-group';label.className='nya-s33-opt-label';label.textContent=name;group.append(label);
+    for(const [val,text] of list){
+      const b=document.createElement('button');
+      b.type='button';b.textContent=text;b.dataset.key=key;b.dataset.val=val;b.setAttribute('aria-pressed',String(val===now));
+      group.append(b);
+    }
+    bar.append(group);
+  }
+  bar.addEventListener('click',e=>{
+    const b=e.target.closest('button');
+    if(!b)return;
+    const {key,val}=b.dataset;
+    choose(key,val);
+    for(const o of bar.querySelectorAll('button[data-key="'+key+'"]'))o.setAttribute('aria-pressed',String(o===b));
+    const q=new URLSearchParams(location.search);
+    if(val)q.set(key,val);else q.delete(key);
+    history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')+location.hash);
+    setup();
+  });
+  section.append(bar);
+  new IntersectionObserver(([e])=>bar.classList.toggle('is-shown',e.isIntersecting)).observe(section);
   // This motion only ever follows the reader's own scrolling, so it runs for everyone, including with system animations off.
   // Scroll progress: the line climbs, then the hospital builds up slowly behind the words. The words stay solid throughout.
   const clamp=v=>Math.max(0,Math.min(1,v));
