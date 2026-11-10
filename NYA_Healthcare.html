@@ -1906,6 +1906,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Phones and tablets: the drawing's blank strip right of the building (columns 1973-2000 of 2000) is pushed past the screen edge,
    so the building reaches the edge (27/2000 of the drawing's 80.14% width = 1.08% of the frame, which clips it). */
 @media(max-width:899px){.nya-s33-art .nya-s33-full{right:-1.1%}}
+/* Phones turned sideways and portrait tablets (700-899 wide): the building spans the full width, its lawn from the left edge to
+   the right edge (columns 44-1973 of 2000, so the drawing is 2000/1929 = 103.7% wide, 44/2000 of it = 2.28% past the left edge);
+   the frame is as tall as the drawing (103.7% x 667/2000 = 34.59% of its width). */
+@media(min-width:700px) and (max-width:899px){.nya-s33-art{aspect-ratio:2891/1000}.nya-s33-art .nya-s33-full{left:-2.28%;right:auto;width:103.7%;max-width:none}}
 /* Flowing layout (phones, tablets, and laptops where the cards don't fit over the drawing): the drawing comes last, after the
    six cards, as the conclusion; the building fades in as it scrolls into view. */
 .nya-s33:not(.is-pinned) .nya-s33-stage{display:flex;flex-direction:column}
