@@ -3648,6 +3648,30 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
    White section with the page's light-section ink and accent; z-index keeps it above the
    fixed WebGL backdrop (z-index:0). */
 .amc-funnel{position:relative;z-index:1;background:#fff;color:var(--ink)}
+/* The page's type and spacing tokens stop growing around 1920px, which leaves this
+   full-screen scene small on larger screens. Above 1920px each token keeps its normal value
+   but may grow past it in proportion to the screen: the second term equals the token's
+   1920x1080 value scaled by min(width/1920, height/1080), so the scene keeps its proportions
+   (and fits vertically). Scoped to wide screens so the page's own token overrides for small
+   screens (e.g. --pad at 760px) still apply here.
+   DM Sans is held at its 1920px reading-size optical shape: its opsz axis otherwise narrows
+   glyphs at large sizes, which shortens lines against the em measures and leaves dividers
+   running past the text. */
+@media(min-width:1921px){
+  .amc-funnel{
+    --text-display:max(clamp(2.625rem, 1.7rem + 4.1vw, 6.5rem), min(5.4167vw, 9.6296vh));
+    --text-h2-lg:max(clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem), min(2.2917vw, 4.0741vh));
+    --text-body:max(16px, clamp(1.0625rem, 0.875rem + 0.25vw, 1.25rem), min(0.97917vw, 1.7407vh));
+    --text-eyebrow:max(12px, 0.8125rem, min(0.67708vw, 1.2037vh));
+    --space-1:max(0.5rem, min(0.41667vw, 0.74074vh));
+    --space-2:max(1rem, min(0.83333vw, 1.4815vh));
+    --space-3:max(1.5rem, min(1.25vw, 2.2222vh));
+    --space-5:max(4rem, min(3.3333vw, 5.9259vh));
+    --pad:max(clamp(1.4rem, 5vw, 5rem), min(4.1667vw, 7.4074vh));
+    font-size:var(--text-body);
+    font-variation-settings:"opsz" 18.8;
+  }
+}
 .amc-funnel .eyebrow{color:var(--green-on-light)}
 .amc-funnel-pin{position:-webkit-sticky;position:sticky;top:0;height:100svh;overflow:hidden;padding-top:var(--amc-nav,36px)}
 .amc-funnel-track{position:relative;display:flex;align-items:center;width:max-content;height:100%;will-change:transform}
@@ -3659,26 +3683,32 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 /* Side panels shrink-wrap their list so the dividers end where the text does; the script
    centres panels by their own width, so centring and lead lines follow. */
 .amc-funnel-panel{position:relative;z-index:1;flex:none;width:fit-content;max-width:calc(100vw - 2 * var(--pad))}
-.amc-funnel-panel--center{width:min(980px,calc(100vw - 2 * var(--pad)));text-align:center}
-.amc-funnel-gap{flex:none;width:clamp(180px,34vw,560px)}
+.amc-funnel-panel--center{text-align:center}
+.amc-funnel-gap{flex:none;width:max(clamp(180px,34vw,560px), min(29.167vw, 51.852vh))}
 .amc-funnel-label{margin-bottom:var(--space-3)}
 .amc-funnel-label::before{display:none}
 
 /* Drivers and outcomes share one row style: title column + description column, aligned
    across rows (subgrid), hairline dividers like the page's evidence grids.
    Description column is measured in em so text wraps identically at every zoom and screen
-   size. Measures are tuned to the current copy (one-line lengths: drivers 40-67em,
-   outcomes 55-81em) so lines fill most of the column; re-tune if copy changes. Wrap is
-   'pretty' (fill lines, no lone last word), not 'balance': balance split the longest
-   rows into four short lines. */
-.amc-funnel-panel--drivers{--amc-measure:25em}
-.amc-funnel-panel--outcomes{--amc-measure:29em}
-.amc-funnel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:max-content minmax(0,var(--amc-measure));column-gap:var(--space-5);border-top:1px solid rgba(0,0,0,.15)}
+   size, and lines are balanced so each row's lines are even (same breaks in Chromium and
+   WebKit). Measures are tuned to the current copy (one-line lengths: drivers 40-67em,
+   outcomes 55-81em): drivers 2/2/2/3 lines, outcomes 3/2/3/3. A row gains a line below
+   ~25em / ~28.3em, so these sit 0.5em / 1.2em above that. Re-tune (and the 71.25em stack
+   point below) if copy changes.
+   Title track is minmax(min-content,1fr): the description track is sized first, so it keeps
+   its full measure; titles stay on one line at default settings and only wrap when a
+   fallback font or user text-spacing needs the room. */
+.amc-funnel-panel--drivers{--amc-measure:25.5em}
+.amc-funnel-panel--outcomes{--amc-measure:29.5em}
+.amc-funnel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(min-content,1fr) minmax(0,var(--amc-measure));column-gap:var(--space-5);border-top:1px solid rgba(0,0,0,.15)}
 .amc-funnel-item{display:grid;grid-column:1/-1;grid-template-columns:subgrid;align-items:baseline;padding:var(--space-3) 0;border-bottom:1px solid rgba(0,0,0,.15)}
-.amc-funnel-item h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2-lg);line-height:1.1;color:var(--ink);white-space:nowrap}
-.amc-funnel-item p{margin:0;max-width:40em;color:var(--ink2);text-wrap:pretty}
-.amc-funnel-msg{font-family:var(--display);font-weight:300;font-size:var(--text-display);line-height:1.03;letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
-.amc-funnel-msg em{color:var(--green-on-light)}
+.amc-funnel-item h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2-lg);line-height:1.1;color:var(--ink);text-wrap:balance}
+.amc-funnel-item p{margin:0;color:var(--ink2);text-wrap:balance}
+/* Measure in em of the headline's own font so it breaks the same three lines at every size
+   ("NYA's technical credibility" is ~9.6em); the accented phrase never splits. */
+.amc-funnel-msg{max-width:10.5em;font-family:var(--display);font-weight:300;font-size:var(--text-display);line-height:1.03;letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
+.amc-funnel-msg em{color:var(--green-on-light);white-space:nowrap}
 
 /* Reveal states, toggled by scroll position (both directions). */
 .amc-funnel .amc-funnel-label,.amc-funnel .amc-funnel-item,.amc-funnel-msg{opacity:0;transition:opacity .7s var(--ease),transform .7s var(--ease)}
@@ -3693,27 +3723,32 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel-panel--drivers .amc-funnel-item:nth-child(3){transition-delay:.16s}
 .amc-funnel-panel--drivers .amc-funnel-item:nth-child(4){transition-delay:.24s}
 
-/* Narrow screens and short landscape phones: rows stack title over description. */
-@media(max-width:820px),(max-height:500px) and (orientation:landscape){
-  .amc-funnel-list{grid-template-columns:minmax(0,1fr)}
+/* Stack title over description wherever title + gap + full outcomes measure no longer fit
+   (~1140px at a 16px default font; em so it follows the user's font size), and on short
+   landscape phones. The column stays at the measure so wrapping and divider ends match
+   the two-column layout. */
+@media(max-width:71.25em),(max-height:500px) and (orientation:landscape){
+  .amc-funnel-list{grid-template-columns:minmax(0,var(--amc-measure))}
   .amc-funnel-item{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-2) 0}
 }
-/* Very narrow phones: long titles may wrap rather than overflow. */
-@media(max-width:400px){.amc-funnel-item h3{white-space:normal}}
+/* Portrait phones: the screen, not the measure, sets the column; fill lines and only
+   avoid a lone last word (balance would leave every line visibly short). */
+@media(max-width:37.5em){.amc-funnel-item p{text-wrap:pretty}}
 /* Short landscape phones: tighter rows so less of the list needs panning. */
 @media(max-height:500px) and (orientation:landscape){
   .amc-funnel-item{padding-block:var(--space-1)}
   .amc-funnel-label{margin-bottom:var(--space-1)}
 }
-/* No motion: no pinning, panels stacked, lines hidden, everything shown. */
-@media(prefers-reduced-motion:reduce){
-  .amc-funnel{height:auto!important}
-  .amc-funnel-pin{position:static;height:auto;overflow:visible;padding:0}
-  .amc-funnel-track{flex-direction:column;align-items:stretch;gap:var(--space-5);width:auto;transform:none!important;padding:var(--section) var(--pad)}
-  .amc-funnel-gap,.amc-funnel-lines{display:none}
-  .amc-funnel-panel{width:auto!important;opacity:1!important}
-  .amc-funnel .amc-funnel-label,.amc-funnel .amc-funnel-item,.amc-funnel-msg{opacity:1;transform:none}
-}
+/* Static layout unless the script pins the scene (.is-pinned): covers no JS, reduced
+   motion and screens too short to pin. No pinning, panels stacked and centred, lines
+   hidden, everything shown. */
+.amc-funnel:not(.is-pinned){height:auto!important}
+.amc-funnel:not(.is-pinned) .amc-funnel-pin{position:static;height:auto;overflow:visible;padding:0}
+.amc-funnel:not(.is-pinned) .amc-funnel-track{flex-direction:column;align-items:stretch;gap:var(--space-5);width:auto;transform:none!important;padding:var(--section) var(--pad)}
+.amc-funnel:not(.is-pinned) .amc-funnel-gap,.amc-funnel:not(.is-pinned) .amc-funnel-lines{display:none}
+.amc-funnel:not(.is-pinned) .amc-funnel-panel{margin-inline:auto;opacity:1!important}
+.amc-funnel:not(.is-pinned) .amc-funnel-label,.amc-funnel:not(.is-pinned) .amc-funnel-item,.amc-funnel:not(.is-pinned) .amc-funnel-msg{opacity:1;transform:none}
+.amc-funnel:not(.is-pinned) .amc-funnel-panel--outcomes .amc-funnel-list{border-top-color:rgba(0,0,0,.15)}
 </style>
 <script id="amc-funnel-behavior">
 (function(){
@@ -3722,10 +3757,15 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       track=sec.querySelector('.amc-funnel-track'),svg=sec.querySelector('.amc-funnel-lines');
   var dPanel=sec.querySelector('.amc-funnel-panel--drivers'),cPanel=sec.querySelector('.amc-funnel-panel--center'),oPanel=sec.querySelector('.amc-funnel-panel--outcomes');
   var drivers=[].slice.call(dPanel.querySelectorAll('.amc-funnel-item')),outcomes=[].slice.call(oPanel.querySelectorAll('.amc-funnel-item'));
+  var lists=[].slice.call(sec.querySelectorAll('.amc-funnel-list'));
   var dLabel=dPanel.querySelector('.amc-funnel-label'),oLabel=oPanel.querySelector('.amc-funnel-label'),
       msg=sec.querySelector('.amc-funnel-msg'),msgText=sec.querySelector('.amc-funnel-msg-text');
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
-  var NS='http://www.w3.org/2000/svg';
+  // Below this height a pinned scene leaves too small a window onto the panels (400% zoom,
+  // landscape phones with bars), so the section stays static.
+  var MIN_PIN_HEIGHT=300;
+  function pinnable(){return !reduce.matches&&window.innerHeight>=MIN_PIN_HEIGHT}
+  var NS='http://www.w3.org/2000/svg',MIN_DRAWN_PX=16;
   // Scroll timeline, in px of scroll: hold drivers -> slide to message -> hold message ->
   // slide to outcomes -> hold outcomes. X = track offset that centres each panel.
   var lines=[],X=[0,0,0],phase={holdDrivers:0,toMessage:0,holdMessage:0,toOutcomes:0,holdOutcomes:0},d1=0,d3=0,raf=0;
@@ -3746,8 +3786,14 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
 
   function layout(){
+    // WebKit keeps a stale intrinsic width for the subgrid lists after a resize or font
+    // swap, which squeezes the description column; dropping them from layout forces a
+    // fresh measure before anything below reads sizes.
+    lists.forEach(function(l){l.style.display='none'});void sec.offsetWidth;
+    lists.forEach(function(l){l.style.display=''});
     svg.textContent='';lines=[];
-    if(reduce.matches){sec.style.height='';track.style.transform='';return}
+    var pinned=pinnable();sec.classList.toggle('is-pinned',pinned);
+    if(!pinned){sec.style.height='';track.style.transform='';dPanel.style.opacity='';cPanel.style.opacity='';return}
     var nav=document.getElementById('range-nav');sec.style.setProperty('--amc-nav',((nav&&nav.offsetHeight)||30)+6+'px');
     sec.classList.add('is-measuring');track.style.transform='none';
     var vw=pin.clientWidth,vh=window.innerHeight,W=track.scrollWidth,H=track.clientHeight;
@@ -3793,7 +3839,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   function update(){
     raf=0;
     syncNavTone();
-    if(reduce.matches)return;
+    if(!sec.classList.contains('is-pinned'))return;
     var r=sec.getBoundingClientRect(),s=Math.max(0,-r.top),P=phase;
     // Phase boundaries: a = slide 1 starts, b = message reached, c = slide 2 starts, e = outcomes reached.
     var a=P.holdDrivers,b=a+P.toMessage,c=b+P.holdMessage,e=c+P.toOutcomes;
@@ -3807,7 +3853,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     lines.forEach(function(L){
       var f=L.side==='in'?clamp((t1-L.i*.05)/.85,0,1):clamp((t2-L.i*.07)/.79,0,1);
       if(Math.abs(f-L.f)<.0005)return;L.f=f;
-      L.p.style.strokeDashoffset=(L.len*(1-f)).toFixed(1);L.p.style.visibility=f>0?'visible':'hidden';
+      // A line shows only once it has some length: its first few px float alone beside the
+      // headline and read as a stray dot.
+      L.p.style.strokeDashoffset=(L.len*(1-f)).toFixed(1);L.p.style.visibility=L.len*f>=MIN_DRAWN_PX?'visible':'hidden';
       if(L.target)L.target.classList.toggle('is-in',f>=.97);
     });
     // A scene fades only in the back half of its exit, so the lines never float free of it.
@@ -3825,10 +3873,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   layout();queue();
 
   window.addEventListener('scroll',queue,{passive:true});
-  // Width changes re-layout; height-only changes (mobile URL bar) do not, to avoid jumps.
+  // Width changes re-layout; small height-only changes (mobile URL bar) do not, to avoid
+  // jumps, unless the height crosses the static/pinned threshold.
   var lastW=window.innerWidth,lastH=window.innerHeight,rt=0;
   window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){
-    if(window.innerWidth!==lastW||Math.abs(window.innerHeight-lastH)>120){lastW=window.innerWidth;lastH=window.innerHeight;layout()}queue()},150)});
+    if(window.innerWidth!==lastW||Math.abs(window.innerHeight-lastH)>120||(window.innerHeight<MIN_PIN_HEIGHT)!==(lastH<MIN_PIN_HEIGHT)){lastW=window.innerWidth;lastH=window.innerHeight;layout()}queue()},150)});
   if(reduce.addEventListener)reduce.addEventListener('change',function(){layout();queue()});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){layout();queue()});
   window.addEventListener('load',function(){layout();queue()});
