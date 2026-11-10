@@ -1892,6 +1892,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    runs 0 to 1 per card, set by the script). While the script measures the layout (is-fitting) the cards sit in place. */
 .is-live .nya-s33-step{opacity:var(--cp,0);transform:translateY(calc((1 - var(--cp,0))*2.5rem));transition:opacity .25s linear,transform .25s linear}
 .nya-s33.is-live.is-forced .nya-s33-step{transition:opacity .25s linear,transform .25s linear!important}
+/* Desktop: the cards and the building come in at a steady pace (see step() in the script), so each card takes 0.7s and the
+   building 1s, eased. */
+.nya-s33.is-live.is-forced.is-pinned .nya-s33-step{transition:opacity .7s ease-out,transform .7s ease-out!important}
+.nya-s33.is-live.is-forced.is-pinned .nya-s33-full{transition:opacity 1s ease-out,transform 1s ease-out!important}
 .nya-s33.is-live.is-forced.is-fitting .nya-s33-step,.nya-s33.is-fitting .nya-s33-step{transform:none!important;transition:none!important}
 /* ==== NYA FINALE COMBINED END (CSS) ==== */
 </style>
@@ -4135,6 +4139,26 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // Scroll progress: the line climbs, then the hospital builds up slowly behind the words. The words stay solid throughout.
   const clamp=v=>Math.max(0,Math.min(1,v));
   let pinned=false,frame=0;
+  // Desktop reveal at a steady pace: the scroll sets the target (how many cards should be up, whether the building should be in),
+  // and step() moves toward it one change at a time, 0.3s apart, so even a fast scroll shows card 1, 2, 3, 4, 5, 6, then the
+  // building. Going back, the building leaves first, then card 6 down to card 1.
+  let shown=0,built=false,target=0,targetBuilt=false,stepping=false;
+  const cardList=()=>[...section.querySelectorAll('.nya-s33-step')];
+  function applyReveal(){
+    cardList().forEach((li,i)=>li.style.setProperty('--cp',i<shown?'1':'0'));
+    section.style.setProperty('--hp',built?'1':'0');
+  }
+  function step(){
+    const n=cardList().length;
+    if(built&&(!targetBuilt||shown>target))built=false;
+    else if(!built&&shown<target)shown++;
+    else if(!built&&shown>target)shown--;
+    else if(!built&&targetBuilt&&shown===n)built=true;
+    else{stepping=false;return}
+    applyReveal();
+    stepping=true;
+    setTimeout(step,300);
+  }
   function draw(){
     frame=0;
     // The section scrolls straight through: the cable draws as the drawing comes into view, then the building builds up,
@@ -4162,14 +4186,16 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         prevUp=cp>=1;
       });
     }
-    // Desktop, where the cards stand over the drawing: the reveal follows the scroll. It uses all the scroll left once the cards
-    // come into view, from the cards' row top at the bottom of the screen (q=0) to the end of the page (q=1). Card 1 to card 6
-    // come up one after another over the first 80%, then the building appears behind them over the last 20%.
+    // Desktop, where the cards stand over the drawing: the scroll sets the target. q runs from the cards' row top at the bottom of
+    // the screen (0) to the end of the page (1); card k is due once q passes the start of its slot in the first 80%, and the
+    // building once q passes 85%. step() then brings them in at a steady pace.
     if(pinned){
       const st=section.querySelector('.nya-s33-steps').getBoundingClientRect(),toEnd=Math.max(0,document.documentElement.scrollHeight-vh-scrollY);
-      const q=end?1:clamp((vh-st.top)/Math.max(1,vh-st.top+toEnd)),all=[...section.querySelectorAll('.nya-s33-step')];
-      all.forEach((li,i)=>li.style.setProperty('--cp',clamp(q/.8*all.length-i).toFixed(4)));
-      section.style.setProperty('--hp',clamp((q-.8)/.2).toFixed(4));
+      const q=end?1:clamp((vh-st.top)/Math.max(1,vh-st.top+toEnd)),n=cardList().length;
+      target=q<=0?0:Math.min(n,Math.floor(q/.8*n)+1);
+      targetBuilt=q>=.85;
+      applyReveal();
+      if(!stepping)step();
     }
   }
   // Keep the heading block close above the canopy: measure where it starts and move the words down to it.
