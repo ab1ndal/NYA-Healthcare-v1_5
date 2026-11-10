@@ -966,12 +966,12 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   background:rgba(1,12,17,.23);
 }
 .financial-risk--arcs .financial-chart {width:100%;min-width:0;display:block;}
-.financial-risk--arcs .arcs-cost-chart {width:100%;height:auto;display:block;aspect-ratio:1400/435;overflow:visible;}
+.financial-risk--arcs .arcs-cost-chart {width:100%;height:auto;display:block;aspect-ratio:1400/400;overflow:visible;}
 .financial-risk--arcs .arcs-lock {opacity:0;transition:opacity .25s ease;}
 /* Readout appears on its own 1s after the chart scrolls into view; no hover or tap. */
 .financial-risk--arcs .financial-graphic.is-visible .arcs-lock {opacity:1;transition-delay:1s;}
-.financial-risk--arcs .arcs-caption {display:none;margin-top:.6rem;font-size:.6125rem;line-height:1.5;color:#dce2e5;text-wrap:balance;}
-.financial-risk--arcs .financial-graphic.is-compact .arcs-caption {display:block;}
+/* HTML at every width so the disclaimer stays a readable 12px instead of scaling with the SVG. */
+.financial-risk--arcs .arcs-caption {margin-top:.6rem;font-size:.75rem;line-height:1.5;color:#dce2e5;text-wrap:balance;}
 @media (prefers-reduced-motion: reduce) {
   .financial-risk--arcs .arcs-lock {transition:none;}
 }
@@ -2012,12 +2012,12 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       <div class="financial-graphic reveal">
         <div class="financial-chart" role="img" aria-label="Conceptual illustration of anticipated structural cost ranges over the project timeline. Both approaches start with the same wide range. With NYA&#8217;s ARCS workflow the range narrows sharply early, reaching the same cost certainty the typical approach only reaches much later, and it ends lower.">
           <!-- Everything is drawn by the script below, in one of two layouts:
-               desktop (fixed 1400x435 viewBox) or compact (viewBox = container width in px,
+               desktop (fixed 1400x400 viewBox) or compact (viewBox = container width in px,
                so chart text stays at true pixel size on phones). -->
-          <svg class="arcs-cost-chart" data-option="1" viewBox="0 0 1400 435" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <svg class="arcs-cost-chart" data-option="1" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
           </svg>
         </div>
-        <p class="arcs-caption">Conceptual illustration of anticipated structural cost ranges.</p>
+        <p class="arcs-caption">Conceptual illustration of anticipated structural cost ranges</p>
       </div>
       <div class="financial-benefits">
         <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Rapid Evaluation</div><h3>Compare options with confidence</h3><p>ARCS rapidly explores multiple structural systems, including moment frames, braced frames, dampers, and base isolation, allowing the team to compare alternatives and identify the best approach while design flexibility is greatest.</p></article>
@@ -3332,7 +3332,7 @@ function initArcsChart(svg){
   const ts=Array.from({length:N+1},(_,i)=>i/N);
 
   const DESKTOP={
-    W:1400,H:435,X0:72,X1:1330,TOP:100,BOT:330,END_TYP:202,END_ARCS:277,
+    W:1400,H:400,X0:72,X1:1330,TOP:100,BOT:330,END_TYP:202,END_ARCS:277,
     axisY:356,yTip:79,dot:6,
     sw:{line:2,pill:3,axis:1,callout:1},
     title:{x:66,size:14,ls:2,lines:[[51,'ESTIMATED STRUCTURAL COST']]},
@@ -3340,7 +3340,6 @@ function initArcsChart(svg){
     lock:{arrowY:76,l1:63,size:15,head:10},
     // Wide layout labels each band at its end instead of using a legend.
     direct:{size:16,dx:-14,above:-20,below:34},
-    caption:{x:67,y:421,size:10.5},
     time:{x:701,y:388,size:15,ls:2.2}
   };
 
@@ -3386,8 +3385,7 @@ function initArcsChart(svg){
       phases:{y:axisY+24,size:fs,ls:1.4},
       lock:{arrowY,l1,lh,size:lockFs,head:big?8:7,dx:10},
       ...(big?{direct:{size:14,dx:-10,above:-16,below:26}}:{legend:{len:24,textDx:32,rows:legRows,dy:5,size:13}}),
-      time:{x:(10+W-4)/2,y:axisY+24,size:fs,ls:1.4},
-      caption:null // shown as HTML below the chart instead, so it can wrap
+      time:{x:(10+W-4)/2,y:axisY+24,size:fs,ls:1.4}
     };
   };
 
@@ -3398,14 +3396,13 @@ function initArcsChart(svg){
     (parent||svg).appendChild(n);
     return n;
   };
-  let compactMode=false;
-  const captionText=()=>'Conceptual illustration of anticipated structural cost ranges';
 
   function render(L){
-    compactMode=!L.caption;
     Array.from(svg.childNodes).forEach(n=>svg.removeChild(n));
     svg.setAttribute('viewBox','0 0 '+L.W+' '+L.H);
     svg.style.aspectRatio=L.W+' / '+L.H;
+    // Line the HTML caption up with the y-axis title (percent padding = share of chart width).
+    if(caption) caption.style.paddingLeft=(L.title.x/L.W*100)+'%';
     const {X0,X1,TOP,BOT,END_TYP,END_ARCS,axisY}=L;
     const x=t=>X0+t*(X1-X0);
     const typ=t=>[END_TYP-(END_TYP-TOP)*fTyp(t), END_TYP+(BOT-END_TYP)*fTyp(t)];
@@ -3475,9 +3472,6 @@ function initArcsChart(svg){
         el('text',{x:lx+lg.textDx,y:y+lg.dy},leg,s);
       });
     }
-    if(L.caption) el('text',{x:L.caption.x,y:L.caption.y,fill:'#dce2e5','font-family':FONT,'font-size':L.caption.size},null,captionText());
-    if(caption) caption.textContent=captionText();
-    if(graphic) graphic.classList.toggle('is-compact',compactMode);
   }
 
   let lastKey='';
@@ -3491,7 +3485,7 @@ function initArcsChart(svg){
     lastKey=key;
     const W=Math.max(240,w);
     render(!isCompact?DESKTOP:opt===1?fitLock(W,maxH):compact(W,1,maxH));
-    // The HTML caption only shows once compact; its height changes what fits, so retry.
+    // The caption wraps differently at each width; its height changes what fits, so retry.
     if(maxH&&fitHeight()!==maxH) layout();
   }
   // Height left for the SVG when the whole chart box (padding, border, caption) must fit
