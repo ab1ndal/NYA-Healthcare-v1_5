@@ -772,14 +772,20 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     0 12px 28px rgba(0, 0, 0, .70) !important;
   -webkit-text-stroke: 0 !important;
 }
-/* Navy shadow keeps the cyan Hero words legible without a hard outline. */
+/* Cyan Hero words: no shadow. The whole headline sits on a very transparent glass panel. */
+.hero .hero-content h1 .nowrap { white-space: nowrap; }
 .hero .hero-content h1 em {
   -webkit-text-stroke: 0 !important;
   paint-order: normal;
-  text-shadow:
-    0 2px 3px rgba(4, 25, 42, 0.98),
-    0 4px 9px rgba(4, 23, 38, 0.90),
-    0 8px 20px rgba(2, 18, 32, 0.78) !important;
+  text-shadow: none !important;
+}
+.hero .hero-content h1 {
+  width: fit-content;
+  max-width: 100%;
+  padding: .12em .3em .16em;
+  border-radius: .16em;
+  background: rgba(8, 14, 20, .16);
+  border: 0;
 }
 
 /* Keep the fixed proof text legible within the first screen. */
@@ -1969,7 +1975,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     </video>
   </div>
   <div class="hero-content reveal">
-    <h1 class="display">Hospital projects are high-stakes.<br><em>NYA reduces the risk.</em></h1>
+    <h1 class="display">Hospital projects are <span class="nowrap">high-stakes.</span><br><em>NYA reduces the risk.</em></h1>
   </div>
   <div class="hero-dots" aria-label="Healthcare project images">
     <button class="hero-dot active" type="button" data-index="0" aria-label="Show Stanford hospital image"></button>
@@ -4012,6 +4018,28 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
   addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(update)}},{passive:true});
   update();
+})();
+</script>
+<script id="hero-glass-fit">
+(function(){
+  var h1=document.querySelector('.hero .hero-content h1');
+  if(!h1)return;
+  // Shrink the glass panel to the longest rendered line so there is no empty space on its right.
+  function fit(){
+    h1.style.width='';
+    var rects=document.createRange();rects.selectNodeContents(h1);
+    var list=rects.getClientRects(),box=h1.getBoundingClientRect(),cs=getComputedStyle(h1),max=0;
+    for(var i=0;i<list.length;i++){if(list[i].width>1)max=Math.max(max,list[i].right)}
+    if(!max)return;
+    var pr=parseFloat(cs.paddingRight)||0,pl=parseFloat(cs.paddingLeft)||0;
+    var w=max-box.left+pr+14; // small slack so rounding never re-wraps the longest line
+    if(cs.boxSizing==='content-box')w-=pl+pr;
+    h1.style.width=Math.ceil(w)+'px';
+  }
+  var t;function later(){clearTimeout(t);t=setTimeout(fit,80)}
+  addEventListener('resize',later,{passive:true});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  addEventListener('load',fit);fit();
 })();
 </script>
 </body>
