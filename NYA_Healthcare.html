@@ -1536,7 +1536,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Relationships: large fixed intro copy crossfades to its small center counterpart.
    The camera reveals three equal circles, using the existing page typography. */
 @supports (overflow:clip) {body{overflow-x:clip;}}
-.nya-rel-story{position:relative;height:603svh;background:#fff;color:var(--ink);isolation:isolate;}
+.nya-rel-story{position:relative;height:660svh;background:#fff;color:var(--ink);isolation:isolate;}
 .nya-rel-pin{position:sticky;top:0;height:100svh;width:100%;overflow:hidden;background:#fff;contain:paint;}
 .nya-rel-viewport{position:relative;width:100%;height:100%;overflow:hidden;}
 /* The larger, fixed-size opening message is a separate visual layer.
@@ -1595,7 +1595,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-note h3{font-family:var(--display);font-size:var(--text-h3);font-weight:300;line-height:1.06;letter-spacing:-.015em;color:var(--ink);}
 .nya-rel-note p{font-family:var(--body);font-size:var(--text-small);font-weight:400;line-height:1.46;color:var(--ink2);margin-top:var(--space-1);}
 /* Justified descriptions; leave headings and numerical captions unchanged. */
-.nya-rel-center p,.nya-rel-note p{ text-align:justify; text-align-last:left; hyphens:none; -webkit-hyphens:none; word-break:normal; overflow-wrap:normal; }
+.nya-rel-center p{ text-align:justify; text-align-last:left; hyphens:none; -webkit-hyphens:none; word-break:normal; overflow-wrap:normal; }
+/* The three circle paragraphs are left-aligned (ragged right); the curve-hugging wrap shapes are unchanged. */
+.nya-rel-note p{ text-align:left; text-align-last:left; hyphens:none; -webkit-hyphens:none; word-break:normal; overflow-wrap:normal; }
 .nya-rel-note--responsive h3,.nya-rel-note--team h3{ font-size:calc(var(--text-h3) + 1.5px); }
 /* The center block sits fully inside the three-circle intersection.
    If fonts are enlarged, limit its occupied space without hiding the copy:
@@ -1635,7 +1637,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 .nya-rel-a11y{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);}
 @media(max-width:720px){
- .nya-rel-story{height:603svh;}
+ .nya-rel-story{height:660svh;}
  .nya-rel-center{left:510px;top:523px;width:280px;}
  .nya-rel-note--hcai{left:445px;top:65px;width:350px;display:flex;flex-direction:column-reverse;gap:var(--space-1);}
  .nya-rel-note--hcai .nya-rel-stat{padding-top:0;transform:none;}
@@ -1972,7 +1974,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .ucsf-story-head .eyebrow{margin-bottom:.7rem}
 .ucsf-story-head h2{margin:0;font-size:var(--text-h1)}
 .ucsf-story-head h2 br{display:none}
-.ucsf-story-head .value-note{max-width:62rem;margin:1rem auto 0;padding:0;text-align:justify;text-align-last:center;hyphens:none;-webkit-hyphens:none}
+.ucsf-story-head .value-note{max-width:none;margin:1rem 0 0;padding:0;text-align:justify;text-align-last:center;hyphens:none;-webkit-hyphens:none}
 .ucsf-step h3{font-size:var(--text-h2-lg)}
 @media(min-width:1101px){
   .ucsf-story-head{position:sticky;top:0;z-index:6;padding-top:clamp(1.2rem,3svh,2.2rem);padding-bottom:clamp(.8rem,2svh,1.4rem);pointer-events:none}
@@ -2040,6 +2042,31 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .proof-ribbon .proof-marquee { overflow-x: auto !important; }
   .proof-ribbon .proof-set--loop { display: none !important; }
 }
+</style>
+<style id="nya-rel-final-style">
+/* Last screen after the full-diagram zoom-out: a clean diagram on the left, the numbered summary on the right. */
+.nya-rel-final{position:absolute;inset:0;z-index:5;display:none;opacity:0;visibility:hidden;pointer-events:none;background:#fff;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:clamp(1rem,3vw,3.5rem);
+  padding:clamp(.8rem,2.5svh,2rem) clamp(1.25rem,4vw,4.5rem)}
+@media(min-width:721px){.nya-rel-final{display:grid}}
+.nya-rel-final__diagram{position:relative;justify-self:center;width:min(100%,calc((100svh - 2.5rem) * 1300 / 1180));aspect-ratio:1300 / 1180;container-type:inline-size}
+.nya-rel-final__diagram svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.nya-rel-final__diagram circle{fill:none;stroke:var(--ink);stroke-opacity:.82;stroke-width:1.25;vector-effect:non-scaling-stroke}
+.nya-rel-final .fl{position:absolute;transform:translate(-50%,-50%);text-align:center;color:var(--ink)}
+.nya-rel-final .fl-title{font-family:var(--display);font-weight:300;font-size:3.6cqw;line-height:1.08;letter-spacing:-.015em;white-space:nowrap}
+.nya-rel-final .fl[style*="width"].fl-title{white-space:normal}
+.nya-rel-final .fl-stat{font-family:var(--display);font-weight:300;font-size:5cqw;line-height:1;letter-spacing:-.02em;color:var(--green-on-light);white-space:nowrap}
+.nya-rel-final .fl-cap{font-family:var(--body);font-weight:500;font-size:1.6cqw;line-height:1.5;letter-spacing:.13em;text-transform:uppercase;color:var(--green-on-light)}
+.nya-rel-final .fl-center{font-family:var(--display);font-weight:400;font-size:2.9cqw;line-height:1.12;letter-spacing:-.01em}
+.nya-rel-final__panel{min-width:0;max-width:44rem}
+.nya-rel-final__panel h2{font-family:var(--display);font-weight:300;font-size:clamp(1.7rem,min(2.7vw,4.6svh),2.9rem);line-height:1.04;letter-spacing:-.02em;color:var(--ink);margin:0;text-wrap:balance}
+.nya-rel-final__panel .lead{margin:clamp(.6rem,1.6svh,1rem) 0 0;font-family:var(--body);font-size:clamp(.82rem,min(1vw,1.9svh),1.02rem);line-height:1.5;color:var(--ink2)}
+.nya-rel-final__panel ol{list-style:none;margin:clamp(.7rem,2svh,1.3rem) 0 0;padding:0;border-top:1px solid rgba(21,21,21,.18)}
+.nya-rel-final__panel li{display:grid;grid-template-columns:clamp(2.2rem,4vw,3.6rem) minmax(0,1fr);gap:clamp(.7rem,1.6vw,1.5rem);align-items:start;padding:clamp(.7rem,2svh,1.3rem) 0;border-bottom:1px solid rgba(21,21,21,.18)}
+.nya-rel-final__panel li:last-child{border-bottom:0}
+.nya-rel-final__panel .n{font-family:var(--display);font-weight:300;font-size:clamp(2.6rem,min(4.6vw,8svh),4.6rem);line-height:.9;color:var(--green-on-light)}
+.nya-rel-final__panel h3{font-family:var(--display);font-weight:400;font-size:clamp(1.35rem,min(2.5vw,4.4svh),2.5rem);line-height:1.04;letter-spacing:-.015em;color:var(--ink);margin:0}
+.nya-rel-final__panel li p{margin:clamp(.3rem,.9svh,.6rem) 0 0;font-family:var(--body);font-size:clamp(.78rem,min(.92vw,1.75svh),.95rem);line-height:1.46;color:var(--ink2)}
 </style>
 </head>
 <body id="top">
@@ -2336,31 +2363,31 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
         <p>For Stanford, the result was the realization of its ambitious vision without compromise.</p>
       </article>
 
-      <article class="ucsf-step" data-image="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1.webp" data-fit="cover" data-alt="Bright interior atrium with lattice skylight at the Stanford hospital" data-label="Architectural vision"><div class="eyebrow">Architectural Vision</div>
+      <article class="ucsf-step" data-frame-ratio="4 / 3" data-image="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1.webp" data-fit="cover" data-alt="Bright interior atrium with lattice skylight at the Stanford hospital" data-label="Architectural vision"><div class="eyebrow">Architectural Vision</div>
         <h3>Engineering Stanford’s vision for a <em>brighter, more welcoming hospital.</em></h3>
         <p>Stanford’s atrium welcomes patients and families with daylight and open space. To achieve the nearly 120-foot skylight without bulky framing or columns, NYA designed a shallow grid of slender steel pipes. Advanced analysis allowed NYA to keep the structure light while meeting demanding engineering requirements, delivering the openness Stanford envisioned.</p>
       </article>
 
-      <article class="ucsf-step" data-film="base-isolation" data-alt="Animated comparison of fixed-base and base-isolated hospital buildings" data-label="Seismic leadership"><div class="eyebrow">Seismic Leadership</div>
+      <article class="ucsf-step" data-frame-ratio="4 / 3" data-film="base-isolation" data-alt="Animated comparison of fixed-base and base-isolated hospital buildings" data-label="Seismic leadership"><div class="eyebrow">Seismic Leadership</div>
         <h3>Helping Stanford keep caring for patients <em>after an earthquake</em></h3>
         <p>NYA drew on its pioneering seismic isolation expertise to design a system that supports Stanford’s goal of uninterrupted care. By reducing shaking within the hospital, the system helps protect patients, staff, and medical equipment. NYA’s technical expertise brought that protection into the design, reducing the risk of damage and disruption.</p>
       </article>
 
-      <article class="ucsf-step" data-image="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" data-alt="UCSF Health Helen Diller Hospital at Parnassus" data-label="The site sets the problem"><div class="eyebrow">Site Ingenuity</div>
+      <article class="ucsf-step" data-frame-ratio="4 / 3" data-image="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" data-alt="UCSF Health Helen Diller Hospital at Parnassus" data-label="The site sets the problem"><div class="eyebrow">Site Ingenuity</div>
         <h3>Engineering a nearly million-square-foot hospital <em>on a very small site</em></h3>
         <p>UCSF envisioned a major new hospital on a steep, triangular site surrounded by existing buildings, roads, and underground utilities. The limited footprint left little room for the large, flexible floors essential to modern healthcare.</p>
         <p>NYA engineered a way to make every square foot count. Dramatic cantilevers extended usable floors beyond their supporting columns, while an innovative structural system accommodated shifting floorplates as the tower rose. Together, these solutions maximized the space available within the site’s restrictive geometry.</p>
         <p>The result was a structural design that made UCSF’s nearly million-square-foot hospital possible on a site that seemed far too small to accommodate it.</p>
       </article>
 
-      <article class="ucsf-step" data-video="https://www.nyase.com/wp-content/uploads/2026/11/with-dampers-960.mp4" data-alt="Fluid viscous damper animation" data-label="Choose the right system"><div class="eyebrow">Architectural Freedom</div>
+      <article class="ucsf-step" data-frame-ratio="4 / 3" data-video="https://www.nyase.com/wp-content/uploads/2026/11/with-dampers-960.mp4" data-alt="Fluid viscous damper animation" data-label="Choose the right system"><div class="eyebrow">Architectural Freedom</div>
         <h3>Making UCSF’s bold architecture possible <em>through innovative seismic design</em></h3>
         <p>UCSF needed to fit an architecturally ambitious hospital onto a severely constrained site while meeting California’s demanding seismic requirements. Conventional seismic systems would have occupied precious space and imposed significant restrictions on the building’s design.</p>
         <p>NYA engineered an innovative system combining steel moment frames with nearly 200 fluid viscous dampers. By dissipating earthquake energy without relying on restrictive walls or bracing, the system accommodated the building’s dramatic geometry and preserved its open, flexible spaces.</p>
         <p>The result was a hospital designed for powerful earthquakes, with the architectural freedom and usable space UCSF envisioned.</p>
       </article>
 
-      <article class="ucsf-step" data-layout="single" data-alt="Prefabricated MEP rack photograph" data-label="Dissipate seismic energy"><div class="eyebrow">Collaboration</div>
+      <article class="ucsf-step" data-frame-ratio="4 / 3" data-layout="single" data-alt="Prefabricated MEP rack photograph" data-label="Dissipate seismic energy"><div class="eyebrow">Collaboration</div>
         <h3>Helping UCSF build more efficiently through two <em>California hospital firsts</em></h3>
         <p>UCSF saw an opportunity to simplify construction through prefabricated MEP racks and bathroom pods. But making these innovations work required multiple engineering disciplines to resolve competing requirements before construction.</p>
         <p>NYA brought the MEP teams together to coordinate shared racks and engineered the structural supports needed to accommodate them. This coordination also minimized MEP clashes before construction. NYA also coordinated the building structure to receive prefabricated bathroom pods.</p>
@@ -2412,6 +2439,30 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
      <p>NYA’s low staff turnover gives our engineers years of shared experience. The people who understand the design, the decisions behind it, and the project’s history remain engaged, preserving knowledge, strengthening coordination, and keeping teams aligned from design through construction.</p>
      <div class="nya-rel-stat"><strong>20+ years</strong><small>Median tenure</small></div>
     </article>
+   </div>
+   <div class="nya-rel-final" aria-hidden="true">
+    <div class="nya-rel-final__diagram">
+     <svg viewBox="0 0 1300 1180" focusable="false"><circle cx="650" cy="445" r="420"/><circle cx="450" cy="745" r="420"/><circle cx="850" cy="745" r="420"/></svg>
+     <div class="fl fl-title" style="left:50%;top:11.5%">Partnering with HCAI</div>
+     <div class="fl fl-stat" style="left:50%;top:18.2%">1 of only 5</div>
+     <div class="fl fl-cap" style="left:50%;top:24.3%;width:24cqw">HCAI-approved plan check firms</div>
+     <div class="fl fl-center" style="left:50%;top:58.5%;width:28cqw">The relationships that define how we deliver</div>
+     <div class="fl fl-title" style="left:18.5%;top:68.6%;width:26cqw">Responsiveness that earns trust</div>
+     <div class="fl fl-stat" style="left:23.5%;top:83%">One day or less</div>
+     <div class="fl fl-cap" style="left:25.5%;top:89.8%;width:22cqw">49% of RFIs answered in one day or less.</div>
+     <div class="fl fl-title" style="left:83.5%;top:68.6%;width:22cqw">A team that stays in sync</div>
+     <div class="fl fl-stat" style="left:77%;top:83.6%">20+ years</div>
+     <div class="fl fl-cap" style="left:77%;top:89.2%">Median tenure</div>
+    </div>
+    <div class="nya-rel-final__panel">
+     <h2>The relationships that define how we deliver</h2>
+     <p class="lead">Established working relationships reduce the uncertainty that puts hospital projects at risk. NYA combines a cohesive, experienced team with close HCAI collaboration and a commitment to architects and contractors, keeping decisions consistent, approvals advancing, and construction moving.</p>
+     <ol>
+      <li><span class="n">1</span><div><h3>Partnering with HCAI</h3><p>NYA partners with HCAI early, aligns on priorities, and works through technical questions together, securing approvals for innovative solutions, including AMCs.</p></div></li>
+      <li><span class="n">2</span><div><h3>Responsiveness that earns trust</h3><p>NYA builds lasting relationships with architects and contractors by honoring our commitments. We stay accessible, understand what the field needs, and deliver clear, considered answers when they matter most. That reliability keeps questions from becoming delays.</p></div></li>
+      <li><span class="n">3</span><div><h3>A team that stays in sync</h3><p>NYA’s low staff turnover gives our engineers years of shared experience. The people who understand the design, the decisions behind it, and the project’s history remain engaged, preserving knowledge, strengthening coordination, and keeping teams aligned from design through construction.</p></div></li>
+     </ol>
+    </div>
    </div>
   </div>
   <div class="nya-rel-a11y">
@@ -3336,6 +3387,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  const hcai=story.querySelector('.nya-rel-note--hcai');
  const responsive=story.querySelector('.nya-rel-note--responsive');
  const team=story.querySelector('.nya-rel-note--team');
+  const finalEl=story.querySelector('.nya-rel-final');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
  const clamp=x=>Math.max(0,Math.min(1,x));
  const ease=x=>{let t=clamp(x);return t*t*(3-2*t);};
@@ -3355,19 +3407,16 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   {p:.32,  x:650,y:150,z:1.95,name:'hcai'},
   // The HCAI close-up stays centered on its complete statistic + copy,
   // matching the arrival target instead of drifting left when zooming.
-  {p:.40,  x:650,y:228,z:2.70,name:'hcai-text'},
-  {p:.44,  x:650,y:228,z:2.70,name:'hcai-text'},
+  {p:.40,  x:650,y:228,z:2.30,name:'hcai-text'},
+  {p:.44,  x:650,y:228,z:2.30,name:'hcai-text'},
 
+  // From here the camera only pans between the three messages at one constant zoom (no zoom out / zoom in between them).
   // Center both the narrative and the offset RFI statistic as a group.
-  {p:.54,  x:370,y:900,z:1.8,name:'responsive'},
-  {p:.57,  x:370,y:900,z:1.8,name:'responsive'},
-  {p:.65,  x:370,y:900,z:2.3,name:'responsive-text'},
-  {p:.69,  x:370,y:900,z:2.3,name:'responsive-text'},
+  {p:.56,  x:370,y:900,z:2.30,name:'responsive-text'},
+  {p:.66,  x:370,y:900,z:2.30,name:'responsive-text'},
 
-  {p:.77,  x:930,y:900,z:1.8,name:'team'},
-  {p:.80,  x:930,y:900,z:1.8,name:'team'},
-  {p:.88,  x:930,y:900,z:2.3,name:'team-text'},
-  {p:.92,  x:930,y:900,z:2.3,name:'team-text'},
+  {p:.80,  x:930,y:900,z:2.30,name:'team-text'},
+  {p:.90,  x:930,y:900,z:2.30,name:'team-text'},
 
   {p:.975, x:650,y:590,z:1.03,name:'overview'},
   {p:1,    x:650,y:590,z:1.03,name:'overview'}
@@ -3403,7 +3452,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   const rawProgress=clamp(-rect.top/extent);
   // Opening stage (old 0-.20) now takes half the scroll; later stages keep their length.
   const OPEN=.111;
-  const progress=rawProgress<=OPEN?rawProgress/OPEN*.20:.20+(rawProgress-OPEN)/(1-OPEN)*.80;
+  const progress0=rawProgress<=OPEN?rawProgress/OPEN*.20:.20+(rawProgress-OPEN)/(1-OPEN)*.80;
+  // Earlier stages keep their length; the final screen then holds for the remaining ~8% of the scroll.
+  const progress=clamp(progress0/.915);
   desired=sample(progress);
   desired.fit=getFit();
   // The opening message is large and fixed-size. It crossfades with the
@@ -3422,6 +3473,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   desired.hcaiOpacity=focus(.225,.29,.465,.535);
   desired.responsiveOpacity=focus(.48,.54,.70,.765);
   desired.teamOpacity=Math.max(overview,ease((progress-.71)/.06));
+  // After the Team close-up the page goes straight to the final screen (no paragraph-filled overview in between):
+  // the diagram fades away first, then the final screen fades in.
+  desired.worldOpacity=innerWidth<=720?1:1-ease((progress-.925)/.035);
+  desired.finalOpacity=innerWidth<=720?0:ease((progress-.955)/.035);
   story.dataset.cameraScene=desired.name;
   if(!running){running=true;requestAnimationFrame(frame);}
  }
@@ -3429,7 +3484,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   if(reduced.matches||!desired){running=false;return;}
   if(!current)current={...desired};
   const blend=.27;
-  for(const k of ['x','y','z','fit','ring','introOpacity','centerOpacity','hcaiOpacity','responsiveOpacity','teamOpacity'])current[k]=lerp(current[k],desired[k],blend);
+  for(const k of ['x','y','z','fit','ring','introOpacity','centerOpacity','hcaiOpacity','responsiveOpacity','teamOpacity','finalOpacity','worldOpacity'])current[k]=lerp(current[k],desired[k],blend);
   const scale=current.z*current.fit;
   world.style.transform=`translate3d(${(-current.x*scale).toFixed(2)}px,${(-current.y*scale).toFixed(2)}px,0) scale(${scale.toFixed(5)})`;
   rings.style.opacity=String(clamp(current.ring));
@@ -3439,8 +3494,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   hcai.style.opacity=String(clamp(current.hcaiOpacity));
   responsive.style.opacity=String(clamp(current.responsiveOpacity));
   team.style.opacity=String(clamp(current.teamOpacity));
+  world.style.opacity=String(clamp(current.worldOpacity));
+  if(finalEl){finalEl.style.opacity=String(clamp(current.finalOpacity));finalEl.style.visibility=current.finalOpacity<.01?'hidden':'visible';}
   const err=Math.max(Math.abs(current.x-desired.x),Math.abs(current.y-desired.y),Math.abs(current.z-desired.z)*100,Math.abs(current.fit-desired.fit)*100,Math.abs(current.ring-desired.ring)*100,
-    ...['introOpacity','centerOpacity','hcaiOpacity','responsiveOpacity','teamOpacity'].map(k=>Math.abs(current[k]-desired[k])*100));
+    ...['introOpacity','centerOpacity','hcaiOpacity','responsiveOpacity','teamOpacity','finalOpacity','worldOpacity'].map(k=>Math.abs(current[k]-desired[k])*100));
   if(err>.03)requestAnimationFrame(frame);else{current={...desired};running=false;}
  }
  function schedule(){if(!ticking){ticking=true;requestAnimationFrame(()=>{ticking=false;capture();});}}
@@ -4274,6 +4331,25 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var head=story&&story.querySelector('.ucsf-story-head');
   if(!head)return;
   var note=head.querySelector('.value-note');
+  var h2=head.querySelector('h2');
+  // Desktop: centre the paragraph under the title (as a block about 86% of the title's width).
+  function alignNote(){
+    if(!note||!h2)return;
+    note.style.marginLeft='';note.style.maxWidth='';
+    if(innerWidth<1101)return;
+    var all=document.createRange();all.selectNodeContents(h2);
+    var left=1e9,right=0,list=all.getClientRects();
+    for(var j=0;j<list.length;j++){if(list[j].width>1){left=Math.min(left,list[j].left);right=Math.max(right,list[j].right)}}
+    if(!right)return;
+    var base=head.getBoundingClientRect().left+(parseFloat(getComputedStyle(head).paddingLeft)||0);
+    var tw=right-left,w=Math.round(tw*.86);
+    note.style.maxWidth=w+'px';
+    note.style.marginLeft=Math.max(0,Math.round(left-base+(tw-w)/2))+'px';
+  }
+  alignNote();
+  addEventListener('resize',function(){clearTimeout(alignNote._t);alignNote._t=setTimeout(alignNote,80)},{passive:true});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){alignNote();setH()});
+  addEventListener('load',function(){alignNote();setH()});
   var brow=head.querySelector('.eyebrow');
   function setH(){
     var h=head.offsetHeight;
