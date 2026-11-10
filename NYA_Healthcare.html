@@ -1877,8 +1877,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* The photo's top ~150px (of 724) is white sky, broken only by palm crowns right of 63% width.
    Where the intro ends left of the palms, the photo slides up behind it so the skyline sits just
    below the text. Percent margins resolve against width, which keeps the image's 150px row tied to it.
-   The intro also widens to end a --space-4 gap left of the palm crowns (x 1370 of 2172), capped at 72ch. */
+   The intro also widens to end a --space-4 gap left of the palm crowns (x 1370 of 2172), capped at 72ch.
+   In landscape the script's .is-fill rules below replace this with a tighter, zoom-aware fit. */
 @media(min-width:1280px){.uci-team-intro{max-width:min(72ch,calc(1370 / 2172 * 100vw - max(var(--pad),(100vw - 1500px) / 2) - var(--space-4)))}.uci-team-media{margin-top:calc(var(--space-3) - 150 / 2172 * 100%)}}
+/* Landscape: the script sizes the photo so it ends at the viewport bottom when the heading pins,
+   cropping the sides (--uci-pos-x) and zooming; it also sets the sky overlap (--uci-media-mt) and,
+   from 1280px, the intro width that stops short of the palms (--uci-intro-max). */
+.uci-team.is-fill .uci-team-media{margin-top:var(--uci-media-mt)}
+.uci-team.is-fill .uci-team-media img{height:var(--uci-img-h);aspect-ratio:auto;object-position:var(--uci-pos-x) 50%}
+@media(min-width:1280px){.uci-team.is-fill .uci-team-intro{max-width:min(80ch,var(--uci-intro-max))}}
 /* Centered timeline: the line runs down the middle; on desktop headings align right against it and body text left, so both sit the same distance from the line. */
 /* --uci-pad is 1.5x the original row padding budget: each point needs ~50% more scroll to reveal, giving time to read. */
 .uci-team-track{--uci-gap:calc(2*var(--space-4));--uci-pad:5.5rem;position:relative;margin-top:var(--space-2)}
@@ -1908,6 +1915,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 @media(max-width:599px),(max-height:620px){.uci-team-head{position:static}.uci-team .uci-team-head::after,.uci-team .uci-team-head::before{display:none}}
 @media(max-width:900px) and (orientation:portrait){.uci-team-media img{aspect-ratio:2/1}.uci-team-media{margin-top:calc(var(--space-1) - 50 / 1448 * 100%)}}
 @media(max-width:900px){
+  /* Stacked rows are already tall, so the extra reading pace of --uci-pad isn't needed here. */
+  .uci-team-track{--uci-pad:var(--space-3)}
   .uci-team-line{left:calc(.5rem - 1px)}
   .uci-team-step h3{justify-self:start;text-align:left}
   .uci-team-step{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--uci-pad) 0 var(--uci-pad) calc(1rem + var(--space-2))}
@@ -3920,9 +3929,67 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   const nav=document.getElementById('range-nav');
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
   let marks=[],mids=[],lineH=1,fadeH=0,raf=0,listening=false,resizeT=0;
+  const img=media&&media.querySelector('img');
+  const intro=sec.querySelector('.uci-team-intro');
+  const landscape=window.matchMedia('(orientation: landscape)');
+  const wide=window.matchMedia('(min-width: 1280px)');
+  // Photo geometry in source pixels (2172x724): palm crowns start at x 1370. The crop keeps the
+  // owner-marked window (6% to 85% of the width) and splits trimming 29:71 left:right down to it;
+  // tighter than that, the right edge holds at 85% (palms) and the left trees give way.
+  // Zoom stops at 60% of the width so the scene stays recognisable.
+  const SRC_W=2172,SRC_H=724,PALM_X=1370,MARK_L=.06,MARK_R=.85,MIN_VISIBLE=.6;
+  function cropPos(visible){
+    const markV=MARK_R-MARK_L;
+    return visible>=markV?MARK_L/(1-markV):(MARK_R-visible)/(1-visible);
+  }
+
+  // Mirrors the CSS offsets in source pixels: the top 150 rows are sky except the palm crowns,
+  // which start at row 50.
+  function applyScale(s,w){
+    const rem=parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const posX=cropPos(w/s/SRC_W);
+    sec.style.setProperty('--uci-s',s.toFixed(5));
+    sec.style.setProperty('--uci-img-h',(SRC_H*s).toFixed(2)+'px');
+    sec.style.setProperty('--uci-pos-x',(posX*100).toFixed(2)+'%');
+    // Zoomed, the photo renders wider than the viewport; srcset picks by this width, not 100vw.
+    img.sizes=Math.ceil(SRC_W*s)+'px';
+    if(!wide.matches||!intro){
+      sec.style.setProperty('--uci-media-mt',(.5*rem-50*s).toFixed(2)+'px');
+      return;
+    }
+    // The sky slides behind the intro, but never so far that the crowns rise past the intro's top,
+    // where the pinned heading would slice them.
+    const introH=intro.offsetHeight+parseFloat(getComputedStyle(intro).marginTop);
+    sec.style.setProperty('--uci-media-mt',Math.max(1.5*rem-150*s,rem-introH-50*s).toFixed(2)+'px');
+    const gap=rem;
+    const cropL=(SRC_W-w/s)*posX;
+    const introL=intro.getBoundingClientRect().left-media.getBoundingClientRect().left;
+    sec.style.setProperty('--uci-intro-max',Math.max(0,(PALM_X-cropL)*s-introL-gap).toFixed(2)+'px');
+  }
+  // Landscape: size the photo so its bottom meets the viewport bottom at the moment the heading
+  // pins (or, when the heading doesn't pin, when the section reaches the nav). The photo's top
+  // depends on the scale (sky overlap, intro width), so a few passes settle it.
+  function fitMedia(){
+    if(!img||!landscape.matches){sec.classList.remove('is-fill');if(img)img.sizes='100vw';return}
+    sec.classList.add('is-fill');
+    const w=media.clientWidth;
+    const navH=nav?nav.offsetHeight:0;
+    const pins=getComputedStyle(head).position==='sticky'&&navH+head.offsetHeight<=window.innerHeight*.4;
+    const padTop=parseFloat(getComputedStyle(sec).paddingTop);
+    const minS=w/SRC_W,maxS=w/(SRC_W*MIN_VISIBLE);
+    let s=minS;
+    for(let i=0;i<4;i++){
+      applyScale(s,w);
+      // The heading's unpinned top is the section's padding edge.
+      const above=navH+media.getBoundingClientRect().top-sec.getBoundingClientRect().top-(pins?padTop:0);
+      s=Math.min(maxS,Math.max(minS,(window.innerHeight-above)/SRC_H));
+    }
+    applyScale(s,w);
+  }
 
   // All reads first, then writes. Dot centers are measured relative to the track.
   function measure(){
+    fitMedia();
     const navH=nav?nav.offsetHeight:0;
     const headH=head.offsetHeight;
     const t=track.getBoundingClientRect();
