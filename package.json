@@ -1,0 +1,11 @@
+{
+  "name": "nya-healthcare",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:scroll": "node tests/scrollcheck.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.61.0"
+  }
+}

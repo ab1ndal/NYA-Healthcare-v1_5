@@ -9,3 +9,6 @@
 !nya-closing-hospital-whole.webp
 !nya-closing-tree-whole.webp
 !/.github
+!/tests
+!package.json
+!package-lock.json
