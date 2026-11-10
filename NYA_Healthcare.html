@@ -1903,6 +1903,11 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 @media(max-width:899px){.nya-s33-art{aspect-ratio:1672/452;margin-top:1.5rem;overflow:hidden}.nya-s33-art .nya-s33-base{top:-16.81%;height:208.19%}.nya-s33-art .nya-s33-line{display:none}.nya-s33-art .nya-s33-full{left:auto;right:0;bottom:auto;width:80.14%;height:auto;top:0}}
 /* Phones: crop it further to the building end (x 38% to 100%) and show it larger. */
 @media(max-width:699px){.nya-s33-stage{overflow-x:clip}.nya-s33-art{width:161.3%;margin-left:-61.3%}}
+/* Flowing layout (phones, tablets, and laptops where the cards don't fit over the drawing): the drawing comes last, after the
+   six cards, as the conclusion; the building fades in as it scrolls into view. */
+.nya-s33:not(.is-pinned) .nya-s33-stage{display:flex;flex-direction:column}
+.nya-s33:not(.is-pinned) .nya-s33-steps{order:1;padding-bottom:0}
+.nya-s33:not(.is-pinned) .nya-s33-art{order:2;flex:none;margin-top:clamp(2rem,5vw,3.5rem)}
 /* Keeps this section's scroll motion smooth over the page-wide reduced-motion rule. */
 .nya-s33.is-live.is-forced .nya-s33-line{transition:clip-path .28s cubic-bezier(.22,.7,.2,1)!important}
 .nya-s33.is-live.is-forced .nya-s33-full{transition:opacity .25s linear,transform .25s linear!important}
@@ -4261,9 +4266,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     // complete once the whole drawing is on screen.
     const a=art.getBoundingClientRect(),vh=innerHeight;
     const p=clamp((vh-a.top)/Math.max(1,a.height+vh*.1));
-    const lp=p/.5,hp=(p-.3)/.65;
-    section.style.setProperty('--lp',clamp(lp).toFixed(4));
-    section.style.setProperty('--hp',clamp(hp).toFixed(4));
+    const lp=p/.5,hp=(p-.3)/.65,atEnd=scrollY+vh>=document.documentElement.scrollHeight-2;
+    section.style.setProperty('--lp',atEnd?'1':clamp(lp).toFixed(4));
+    section.style.setProperty('--hp',atEnd?'1':clamp(hp).toFixed(4));
     // Cards come up one after another: as a row's top (where it sits, not where it is mid-rise) moves from the bottom of the screen
     // to half way up, its cards rise in turn from the left, each starting when the one before has finished. At the very end of the
     // page every card is fully in.
@@ -4365,18 +4370,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       wrapLede(bands,gap);
     }
   }
-  // Unpinned, 900px and wider: pull the drawing up under the words as far as they allow, so the canopy roof ends a set gap below
-  // the paragraph and the hospital drawing and its tree stay that gap clear of every line of the heading and paragraph.
+  // Flowing layout: the drawing now comes after the cards (see the CSS), so it is no longer pulled up under the words.
   function fitArt(){
     art.style.marginTop='';
-    if(pinned||innerWidth<900)return;
-    const a=art.getBoundingClientRect(),u=a.width/2000,gap=Math.max(18,innerHeight*.035),roof=baseY(a,u),shape=outline(a);
-    let room=Infinity;
-    for(const el of [title,lede])for(const r of lineRects(el)){
-      room=Math.min(room,roof-r.bottom);
-      for(const [l,rt,t] of shape)if(rt>r.left&&l<r.right)room=Math.min(room,t-r.bottom);
-    }
-    if(room-gap>0)art.style.marginTop=(parseFloat(getComputedStyle(art).marginTop)-(room-gap))+'px';
   }
   function fitIntro(){
     intro.style.top='';
