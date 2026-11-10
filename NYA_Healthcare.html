@@ -1861,15 +1861,18 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .uci-team.fade-off .uci-team-head::after{opacity:0}
 .uci-team-head h2{font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--ink);max-width:26em;text-wrap:balance}
 .uci-team-head h2 em{font-style:normal;font-weight:300;color:var(--green-on-light)}
-.uci-team-intro{margin-top:var(--space-1);max-width:60ch;font-size:var(--text-body);line-height:1.65;color:var(--ink2)}
-.uci-team-media{margin:calc(clamp(var(--space-3),4vw,var(--space-5)) / 2) 0 0}
+.uci-team-intro{position:relative;z-index:1;margin-top:var(--space-1);max-width:60ch;font-size:var(--text-body);line-height:1.65;color:var(--ink2)}
+/* Above 1280px the rule below overrides this. Here the intro spans the palms, so the photo rises only
+   through the plain white rows above the palm crowns (top 50px of 724), leaving a --space-1 gap.
+   The offset is 50/724 of the image height; portrait queries change the aspect ratio and redo it. */
+.uci-team-media{margin:calc(var(--space-1) - 50 / 2172 * 100%) 0 0}
 /* Narrow screens crop the sides for a taller view of the campus; the focus stays on the entrance. */
 .uci-team-media img{display:block;width:100%;height:auto;aspect-ratio:2172/724;object-fit:cover;object-position:45% 50%}
 /* The photo's top ~150px (of 724) is white sky, broken only by palm crowns right of 63% width.
    Where the intro ends left of the palms, the photo slides up behind it so the skyline sits just
    below the text. Percent margins resolve against width, which keeps the image's 150px row tied to it.
    The intro also widens to end a --space-4 gap left of the palm crowns (x 1370 of 2172), capped at 72ch. */
-@media(min-width:1280px){.uci-team-intro{position:relative;z-index:1;max-width:min(72ch,calc(1370 / 2172 * 100vw - max(var(--pad),(100vw - 1500px) / 2) - var(--space-4)))}.uci-team-media{margin-top:calc(var(--space-3) - 150 / 2172 * 100%)}}
+@media(min-width:1280px){.uci-team-intro{max-width:min(72ch,calc(1370 / 2172 * 100vw - max(var(--pad),(100vw - 1500px) / 2) - var(--space-4)))}.uci-team-media{margin-top:calc(var(--space-3) - 150 / 2172 * 100%)}}
 /* Centered timeline: the line runs down the middle; on desktop headings align right against it and body text left, so both sit the same distance from the line. */
 /* --uci-pad is 1.5x the original row padding budget: each point needs ~50% more scroll to reveal, giving time to read. */
 .uci-team-track{--uci-gap:calc(2*var(--space-4));--uci-pad:5.5rem;position:relative;margin-top:var(--space-2)}
@@ -1897,14 +1900,14 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .uci-team.no-stick .uci-team-head{position:static}
 .uci-team.no-stick .uci-team-head::after,.uci-team.no-stick .uci-team-head::before{display:none}
 @media(max-width:599px),(max-height:620px){.uci-team-head{position:static}.uci-team .uci-team-head::after,.uci-team .uci-team-head::before{display:none}}
-@media(max-width:900px) and (orientation:portrait){.uci-team-media img{aspect-ratio:2/1}}
+@media(max-width:900px) and (orientation:portrait){.uci-team-media img{aspect-ratio:2/1}.uci-team-media{margin-top:calc(var(--space-1) - 50 / 1448 * 100%)}}
 @media(max-width:900px){
   .uci-team-line{left:calc(.5rem - 1px)}
   .uci-team-step h3{justify-self:start;text-align:left}
   .uci-team-step{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--uci-pad) 0 var(--uci-pad) calc(1rem + var(--space-2))}
   .uci-team-dot{left:0;top:calc(var(--uci-pad) + .54 * var(--text-h2-lg) - .5rem)}
 }
-@media(max-width:599px) and (orientation:portrait){.uci-team-media img{aspect-ratio:3/2}}
+@media(max-width:599px) and (orientation:portrait){.uci-team-media img{aspect-ratio:3/2}.uci-team-media{margin-top:calc(var(--space-1) - 50 / 1086 * 100%)}}
 @media(prefers-reduced-motion:reduce){
   .uci-team-head::after{transition:none}
   .uci-team.is-armed .uci-team-line{transform:none}
