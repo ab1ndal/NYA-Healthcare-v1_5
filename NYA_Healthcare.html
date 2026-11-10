@@ -831,7 +831,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   }
 }
 /* Three equal, centred proof boxes with tighter vertical space. */
-:root { --hero-proof-height: clamp(4.25rem, 9svh, 5.5rem); }
+:root { --hero-proof-height: clamp(5.75rem, 12.5svh, 7rem); }
 .proof-ribbon .proof-set {
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   width: 100% !important;
@@ -846,8 +846,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 .proof-ribbon .proof-set .proof:last-child { border-right: 0; }
 /* Larger proof-point text; the bar height is fixed above, so the bar does not grow. */
-.proof-ribbon .proof-v { font-size: clamp(1.4rem, 2.2vw, 2.1rem); line-height: 1.1; }
+.proof-ribbon .proof-v { font-size: clamp(1.15rem, min(1.85vw, 3.4svh), 1.95rem); line-height: 1.1; }
 .proof-ribbon .proof-set .proof .proof-v { color: #fff; }
+/* Each proof point is a left-aligned block (eyebrow and text share one left edge), centred as a block in its column. */
+.proof-ribbon .proof-set .proof{display:grid;grid-template-columns:minmax(0,max-content);justify-content:center;justify-items:start;align-content:center;text-align:left}
 @media (max-width: 760px) {
   .proof-ribbon .proof-set .proof { width: min(78vw, 20rem); }
 }
@@ -2252,14 +2254,14 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   <div class="proof-marquee">
     <div class="proof-track">
       <div class="proof-set" role="list">
-          <div class="proof" role="listitem"><div class="proof-v">35+ Years Of Hospital Experience</div></div>
-          <div class="proof" role="listitem"><div class="proof-v">16 OSHPD 1 Projects</div></div>
-          <div class="proof" role="listitem"><div class="proof-v">67 University Healthcare Projects</div></div>
+          <div class="proof" role="listitem"><div class="proof-k">Track Record</div><div class="proof-v">35+ Years Of Hospital Experience</div></div>
+          <div class="proof" role="listitem"><div class="proof-k">Acute Care Hospitals</div><div class="proof-v">16 OSHPD 1 Projects</div></div>
+          <div class="proof" role="listitem"><div class="proof-k">Supporting Institutions</div><div class="proof-v">67 University Healthcare Projects</div></div>
       </div>
       <div class="proof-set proof-set--loop" role="presentation" aria-hidden="true">
-          <div class="proof"><div class="proof-v">35+ Years Of Hospital Experience</div></div>
-          <div class="proof"><div class="proof-v">16 OSHPD 1 Projects</div></div>
-          <div class="proof"><div class="proof-v">67 University Healthcare Projects</div></div>
+          <div class="proof"><div class="proof-k">Track Record</div><div class="proof-v">35+ Years Of Hospital Experience</div></div>
+          <div class="proof"><div class="proof-k">Acute Care Hospitals</div><div class="proof-v">16 OSHPD 1 Projects</div></div>
+          <div class="proof"><div class="proof-k">Supporting Institutions</div><div class="proof-v">67 University Healthcare Projects</div></div>
       </div>
     </div>
   </div>
