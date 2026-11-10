@@ -2061,9 +2061,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 </style>
 <style id="hero-mobile-landscape">
-/* Phones: show the hero video at its true 16:9 ratio (no stretching or cropping),
+/* Portrait phones: show the hero video at its true 16:9 ratio (no stretching or cropping),
    with the headline on a dark panel directly below it. */
-@media (max-width: 760px) {
+@media (max-width: 760px) and (orientation: portrait) {
   .hero { display: block; height: auto; min-height: 0; background: #070a0d; overflow: visible; }
   .hero .hero-frames, .hero .hero-dots { display: none !important; }
   .hero .ucsf-bg-media {
@@ -2076,6 +2076,13 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     padding: 1.4rem var(--pad) 1.8rem;
   }
   .hero .hero-content h1 { background: none; padding: 0; border: 0; border-radius: 0; width: auto !important; max-width: 100%; }
+}
+/* Landscape phones: headline sized to the screen height so the Hero and the proof strip fit on one screen. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .hero .hero-content { padding-top: var(--space-5); padding-bottom: var(--space-2); }
+  .hero .hero-content h1 { font-size: min(var(--text-display), 14svh); padding: var(--space-1) var(--space-3) var(--space-2); }
+  /* The Hero is much wider than 16:9 here, so crop the video instead of stretching it. */
+  .hero .ucsf-bg-media video { object-fit: cover; }
 }
 </style>
 <style id="proof-mobile-marquee">
