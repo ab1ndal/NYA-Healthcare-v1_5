@@ -1898,6 +1898,11 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Keeps this section's scroll motion smooth over the page-wide reduced-motion rule. */
 .nya-s33.is-live.is-forced .nya-s33-line{transition:clip-path .28s cubic-bezier(.22,.7,.2,1)!important}
 .nya-s33.is-live.is-forced .nya-s33-full{transition:opacity .25s linear,transform .25s linear!important}
+/* The cards come up with the scroll: each fades in and rises 2.5rem as it comes into view, left to right within a row (--cp runs
+   0 to 1 per card, set by the script). While the script measures the layout (is-fitting) the cards sit in place. */
+.is-live .nya-s33-step{opacity:var(--cp,0);transform:translateY(calc((1 - var(--cp,0))*2.5rem));transition:opacity .25s linear,transform .25s linear}
+.nya-s33.is-live.is-forced .nya-s33-step{transition:opacity .25s linear,transform .25s linear!important}
+.nya-s33.is-live.is-forced.is-fitting .nya-s33-step,.nya-s33.is-fitting .nya-s33-step{transform:none!important;transition:none!important}
 /* ==== NYA FINALE COMBINED END (CSS) ==== */
 </style>
 <style id="uci-team-style">
@@ -4108,6 +4113,15 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     const lp=p/.5,hp=(p-.3)/.65;
     section.style.setProperty('--lp',clamp(lp).toFixed(4));
     section.style.setProperty('--hp',clamp(hp).toFixed(4));
+    // Cards: each comes up as its own top (where it sits, not where it is mid-rise) moves from the bottom of the screen to 35% up,
+    // with later cards in the same row a little behind. At the very end of the page every card is fully in.
+    const end=scrollY+vh>=document.documentElement.scrollHeight-2;
+    let rowTop=null,col=0;
+    for(const li of section.querySelectorAll('.nya-s33-step')){
+      const top=li.offsetParent.getBoundingClientRect().top+li.offsetTop;
+      col=rowTop!==null&&Math.abs(top-rowTop)<2?col+1:0;rowTop=top;
+      li.style.setProperty('--cp',end?'1':clamp((vh-top)/(vh*.35)-col*.12).toFixed(4));
+    }
   }
   // Keep the heading block close above the canopy: measure where it starts and move the words down to it.
   const intro=section.querySelector('.nya-s33-intro'),stage=section.querySelector('.nya-s33-stage'),art=section.querySelector('.nya-s33-art'),building=section.querySelector('.nya-s33-full');
@@ -4225,6 +4239,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     }
   }
   function setup(){
+    section.classList.add('is-fitting');
     stage.style.height='';
     pinned=PIN&&roomy.matches;
     section.classList.toggle('is-pinned',pinned);
@@ -4237,6 +4252,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     if(pinned)for(const f of [.95,.9,.85]){if(cardsFit())break;section.style.setProperty('--fit',f)}
     if(pinned&&!cardsFit()){pinned=false;section.classList.remove('is-pinned');section.style.removeProperty('--fit');fitIntro()}
     fitStage();
+    section.classList.remove('is-fitting');
     request();
   }
   addEventListener('scroll',request,{passive:true});
