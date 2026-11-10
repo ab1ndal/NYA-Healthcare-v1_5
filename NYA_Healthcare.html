@@ -1865,18 +1865,24 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .uci-team-media{margin:calc(clamp(var(--space-3),4vw,var(--space-5)) / 2) 0 0}
 /* Narrow screens crop the sides for a taller view of the campus; the focus stays on the entrance. */
 .uci-team-media img{display:block;width:100%;height:auto;aspect-ratio:2172/724;object-fit:cover;object-position:45% 50%}
+/* The photo's top ~150px (of 724) is white sky, broken only by palm crowns right of 63% width.
+   Where the intro ends left of the palms, the photo slides up behind it so the skyline sits just
+   below the text. Percent margins resolve against width, which keeps the image's 150px row tied to it.
+   The intro also widens to end a --space-4 gap left of the palm crowns (x 1370 of 2172), capped at 72ch. */
+@media(min-width:1280px){.uci-team-intro{position:relative;z-index:1;max-width:min(72ch,calc(1370 / 2172 * 100vw - max(var(--pad),(100vw - 1500px) / 2) - var(--space-4)))}.uci-team-media{margin-top:calc(var(--space-3) - 150 / 2172 * 100%)}}
 /* Centered timeline: the line runs down the middle; on desktop headings align right against it and body text left, so both sit the same distance from the line. */
-.uci-team-track{--uci-gap:calc(2*var(--space-4));position:relative;margin-top:var(--space-2)}
+/* --uci-pad is 1.5x the original row padding budget: each point needs ~50% more scroll to reveal, giving time to read. */
+.uci-team-track{--uci-gap:calc(2*var(--space-4));--uci-pad:5.5rem;position:relative;margin-top:var(--space-2)}
 /* --uci-end (set by the script) stops the line at the last dot. */
 .uci-team-line{position:absolute;top:0;height:var(--uci-end,100%);left:calc(50% - 1px);width:2px;background:var(--uci-line);transform-origin:top;z-index:1}
 .uci-team-steps{list-style:none;margin:0;padding:0}
-.uci-team-step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--uci-gap);padding-block:var(--space-4)}
+.uci-team-step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--uci-gap);padding-block:var(--uci-pad)}
 .uci-team-step+.uci-team-step{border-top:1px solid var(--uci-rule)}
 .uci-team-step h3{font-family:var(--display);font-size:var(--text-h2-lg);font-weight:400;line-height:1.08;color:var(--ink);max-width:14em;justify-self:end;text-align:right}
 .uci-team-step--outcome h3{color:var(--green-on-light)}
 .uci-team-body{max-width:42ch;font-size:var(--text-body);line-height:1.6;color:var(--ink2)}
 .uci-team-body p+p{margin-top:var(--space-1)}
-.uci-team-dot{position:absolute;z-index:2;left:calc(50% - .5rem);top:calc(var(--space-4) + .54 * var(--text-h2-lg) - .5rem);width:1rem;height:1rem;border-radius:50%;background:var(--uci-line)}
+.uci-team-dot{position:absolute;z-index:2;left:calc(50% - .5rem);top:calc(var(--uci-pad) + .54 * var(--text-h2-lg) - .5rem);width:1rem;height:1rem;border-radius:50%;background:var(--uci-line)}
 /* Scroll reveal applies only once the script arms it, so content shows without JS. */
 .uci-team.is-armed .uci-team-line{transform:scaleY(var(--uci-p,0))}
 .uci-team.is-armed .uci-team-dot{transform:scale(0);transition:transform .3s var(--ease)}
@@ -1895,8 +1901,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 @media(max-width:900px){
   .uci-team-line{left:calc(.5rem - 1px)}
   .uci-team-step h3{justify-self:start;text-align:left}
-  .uci-team-step{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-3) 0 var(--space-3) calc(1rem + var(--space-2))}
-  .uci-team-dot{left:0;top:calc(var(--space-3) + .54 * var(--text-h2-lg) - .5rem)}
+  .uci-team-step{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--uci-pad) 0 var(--uci-pad) calc(1rem + var(--space-2))}
+  .uci-team-dot{left:0;top:calc(var(--uci-pad) + .54 * var(--text-h2-lg) - .5rem)}
 }
 @media(max-width:599px) and (orientation:portrait){.uci-team-media img{aspect-ratio:3/2}}
 @media(prefers-reduced-motion:reduce){
