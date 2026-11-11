@@ -1943,7 +1943,48 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    building 1s, eased. */
 .nya-s33.is-live.is-forced.is-pinned .nya-s33-step{transition:opacity .7s ease-out,transform .7s ease-out!important}
 .nya-s33.is-live.is-forced.is-pinned .nya-s33-full{transition:opacity 1s ease-out,transform 1s ease-out!important}
-.nya-s33.is-live.is-forced.is-fitting .nya-s33-step,.nya-s33.is-fitting .nya-s33-step{transform:none!important;transition:none!important}
+.nya-s33.is-live.is-forced.is-fitting .nya-s33-step,.nya-s33.is-fitting .nya-s33-step{transform:none!important;transition:none!important}
+/* Phones and upright tablets (class is-scene, set by the script): the points play over the building. After the heading and
+   paragraph, the scene pins for a while (the run is the scene's height plus 120% of the screen to scroll through): the building
+   stands at the bottom of the screen with its lawn on the bottom edge, and the six points come up over its upper part two at a
+   time on white panels, 1-2, then 3-4, then 5-6 (one under the other on phones, side by side from 560px wide). The drawing and
+   the points sit in .nya-s33-run > .nya-s33-scene, which have no box of their own anywhere else. */
+.nya-s33-run,.nya-s33-scene{display:contents}
+.nya-s33.is-scene{--art-h:min(66vw,40svh)}
+@media(min-width:560px){.nya-s33.is-scene{--art-h:min(60vw,42svh)}}
+@media(orientation:landscape){.nya-s33.is-scene{--art-h:min(32vw,62svh)}}
+.nya-s33.is-scene .nya-s33-stage{display:block}
+.nya-s33.is-scene .nya-s33-run{display:block;position:relative;height:220svh}
+.nya-s33.is-scene .nya-s33-scene{display:block;position:sticky;top:0;height:100svh;overflow:hidden}
+/* The drawing is sized by its height (--art-h, from the lawn up); it is right-aligned past the edge by its empty margin (27 of
+   2000 columns) and its 52 empty rows under the lawn hang below the frame, so the building reaches the side and the lawn the foot. */
+.nya-s33.is-scene .nya-s33-art{position:absolute;left:0;right:0;bottom:0;width:auto;height:var(--art-h);aspect-ratio:auto;margin:0;overflow:hidden;z-index:1}
+.nya-s33.is-scene .nya-s33-art .nya-s33-full{inset:auto;right:calc(var(--art-h)*-.0439);bottom:calc(var(--art-h)*-.0846);width:auto;height:calc(var(--art-h)*1.0846);max-width:none}
+/* The points stand over the top 55% of the drawing (its tree and the upper floors), all in the same place. */
+.nya-s33.is-scene .nya-s33-steps{position:absolute;left:var(--pad);right:var(--pad);bottom:calc(var(--art-h)*.55);z-index:3;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem}
+.nya-s33.is-scene .nya-s33-step:nth-child(odd){grid-area:1/1}
+.nya-s33.is-scene .nya-s33-step:nth-child(even){grid-area:2/1}
+@media(min-width:560px){.nya-s33.is-scene .nya-s33-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}.nya-s33.is-scene .nya-s33-step:nth-child(even){grid-area:1/2}}
+.nya-s33.is-scene .nya-s33-step{position:relative;isolation:isolate}
+.nya-s33.is-scene .nya-s33-step::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:6px;background:rgba(255,255,255,.84);border:1px solid rgba(255,255,255,.7);box-shadow:0 2px 14px rgba(20,25,30,.08);pointer-events:none}
+.nya-s33.is-scene .nya-s33-copy{padding:1rem 1.15rem 1.1rem}
+.nya-s33.is-scene .nya-s33-copy h3{margin-bottom:.5rem}
+/* Showing a pair: its points rise into place, the second just after the first; the pair before leaves upward, the one after
+   downward. The script moves one pair at a time, so a fast scroll still shows every pair. */
+.nya-s33.is-scene .nya-s33-step{opacity:0;transform:translateY(1.5rem);pointer-events:none}
+.nya-s33.is-scene .nya-s33-step.is-past{transform:translateY(-1.5rem)}
+.nya-s33.is-scene .nya-s33-step.is-on{opacity:1;transform:none;pointer-events:auto}
+.nya-s33.is-live.is-forced.is-scene .nya-s33-step{transition:opacity .5s ease-out,transform .5s ease-out!important}
+.nya-s33.is-live.is-forced.is-scene .nya-s33-step:nth-child(even).is-on{transition-delay:.12s!important}
+.nya-s33.is-live.is-forced.is-scene.is-fitting .nya-s33-step{transition:none!important}
+/* The copyright line follows close under the lawn. */
+.nya-s33.is-scene+.nya-copyright,.nya-s33.is-scene~.nya-copyright{padding-top:.7rem}
+/* Where the heading and paragraph fit above the points (class is-scene-all, set by the script), the whole section pins as one
+   screen: heading and paragraph at the top, the points two at a time, the building at the foot. The section is that screen plus
+   120% of the screen to scroll through. */
+.nya-s33.is-scene-all{height:220svh}
+.nya-s33.is-scene-all .nya-s33-stage{position:sticky;top:0;height:100svh;overflow:hidden;padding-top:min(var(--section),9svh)}
+.nya-s33.is-scene-all .nya-s33-run,.nya-s33.is-scene-all .nya-s33-scene{position:absolute;inset:0;height:auto}
 /* ==== NYA FINALE COMBINED END (CSS) ==== */
 </style>
 <style id="uci-team-style">
@@ -2770,6 +2811,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       <h2 id="nya-s33-title">The NYA difference<br> is in the results</h2>
       <p class="nya-s33-lede">Hospitals are too complex, too costly, and too important to tolerate unnecessary project risk. NYA brings technical ingenuity, cost insight, and close collaboration to the decisions that put hospital projects at risk. From the first structural concept through construction, we turn that expertise into lower costs, fewer surprises, and greater confidence in delivery.</p>
     </div>
+    <div class="nya-s33-run"><div class="nya-s33-scene">
     <div class="nya-s33-art" aria-hidden="true">
       <img class="nya-s33-full" src="https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfullv.webp" alt="" decoding="async">
     </div>
@@ -2781,6 +2823,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Collaboration <br>That Delivers</h3><p>Owners, architects, builders, and MEP teams brought together to resolve challenges early.</p></div></li>
       <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Responsiveness <br>That Earns Trust</h3><p>Long-serving teams preserve project knowledge and deliver timely answers that keep work moving.</p></div></li>
     </ol>
+    </div></div>
   </div>
 </section>
 <!-- ==== NYA FINALE COMBINED END (HTML) ==== -->
@@ -4317,6 +4360,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   const section=document.getElementById('nya-s33');
   if(!section)return;
   const roomy=matchMedia('(min-width: 1280px)');
+  // Phones and upright tablets (the page's phone layout): the points play over the pinned building, two at a time (class is-scene).
+  const phone=matchMedia('(max-width: 899px), (max-width: 1100px) and (orientation: portrait)');
   // Desktop uses the canopy layout (class is-pinned): the cards between the posts. Where a screen is too small for the cards to fit
   // above the ground line, setup() falls back to the flowing layout (cards below the drawing). Set PIN to false to always use that.
   const PIN=true;
@@ -4324,7 +4369,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // This motion only ever follows the reader's own scrolling, so it runs for everyone, including with system animations off.
   // Scroll progress: the line climbs, then the hospital builds up slowly behind the words. The words stay solid throughout.
   const clamp=v=>Math.max(0,Math.min(1,v));
-  let pinned=false,frame=0;
+  let pinned=false,scene=false,frame=0;
   // Desktop reveal at a steady pace: the scroll sets the target (how many cards should be up, whether the building should be in),
   // and step() moves toward it one change at a time, 0.3s apart, so even a fast scroll shows card 1, 2, 3, 4, 5, 6, then the
   // building. Going back, the building leaves first, then card 6 down to card 1.
@@ -4345,6 +4390,19 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     stepping=true;
     setTimeout(step,300);
   }
+  // Phones: which pair of points is showing (-1 none, 0 = points 1-2, 1 = 3-4, 2 = 5-6). The scroll sets the target pair and
+  // stepPair() moves toward it one pair at a time, 0.45s apart.
+  let pair=-1,targetPair=-1,pairing=false;
+  function applyPair(){
+    cardList().forEach((li,i)=>{const k=Math.floor(i/2);li.classList.toggle('is-on',k===pair);li.classList.toggle('is-past',k<pair)});
+  }
+  function stepPair(){
+    if(pair===targetPair){pairing=false;return}
+    pair+=pair<targetPair?1:-1;
+    applyPair();
+    pairing=true;
+    setTimeout(stepPair,450);
+  }
   function draw(){
     frame=0;
     // The section scrolls straight through: the cable draws as the drawing comes into view, then the building builds up,
@@ -4359,6 +4417,18 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     // card is fully in soon after it enters and the screen never shows an empty space where cards should be. At the very end of
     // the page every card is fully in.
     const end=scrollY+vh>=document.documentElement.scrollHeight-2,rows=[];
+    // Phones: the first pair comes up as the points' place scrolls into view; then, while the scene is pinned, the pairs change
+    // at a third and two thirds of the way through the run. At the end of the page the last pair shows.
+    if(scene){
+      const all=section.classList.contains('is-scene-all'),r=(all?section:run).getBoundingClientRect();
+      const room=Math.max(1,r.height-(all?stage:sceneBox).offsetHeight),t=clamp(-r.top/room);
+      // The building is solid once it is fully on screen.
+      section.style.setProperty('--hp',end?'1':clamp((vh-a.top)/Math.max(1,a.height)).toFixed(4));
+      const due=steps.getBoundingClientRect().top<vh*.9;
+      targetPair=end?2:!due?-1:t<1/3?0:t<2/3?1:2;
+      if(!pairing)stepPair();
+      return;
+    }
     for(const li of section.querySelectorAll('.nya-s33-step')){
       const top=li.offsetParent.getBoundingClientRect().top+li.offsetTop,row=rows[rows.length-1];
       if(row&&Math.abs(top-row.top)<2)row.cards.push(li);else rows.push({top,cards:[li]});
@@ -4465,7 +4535,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     if(pinned)placeWords();
   }
   function request(){if(!frame)frame=requestAnimationFrame(draw)}
-  const steps=section.querySelector('.nya-s33-steps');
+  const steps=section.querySelector('.nya-s33-steps'),run=section.querySelector('.nya-s33-run'),sceneBox=section.querySelector('.nya-s33-scene');
   // Does the row of cards fit between the roof and the ground? The cards stand on the ground line and grow upward with their text,
   // so they fit while the row's top stays at or below the top of the card area (just under the roof).
   function cardsFit(){
@@ -4498,6 +4568,25 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     section.style.removeProperty('--fit');
     if(pinned)for(const f of [.95,.9,.85]){if(cardsFit())break;section.style.setProperty('--fit',f)}
     if(pinned&&!cardsFit()){pinned=false;section.classList.remove('is-pinned');section.style.removeProperty('--fit');fitIntro()}
+    scene=!pinned&&phone.matches;
+    section.classList.toggle('is-scene',scene);
+    // The heading and paragraph pin with the points where they end at least 1.2rem above the points' place.
+    section.classList.remove('is-scene-all');
+    if(scene){
+      section.classList.add('is-scene-all');
+      const room=steps.getBoundingClientRect().top-intro.getBoundingClientRect().bottom;
+      if(room<parseFloat(getComputedStyle(document.documentElement).fontSize)*1.2)section.classList.remove('is-scene-all');
+    }
+    // With the heading pinned too: raise the points toward the middle of the free space between the paragraph and the drawing,
+    // by at most 35% of the drawing's height, so they still stand over its top.
+    steps.style.bottom='';
+    if(section.classList.contains('is-scene-all')){
+      const artH=art.offsetHeight,below=intro.getBoundingClientRect().bottom-stage.getBoundingClientRect().top;
+      const free=stage.offsetHeight-artH*.55-steps.offsetHeight-below;
+      steps.style.bottom=(artH*.55+Math.max(0,Math.min(free/2,artH*.35)))+'px';
+    }
+    if(!scene)cardList().forEach(li=>li.classList.remove('is-on','is-past'));
+    else applyPair();
     fitStage();
     section.classList.remove('is-fitting');
     request();
@@ -4508,6 +4597,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   addEventListener('load',setup);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(setup);
   roomy.addEventListener('change',setup);
+  phone.addEventListener('change',setup);
   setup();
 })();
 </script>
