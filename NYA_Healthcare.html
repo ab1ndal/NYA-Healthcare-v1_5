@@ -1779,6 +1779,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ucsf-story{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--space-3)}
   .ucsf-story-media{height:calc(100svh - var(--range-nav-h,0px));padding:.75rem 0;align-items:center}
   .ucsf-story-frame{width:min(100%,calc((100svh - var(--range-nav-h,0px) - 1.5rem) * 4 / 3))}
+  /* Every slide fills the same 4:3 frame (photos fill it as they do on desktop, instead of showing letterbox bars; the animation gets a matching panel). */
+  .ucsf-story-frame .ucsf-story-image:not(.is-reference-contained),.ucsf-story-single img{object-fit:cover}
+  .ucsf-story-frame.is-iso-active{background:#fffaf5;border-color:transparent}
+  .ucsf-story-video{width:100%}
   .ucsf-step{min-height:calc(100svh - var(--range-nav-h,0px));padding:2rem 0}
 }
 </style>
@@ -2061,6 +2065,29 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ucsf-step{min-height:62svh;padding:3rem 0}
   .ucsf-step:first-child{padding-top:calc(var(--ucsf-head-h-short,var(--ucsf-head-h)) + 3rem)}
   .ucsf-story-media{padding-top:clamp(1.5rem,4svh,2.5rem)}
+}
+
+/* Landscape phones: same header behaviour as desktop. The eyebrow, title and paragraph show together; after a little scrolling the
+   eyebrow and paragraph fade and the title (pinned below the section bar, two paddings below it) stays above the picture. The slide
+   titles are smaller than the main title. */
+@media (max-width:1100px) and (orientation:landscape) and (max-height:500px){
+  .ucsf-story{--ucsf-pad:clamp(1.2rem,3svh,2.2rem);--ucsf-pic-pad:.9rem;--ucsf-avail-h:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h) - var(--ucsf-pic-pad))}
+  .ucsf-story.is-note-off{--ucsf-avail-h:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h-short,var(--ucsf-head-h)) - var(--ucsf-pic-pad))}
+  .ucsf-story-head{display:block;position:sticky;top:var(--ucsf-nav,0px);z-index:6;pointer-events:none;text-align:center;padding:var(--ucsf-pad) 0 .5rem}
+  .ucsf-story-head::before{content:"";position:absolute;z-index:-1;top:0;left:calc(50% - 50vw);width:100vw;height:100%;background:#070a0d;transition:height .5s var(--ease)}
+  .ucsf-story.is-note-off .ucsf-story-head::before{height:var(--ucsf-head-h-short,100%)}
+  .ucsf-story-head .eyebrow{justify-content:flex-start;margin-bottom:.3rem}
+  .ucsf-story-head h2{font-size:min(var(--text-h1),6svh)}
+  .ucsf-story-head .value-note{margin:.4rem auto 0;max-width:none;font-size:clamp(.72rem,2.5svh,.9rem);line-height:1.4;text-align:center;text-align-last:center;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear 0s}
+  .ucsf-story.is-note-off .ucsf-story-head .value-note{opacity:0!important;transform:translateY(-.6rem)!important;visibility:hidden;pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear .45s}
+  .ucsf-story.is-note-off .ucsf-story-head .eyebrow{opacity:0!important;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
+  .ucsf-story.is-note-off .ucsf-story-head h2{transform:translateY(calc(-1 * var(--ucsf-eyebrow-h,0px)))!important;transition:transform .5s var(--ease)}
+  .ucsf-story-media{top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h));height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h));padding:.5rem 0;transition:top .5s var(--ease),height .5s var(--ease)}
+  .ucsf-story.is-note-off .ucsf-story-media{top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h-short,var(--ucsf-head-h)));height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h-short,var(--ucsf-head-h)))}
+  .ucsf-story-frame{width:min(100%,calc(var(--ucsf-avail-h) * 4 / 3));transition:width .5s var(--ease)}
+  .ucsf-step{min-height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h));padding:1.2rem 0}
+  .ucsf-step h3{font-size:min(var(--text-h2-lg),4.6svh)}
+}
 }
 </style>
 <style id="hero-mobile-landscape">
@@ -4669,7 +4696,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     var mt=note?parseFloat(getComputedStyle(note).marginTop)||0:0;
     story.style.setProperty('--ucsf-head-h-short',Math.max(0,h-(note?note.offsetHeight+mt:0)-eh)+'px');
   }
-  if('ResizeObserver' in window)new ResizeObserver(setH).observe(head);
+  if('ResizeObserver' in window){new ResizeObserver(setH).observe(head);if(navEl)new ResizeObserver(setH).observe(navEl)}
   setH();addEventListener('resize',setH,{passive:true});
   var off=false,tick=false;
   function update(){
