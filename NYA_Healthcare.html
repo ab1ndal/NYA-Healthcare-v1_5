@@ -1858,6 +1858,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    margin (the building ends at column 1973 of 2000), so the building reaches the side, and its lawn (row 615 of 667) sits on the bottom edge (the 52 empty rows under it hang below and are clipped).
    Larger keeps its own size and top and simply runs to the bottom edge. */
 @media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33.is-no-canopy .nya-s33-art .nya-s33-full{left:auto;right:-1.76%;width:130%;max-width:none;bottom:calc(-3.38*var(--k));margin-bottom:0}.nya-s33.is-no-canopy.is-full-large .nya-s33-art .nya-s33-full{right:-2.19%;width:162.5%;top:20.01%;bottom:auto;clip-path:none}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+/* Desktop, full screen (class is-full, set by the script): the drawing is scaled up from its bottom-right corner by --zoom, so it
+   fills the taller stage, the tree reaching near its top; its empty margins (right 1.76%, below the lawn 3.38 units) scale with it. */
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33.is-no-canopy.is-pinned.is-full .nya-s33-art .nya-s33-full{width:calc(130%*var(--zoom,1));right:calc(-1.76%*var(--zoom,1));bottom:calc(-3.38*var(--k)*var(--zoom,1))}}
 /* Phones and portrait tablets: no pillars. Only rows 76 to 528 of the canopy drawing (941 rows) show: the roof, with the hospital
    drawing standing on it (its lawn on row 488, at 80% of the width so its 615 rows fit the 412 above the roof, right-aligned),
    without the empty bays below. The cable hangs between the pillars, so it goes with them. */
@@ -4523,6 +4526,12 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         wrapLede(bands,gap);
       }
     };
+    if(section.classList.contains('is-full')){
+      const top=()=>{intro.style.top='0px';const st=stage.getBoundingClientRect();intro.style.top=(Math.max(48,innerHeight*.06)-(intro.getBoundingClientRect().top-st.top))+'px';wrapLede(bands,gap)};
+      top();
+      if(Math.max(0,...lineRects(title).map(r=>clash(bands,r,gap)))>0){section.classList.add('is-stacked');top()}
+      return;
+    }
     settle();
     // The heading stays on one line unless that line would run into the drawing; if even two lines would, the words rise until clear.
     const lift=()=>Math.max(0,...lineRects(title).map(r=>clash(bands,r,gap)));
@@ -4560,12 +4569,24 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // Shortening the stage lifts the drawing (it sits at the bottom), so the words are placed again and the height is checked once more.
   function fitStage(){
     stage.style.height='';
+    section.classList.remove('is-full');
+    section.style.removeProperty('--zoom');
     if(!pinned)return;
     const pad=Math.max(48,innerHeight*.06);
     for(let n=0;n<3;n++){
       const st=stage.getBoundingClientRect(),extra=intro.getBoundingClientRect().top-st.top-pad;
       if(Math.abs(extra)<2)break;
       stage.style.height=(st.height-extra)+'px';
+      fitIntro();
+    }
+    // Full screen: the section and the copyright line fill exactly one screen. Where the content is shorter, the stage takes the
+    // rest, the drawing scales up so its tree top (row 0; the lawn is row 615 of 667, the drawing 130% wide, so its height to the
+    // lawn is 2.503 x zoom / 6.5 of the width) sits 3% below the stage top, and the heading goes to the top margin (placeWords).
+    const copy=document.querySelector('.nya-copyright'),avail=innerHeight-(copy?copy.offsetHeight:0),h=stage.getBoundingClientRect().height;
+    if(avail>h+2){
+      section.classList.add('is-full');
+      stage.style.height=avail+'px';
+      section.style.setProperty('--zoom',Math.max(1,2.503*avail*.97/stage.clientWidth).toFixed(4));
       fitIntro();
     }
   }
