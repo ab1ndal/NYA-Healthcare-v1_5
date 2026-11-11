@@ -778,19 +778,6 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   paint-order: normal;
   text-shadow: none !important;
 }
-/* Glass panel: the same recipe as the main nyase.com hero (tint, 0.5px blur, hairline border, 18px corners, soft drop shadow). */
-.hero .hero-content h1 {
-  box-sizing: border-box;
-  width: fit-content;
-  max-width: 100%;
-  padding: 20px 26px 28px;
-  background: rgba(15, 25, 45, .36);
-  -webkit-backdrop-filter: blur(.5px) saturate(115%);
-  backdrop-filter: blur(.5px) saturate(115%);
-  border: 1px solid rgba(255, 255, 255, .18);
-  border-radius: 18px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, .25);
-}
 
 /* Keep the fixed proof text legible within the first screen. */
 :root { --hero-proof-height: clamp(7.5rem, 15svh, 8.75rem); }
@@ -1943,7 +1930,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
    building 1s, eased. */
 .nya-s33.is-live.is-forced.is-pinned .nya-s33-step{transition:opacity .7s ease-out,transform .7s ease-out!important}
 .nya-s33.is-live.is-forced.is-pinned .nya-s33-full{transition:opacity 1s ease-out,transform 1s ease-out!important}
-.nya-s33.is-live.is-forced.is-fitting .nya-s33-step,.nya-s33.is-fitting .nya-s33-step{transform:none!important;transition:none!important}
+.nya-s33.is-live.is-forced.is-fitting .nya-s33-step,.nya-s33.is-fitting .nya-s33-step{transform:none!important;transition:none!important}
+
 /* Phones and upright tablets (class is-scene, set by the script): the points come up over the building two at a time and stay,
    so they stack up: 1-2, then 3-4 joins them, then 5-6 (one under the other on phones, side by side from 560px wide), on white
    panels. The drawing and the points sit in .nya-s33-run > .nya-s33-scene, which have no box of their own anywhere else. */
@@ -2311,6 +2299,19 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .nya-rel-after .nya-rel-final__panel h2{white-space:normal;font-size:var(--text-h2)}
   .nya-rel-after .nya-rel-final__panel h3{font-size:var(--text-h3)}
   .nya-rel-after .nya-rel-final__panel .lead,.nya-rel-after .nya-rel-final__panel li p{font-size:var(--text-small);line-height:1.5}
+}
+</style>
+<style id="hero-bottom-centre">
+/* Hero (desktop and landscape): no glass panel. A deep-blue overlay rises from the bottom of the video, and the headline sits
+   centred just above the proof strip: the first line smaller, "NYA reduces the risk." larger. */
+@media (min-width:1101px), (orientation:landscape){
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+    background:linear-gradient(to top,rgba(6,16,52,.92) 0%,rgba(6,16,52,.74) 16%,rgba(6,16,52,.4) 32%,rgba(6,16,52,0) 52%);
+  }
+  .hero .hero-content{margin-inline:auto;text-align:center;width:min(1100px,calc(100% - 2*var(--pad)));padding-bottom:clamp(.9rem,3.2svh,2.4rem)}
+  .hero .hero-content h1{width:auto;max-width:none;margin-inline:auto;font-size:clamp(1.25rem,min(3.1vw,6.4svh),3.3rem);line-height:1.12;letter-spacing:-.01em}
+  .hero .hero-content h1 em{display:block;margin-top:.12em;font-size:1.6em;line-height:1.05}
 }
 </style>
 </head>
@@ -4805,28 +4806,6 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
   addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(update)}},{passive:true});
   update();
-})();
-</script>
-<script id="hero-glass-fit">
-(function(){
-  var h1=document.querySelector('.hero .hero-content h1');
-  if(!h1)return;
-  // Shrink the glass panel to the longest rendered line so there is no empty space on its right.
-  function fit(){
-    h1.style.width='';
-    var rects=document.createRange();rects.selectNodeContents(h1);
-    var list=rects.getClientRects(),box=h1.getBoundingClientRect(),cs=getComputedStyle(h1),max=0;
-    for(var i=0;i<list.length;i++){if(list[i].width>1)max=Math.max(max,list[i].right)}
-    if(!max)return;
-    var pr=parseFloat(cs.paddingRight)||0,pl=parseFloat(cs.paddingLeft)||0;
-    var w=max-box.left+pr+14; // small slack so rounding never re-wraps the longest line
-    if(cs.boxSizing==='content-box')w-=pl+pr;
-    h1.style.width=Math.ceil(w)+'px';
-  }
-  var t;function later(){clearTimeout(t);t=setTimeout(fit,80)}
-  addEventListener('resize',later,{passive:true});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
-  addEventListener('load',fit);fit();
 })();
 </script>
 <script id="nya-rel-after-reveal-script">
