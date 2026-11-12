@@ -1515,7 +1515,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
    hides again when the line retracts past it. Rows keep their space while hidden, so nothing
    shifts. --uci-stick is set by the script to clear #range-nav. */
 .uci-team{--uci-stick:3.5rem;--uci-line:var(--green-on-light);--uci-rule:rgba(0,0,0,.12);
-  background:#fff;color:var(--ink);padding:var(--section) 0 var(--space-3);scroll-margin-top:var(--uci-stick)}
+  background:#fff;color:var(--ink);padding:var(--space-5) 0 calc(var(--space-4) + var(--space-2));scroll-margin-top:var(--uci-stick)}
 .uci-team .wrap{width:min(1500px,calc(100% - 2*var(--pad)))}
 .uci-team-head{position:sticky;top:var(--uci-stick);z-index:5;background:#fff;padding-block:var(--space-2)}
 /* Soft edge under the pinned heading so content fades as it scrolls beneath. */
@@ -1551,6 +1551,8 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .uci-team-steps{list-style:none;margin:0;padding:0}
 .uci-team-step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--uci-gap);padding-block:var(--uci-pad)}
 .uci-team-step+.uci-team-step{border-top:1px solid var(--uci-rule)}
+/* The last row needs no reading pad below it; the section's bottom padding is the gap. */
+.uci-team-step:last-child{padding-bottom:0}
 .uci-team-step h3{font-family:var(--display);font-size:var(--text-h2-lg);font-weight:300;line-height:1.08;color:var(--ink);max-width:14em;justify-self:end;text-align:right}
 .uci-team-step--outcome h3{color:var(--green-on-light)}
 .uci-team-body{max-width:42ch;font-size:var(--text-body);line-height:1.6;color:var(--ink2)}
@@ -1569,7 +1571,9 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .uci-team.nav-off .uci-team-head::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:var(--uci-stick);background:#fff;pointer-events:none}
 .uci-team.no-stick .uci-team-head{position:static}
 .uci-team.no-stick .uci-team-head::after,.uci-team.no-stick .uci-team-head::before{display:none}
-@media (max-width:599px), (max-height:620px){.uci-team-head{position:static}.uci-team .uci-team-head::after,.uci-team .uci-team-head::before{display:none}}
+/* The space above the heading is also how far it scrolls with the intro before it pins, so it stays at
+   --space-5 where the heading pins and drops to --space-4 where it doesn't. */
+@media (max-width:599px), (max-height:620px){.uci-team{padding-top:var(--space-4)}.uci-team-head{position:static}.uci-team .uci-team-head::after,.uci-team .uci-team-head::before{display:none}}
 @media (max-width:1100px) and (orientation:portrait){.uci-team-media img{aspect-ratio:2/1}.uci-team-media{margin-top:calc(var(--space-1) - 50 / 1448 * 100%)}}
 @media (max-width:900px), (max-width:1100px) and (orientation:portrait){
   /* Stacked rows are already tall, so the extra reading pace of --uci-pad isn't needed here. */
