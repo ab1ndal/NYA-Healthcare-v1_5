@@ -7,7 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="NYA healthcare structural engineering: advanced seismic analysis, HCAI experience, constructability, coordination, and hospital delivery across California and the U.S.">
 <title>Healthcare Structural Engineering | Nabih Youssef Associates</title>
-<link rel="icon" type="image/png" href="https://www.nyase.com/wp-content/uploads/2026/07/nabihyoussefassociateslogomark.png?v=20260724">
+<!-- The 150px mark, not the 1811x1888 original: this is drawn at 16-32px and is one of the
+     first requests the browser makes. -->
+<link rel="icon" type="image/png" href="https://www.nyase.com/wp-content/uploads/2026/07/nabihyoussefassociateslogomark-150x150.png?v=20260724">
+<!-- Every first-screen byte except the fonts (logo, hero poster, hero video) comes from
+     nyase.com, which sits behind Sucuri, so open that connection before the parser needs it. -->
+<link rel="preconnect" href="https://www.nyase.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -2334,10 +2339,14 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 
 <header class="hero" id="hero">
   <div class="hero-frames" aria-hidden="true">
+    <!-- The first frame is the video's own poster, so it costs nothing extra and keeps the
+         hero filled from the first paint. Frames 2-4 only ever show if the video fails or
+         reduced motion is on: they wait in data-bg and the script loads them if that happens,
+         instead of pulling 768 KB on the first screen of every desktop and landscape phone. -->
     <div class="hero-frame active" style="background-image:url('https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp')"></div>
-    <div class="hero-frame" style="background-image:url('https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp')"></div>
-    <div class="hero-frame" style="background-image:url('https://www.nyase.com/wp-content/uploads/2026/11/ucirvinedouglashospitalstructuralengineering.webp')"></div>
-    <div class="hero-frame" style="background-image:url('https://www.nyase.com/wp-content/uploads/2026/11/centurycityhospital.webp')"></div>
+    <div class="hero-frame" data-bg="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp"></div>
+    <div class="hero-frame" data-bg="https://www.nyase.com/wp-content/uploads/2026/11/ucirvinedouglashospitalstructuralengineering.webp"></div>
+    <div class="hero-frame" data-bg="https://www.nyase.com/wp-content/uploads/2026/11/centurycityhospital.webp"></div>
   </div>
   <div class="ucsf-bg-media" id="ucsf-bg-media">
     <video id="ucsf-bg-video" autoplay muted loop playsinline preload="metadata" poster="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp" tabindex="-1"
@@ -2602,9 +2611,9 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
         </div>
 
         <div class="ucsf-story-single" id="ucsf-story-single" aria-label="UCSF prefabricated MEP rack photograph" hidden>
-          <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfprefabmeprack.webp" alt="Prefabricated MEP rack at UCSF Helen Diller Hospital" decoding="async">
+          <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfprefabmeprack.webp" alt="Prefabricated MEP rack at UCSF Helen Diller Hospital" width="1024" height="768" decoding="async">
         </div>
-        <img class="ucsf-story-image" id="ucsf-story-image" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="Stanford hospital patient towers with long cantilevered floors at dusk">
+        <img class="ucsf-story-image" id="ucsf-story-image" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="Stanford hospital patient towers with long cantilevered floors at dusk" width="1600" height="1067" decoding="async">
       </div>
     </div>
     <div class="ucsf-story-steps">
@@ -2818,7 +2827,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
     </div>
     <div class="nya-s33-run"><div class="nya-s33-scene">
     <div class="nya-s33-art" aria-hidden="true">
-      <img class="nya-s33-full" src="https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfullv.webp" alt="" decoding="async">
+      <img class="nya-s33-full" src="https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfullv.webp" alt="" width="2000" height="667" decoding="async">
     </div>
     <ol class="nya-s33-steps">
       <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Technical <br>Ingenuity</h3><p>Creative engineering that protects seismic performance, preserves design ambition, and reduces material demands</p></div></li>
@@ -2858,8 +2867,40 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   'use strict';
   var frames=document.querySelectorAll('.hero-frame'),dots=document.querySelectorAll('.hero-dot'),heroIndex=0,timer;
   function setHero(i){frames[heroIndex].classList.remove('active');dots[heroIndex].classList.remove('active');heroIndex=(i+frames.length)%frames.length;frames[heroIndex].classList.add('active');dots[heroIndex].classList.add('active')}
-  function startHero(){if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;timer=setInterval(function(){setHero(heroIndex+1)},5000)}
-  dots.forEach(function(dot){dot.addEventListener('click',function(){clearInterval(timer);setHero(parseInt(this.dataset.index,10));startHero()})});startHero();
+  // Fetch frames 2-4 only once the carousel is genuinely what the reader is looking at.
+  function armFrames(){
+    Array.prototype.forEach.call(frames,function(f){
+      var bg=f.getAttribute('data-bg');
+      if(bg){f.style.backgroundImage='url("'+bg+'")';f.removeAttribute('data-bg')}
+    });
+  }
+  // The video covers the carousel once it plays (body.ucsf-bg-ready hides .hero-frames), and
+  // the carousel is hidden again whenever the hero scrolls away. Rotating four viewport-sized
+  // layers in either state is work nobody sees, so the timer only runs when it is on screen.
+  var reduceHero=window.matchMedia('(prefers-reduced-motion: reduce)'),heroOff=false;
+  function heroShown(){return !document.body.classList.contains('ucsf-bg-ready')&&!heroOff}
+  function stopHero(){clearInterval(timer);timer=0}
+  function startHero(){
+    stopHero();
+    if(!heroShown()||reduceHero.matches)return;
+    armFrames();
+    timer=setInterval(function(){setHero(heroIndex+1)},5000);
+  }
+  dots.forEach(function(dot){dot.addEventListener('click',function(){stopHero();armFrames();setHero(parseInt(this.dataset.index,10));startHero()})});
+  // With reduced motion the video never loads, so the carousel is the hero: load its images
+  // now, but leave it still.
+  if(reduceHero.matches)armFrames();
+  // Give the video a few seconds to start. If it has not by then, the carousel is the real
+  // hero and its images are worth fetching.
+  else setTimeout(startHero,3000);
+  var heroEl=document.getElementById('hero');
+  if(heroEl&&'IntersectionObserver'in window){
+    new IntersectionObserver(function(es){heroOff=!es[0].isIntersecting;if(heroOff)stopHero();else startHero()},{rootMargin:'200px 0px'}).observe(heroEl);
+  }
+  if('MutationObserver'in window){
+    new MutationObserver(function(){if(heroShown())startHero();else stopHero()})
+      .observe(document.body,{attributes:true,attributeFilter:['class']});
+  }
 
   var reveal=document.querySelectorAll('.reveal,.project');
   if('IntersectionObserver'in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -35px 0px'});reveal.forEach(function(el){io.observe(el)})}else{reveal.forEach(function(el){el.classList.add('is-visible')})}
@@ -2955,6 +2996,12 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
     }
     if (ucsfProgress) ucsfProgress.style.transform = 'translateY(' + (index * 100) + '%)';
     ucsfIndex = index;
+    // Point the player at the next step's film one step early. preload="metadata" means this
+    // costs a header rather than the file, but it opens the connection, so the video is not
+    // fetched stone cold the moment the reader arrives at it.
+    var next = ucsfSteps[index + 1];
+    if (next && next.dataset.video && ucsfVideo && !ucsfVideo.getAttribute('src'))
+      ucsfVideo.src = next.dataset.video;
     setUcsfFrameRatio(step);
   }
   if (ucsfSteps.length) {
@@ -3069,9 +3116,21 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   var tiers=[720,1080,1440];
   var reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
   var current=0;
+  // The video is decorative: it plays under a dark gradient, a colour filter and (on desktop)
+  // 0.78 opacity. Matching a retina screen pixel for pixel buys nothing anyone can see and
+  // roughly doubles the file, so the device pixel ratio counts only up to this much.
+  var MAX_DPR=1.25;
   function neededTier(){
+    // Size for the widest the video can ever be drawn on this device, not the width right
+    // now: turning a phone or tablet then never escalates to a second, larger download.
+    var box=Math.max(window.innerWidth,window.innerHeight);
+    // `cover` (landscape phones) crops a 16:9 frame to the box, so a box taller than 16:9
+    // needs a wider file. `contain` (portrait phones) and `fill` (desktop) do not: the frame
+    // is fitted or stretched to the box as it is.
     var r=video.getBoundingClientRect();
-    var w=Math.max(r.width,r.height*16/9)*(window.devicePixelRatio||1);
+    if(r.height>0&&(window.getComputedStyle(video).objectFit||'fill')==='cover')
+      box=Math.max(box,r.height*16/9);
+    var w=box*Math.min(window.devicePixelRatio||1,MAX_DPR);
     for(var i=0;i<tiers.length;i++){if(w<=tiers[i]*16/9)return tiers[i];}
     return tiers[tiers.length-1];
   }
@@ -3143,10 +3202,22 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   video.addEventListener('abort',showFallback);
   video.addEventListener('emptied',showFallback);
   video.addEventListener('stalled',function(){if(video.readyState<2)showFallback();});
-  video.addEventListener('pause',function(){if(!document.hidden)showFallback();});
+  // The hero scrolls away but the video kept decoding for the rest of the visit, on top of
+  // every scroll animation further down. Pause it off screen; a pause we asked for ourselves
+  // must not drop back to the still image, or returning to the top would flash the poster.
+  var offScreen=false;
+  video.addEventListener('pause',function(){if(!document.hidden&&!offScreen)showFallback();});
   video.addEventListener('loadeddata',tryPlayback,{once:true});
   video.addEventListener('canplay',tryPlayback,{once:true});
-  document.addEventListener('visibilitychange',function(){if(!document.hidden)tryPlayback();});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&!offScreen)tryPlayback();});
+  var hero=document.getElementById('hero');
+  if(hero&&'IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      offScreen=!es[0].isIntersecting;
+      if(offScreen)video.pause();
+      else tryPlayback();
+    },{rootMargin:'200px 0px'}).observe(hero);
+  }
   if(typeof reducedMotion.addEventListener==='function')
     reducedMotion.addEventListener('change',tryPlayback);
   else if(typeof reducedMotion.addListener==='function')
@@ -3429,13 +3500,6 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
     n.br.innerHTML = UI.bearing("shake-r");
     var pl = UI.parts(n.bl, "shake-l"), pr = UI.parts(n.br, "shake-r");
 
-    var sim = simulate();
-    var fTrack = equipmentTrack(sim, "fa"), iTrack = equipmentTrack(sim, "sa");
-    // The fixed-base drift's running peak at each sample, as a share of the overall peak.
-    var m = 0, peaks = sim.f.map(function (v) { return (m = Math.max(m, Math.abs(v))); });
-    peaks = peaks.map(function (v) { return v / m; });
-    var traceK = REACH / m;
-
     function draw(prefix, b, e) {
       n[prefix + "Wall"].setAttribute("d", b.wall);
       n[prefix + "Slabs"].setAttribute("d", b.slabs);
@@ -3445,29 +3509,56 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
       n[prefix + "Items"].setAttribute("d", e.items);
     }
 
-    function renderAt(tau) {
-      var gx = sim.at("g", tau) * PG, xb = sim.at("b", tau) * PG, df = sim.at("f", tau) * PD, ds = sim.at("s", tau) * PD;
-      n.soilL.setAttribute("transform", "translate(" + gx + " 0)");
-      n.soilR.setAttribute("transform", "translate(" + gx + " 0)");
-      draw("f", building(LX + gx, df, GY), equipment(LX + gx, df, GY, sim, fTrack, tau));
-      draw("i", building(RX + gx + xb, ds, BASE + DROP), equipment(RX + gx + xb, ds, BASE + DROP, sim, iTrack, tau));
-      var i = Math.max(0, Math.min(sim.f.length - 1, Math.floor(tau / sim.step)));
-      var dmg = damage(LX + gx, df, GY, peaks[i]);
-      n.cracks.setAttribute("d", dmg.cracks);
-      n.spalls.setAttribute("d", dmg.spalls);
-      n.bl.setAttribute("transform", "translate(" + (RX - BX + gx) + " " + (BY + DROP) + ") scale(" + BS + ")");
-      n.br.setAttribute("transform", "translate(" + (RX + BX + gx) + " " + (BY + DROP) + ") scale(" + BS + ")");
-      var U = [sim.at("u1", tau), sim.at("u2", tau), sim.at("u3", tau), sim.at("u4", tau)];
-      UI.pose(pl, U);
-      UI.pose(pr, U);
-      var up = UI.lift(U) * BS;
-      n.mat.setAttribute("transform", "translate(" + (gx + xb) + " " + -up + ")");
-      n.isoBody.setAttribute("transform", "translate(0 " + -up + ")");
-      n.traceF.setAttribute("d", tau > 0 ? trace(sim, "f", i, traceK) : "");
-      n.traceI.setAttribute("d", tau > 0 ? trace(sim, "s", i, traceK) : "");
+    // The 64,000-step integration costs about 80 ms on a laptop and several hundred on a phone.
+    // Running it at parse time blocked the main thread during load for a scene most readers
+    // reach much later (and some never do), so it waits until the Stanford story is near.
+    var started = false;
+    function start() {
+      if (started) return;
+      started = true;
+      var sim = simulate();
+      var fTrack = equipmentTrack(sim, "fa"), iTrack = equipmentTrack(sim, "sa");
+      // The fixed-base drift's running peak at each sample, as a share of the overall peak.
+      var m = 0, peaks = sim.f.map(function (v) { return (m = Math.max(m, Math.abs(v))); });
+      peaks = peaks.map(function (v) { return v / m; });
+      var traceK = REACH / m;
+
+      function renderAt(tau) {
+        var gx = sim.at("g", tau) * PG, xb = sim.at("b", tau) * PG, df = sim.at("f", tau) * PD, ds = sim.at("s", tau) * PD;
+        n.soilL.setAttribute("transform", "translate(" + gx + " 0)");
+        n.soilR.setAttribute("transform", "translate(" + gx + " 0)");
+        draw("f", building(LX + gx, df, GY), equipment(LX + gx, df, GY, sim, fTrack, tau));
+        draw("i", building(RX + gx + xb, ds, BASE + DROP), equipment(RX + gx + xb, ds, BASE + DROP, sim, iTrack, tau));
+        var i = Math.max(0, Math.min(sim.f.length - 1, Math.floor(tau / sim.step)));
+        var dmg = damage(LX + gx, df, GY, peaks[i]);
+        n.cracks.setAttribute("d", dmg.cracks);
+        n.spalls.setAttribute("d", dmg.spalls);
+        n.bl.setAttribute("transform", "translate(" + (RX - BX + gx) + " " + (BY + DROP) + ") scale(" + BS + ")");
+        n.br.setAttribute("transform", "translate(" + (RX + BX + gx) + " " + (BY + DROP) + ") scale(" + BS + ")");
+        var U = [sim.at("u1", tau), sim.at("u2", tau), sim.at("u3", tau), sim.at("u4", tau)];
+        UI.pose(pl, U);
+        UI.pose(pr, U);
+        var up = UI.lift(U) * BS;
+        n.mat.setAttribute("transform", "translate(" + (gx + xb) + " " + -up + ")");
+        n.isoBody.setAttribute("transform", "translate(0 " + -up + ")");
+        n.traceF.setAttribute("d", tau > 0 ? trace(sim, "f", i, traceK) : "");
+        n.traceI.setAttribute("d", tau > 0 ? trace(sim, "s", i, traceK) : "");
+      }
+
+      play(root, sim.len, renderAt);
     }
 
-    play(root, sim.len, renderAt);
+    // The film's own box is display:none until its step opens, so watch the whole Stanford
+    // story: the simulation is ready well before the reader reaches the third slide.
+    var near = (root.closest && root.closest(".ucsf-story")) || root;
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { io.disconnect(); start(); }
+      }, { rootMargin: "600px 0px" });
+      io.observe(near);
+    } else {
+      start();
+    }
   }
 
   // ---- Playback: loops with a hold on the last frame, pauses off screen, click / Space / Enter
@@ -3475,24 +3566,28 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   var END_HOLD = 2;
   function play(root, len, renderAt) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { renderAt(len); return; }
-    var t = 0, last = null, paused = false, visible = true;
+    var t = 0, last = null, paused = false, visible = true, raf = 0;
     renderAt(0);
+    // The loop stops outright while paused or off screen rather than idling frame by frame,
+    // and `last` is dropped so the first frame back does not jump the film forward.
     function tick(now) {
-      if (last !== null && !paused && visible) {
+      if (paused || !visible) { raf = 0; last = null; return; }
+      if (last !== null) {
         t = (t + Math.min(0.1, (now - last) / 1000)) % (len + END_HOLD);
         renderAt(Math.min(t, len));
       }
       last = now;
-      requestAnimationFrame(tick);
+      raf = requestAnimationFrame(tick);
     }
-    requestAnimationFrame(tick);
-    var toggle = function () { paused = !paused; };
+    function run() { if (!raf && !paused && visible) { last = null; raf = requestAnimationFrame(tick); } }
+    run();
+    var toggle = function () { paused = !paused; run(); };
     root.addEventListener("click", toggle);
     root.addEventListener("keydown", function (e) {
       if (e.code === "Space" || e.code === "Enter") { e.preventDefault(); toggle(); }
     });
     if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(root);
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; run(); }).observe(root);
     }
   }
 
@@ -3523,13 +3618,20 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
     // A narrower film wraps the names and labels onto more lines, so it gets barely shorter.
     // Instead, try widths and scale the whole film down to fit; keep the width that leaves the
     // drawing largest while the text stays at 70% or more of its size.
+    // Each try writes a width then reads a height, which forces a full layout of the film, so
+    // sweep coarsely and refine only around the winner: about 20 measurements instead of 50.
     var best=null;
-    for(var w=Math.floor(availW);w>=120;w-=16){
+    function probe(w){
       film.style.width=w+'px';
       var s=Math.min(1,availH/film.offsetHeight,availW/film.offsetWidth);
       var c={w:w,s:s,size:s*w,ok:s>=.7};
       if(!best||(c.ok&&!best.ok)||(c.ok===best.ok&&(c.ok?c.size>best.size:c.s>best.s)))best=c;
     }
+    var top=Math.floor(availW),w;
+    for(w=top;w>=120;w-=64)probe(w);
+    // Narrower than the floor: nothing was tried above, so measure that one width.
+    if(!best)probe(Math.max(120,top));
+    for(w=Math.max(120,best.w-56);w<=Math.min(top,best.w+56);w+=16)probe(w);
     film.style.width=best.w+'px';
     film.style.transform='scale('+best.s.toFixed(3)+')';
   }
@@ -3626,7 +3728,8 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
         if (result && typeof result.catch==='function') result.catch(function(){});
       } else { film.pause(); }
     });
-  }, {threshold:0.12});
+    // Start a little before the film reaches the screen so it is already running on arrival.
+  }, {threshold:0.12, rootMargin:'200px 0px'});
   films.forEach(function(film){observer.observe(film);});
 })();
 </script>
@@ -4362,9 +4465,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // The section is white: while it sits under the fixed range nav, show the nav's light tone.
   // The nav only sets its tone when the current part changes, so hand it back explicitly.
   var nav=document.getElementById('range-nav'),navLit=false;
-  function syncNavTone(){
+  function syncNavTone(r){
     if(!nav)return;
-    var r=sec.getBoundingClientRect(),h=nav.offsetHeight;
+    var h=nav.offsetHeight;
     var over=r.top<=h&&r.bottom>h;
     if(over){nav.dataset.tone='light';navLit=true}
     else if(navLit){var cur=nav.querySelector('a[aria-current="true"]');if(cur)nav.dataset.tone=cur.dataset.tone;navLit=false}
@@ -4372,9 +4475,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 
   function update(){
     raf=0;
-    syncNavTone();
+    // One rect read per frame, shared with the nav tone check.
+    var r=sec.getBoundingClientRect();
+    syncNavTone(r);
     if(!sec.classList.contains('is-pinned'))return;
-    var r=sec.getBoundingClientRect(),s=Math.max(0,-r.top),P=phase;
+    var s=Math.max(0,-r.top),P=phase;
     // Phase boundaries: a = slide 1 starts, b = message reached, c = slide 2 starts, e = outcomes reached.
     var a=P.holdDrivers,b=a+P.toMessage,c=b+P.holdMessage,e=c+P.toOutcomes;
     var t1=ease(clamp((s-a)/P.toMessage,0,1)),t2=ease(clamp((s-c)/P.toOutcomes,0,1)),x,y;
@@ -4406,7 +4511,22 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 
   layout();queue();
 
-  window.addEventListener('scroll',queue,{passive:true});
+  // The scroll listener is only attached while the section is near the viewport: this ran on
+  // every scroll frame of the whole page, moving the track and toggling items off screen.
+  var listening=false;
+  function listen(on){
+    if(on===listening)return;
+    listening=on;
+    if(on)window.addEventListener('scroll',queue,{passive:true});
+    else window.removeEventListener('scroll',queue);
+    // One last pass on the way out hands the nav its tone back.
+    queue();
+  }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){listen(es[0].isIntersecting)},{rootMargin:'200px 0px'}).observe(sec);
+  }else{
+    listen(true);
+  }
   // Width changes re-layout; small height-only changes (mobile URL bar) do not, to avoid
   // jumps, unless the height crosses the static/pinned threshold.
   var lastW=window.innerWidth,lastH=window.innerHeight,rt=0;
