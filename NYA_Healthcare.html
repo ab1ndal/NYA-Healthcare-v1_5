@@ -1912,15 +1912,15 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .nya-s33:not(.is-pinned) .nya-s33-copy h3 br{display:none}
 /* Keeps this section's scroll motion smooth over the page-wide reduced-motion rule. */
 .nya-s33.is-live.is-forced .nya-s33-line{transition:clip-path .28s cubic-bezier(.22,.7,.2,1)!important}
-.nya-s33.is-live.is-forced .nya-s33-full{transition:opacity .25s linear,transform .25s linear!important}
+.nya-s33.is-live.is-forced .nya-s33-full{transition:opacity .8s ease-out,transform .8s ease-out!important}
 /* The cards come up with the scroll, one after another: each fades in and rises 2.5rem in turn, left to right within a row (--cp
    runs 0 to 1 per card, set by the script). While the script measures the layout (is-fitting) the cards sit in place. */
 .is-live .nya-s33-step{opacity:var(--cp,0);transform:translateY(calc((1 - var(--cp,0))*2.5rem));transition:opacity .25s linear,transform .25s linear}
-.nya-s33.is-live.is-forced .nya-s33-step{transition:opacity .25s linear,transform .25s linear!important}
+.nya-s33.is-live.is-forced .nya-s33-step{transition:opacity .5s ease-out,transform .5s ease-out!important}
 /* Desktop: the cards and the building come in at a steady pace (see step() in the script), so each card takes 0.5s and the
    building 0.5s, eased. */
 .nya-s33.is-live.is-forced.is-pinned .nya-s33-step{transition:opacity .5s ease-out,transform .5s ease-out!important}
-.nya-s33.is-live.is-forced.is-pinned .nya-s33-full{transition:opacity .5s ease-out,transform .5s ease-out!important}
+.nya-s33.is-live.is-forced.is-pinned .nya-s33-full{transition:opacity .8s ease-out,transform .8s ease-out!important}
 .nya-s33.is-live.is-forced.is-fitting .nya-s33-step,.nya-s33.is-fitting .nya-s33-step{transform:none!important;transition:none!important}
 
 /* Phones and upright tablets (class is-scene, set by the script): the points come up over the building two at a time and stay,
@@ -1954,7 +1954,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .nya-s33.is-live.is-forced.is-scene .nya-s33-step{transition:opacity .5s ease-out,transform .5s ease-out!important}
 .nya-s33.is-live.is-forced.is-scene .nya-s33-step:nth-child(even).is-on{transition-delay:.12s!important}
 .nya-s33.is-live.is-forced.is-scene.is-fitting .nya-s33-step{transition:none!important}
-.nya-s33.is-live.is-forced.is-scene .nya-s33-full{transition:opacity .6s ease-out,transform .6s ease-out!important}
+.nya-s33.is-live.is-forced.is-scene .nya-s33-full{transition:opacity .8s ease-out,transform .8s ease-out!important}
 /* The copyright line follows close under the lawn. */
 .nya-s33.is-scene+.nya-copyright,.nya-s33.is-scene~.nya-copyright{padding-top:.7rem}
 /* ==== NYA FINALE COMBINED END (CSS) ==== */
@@ -4434,103 +4434,43 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // Scroll progress: the line climbs, then the hospital builds up slowly behind the words. The words stay solid throughout.
   const clamp=v=>Math.max(0,Math.min(1,v));
   let pinned=false,scene=false,frame=0;
-  // Desktop reveal at a steady pace: the scroll sets the target (how many cards should be up, whether the building should be in),
-  // and step() moves toward it one change at a time, 0.2s apart (the building only once card 6 has finished), so even a fast scroll shows card 1, 2, 3, 4, 5, 6, then the
-  // building. Going back, the building leaves first, then card 6 down to card 1.
-  let shown=0,built=false,target=0,targetBuilt=false,stepping=false,shownAt=0;
+  // The reveal plays by itself once it starts, on every layout. When the first card's place (where it sits, not mid-rise) comes
+  // 85% of the way down the screen, the cards come up one after another, 0.2s apart (on phones and upright tablets two at a
+  // time, 0.45s apart), each finishing on its own whatever the scroll does. The building is separate: once the cards have all
+  // finished and it is on screen, it fades fully in by itself. Scrolling back above the section (the first card's place below
+  // the screen) resets it, so it plays again next time.
+  let played=false,shown=0,built=false,stepping=false,shownAt=0;
   const cardList=()=>[...section.querySelectorAll('.nya-s33-step')];
   function applyReveal(){
-    cardList().forEach((li,i)=>li.style.setProperty('--cp',i<shown?'1':'0'));
+    cardList().forEach((li,i)=>{const on=i<shown;li.style.setProperty('--cp',on?'1':'0');li.classList.toggle('is-on',on)});
     section.style.setProperty('--hp',built?'1':'0');
   }
   function step(){
     const n=cardList().length;
-    if(built&&(!targetBuilt||shown>target))built=false;
-    else if(!built&&shown<target){shown++;shownAt=performance.now();}
-    else if(!built&&shown>target)shown--;
-    else if(!built&&targetBuilt&&shown===n){
-      // The building waits until the last card has finished coming up (its 0.5s).
-      const wait=500-(performance.now()-shownAt);
-      if(wait>0){stepping=true;setTimeout(step,wait);return}
-      built=true;
-    }
-    else{stepping=false;return}
+    if(!played||shown>=n){stepping=false;return}
+    shown=Math.min(n,shown+(scene?2:1));shownAt=performance.now();
     applyReveal();
+    if(shown>=n){stepping=false;request();return}
     stepping=true;
-    setTimeout(step,200);
+    setTimeout(step,scene?450:200);
   }
-  // Phones: how many pairs of points are up (-1 none, 0 = points 1-2, 1 = 1-4, 2 = all six). The scroll sets the target and
-  // stepPair() moves toward it one pair at a time, 0.45s apart.
-  // The building stays hidden while the points stack up and comes in once the last pair has finished (its second point starts
-  // 0.12s after the first and takes 0.5s), so it is the conclusion.
-  let pair=-1,targetPair=-1,pairing=false,sceneBuilt=false,buildT=0;
-  const lastPair=()=>Math.ceil(cardList().length/2)-1;
-  function applyPair(){
-    cardList().forEach((li,i)=>li.classList.toggle('is-on',Math.floor(i/2)<=pair));
-    clearTimeout(buildT);
-    if(pair===lastPair())buildT=setTimeout(()=>{sceneBuilt=true;request()},650);
-    else{sceneBuilt=false;section.style.setProperty('--hp','0')}
-  }
-  function stepPair(){
-    if(pair===targetPair){pairing=false;return}
-    pair+=pair<targetPair?1:-1;
-    applyPair();
-    pairing=true;
-    setTimeout(stepPair,450);
-  }
+  function resetReveal(){played=false;shown=0;built=false;applyReveal()}
   function draw(){
     frame=0;
-    // The section scrolls straight through: the cable draws as the drawing comes into view, then the building builds up,
-    // complete once the whole drawing is on screen.
     const a=art.getBoundingClientRect(),vh=innerHeight;
-    const p=clamp((vh-a.top)/Math.max(1,a.height+vh*.1));
-    const lp=p/.5,hp=(p-.3)/.65,atEnd=scrollY+vh>=document.documentElement.scrollHeight-2;
-    section.style.setProperty('--lp',atEnd?'1':clamp(lp).toFixed(4));
-    section.style.setProperty('--hp',atEnd?'1':clamp(hp).toFixed(4));
-    // Cards come up as they scroll into view: as a row's top (where it sits, not where it is mid-rise) moves from the bottom of the
-    // screen to a quarter of the way up, its cards rise in turn from the left. Each row goes by its own place on the screen, so a
-    // card is fully in soon after it enters and the screen never shows an empty space where cards should be. At the very end of
-    // the page every card is fully in.
-    const end=scrollY+vh>=document.documentElement.scrollHeight-2,rows=[];
-    // Phones and upright tablets: a pair comes up once its first point (where it sits, not mid-rise) is 85% of the way down the
-    // screen, so the points follow the scroll. At the end of the page all six show.
-    if(scene){
-      // The building comes in after the last pair (applyPair).
-      section.style.setProperty('--hp',sceneBuilt&&a.top<vh*.95?'1':'0');
-      const cards=cardList(),st=steps.getBoundingClientRect().top;
-      const line=vh*.85;
-      targetPair=-1;
-      for(let k=0;k*2<cards.length;k++)if(st+cards[k*2].offsetTop<line)targetPair=k;
-      if(end)targetPair=Math.ceil(cards.length/2)-1;
-      if(!pairing)stepPair();
-      return;
-    }
-    for(const li of section.querySelectorAll('.nya-s33-step')){
-      const top=li.offsetParent.getBoundingClientRect().top+li.offsetTop,row=rows[rows.length-1];
-      if(row&&Math.abs(top-row.top)<2)row.cards.push(li);else rows.push({top,cards:[li]});
-    }
-    let allIn=true;
-    for(const {top,cards} of rows){
-      const p=clamp((vh-top)/(vh*.25));
-      cards.forEach((li,i)=>{const cp=end?1:clamp(p*cards.length-i);if(cp<1)allIn=false;li.style.setProperty('--cp',cp.toFixed(4))});
-    }
-    // Laptops (flowing layout): the building waits until every card is fully in, on screen too (their 0.25s fade); while they
-    // are still fading, check again shortly.
-    if(!pinned){
-      const shown=cardList().every(li=>+getComputedStyle(li).opacity>.99);
-      if(!allIn||!shown){section.style.setProperty('--hp','0');if(allIn)setTimeout(request,120);}
-    }
-    // Desktop, where the cards stand over the drawing: the scroll sets the target. q runs from the cards' row top at the bottom of
-    // the screen (0) to the end of the page (1); card k is due once q passes the start of its slot in the first half, and the
-    // building once all six are due. step() then brings them in at a steady pace.
-    if(pinned){
-      const st=section.querySelector('.nya-s33-steps').getBoundingClientRect(),toEnd=Math.max(0,document.documentElement.scrollHeight-vh-scrollY);
-      const q=end?1:clamp((vh-st.top)/Math.max(1,vh-st.top+toEnd)),n=cardList().length;
-      target=q<=0?0:Math.min(n,Math.floor(q/.5*n)+1);
-      // The building is due as soon as every card is (step() then waits for card 6 to finish), not only near the page end.
-      targetBuilt=target>=n;
-      applyReveal();
-      if(!stepping)step();
+    // The canopy's cable (not shown with the canopy off) still follows the drawing into view.
+    section.style.setProperty('--lp',clamp((vh-a.top)/Math.max(1,a.height+vh*.1)/.5).toFixed(4));
+    const cards=cardList();
+    if(!cards.length)return;
+    const first=cards[0],ft=first.offsetParent.getBoundingClientRect().top+first.offsetTop;
+    const end=scrollY+vh>=document.documentElement.scrollHeight-2,n=cards.length;
+    if(!played&&(ft<vh*.85||end)){played=true;if(!stepping)step()}
+    else if(played&&ft>vh&&!end){resetReveal();return}
+    // The building: once the last card has finished (its 0.5s; 0.62s for the second of a pair) and the drawing is on screen.
+    if(!built&&shown>=n){
+      const done=performance.now()-shownAt>=(scene?620:500);
+      if(done&&a.top<vh*.95){built=true;applyReveal()}
+      else setTimeout(request,100);
     }
   }
   // Keep the heading block close above the canopy: measure where it starts and move the words down to it.
@@ -4738,8 +4678,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     // Phones and tablets scroll straight through.
     section.classList.remove('is-scene-all');
     steps.style.bottom='';
-    if(!scene)cardList().forEach(li=>li.classList.remove('is-on','is-past'));
-    else applyPair();
+    cardList().forEach(li=>li.classList.remove('is-past'));
+    applyReveal();
     fitStage();
     section.classList.remove('is-fitting');
     request();
