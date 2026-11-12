@@ -1917,6 +1917,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-s33.is-scene .nya-s33-art .nya-s33-full{inset:auto;right:calc(var(--art-h)*-.0439);bottom:calc(var(--art-h)*-.0846);width:auto;height:calc(var(--art-h)*1.0846);max-width:none}
 /* Phones: the points run down the page in order; the building stays at the foot of the screen while they pass over it (sticky),
    then ends the section with its top 45% under the last points. */
+/* The heading and paragraph stay in front of the drawing as it rises into view, so the tree passes behind the words. */
+.nya-s33.is-scene .nya-s33-intro{position:relative;z-index:4}
 .nya-s33.is-scene .nya-s33-steps{order:1;position:relative;z-index:3;margin:clamp(1.5rem,5vw,2.5rem) var(--pad) 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem}
 @media(min-width:560px){.nya-s33.is-scene .nya-s33-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}}
 .nya-s33.is-scene .nya-s33-step{position:relative;isolation:isolate}
