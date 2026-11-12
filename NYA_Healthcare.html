@@ -1946,6 +1946,13 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
    building follows them as the conclusion, its top 45% under the last points, and fades in once they are all up. */
 /* The heading and paragraph stay in front of the drawing as it rises into view, so the tree passes behind the words. */
 .nya-s33.is-scene .nya-s33-intro{position:relative;z-index:4}
+/* Phones and upright tablets: the heading and paragraph are centred above the cards, the heading a size larger (1.15x) on two
+   lines, 'The NYA difference' / 'is in the results', with 'in the results' in the semi-bold weight (600) for emphasis. */
+.nya-s33.is-scene .nya-s33-intro{text-align:center}
+.nya-s33.is-scene .nya-s33-lede{margin-left:auto;margin-right:auto}
+.nya-s33.is-scene .nya-s33-intro h2{font-size:calc(var(--text-h1)*1.15)}
+.nya-s33.is-scene .nya-s33-intro h2 br{display:inline}
+.nya-s33.is-scene .nya-s33-strong{font-weight:600}
 .nya-s33.is-scene .nya-s33-steps{order:1;position:relative;z-index:3;margin:clamp(1.5rem,5vw,2.5rem) var(--pad) 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem}
 @media(min-width:560px){.nya-s33.is-scene .nya-s33-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}}
 .nya-s33.is-scene .nya-s33-step{position:relative;isolation:isolate}
@@ -2822,7 +2829,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 <section class="nya-s33 is-no-canopy" id="nya-s33" aria-labelledby="nya-s33-title">
   <div class="nya-s33-stage">
     <div class="nya-s33-intro">
-      <h2 id="nya-s33-title">The NYA difference<br> is in the results</h2>
+      <h2 id="nya-s33-title">The NYA difference<br> is <span class="nya-s33-strong">in the results</span></h2>
       <p class="nya-s33-lede">Hospitals are too complex, too costly, and too important to tolerate unnecessary project risk. NYA brings technical ingenuity, cost insight, and close collaboration to the decisions that put hospital projects at risk. From the first structural concept through construction, we turn that expertise into lower costs, fewer surprises, and greater confidence in delivery.</p>
     </div>
     <div class="nya-s33-run"><div class="nya-s33-scene">
