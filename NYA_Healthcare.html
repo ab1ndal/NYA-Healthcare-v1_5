@@ -1777,7 +1777,23 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .rn-current{display:flex;color:var(--rn-on);font-size:.6875rem;line-height:1.2;letter-spacing:.12em;text-transform:uppercase}
   .rn-overall{display:block;height:1px;margin-bottom:1px;background:var(--rn-track)}
   .rn-overall i{display:block;height:2px;margin-top:-.5px;background:var(--rn-fill);transform-origin:left;transform:scaleX(var(--overall,0))}
+  .range-nav{cursor:pointer;-webkit-tap-highlight-color:transparent}
 }
+/* Phones and upright tablets: the current part's name is a button. Tapping it, or the track under it, opens a small list of the
+   parts plus the Hospital Gallery under the bar, the current one marked; picking one goes there. The list floats below the bar, so
+   the bar's height (--range-nav-h, which pinned parts use) never changes. Closes on a pick, a tap elsewhere, a scroll or Esc. */
+.rn-current{font-family:inherit;font-weight:inherit;background:none;border:0;padding:0;margin:0;text-align:left;align-items:center;cursor:pointer}
+.rn-current:focus-visible{outline:2px solid var(--rn-text);outline-offset:2px}
+.rn-caret{flex:none;width:6px;height:6px;margin:0 2px 0 10px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s ease}
+.range-nav.is-open .rn-caret{transform:translateY(1px) rotate(225deg)}
+.rn-menu{position:absolute;top:100%;left:var(--space-2,16px);width:min(300px,calc(100% - 2*var(--space-2,16px)));margin-top:6px;padding:6px 0;background:var(--rn-surface);border:1px solid var(--rn-track);border-radius:6px;box-shadow:0 12px 32px rgba(0,0,0,.28);cursor:auto}
+.rn-menu[hidden]{display:none}
+.range-nav .rn-menu a{display:flex;align-items:center;gap:0;min-height:44px;padding:0 14px;color:var(--rn-soft);font-size:.75rem;line-height:1.25;letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
+.range-nav .rn-menu a:hover,.range-nav .rn-menu a[aria-current="true"]{color:var(--rn-on)}
+.range-nav .rn-menu a[aria-current="true"]{background:color-mix(in srgb,var(--rn-text) 8%,var(--rn-surface));box-shadow:inset 2px 0 0 var(--rn-mark)}
+.range-nav .rn-menu a:focus-visible{outline:2px solid var(--rn-text);outline-offset:-2px}
+/* The bar steps aside while a project pop-up is open (the pop-up sits on a lower layer). */
+html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-events:none}
 </style>
 <style id="nya-closing-style">
 /* ==== NYA FINALE COMBINED START (CSS) ==== The supplied artwork is the section; words sit between its posts and its cable draws itself with the scroll. */
@@ -3637,7 +3653,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 })();
 </script>
 <nav class="range-nav" id="range-nav" aria-label="Case studies" data-tone="dark">
-  <span class="rn-current"><span class="rn-num" aria-hidden="true"></span><span class="rn-current-label"></span></span>
+  <button type="button" class="rn-current" aria-expanded="false" aria-controls="rn-menu"><span class="rn-num" aria-hidden="true"></span><span class="rn-current-label"></span><span class="rn-caret" aria-hidden="true"></span></button>
   <span class="rn-overall" aria-hidden="true"><i></i></span>
   <a href="#cost-certainty" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">01</span><span class="range-nav-label">Cost Certainty</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
   <a href="#ucsf-case-study" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">02</span><span class="range-nav-label">Technical Excellence</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
@@ -3659,43 +3675,81 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   const curNum=nav.querySelector('.rn-current .rn-num'),curLabel=nav.querySelector('.rn-current-label');
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
   let raf=0,current=-1;
+  // Phones and upright tablets (the single-line bar): the run goes on through the Hospital Gallery (#projects), and the bar
+  // opens a small list of every entry. entries = the parts in page order, then the gallery.
+  const phone=window.matchMedia('(max-width:760px), (max-width:1100px) and (orientation:portrait)');
+  const gallery=document.getElementById('projects');
+  const toggle=nav.querySelector('.rn-current');
+  const entries=items.map(it=>({el:it.el,label:it.a.querySelector('.range-nav-label').textContent,tone:it.a.dataset.tone}));
+  if(gallery)entries.push({el:gallery,label:'Hospital Gallery',tone:'dark'});
+  const menu=document.createElement('div');
+  menu.className='rn-menu';menu.id='rn-menu';menu.hidden=true;
+  entries.forEach((e,k)=>{
+    const a=document.createElement('a'),n=document.createElement('span'),l=document.createElement('span');
+    a.href='#'+e.el.id;n.className='rn-num';n.setAttribute('aria-hidden','true');n.textContent=String(k+1).padStart(2,'0');l.textContent=e.label;
+    a.append(n,l);menu.appendChild(a);e.m=a;
+    a.addEventListener('click',ev=>{ev.preventDefault();closeMenu(false);goTo(e.el);});
+  });
+  nav.appendChild(menu);
+  let openY=0;
+  function openMenu(){menu.hidden=false;nav.classList.add('is-open');toggle.setAttribute('aria-expanded','true');openY=scrollY;}
+  function closeMenu(refocus){
+    if(menu.hidden)return;
+    menu.hidden=true;nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');
+    if(refocus)toggle.focus();
+  }
+  nav.addEventListener('click',e=>{
+    if(!phone.matches||menu.contains(e.target)||e.target.closest('a'))return;
+    if(menu.hidden)openMenu();else closeMenu(false);
+  });
+  document.addEventListener('pointerdown',e=>{if(!menu.hidden&&!nav.contains(e.target))closeMenu(false);},true);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden)closeMenu(true);});
+  window.addEventListener('scroll',()=>{if(!menu.hidden&&Math.abs(scrollY-openY)>24)closeMenu(false);},{passive:true});
+  phone.addEventListener('change',()=>{closeMenu(false);current=-2;schedule();});
 
   // Each link's part stays current until the next part reaches the middle of the screen.
   // The nav shows from the first part's top to the last one's bottom.
   function update(){
     raf=0;
     const mid=window.innerHeight/2;
-    const tops=items.map(i=>i.el.getBoundingClientRect().top+scrollY);
-    const end=items[items.length-1].el.getBoundingClientRect().bottom+scrollY;
+    // On the single-line bar the run includes the gallery; the four-link bar ends with the last part.
+    const list=phone.matches?entries:entries.slice(0,items.length);
+    const tops=list.map(e=>e.el.getBoundingClientRect().top+scrollY);
+    const end=list[list.length-1].el.getBoundingClientRect().bottom+scrollY;
     const y=scrollY+mid;
     const inRun=y>=tops[0]&&y<end;
     let idx=-1;
     if(inRun)tops.forEach((t,k)=>{if(t<=y)idx=k;});
     nav.classList.toggle('is-on',idx>=0);
+    const pOf=k=>{const a=tops[k],b=k<list.length-1?tops[k+1]:end;return k<idx?1:k>idx?0:Math.min(1,Math.max(0,(y-a)/(b-a)));};
     items.forEach((it,k)=>{
-      const a=tops[k],b=k<items.length-1?tops[k+1]:end;
-      const p=k<idx?1:k>idx?0:Math.min(1,Math.max(0,(y-a)/(b-a)));
-      it.a.style.setProperty('--p',p.toFixed(3));
+      it.a.style.setProperty('--p',pOf(k).toFixed(3));
       it.a.classList.toggle('is-past',k<idx);
-      if(k===idx)nav.style.setProperty('--overall',((k+p)/items.length).toFixed(3));
     });
+    if(idx>=0)nav.style.setProperty('--overall',((idx+pOf(idx))/list.length).toFixed(3));
     if(idx===current)return;
     current=idx;
     links.forEach(a=>a.removeAttribute('aria-current'));
+    entries.forEach(e=>e.m.removeAttribute('aria-current'));
     if(idx>=0){
-      const a=items[idx].a;
-      a.setAttribute('aria-current','true');nav.dataset.tone=a.dataset.tone;
-      curNum.textContent=a.querySelector('.rn-num').textContent;curLabel.textContent=a.querySelector('.range-nav-label').textContent;
-    }else if(nav.contains(document.activeElement)){document.activeElement.blur();}
+      const e=entries[idx];
+      if(idx<items.length)items[idx].a.setAttribute('aria-current','true');
+      e.m.setAttribute('aria-current','true');nav.dataset.tone=e.tone;
+      curNum.textContent=String(idx+1).padStart(2,'0');curLabel.textContent=e.label;
+      toggle.setAttribute('aria-label','Sections. Current: '+e.label);
+    }else{
+      closeMenu(false);
+      if(nav.contains(document.activeElement))document.activeElement.blur();
+    }
   }
   function schedule(){if(!raf)raf=requestAnimationFrame(update);}
   window.addEventListener('scroll',schedule,{passive:true});
   window.addEventListener('resize',schedule);
-  function go(k){
-    const it=items[k];if(!it)return;
-    it.el.scrollIntoView({behavior:reduced.matches?'auto':'smooth',block:'start'});
-    const u=new URL(location.href);u.hash=it.el.id;history.replaceState(null,'',u);
+  function goTo(el){
+    el.scrollIntoView({behavior:reduced.matches?'auto':'smooth',block:'start'});
+    const u=new URL(location.href);u.hash=el.id;history.replaceState(null,'',u);
   }
+  function go(k){const it=items[k];if(it)goTo(it.el);}
   items.forEach((it,k)=>it.a.addEventListener('click',e=>{e.preventDefault();go(k);}));
   // Publish the nav's height so pinned parts can sit below it.
   const setH=()=>document.documentElement.style.setProperty('--range-nav-h',nav.offsetHeight+'px');
