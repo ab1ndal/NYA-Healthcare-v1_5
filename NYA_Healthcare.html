@@ -1833,6 +1833,8 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 /* Desktop: the paragraph wraps around the drawing. The script draws the building's and tree's outline into this right float's shape
    (--wrap-w, --wrap-h, --wrap), so each line ends just short of the drawing at its height and the edge follows the roofline. */
 .is-pinned .nya-s33-lede::before{content:'';float:right;width:var(--wrap-w,0);height:var(--wrap-h,0);shape-outside:var(--wrap,none)}
+/* Laptops (flowing layout): the same right float gives the paragraph its diagonal right edge (set by the script). */
+.nya-s33:not(.is-pinned) .nya-s33-lede::before{content:'';float:right;width:var(--wrap-w,0);height:var(--wrap-h,0);shape-outside:var(--wrap,none)}
 .is-pinned .nya-s33-lede{margin-top:min(calc(1.1*var(--k)),1.9svh);max-width:none;font-size:var(--text-body);line-height:1.7}
 
 /* The angled line is the artwork's own line, lifted out and uncovered up to the right with the scroll (--lp runs 0 to 1). */
@@ -4576,6 +4578,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
   // Shape the paragraph's right float to the drawing: at each half line, the text may run to just short of the leftmost part of the
   // building or tree that reaches above that line. The left part of the paragraph (at least 42% or 320px) always stays free.
+  // The paragraph's right edge steps in like a diagonal from its first line (which ends at 'brings'): each line after the first
+  // may run DIAG of the full width less than the one before. Each half-line slice gets the room of the line it starts in; the
+  // shape sits 1px lower than the lines (see wrapLede), so a line never touches the next line's narrower slice.
+  const DIAG=.12;
+  const diagRoom=(y,W,lh)=>W*(1-DIAG*Math.floor(y/lh+1e-6));
   function wrapLede(bands,gap){
     lede.style.removeProperty('--wrap');lede.style.removeProperty('--wrap-w');lede.style.removeProperty('--wrap-h');
     const L=lede.getBoundingClientRect(),lh=parseFloat(getComputedStyle(lede).lineHeight)||24,free=Math.min(L.width,Math.max(320,L.width*.42));
@@ -4584,7 +4591,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       let x=L.right;
       for(const [l,rt,t] of bands)if(rt>L.left&&t<L.top+y+lh+gap)x=Math.min(x,l-gap);
       x=Math.max(x,L.left+free)-L.left;
-      pts.push([x,y],[x,y+step]);
+      if(innerWidth>=900)x=Math.min(x,diagRoom(y,L.width,lh));
+      pts.push([x,y+1],[x,y+step+1]);
     }
     pts.push([L.width,H]);
     lede.style.setProperty('--wrap-w',L.width+'px');
@@ -4641,6 +4649,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     const w=measure.measureText(txt.slice(0,cut+BREAK.length)).width,space=measure.measureText(' technical').width;
     // A little more than the first line (a quarter of the next word), so 'brings' always fits and the next word never does.
     lede.style.maxWidth=Math.ceil(w+space*.25)+'px';
+    // Laptops (flowing layout): the diagonal right edge on its own; desktop adds it to the wrap around the drawing (placeWords).
+    if(!pinned)wrapLede([],0);
   }
   function fitIntro(){
     intro.style.top='';
