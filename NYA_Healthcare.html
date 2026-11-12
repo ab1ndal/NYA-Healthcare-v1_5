@@ -66,22 +66,14 @@ body,body *{font-variant-numeric:lining-nums}
 .hero-frames,.hero-frame,.hero-overlay{position:absolute;inset:0}
 .hero-frame{background-size:cover;background-position:center;opacity:0;transform:scale(1.05);transition:opacity 1s var(--ease),transform 8s linear}
 .hero-frame.active{opacity:1;transform:scale(1)}
-.hero-overlay{background:linear-gradient(90deg,rgba(7,9,12,.61) 0%,rgba(7,9,12,.34) 44%,rgba(7,9,12,.08) 75%,rgba(7,9,12,.03) 100%),linear-gradient(0deg,rgba(7,9,12,.44),transparent 55%)}
 .hero-content{position:relative;z-index:5;width:min(1050px,calc(100% - 2*var(--pad)));margin-left:var(--pad);padding-bottom:clamp(3.4rem,7vh,6rem)}
 .hero h1{font-size:var(--text-display);max-width:1000px;color:#fff}
 .hero h1 em{font-weight:300;color:var(--gold)}
-.hero-copy{font-size:var(--text-body);font-weight:300;max-width:690px;color:rgba(255,255,255,.86);margin-top:1.55rem;line-height:1.75}
-.hero-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:.75rem 1.25rem;border:1px solid var(--gold);font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;transition:.3s var(--ease)}
-.btn.primary{background:var(--gold);color:#111;border-color:var(--gold)}
-.btn.secondary{background:rgba(10,12,15,.28);color:#fff;border-color:rgba(255,255,255,.26);backdrop-filter:blur(6px)}
-.btn:hover{transform:translateY(-2px)}
 .hero-dots{position:absolute;z-index:8;right:var(--pad);bottom:clamp(2rem,4vh,3rem);display:flex;gap:8px}
 .hero-dot{width:9px;height:9px;border:0;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;padding:0;transition:.25s}
 .hero-dot.active{background:var(--gold);transform:scale(1.35)}
 
 .proof-ribbon{border-bottom:1px solid var(--line);background:#0d1014}
-.proof-grid{display:grid;grid-template-columns:repeat(4,1fr)}
 .proof{padding:1.7rem clamp(1rem,2.2vw,2rem);border-right:1px solid var(--line);min-height:130px}
 .proof:last-child{border-right:0}
 .proof-k{font-size:var(--text-eyebrow);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.55rem}
@@ -89,58 +81,20 @@ body,body *{font-variant-numeric:lining-nums}
 
 .difference{background:var(--light);color:var(--ink);padding:var(--section) 0}
 .difference .eyebrow{color:var(--green-on-light)}
-.difference-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,7vw,7rem);align-items:end;margin-bottom:3rem}
 .difference h2{font-size:var(--text-h1)}
-.difference-intro{font-size:var(--text-body);line-height:1.8;color:var(--ink2);max-width:660px}
-.pressures{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(0,0,0,.16);border-bottom:1px solid rgba(0,0,0,.16)}
-.pressure{padding:2rem 1.4rem 2.2rem;border-right:1px solid rgba(0,0,0,.16)}
-.pressure:last-child{border-right:0}.pressure-num{font-family:var(--display);font-size:var(--text-h2-lg);color:var(--green-on-light);margin-bottom:1.4rem}
-.pressure h3{font-size:var(--text-h3);font-weight:500;margin-bottom:.55rem}.pressure p{color:var(--ink2);font-size:var(--text-body);line-height:1.65}
 
 .value{padding:var(--section) 0;background:radial-gradient(circle at 10% 0,rgba(34,211,255,.08),transparent 35%),var(--bg)}
-.value-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:2.6rem}
 .value h2{font-size:var(--text-display);max-width:880px}.value-note{max-width:420px;color:var(--muted);font-size:var(--text-body)}
-.value-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.value-card{position:relative;overflow:hidden;background:var(--surface);padding:2rem;min-height:330px;transition:.35s var(--ease)}
-.value-card:hover{background:#181c24;transform:translateY(-4px);z-index:2;box-shadow:0 20px 50px rgba(0,0,0,.28)}
-.value-num{font-family:var(--display);font-size:var(--text-h1);color:rgba(34,211,255,.42);margin-bottom:3.7rem}.value-card h3{font-family:var(--display);font-weight:300;font-size:var(--text-h3);line-height:1.05;color:#fff;margin-bottom:.85rem}
-.value-card p{font-size:var(--text-body);color:var(--muted);line-height:1.7}
-
-.calibration{padding:clamp(3.8rem,7vw,6.5rem) 0;background:linear-gradient(135deg,#f3f1ea 0%,#e7e3d8 100%);color:var(--ink);border-top:1px solid rgba(0,0,0,.13);border-bottom:1px solid rgba(0,0,0,.13)}
-.calibration-head{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,6vw,6rem);align-items:end;margin-bottom:2.2rem}.calibration .eyebrow{color:var(--green-on-light)}.calibration h2{font-size:var(--text-display);max-width:950px}.calibration-intro{font-size:var(--text-body);line-height:1.8;color:var(--ink2);max-width:640px}.calibration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(0,0,0,.15);border:1px solid rgba(0,0,0,.15)}.calibration-card{background:rgba(247,245,239,.96);padding:1.65rem;min-height:220px}.calibration-num{font-family:var(--display);font-size:var(--text-h2);color:var(--green-on-light);margin-bottom:1.4rem}.calibration-card h3{font-family:var(--display);font-size:var(--text-h2);line-height:1.05;font-weight:300;margin-bottom:.7rem}.calibration-card p{font-size:var(--text-body);line-height:1.68;color:var(--ink2)}
-
-.authority{padding:var(--section) 0;background:radial-gradient(circle at 88% 8%,rgba(34,211,255,.10),transparent 32%),#080b0f;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.authority-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,6vw,6rem);align-items:end;margin-bottom:2.4rem}.authority h2{font-size:var(--text-display);max-width:900px}.authority-intro{max-width:660px;color:var(--muted);font-size:var(--text-body);line-height:1.8}.authority-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:2rem}.authority-card{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(20,27,35,.96),rgba(11,16,22,.96));padding:clamp(2rem,3.4vw,3.2rem);min-height:370px}.authority-card:after{content:"";position:absolute;right:-75px;bottom:-75px;width:210px;height:210px;border:1px solid rgba(34,211,255,.18);border-radius:50%;box-shadow:0 0 0 42px rgba(34,211,255,.035)}.authority-tag{font-size:var(--text-eyebrow);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2.6rem}.authority-card h3{position:relative;z-index:1;font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:1.02;color:#fff;max-width:620px}.authority-card p{position:relative;z-index:1;max-width:610px;margin-top:1.15rem;font-size:var(--text-body);line-height:1.78;color:rgba(255,255,255,.72)}.authority-card strong{color:#fff;font-weight:500}.reliability-label{display:flex;align-items:center;gap:14px;margin:2.4rem 0 1rem;font-size:var(--text-eyebrow);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}.reliability-label:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(34,211,255,.45),transparent)}.reliability-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.reliability-card{background:rgba(15,20,27,.92);padding:1.55rem;min-height:210px}.reliability-card b{display:block;font-family:var(--display);font-size:var(--text-h2);font-weight:300;color:var(--gold);line-height:1;margin-bottom:1rem}.reliability-card h4{font-size:var(--text-h3);font-weight:500;color:#fff;margin-bottom:.55rem}.reliability-card p{font-size:var(--text-body);line-height:1.62;color:rgba(255,255,255,.64)}
 
 .flagship{position:relative;min-height:780px;display:grid;grid-template-columns:1.18fr .82fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#080a0d;overflow:hidden}
-.flagship-media{position:relative;min-height:620px;background:#080a0d;overflow:hidden}
-.flagship-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#080a0d}
-.flagship-media:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 52%,rgba(8,10,13,.88) 100%),linear-gradient(0deg,rgba(8,10,13,.45),transparent 55%);pointer-events:none}
-.flagship-content{position:relative;z-index:2;padding:clamp(3rem,6vw,6rem) clamp(2rem,5vw,5rem) clamp(3rem,6vw,6rem) clamp(2rem,3.5vw,4rem);display:flex;flex-direction:column;justify-content:center}
 .flagship h2{font-size:var(--text-display);color:#fff}.flagship h2 em{color:var(--gold);font-weight:300}
-.flagship-lead{margin-top:1.3rem;font-size:var(--text-body);color:rgba(255,255,255,.82);line-height:1.8;max-width:610px}
-.flagship-points{margin-top:2rem;border-top:1px solid var(--line)}
-.flagship-point{display:grid;grid-template-columns:80px 1fr;gap:1rem;padding:1.15rem 0;border-bottom:1px solid var(--line)}
-.flagship-point b{font-family:var(--display);font-size:var(--text-h2);font-weight:300;color:var(--gold)}
-.flagship-point span{font-size:var(--text-body);color:var(--muted);line-height:1.6}
 
 .ucsf-proof{position:relative;background:#070a0d;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow-y:visible;overflow-x:clip}
 .ucsf-proof-intro{position:relative;min-height:82svh;display:grid;grid-template-columns:.92fr 1.08fr;align-items:stretch}
 .ucsf-proof-copy{position:relative;z-index:3;padding:clamp(4rem,8vw,8rem) var(--pad);display:flex;flex-direction:column;justify-content:center;background:linear-gradient(90deg,rgba(6,9,12,.98) 0%,rgba(6,9,12,.9) 72%,rgba(6,9,12,.15) 100%)}
 .ucsf-proof-copy h2{font-size:var(--text-display);color:#fff;max-width:780px}
-.ucsf-proof-copy h2 em{color:var(--gold);font-weight:300}
-.ucsf-proof-lead{max-width:650px;margin-top:1.4rem;font-size:var(--text-body);line-height:1.82;color:rgba(255,255,255,.8)}
-.ucsf-proof-video{position:relative;min-height:600px;background:#05070a;overflow:hidden}
-.ucsf-proof-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;filter:saturate(.86) contrast(1.06)}
-.ucsf-proof-video:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,10,13,.8),transparent 28%),linear-gradient(0deg,rgba(7,10,13,.5),transparent 45%)}
-.ucsf-proof-metrics{position:relative;z-index:4;grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(7,10,13,.92)}
-.ucsf-metric{padding:1.7rem clamp(1.1rem,2.5vw,2.3rem);border-right:1px solid var(--line);min-height:145px}
-.ucsf-metric:last-child{border-right:0}
-.ucsf-metric strong{display:block;font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:.9;color:var(--gold);letter-spacing:-.04em}
-.ucsf-metric span{display:block;margin-top:.8rem;font-size:var(--text-small);letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.68);line-height:1.5}
-/* Technical expertise names replace numeric proof metrics; preserve four-column layout. */
-.ucsf-proof-metrics .ucsf-metric{display:flex;align-items:center;min-width:0}
-.ucsf-proof-metrics .ucsf-metric strong{font-size:var(--text-h2);line-height:1.08;letter-spacing:-.025em;overflow-wrap:normal}
+.ucsf-proof-copy h2 em{color:var(--gold);font-weight:300}/* Technical expertise names replace numeric proof metrics; preserve four-column layout. */
+
 
 
 .ucsf-story{position:relative;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(380px,.94fr);align-items:start;max-width:1650px;margin:auto;padding:0 var(--pad)}
@@ -150,12 +104,6 @@ body,body *{font-variant-numeric:lining-nums}
 .ucsf-story-frame:after{display:none}
 @keyframes ucsfScan{from{transform:none}to{transform:none}}
 .ucsf-story-image{width:100%;height:100%;object-fit:cover;transition:opacity .48s var(--ease),transform 1s var(--ease),filter .55s var(--ease);filter:none;transform:none}
-.ucsf-story-image.is-changing{opacity:.15;transform:scale(1.035);filter:saturate(.5) blur(2px)}
-.ucsf-story-hud{position:absolute;z-index:5;inset:auto 1.2rem 1.2rem;display:flex;align-items:end;justify-content:space-between;gap:1rem;padding:1rem 1.1rem;border:1px solid rgba(255,255,255,.13);background:rgba(5,8,11,.72);backdrop-filter:blur(8px)}
-.ucsf-story-hud strong{font-family:var(--display);font-size:var(--text-h2);font-weight:300;color:var(--gold);line-height:1}
-.ucsf-story-hud span{font-size:var(--text-eyebrow);letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72)}
-.ucsf-story-progress{display:none}
-.ucsf-story-progress i{display:none}
 /* Start the UCSF vertical divider at the same vertical position as the sticky image. */
 .ucsf-story-steps{position:relative;border-left:0;padding-left:clamp(2rem,5vw,5rem);padding-bottom:18svh}
 .ucsf-story-steps::before{content:"";position:absolute;left:0;top:calc((100svh - min(72vh,760px))/2);bottom:0;border-left:1px solid var(--line);pointer-events:none}
@@ -164,33 +112,16 @@ body,body *{font-variant-numeric:lining-nums}
 .ucsf-step .eyebrow{margin-bottom:.8rem}
 .ucsf-step h3{font-family:var(--display);font-size:var(--text-h1);line-height:1.02;font-weight:300;color:#fff;max-width:650px}
 .ucsf-step p{max-width:620px;margin-top:1.25rem;color:rgba(255,255,255,.72);font-size:var(--text-body);line-height:1.82}
-.ucsf-step-points{display:grid;gap:.65rem;margin-top:1.5rem;max-width:610px}
-.ucsf-step-points span{display:flex;gap:.7rem;align-items:flex-start;color:rgba(255,255,255,.8);font-size:var(--text-body);line-height:1.55}
-.ucsf-step-points span:before{content:"";width:7px;height:7px;border:1px solid var(--gold);margin-top:.46rem;flex:0 0 auto}
 
 @media (max-width:1100px), (max-width:1100px) and (orientation:portrait){
-  .ucsf-proof-intro{grid-template-columns:1fr}.ucsf-proof-video{min-height:540px}.ucsf-proof-copy{background:linear-gradient(180deg,rgba(6,9,12,.98),rgba(6,9,12,.72))}
-  .ucsf-story{grid-template-columns:1fr}.ucsf-story-media{position:sticky;top:0;height:58svh;padding:1.2rem 0;z-index:4;background:#070a0d}.ucsf-story-frame{height:100%}.ucsf-story-steps{border-left:0;padding-left:0}.ucsf-story-steps::before{display:none}.ucsf-step{min-height:72svh;padding:5rem 0}
-}
+  .ucsf-proof-intro{grid-template-columns:1fr}.ucsf-proof-copy{background:linear-gradient(180deg,rgba(6,9,12,.98),rgba(6,9,12,.72))}
+  .ucsf-story{grid-template-columns:1fr}.ucsf-story-media{position:sticky;top:0;height:58svh;padding:1.2rem 0;z-index:4;background:#070a0d}.ucsf-story-frame{height:100%}.ucsf-story-steps{border-left:0;padding-left:0}.ucsf-story-steps::before{display:none}.ucsf-step{min-height:72svh;padding:5rem 0}}
 @media (max-width:760px), (max-width:1100px) and (orientation:portrait){
-  .ucsf-proof-metrics{grid-template-columns:1fr 1fr}.ucsf-metric:nth-child(2){border-right:0}.ucsf-metric:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .ucsf-story{padding:0 var(--pad)}.ucsf-story-media{height:48svh}.ucsf-story-hud{inset:auto .65rem .65rem;padding:.75rem}.ucsf-step{min-height:auto;padding:4.7rem 0}
-  .ucsf-proof-video{min-height:420px}
-}
+  .ucsf-story{padding:0 var(--pad)}.ucsf-story-media{height:48svh}.ucsf-step{min-height:auto;padding:4.7rem 0}}
 @media(prefers-reduced-motion:reduce){.ucsf-story-image{transition:none}}
 
-.audiences{background:var(--light);color:var(--ink);padding:var(--section) 0}
-.audiences .eyebrow{color:var(--green-on-light)}.audiences h2{font-size:var(--text-display);max-width:900px;margin-bottom:2.8rem}
-.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(0,0,0,.16);border:1px solid rgba(0,0,0,.16)}
-.audience{background:var(--light);padding:2.2rem;min-height:390px;display:flex;flex-direction:column;transition:.3s var(--ease)}
-.audience:hover{background:#f5f2ea;transform:translateY(-4px);box-shadow:0 18px 48px rgba(0,0,0,.08);z-index:2}
-.audience-type{font-size:var(--text-eyebrow);letter-spacing:.18em;text-transform:uppercase;color:var(--green-on-light);margin-bottom:3rem}.audience h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2);line-height:1.05;margin-bottom:1rem}.audience p{font-size:var(--text-body);line-height:1.75;color:var(--ink2)}
-.audience-link{margin-top:auto;padding-top:2rem;font-size:var(--text-eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--green-on-light)}
-
-.capabilities{padding:var(--section) 0;background:var(--bg)}
-.cap-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:4rem;align-items:end;margin-bottom:2.4rem}.capabilities h2{font-size:var(--text-display)}.cap-desc{max-width:650px;color:var(--muted)}
-.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.cap{background:var(--surface);padding:1.7rem;min-height:215px}.cap-tag{font-family:var(--display);font-size:var(--text-h2);color:rgba(34,211,255,.48);margin-bottom:1.2rem}.cap h3{font-size:var(--text-h3);font-weight:500;color:#fff;margin-bottom:.55rem}.cap p{font-size:var(--text-body);color:var(--muted);line-height:1.65}
+.capabilities{padding:var(--section) 0;background:var(--bg)}.capabilities h2{font-size:var(--text-display)}
+.cap{background:var(--surface);padding:1.7rem;min-height:215px}.cap h3{font-size:var(--text-h3);font-weight:500;color:#fff;margin-bottom:.55rem}.cap p{font-size:var(--text-body);color:var(--muted);line-height:1.65}
 
 .projects{padding:var(--space-5) 0 var(--section);background:#0d1014;border-top:1px solid var(--line)}
 .projects-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:1.7rem}.projects h2{font-size:var(--text-display)}
@@ -201,37 +132,25 @@ body,body *{font-variant-numeric:lining-nums}
 .project.is-visible{opacity:1;transform:none}.project.featured{grid-column:span 7;grid-row:span 2;min-height:680px}.project.std{grid-column:span 5}.project.wide{grid-column:span 4;min-height:300px}
 .project img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.58) saturate(.9);transition:.8s var(--ease)}.project:hover img{transform:scale(1.045);filter:brightness(.7) saturate(1)}
 .project:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,7,9,.94) 0%,rgba(5,7,9,.2) 60%,transparent 100%)}
-.project-body{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:clamp(1.4rem,2.8vw,2.4rem)}.project-tag{font-size:var(--text-eyebrow);letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}.project h3{font-family:var(--display);font-weight:300;color:#fff;line-height:1.08;font-size:var(--text-h2-lg)}.project-meta{font-size:var(--text-small);color:rgba(255,255,255,.68);margin-top:.55rem}.project-outcome{font-size:var(--text-body);color:rgba(255,255,255,.8);margin-top:.8rem;max-width:470px;line-height:1.55}
+.project-body{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:clamp(1.4rem,2.8vw,2.4rem)}.project-tag{font-size:var(--text-eyebrow);letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}.project h3{font-family:var(--display);font-weight:300;color:#fff;line-height:1.08;font-size:var(--text-h2-lg)}.project-outcome{font-size:var(--text-body);color:rgba(255,255,255,.8);margin-top:.8rem;max-width:470px;line-height:1.55}
 .project-arrow{position:absolute;z-index:3;top:1.2rem;right:1.2rem;width:38px;height:38px;border:1px solid rgba(255,255,255,.25);border-radius:50%;display:grid;place-items:center;color:var(--gold);opacity:0;transform:translateX(-5px);transition:.3s}.project:hover .project-arrow{opacity:1;transform:none}
 
 
 .cta{position:relative;padding:clamp(5rem,10vw,9rem) 0;overflow:hidden;color:#101216;background:radial-gradient(circle at 88% 22%,rgba(34,211,255,.075),transparent 30%),linear-gradient(180deg,#f5f4ef 0%,#e9e7df 100%);border-top:1px solid rgba(16,18,22,.10);border-bottom:1px solid rgba(16,18,22,.10)}
 .cta:after{content:"";position:absolute;left:0;top:0;width:min(180px,18vw);height:3px;background:var(--gold);box-shadow:0 0 24px rgba(34,211,255,.28);pointer-events:none}
-.cta:before{content:"NYA";position:absolute;right:1.5vw;bottom:-2.25vw;font-family:var(--display);font-size:var(--text-watermark);line-height:.78;color:rgba(16,18,22,.05);letter-spacing:-.08em;pointer-events:none;white-space:nowrap}.cta .wrap{position:relative;z-index:2}.cta .eyebrow{color:var(--green-on-light)}.cta h2{font-size:var(--text-display);max-width:1000px;color:#0d1014}.cta p{max-width:700px;margin-top:1.3rem;font-size:var(--text-body);color:rgba(13,16,20,.70)}.cta .hero-actions{margin-top:2rem}.cta .btn.primary{background:#101216;color:#fff;border-color:#101216}.cta .btn.primary:hover{border-color:var(--gold);box-shadow:0 0 0 1px rgba(34,211,255,.24) inset,0 10px 34px rgba(10,24,32,.12)}.cta .btn.secondary{background:rgba(255,255,255,.22);color:#111;border-color:rgba(0,0,0,.28);backdrop-filter:none}.cta .btn.secondary:hover{border-color:var(--green-on-light);color:#0d1014}
-
-.footer{padding:4rem var(--pad) 1.7rem;background:#090b0e;border-top:1px solid var(--line)}.footer-inner{max-width:1500px;margin:auto}.footer-logo{width:clamp(190px,17vw,285px);margin-bottom:2rem}.footer-title{font-family:var(--display);font-size:var(--text-display);line-height:.95;font-weight:600;color:#fff;margin-bottom:2.2rem}.footer-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:3rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:2rem 0}.footer-col h4{font-size:var(--text-eyebrow);letter-spacing:.19em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}.footer-col a,.footer-col p{display:block;font-size:var(--text-body);color:rgba(255,255,255,.72);margin-bottom:.55rem}.footer-col a:hover{color:#fff}.footer-bottom{display:flex;justify-content:flex-start;padding-top:1.2rem;font-size:var(--text-small);letter-spacing:.06em;color:rgba(255,255,255,.5)}
+.cta:before{content:"NYA";position:absolute;right:1.5vw;bottom:-2.25vw;font-family:var(--display);font-size:var(--text-watermark);line-height:.78;color:rgba(16,18,22,.05);letter-spacing:-.08em;pointer-events:none;white-space:nowrap}.cta .wrap{position:relative;z-index:2}.cta .eyebrow{color:var(--green-on-light)}.cta h2{font-size:var(--text-display);max-width:1000px;color:#0d1014}.cta p{max-width:700px;margin-top:1.3rem;font-size:var(--text-body);color:rgba(13,16,20,.70)}
 
 .modal{position:fixed;inset:0;z-index:100;display:flex;opacity:0;pointer-events:none;transition:.3s}.modal.open{opacity:1;pointer-events:auto}.modal-backdrop{position:absolute;inset:0;background:rgba(4,5,7,.78);backdrop-filter:blur(6px)}.modal-panel{position:relative;margin-left:auto;width:min(600px,96vw);height:100%;overflow:auto;overscroll-behavior:contain;background:var(--card);border-left:1px solid var(--line);transform:translateX(45px);transition:.45s var(--ease);z-index:2}.modal.open .modal-panel{transform:none}.modal-hero{height:300px;background-size:cover;background-position:center;position:relative}.modal-hero:after{content:"";position:absolute;inset:auto 0 0;height:120px;background:linear-gradient(transparent,var(--card))}.modal-close{position:absolute;top:1.1rem;right:1.1rem;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;font-size:var(--text-h3);cursor:pointer;z-index:3}.modal-body{padding:2rem 2rem 3rem}.modal-tag{font-size:var(--text-eyebrow);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}.modal-title{font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.05;font-weight:300;color:#fff;margin-bottom:1.4rem}.modal-specs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:1.4rem}.modal-spec{background:var(--surface);padding:1rem}.modal-spec-k{font-size:var(--text-eyebrow);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}.modal-spec-v{font-size:var(--text-small);color:#fff}.modal-desc{font-size:var(--text-body);color:rgba(255,255,255,.78);line-height:1.75;margin-bottom:1.5rem}.modal-link{display:inline-flex;align-items:center;gap:8px;font-size:var(--text-eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(34,211,255,.45)}
 
-@media (max-width:1100px), (max-width:1100px) and (orientation:portrait){.calibration-grid,.reliability-grid{grid-template-columns:repeat(2,1fr)}.authority-grid{grid-template-columns:1fr}.proof-grid,.value-grid{grid-template-columns:repeat(2,1fr)}.proof:nth-child(2){border-right:0}.proof:nth-child(-n+2){border-bottom:1px solid var(--line)}.pressures{grid-template-columns:repeat(2,1fr)}.pressure:nth-child(2){border-right:0}.pressure:nth-child(-n+2){border-bottom:1px solid rgba(0,0,0,.16)}.flagship{grid-template-columns:1fr}.flagship-media{min-height:520px}.flagship-media:after{background:linear-gradient(0deg,rgba(8,10,13,.95),transparent 55%)}.audience-grid{grid-template-columns:1fr}.audience{min-height:auto}.cap-grid{grid-template-columns:repeat(2,1fr)}.project.featured,.project.std,.project.wide{grid-column:span 12;grid-row:auto;min-height:420px}.footer-cols{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:760px), (max-width:1100px) and (orientation:portrait){:root{--pad:1.25rem;--section:4.5rem}.calibration-head,.authority-head{grid-template-columns:1fr;gap:1.4rem}.calibration-grid,.reliability-grid{grid-template-columns:1fr}.authority-card{min-height:auto}.hero{min-height:720px}.hero h1{font-size:var(--text-display)}.hero-copy{font-size:var(--text-body)}.hero-dots{display:none}.proof-grid,.pressures,.value-grid,.cap-grid{grid-template-columns:1fr}.proof{border-right:0;border-bottom:1px solid var(--line)}.proof:last-child{border-bottom:0}.pressure{border-right:0;border-bottom:1px solid rgba(0,0,0,.16)}.difference-head,.cap-head{grid-template-columns:1fr;gap:1.4rem}.value-head,.projects-head{align-items:flex-start;flex-direction:column}.flagship-media{min-height:400px}.flagship-point{grid-template-columns:55px 1fr}.project.featured,.project.std,.project.wide{min-height:360px}.footer-cols{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:.5rem}.modal-specs{grid-template-columns:1fr}}
+@media (max-width:1100px), (max-width:1100px) and (orientation:portrait){.proof:nth-child(2){border-right:0}.proof:nth-child(-n+2){border-bottom:1px solid var(--line)}.flagship{grid-template-columns:1fr}.project.featured,.project.std,.project.wide{grid-column:span 12;grid-row:auto;min-height:420px}}
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){:root{--pad:1.25rem;--section:4.5rem}.hero{min-height:720px}.hero h1{font-size:var(--text-display)}.hero-dots{display:none}.proof{border-right:0;border-bottom:1px solid var(--line)}.proof:last-child{border-bottom:0}.value-head,.projects-head{align-items:flex-start;flex-direction:column}.project.featured,.project.std,.project.wide{min-height:360px}.modal-specs{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.reveal,.project{opacity:1!important;transform:none!important}.hero-frame{transform:none!important}}
 
 .webgl-shell{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(circle at 76% 38%,#354657 0%,#202d39 24%,#111820 58%,#090c10 100%);opacity:0;transition:opacity .7s var(--ease)}
-.webgl-ready .webgl-shell{opacity:1}
 .webgl-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 76% 40%,rgba(126,183,230,.14) 0%,rgba(126,183,230,.06) 24%,transparent 48%),linear-gradient(90deg,rgba(5,8,12,.80) 0%,rgba(7,11,16,.55) 34%,rgba(9,14,20,.16) 64%,rgba(7,10,14,.12) 100%),linear-gradient(0deg,rgba(5,7,10,.36) 0%,transparent 46%,rgba(255,255,255,.02) 100%)}
-.webgl-blueprint{position:absolute;inset:0;pointer-events:none;opacity:.11;background-image:linear-gradient(rgba(156,198,230,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(156,198,230,.16) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(circle at 72% 42%,#000 0%,rgba(0,0,0,.92) 34%,transparent 76%)}
 .webgl-noise{position:absolute;inset:0;pointer-events:none;opacity:.075;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
 section,.footer{position:relative;z-index:1}
 .hero{z-index:1;background:transparent}
-.webgl-ready .hero-frames,.webgl-ready .hero-dots{opacity:0;visibility:hidden;pointer-events:none}
-.webgl-ready .proof-ribbon{background:rgba(8,12,16,.66);backdrop-filter:blur(12px) saturate(120%)}
-.webgl-ready .value{background:radial-gradient(circle at 10% 0,rgba(34,211,255,.09),transparent 35%),rgba(7,10,14,.56);backdrop-filter:blur(6px) saturate(115%)}
-.webgl-ready .capabilities,.webgl-ready .authority{background:rgba(7,10,14,.58);backdrop-filter:blur(6px) saturate(115%)}
-.webgl-ready .projects{background:rgba(8,12,16,.68);backdrop-filter:blur(7px) saturate(110%)}
-.webgl-ready .footer{background:rgba(7,10,14,.82);backdrop-filter:blur(10px)}
-.webgl-ready .value-card,.webgl-ready .cap{backdrop-filter:blur(7px)}
-.no-webgl .webgl-shell{display:none}
 @media (prefers-reduced-motion:reduce){.webgl-shell{display:none!important}.hero-frames{display:block!important}.hero-dots{display:flex!important}}
 
 .webgl-shell{
@@ -266,31 +185,6 @@ section,.footer{position:relative;z-index:1}
   radial-gradient(circle at 75% 43%,rgba(116,181,230,.13) 0%,rgba(91,151,202,.055) 30%,transparent 56%),
   linear-gradient(90deg,rgba(5,8,12,.78) 0%,rgba(6,10,15,.53) 31%,rgba(7,12,18,.19) 55%,rgba(6,10,15,.04) 78%,rgba(5,8,12,.12) 100%),
   linear-gradient(0deg,rgba(5,7,10,.38) 0%,transparent 40%,rgba(4,7,10,.09) 100%)}
-.webgl-blueprint{
-  z-index:3;
-  opacity:.13;
-  background-image:
-    linear-gradient(rgba(143,199,240,.16) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(143,199,240,.16) 1px,transparent 1px),
-    linear-gradient(rgba(34,211,255,.075) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(34,211,255,.075) 1px,transparent 1px);
-  background-size:72px 72px,72px 72px,360px 360px,360px 360px;
-  mask-image:radial-gradient(ellipse 64% 78% at 73% 45%,#000 0%,rgba(0,0,0,.92) 44%,transparent 86%);
-}
-.webgl-scan{
-  position:absolute;
-  z-index:3;
-  left:43%;
-  right:2%;
-  top:-32%;
-  height:26%;
-  opacity:.28;
-  pointer-events:none;
-  background:linear-gradient(180deg,transparent 0%,rgba(132,199,245,.04) 25%,rgba(167,216,248,.24) 50%,rgba(34,211,255,.12) 55%,transparent 100%);
-  filter:blur(.25px);
-  mix-blend-mode:screen;
-  animation:nyaScan 9s cubic-bezier(.45,0,.55,1) infinite;
-}
 @keyframes nyaScan{0%{transform:translate3d(0,-34vh,0);opacity:0}10%{opacity:.25}50%{opacity:.30}90%{opacity:.18}100%{transform:translate3d(0,150vh,0);opacity:0}}
 .webgl-noise{z-index:5;opacity:.045}
 
@@ -298,14 +192,9 @@ section,.footer{position:relative;z-index:1}
 .webgl-ready .value,.ucsf-bg-ready .value{background:linear-gradient(90deg,rgba(6,10,15,.83) 0%,rgba(7,11,16,.72) 48%,rgba(8,13,19,.54) 100%);backdrop-filter:none}
 .webgl-ready .capabilities,.ucsf-bg-ready .capabilities,.webgl-ready .authority,.ucsf-bg-ready .authority{background:linear-gradient(90deg,rgba(6,10,15,.84),rgba(8,13,19,.62));backdrop-filter:none}
 .webgl-ready .projects,.ucsf-bg-ready .projects{background:rgba(7,11,16,.82);backdrop-filter:none}
-.webgl-ready .footer,.ucsf-bg-ready .footer{background:rgba(6,9,13,.91);backdrop-filter:none}
 .webgl-ready .value-card,.webgl-ready .cap,
 .ucsf-bg-ready .value-card,.ucsf-bg-ready .cap{backdrop-filter:none}
 .ucsf-bg-ready .hero-frames,.ucsf-bg-ready .hero-dots{opacity:0;visibility:hidden;pointer-events:none}
-
-.ucsf-bg-ready .hero-overlay{background:
-  linear-gradient(90deg,rgba(5,8,12,.62) 0%,rgba(5,9,14,.42) 34%,rgba(6,11,17,.16) 56%,rgba(6,10,15,.03) 82%,rgba(4,7,10,.09) 100%),
-  linear-gradient(0deg,rgba(4,7,10,.35) 0%,transparent 48%,rgba(4,7,10,.07) 100%)}
 .ucsf-bg-ready .hero-content{max-width:1020px}
 
 .ucsf-bg-ready .value-card,.ucsf-bg-ready .cap{
@@ -319,19 +208,13 @@ section,.footer{position:relative;z-index:1}
 @media (max-width:900px), (max-width:1100px) and (orientation:portrait){
   .ucsf-bg-media{inset:0;}
   .ucsf-bg-media video{object-position:center;filter:brightness(.67) contrast(1.17) saturate(.77)}
-  .webgl-vignette{background:linear-gradient(90deg,rgba(5,8,12,.80) 0%,rgba(6,10,15,.57) 58%,rgba(6,10,15,.16) 100%),linear-gradient(0deg,rgba(5,7,10,.37),transparent 52%)}
-  .webgl-blueprint{opacity:.08}
-}
+  .webgl-vignette{background:linear-gradient(90deg,rgba(5,8,12,.80) 0%,rgba(6,10,15,.57) 58%,rgba(6,10,15,.16) 100%),linear-gradient(0deg,rgba(5,7,10,.37),transparent 52%)}}
 @media (max-width:760px), (max-width:1100px) and (orientation:portrait){
   #nya-webgl{display:none}
-  .webgl-scan{display:none}
   .ucsf-bg-media video{filter:brightness(.59) contrast(1.14) saturate(.72)}
-  .webgl-shell{--media-opacity:.66}
-}
+  .webgl-shell{--media-opacity:.66}}
 @media (prefers-reduced-motion:reduce){
-  .webgl-scan{display:none!important}
-  .ucsf-bg-media video{display:none!important}
-}
+  .ucsf-bg-media video{display:none!important}}
 
 @keyframes nypScrollDot{
   0%{transform:translateY(0);opacity:0}
@@ -339,74 +222,9 @@ section,.footer{position:relative;z-index:1}
   70%{opacity:1}
   100%{transform:translateY(21px);opacity:0}
 }
-@media (max-width:760px), (max-width:1100px) and (orientation:portrait){
-}
-@media(prefers-reduced-motion:reduce){
-}
-
-.ssi-campus-case-study{position:relative;background:#0e151d}
-.ucla-ssi{margin-top:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(10,20,30,.15);border:1px solid rgba(10,20,30,.15)}
-.ucla-ssi-media{position:relative;min-height:520px;overflow:hidden;background:#101820}
-.ucla-ssi-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s var(--ease),transform 1s var(--ease)}
-.ucla-ssi-media .ucla-ssi-analysis{opacity:0;object-fit:contain;background:#f2f0e9;padding:1.5rem}
-.ucla-ssi-media:hover .ucla-ssi-photo{opacity:.18;transform:scale(1.025)}
-.ucla-ssi-media:hover .ucla-ssi-analysis{opacity:1}
-.ucla-ssi-copy{background:#0e151d;color:#fff;padding:clamp(2.3rem,4.2vw,4.2rem);display:flex;flex-direction:column;justify-content:center}
-.ucla-ssi-copy h3{font-family:var(--display);font-size:var(--text-h2-lg);font-weight:300;line-height:1;margin-bottom:1rem}
-.ucla-ssi-copy>p{color:rgba(255,255,255,.68);line-height:1.8;max-width:610px}
-.ucla-ssi-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.12);margin-top:2rem}
-.ucla-ssi-stat{background:#121c26;padding:1.35rem}
-.ucla-ssi-stat strong{font-family:var(--display);font-size:var(--text-stat);font-weight:300;line-height:.85;color:var(--gold)}
-.ucla-ssi-stat span{display:block;margin-top:.65rem;font-size:var(--text-eyebrow);letter-spacing:.14em;text-transform:uppercase;line-height:1.5;color:rgba(255,255,255,.62)}
-.ucla-ssi-note{margin-top:1rem;font-size:var(--text-small);letter-spacing:.06em;color:rgba(255,255,255,.5)}
-.ssi-campus-case-study .ucla-ssi{margin-top:0;border-left:0;border-right:0}
-@media (max-width:1050px), (max-width:1100px) and (orientation:portrait){.ssi-campus-case-study .ucla-ssi{grid-template-columns:1fr}}
 
 .ssi-compare{padding:clamp(4rem,7vw,7rem) 0;background:#090d12;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.ssi-compare-head{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(2rem,6vw,6rem);align-items:end;margin-bottom:2.4rem}
 .ssi-compare h3{font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:1.03;color:#fff}
-.ssi-compare-intro{color:rgba(255,255,255,.74);font-size:var(--text-body);line-height:1.75;max-width:650px}
-.ssi-modes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.ssi-mode{appearance:none;text-align:left;background:#11161c;border:0;color:#fff;padding:1.7rem;min-height:250px;cursor:pointer;transition:.3s var(--ease);position:relative;overflow:hidden}
-.ssi-mode:before{content:"";position:absolute;left:0;top:0;width:3px;height:0;background:var(--gold);transition:.3s var(--ease)}
-.ssi-mode:hover,.ssi-mode.active{background:#17212b;transform:translateY(-3px);z-index:2}
-.ssi-mode.active:before{height:100%}
-.ssi-mode small{display:block;font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem}
-.ssi-mode b{display:block;font-family:var(--display);font-size:var(--text-h2);font-weight:300;line-height:1.05;margin-bottom:.75rem}
-.ssi-mode span{display:block;font-size:var(--text-body);line-height:1.65;color:rgba(255,255,255,.62)}
-.ssi-detail{margin-top:1px;border:1px solid var(--line);background:linear-gradient(135deg,#111923,#0b1118);padding:clamp(1.6rem,3vw,2.7rem);display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(1.5rem,4vw,4rem);align-items:start}
-.ssi-detail h4{font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:1.05;color:#fff}
-.ssi-detail p{margin-top:.8rem;color:rgba(255,255,255,.63);font-size:var(--text-body);line-height:1.7}
-.ssi-benefits{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
-.ssi-benefit{padding:1rem;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.025);font-size:var(--text-small);line-height:1.5;color:rgba(255,255,255,.8)}
-.ssi-benefit:before{content:"✓";color:var(--gold);margin-right:.7rem;font-size:var(--text-h3);font-weight:600}
-.ssi-detail[data-ssi-mode="fixed"] .ssi-benefit:before,.ssi-detail[data-ssi-mode="basic"] .ssi-benefit:before{content:"−";color:#ff8a22;font-weight:700}
-
-.ucsf-metric.amc-trigger{appearance:none;width:100%;text-align:left;background:transparent;color:inherit;border-top:0;border-bottom:0;border-left:0;cursor:pointer;transition:.25s var(--ease);font-family:inherit}
-.ucsf-metric.amc-trigger:hover{background:rgba(34,211,255,.055)}
-.ucsf-metric .metric-link{display:block;margin-top:.55rem;color:var(--gold);font-size:var(--text-eyebrow);letter-spacing:.15em;text-transform:uppercase}
-.amc-drawer{position:fixed;inset:0;z-index:1400;display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
-.amc-drawer.open{opacity:1;pointer-events:auto}
-.amc-backdrop{position:absolute;inset:0;background:rgba(3,6,9,.82);backdrop-filter:blur(7px)}
-.amc-panel{position:relative;z-index:2;width:min(980px,96vw);height:100%;overflow:auto;background:#0c1117;border-left:1px solid rgba(255,255,255,.13);transform:translateX(45px);transition:transform .45s var(--ease);padding:clamp(2rem,4vw,4rem)}
-.amc-drawer.open .amc-panel{transform:none}
-.amc-close{position:sticky;top:0;margin-left:auto;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:#0b1118;color:#fff;font-size:var(--text-h3);cursor:pointer;z-index:4}
-.amc-head{max-width:760px;margin:-1.5rem 0 2.3rem}
-.amc-head h3{font-family:var(--display);font-size:var(--text-h1);font-weight:300;line-height:.98;color:#fff}
-.amc-head p{margin-top:1rem;color:rgba(255,255,255,.63);line-height:1.75}
-.amc-groups{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
-.amc-group{background:#111821;padding:1.5rem}
-.amc-group h4{font-size:var(--text-eyebrow);letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
-.amc-list{display:grid;gap:.65rem;list-style:none}
-.amc-list li{display:grid;grid-template-columns:34px 1fr;gap:.65rem;font-size:var(--text-small);line-height:1.5;color:rgba(255,255,255,.78)}
-.amc-list b{font-family:var(--display);font-size:var(--text-h2);font-weight:300;color:rgba(34,211,255,.66);line-height:1.05}
-
-
-@media (max-width:1050px), (max-width:1100px) and (orientation:portrait){
-  .ssi-compare-head,.ssi-detail{grid-template-columns:1fr}
-  .ssi-modes{grid-template-columns:1fr}
-  .amc-groups{grid-template-columns:1fr}
-}
 
 
 .financial-risk{background:linear-gradient(145deg,rgba(7,16,22,.97),rgba(9,24,32,.96));color:var(--text);padding:var(--section) 0}
@@ -416,23 +234,16 @@ section,.footer{position:relative;z-index:1}
 .financial-header h2{font-size:var(--text-h1);line-height:1.03;max-width:800px;color:#f6f5f0}
 .financial-intro{font-size:var(--text-body);line-height:1.8;color:rgba(221,233,238,.78);border-left:1px solid rgba(221,233,238,.27);padding-left:clamp(1.5rem,3vw,3rem);margin-top:0;max-width:700px;align-self:center}
 .financial-graphic{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(235px,.7fr);border:1px solid rgba(221,233,238,.19);margin-top:0;align-items:stretch;padding:clamp(1rem,2vw,2rem)}
-.financial-chart{min-width:0;align-self:center}.financial-chart svg,.financial-chart img{width:100%;height:auto;display:block}.financial-chart-caption{font-size:var(--text-small);letter-spacing:.02em;color:rgba(220,232,237,.55);margin-top:0;padding-left:2%}
-.financial-callout{border-left:1px solid rgba(221,233,238,.2);padding:clamp(1rem,2vw,2rem);display:flex;flex-direction:column;justify-content:center}
-.financial-callout h3{font-size:var(--text-h2-lg);font-weight:300;line-height:1.02;color:#f6f5f0}
-.financial-accent{width:58px;height:2px;background:var(--gold);margin:2rem 0 1.6rem}.financial-callout p{font-size:var(--text-body);line-height:1.75;color:rgba(221,233,238,.75)}
+.financial-chart{min-width:0;align-self:center}.financial-chart svg,.financial-chart img{width:100%;height:auto;display:block}
 .financial-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding-top:1.6rem}
-.financial-benefit{padding:0 clamp(1.2rem,2.4vw,2.6rem);min-height:136px;border-right:1px solid rgba(221,233,238,.22)}.financial-benefit:first-child{padding-left:0}.financial-benefit:last-child{border-right:0}
-.financial-number{display:block;font-family:var(--display);font-size:var(--text-h2-lg);font-weight:300;color:rgba(34,211,255,.42);line-height:1.05;margin-bottom:.8rem}.financial-benefit h3{font-family:var(--display);font-size:var(--text-h2);font-weight:300;line-height:1.05;color:#fff}.financial-benefit p{color:rgba(221,233,238,.72);font-size:var(--text-body);line-height:1.6;margin-top:.65rem;max-width:320px}
-@media (max-width:950px), (max-width:1100px) and (orientation:portrait){.financial-header{grid-template-columns:1fr;gap:1.4rem}.financial-intro{border-left:0;padding-left:0}.financial-graphic{grid-template-columns:1fr}.financial-callout{border-left:0;border-top:1px solid rgba(221,233,238,.2);margin-top:1rem}}
-@media (max-width:650px), (max-width:1100px) and (orientation:portrait){.financial-benefits{grid-template-columns:1fr}.financial-benefit,.financial-benefit:first-child{padding:1.3rem 0;border-right:0;border-bottom:1px solid rgba(221,233,238,.2)}.financial-benefit:last-child{border-bottom:0}.financial-graphic{padding:.65rem}.financial-chart svg,.financial-chart img{min-width:0}.financial-chart-caption{padding:0 .5rem}.financial-callout{padding:1.5rem .5rem}.financial-header h2{font-size:var(--text-h1)}}
+.financial-benefit{padding:0 clamp(1.2rem,2.4vw,2.6rem);min-height:136px;border-right:1px solid rgba(221,233,238,.22)}.financial-benefit:first-child{padding-left:0}.financial-benefit:last-child{border-right:0}.financial-benefit h3{font-family:var(--display);font-size:var(--text-h2);font-weight:300;line-height:1.05;color:#fff}.financial-benefit p{color:rgba(221,233,238,.72);font-size:var(--text-body);line-height:1.6;margin-top:.65rem;max-width:320px}
+@media (max-width:950px), (max-width:1100px) and (orientation:portrait){.financial-header{grid-template-columns:1fr;gap:1.4rem}.financial-intro{border-left:0;padding-left:0}.financial-graphic{grid-template-columns:1fr}}
+@media (max-width:650px), (max-width:1100px) and (orientation:portrait){.financial-benefits{grid-template-columns:1fr}.financial-benefit,.financial-benefit:first-child{padding:1.3rem 0;border-right:0;border-bottom:1px solid rgba(221,233,238,.2)}.financial-benefit:last-child{border-bottom:0}.financial-graphic{padding:.65rem}.financial-chart svg,.financial-chart img{min-width:0}.financial-header h2{font-size:var(--text-h1)}}
 
 
 /* Match the highlighted heading phrase to the site's dark-section cyan emphasis. */
-.financial-header h2 em{font-family:inherit;font-style:italic;font-weight:300;color:var(--gold)}
+.financial-header h2 em{font-family:inherit;font-style:italic;font-weight:300;color:var(--gold)}/* Emphasis for the four healthcare pressure statements. */
 
-/* Emphasis for the four healthcare pressure statements. */
-.pressure .pressure-lead{margin:.75rem 0 .65rem;color:var(--ink);font-size:var(--text-body);line-height:1.5}
-.pressure .pressure-lead strong{font-weight:600}
 /* Damper video is square with empty margin above (~14%) and below (~11%) the drawing. Show it at
    ~1.15:1 (86.25% of the 4:3 frame's width, centered), cropping only part of that margin so about
    6% of space stays above the label and below the damper detail. No stretching. */
@@ -444,34 +255,8 @@ section,.footer{position:relative;z-index:1}
 /* Slide 6: image fills the entire media frame; do not letterbox or add padding. */
 .ucsf-story-single{padding:0;gap:0;background:transparent}
 .ucsf-story-single img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
-.ucsf-story-frame.is-full-bleed{border:0}
+.ucsf-story-frame.is-full-bleed{border:0}/* Updated team and UCI copy, using the existing light theme and typefaces. */
 
-
-
-
-
-/* Updated team and UCI copy, using the existing light theme and typefaces. */
-.audiences--relationships .audience-head{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(2rem,5vw,5rem);align-items:end;margin-bottom:2.8rem}
-.audiences--relationships .audience-head h2{margin-bottom:0}
-.audience-intro{font-size:var(--text-body);line-height:1.8;color:var(--ink2);max-width:660px}
-.audiences--relationships .audience{min-width:0}
-
-.audience-proof{margin-top:auto;padding-top:1.7rem}
-.audience-stat{display:block;font-family:var(--display);font-size:var(--text-display);font-weight:300;letter-spacing:-.035em;line-height:.95;color:var(--green-on-light)}
-.audience-stat-label{display:block;margin-top:.65rem;font-size:var(--text-body);line-height:1.6;letter-spacing:.15em;text-transform:uppercase;color:#000;max-width:300px}
-.audience-stat--response{font-size:var(--text-h1);line-height:1.02}
-.audience .audience-proof-detail{margin-top:.45rem;font-size:var(--text-small);line-height:1.55}
-.audience-proof-detail strong{font-weight:500;color:var(--ink)}
-.audience-closing{display:flex;align-items:center;justify-content:center;gap:clamp(.5rem,1vw,1.4rem);margin-top:1.6rem;font-family:var(--display);font-size:clamp(1rem,.75rem + .75vw,1.75rem);font-weight:400;line-height:1.3;text-align:center;white-space:nowrap}.audience-closing::before,.audience-closing::after{content:"";flex:1 1 0;min-width:0;height:1px;background:var(--green-on-light);opacity:.95}
-@media (max-width:1100px), (max-width:1100px) and (orientation:portrait){
-  .audiences--relationships .audience-head{grid-template-columns:1fr;gap:1.4rem}
-  .audiences--relationships .audience h3{max-width:650px}
-  .audiences--relationships .audience p{max-width:780px}
-}
-@media (max-width:600px), (max-width:1100px) and (orientation:portrait){
-  .audiences--relationships .audience{padding:1.6rem}
-  .audience-closing{display:block;text-align:left;white-space:normal}.audience-closing::before,.audience-closing::after{display:none}
-}
 
 
 /* Smooth, continuous proof-point ribbon directly beneath the Hero. */
@@ -507,8 +292,7 @@ section,.footer{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){
   .proof-track{animation:none;will-change:auto}
   .proof-marquee{overflow-x:auto}
-  .proof-set[aria-hidden="true"]{display:none}
-}
+  .proof-set[aria-hidden="true"]{display:none}}
 
 
 /* Why Healthcare Is Different — two-part heading and four-column layout from reference */
@@ -519,19 +303,6 @@ section,.footer{position:relative;z-index:1}
 }
 .difference .wrap{width:min(1620px,calc(100% - 2*clamp(1.25rem,2.1vw,2.5rem)))}
 .difference .eyebrow{color:var(--green-on-light);font-size:var(--text-eyebrow);letter-spacing:.17em;margin-bottom:clamp(.7rem,1vw,1rem)}
-.difference-head{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:0;
-  align-items:stretch;
-  margin-bottom:clamp(2.2rem,3.5vw,3.8rem);
-  padding-bottom:clamp(1.2rem,2.5vw,2.8rem);
-}
-.difference-problem{padding:0 clamp(2.1rem,3.1vw,3.7rem) 0 clamp(1.5rem,2.7vw,3rem)}
-.difference-approach{
-  padding:0 clamp(.5rem,1vw,1.3rem) 0 clamp(3.8rem,5.2vw,5.5rem);
-  border-left:1px solid rgba(18,24,28,.24);
-}
 /* Both heading labels use the same decorative cyan rule. */
 .difference h2{
   font-family:var(--display);
@@ -542,72 +313,11 @@ section,.footer{position:relative;z-index:1}
   color:#111111;
   max-width:610px;
 }
-.difference-approach h2{font-size:var(--text-h1);max-width:none}
-.difference .pressures{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  border-top:1px solid rgba(0,0,0,.22);
-  border-bottom:0;
-}
-.difference .pressure{
-  display:flex;
-  flex-direction:column;
-  padding:clamp(1.25rem,1.8vw,2rem) clamp(1.1rem,2.65vw,2.7rem) clamp(.5rem,1vw,1.2rem);
-  border-right:1px solid rgba(0,0,0,.17);
-  border-bottom:0;
-  min-width:0;
-}
-.difference .pressure:last-child{border-right:0}
-.difference .pressure-num{
-  font-family:var(--display);
-  font-weight:300;
-  font-size:var(--text-h2-lg);
-  color:var(--green-on-light);
-  line-height:.95;
-  margin-bottom:clamp(.6rem,.95vw,.95rem);
-}
-.difference .pressure h3{
-  font-family:var(--display);
-  font-size:var(--text-h2-lg);
-  line-height:1.02;
-  font-weight:300;
-  color:#141414;
-  margin-bottom:clamp(.7rem,1.1vw,1.2rem);
-}
-.difference .pressure .pressure-lead{
-  color:#101010;
-  font-size:var(--text-body);
-  line-height:1.25;
-  margin:0 0 clamp(.6rem,.75vw,.9rem);
-  min-height:2.45em;
-}
-.difference .pressure .pressure-lead strong{font-weight:600}
-.difference .pressure > p:not(.pressure-lead){
-  color:var(--ink2);
-  font-size:var(--text-body);
-  line-height:1.52;
-  margin:0;
-}
 @media (max-width:1100px), (max-width:1100px) and (orientation:portrait){
-  .difference h2{font-size:var(--text-h1)}
-  .difference .pressures{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .difference .pressure:nth-child(2){border-right:0}
-  .difference .pressure:nth-child(-n+2){border-bottom:1px solid rgba(0,0,0,.16)}
-  .difference .pressure h3{font-size:var(--text-h2-lg)}
-}
+  .difference h2{font-size:var(--text-h1)}}
 @media (max-width:760px), (max-width:1100px) and (orientation:portrait){
   .difference{padding:3rem 0}
-  .difference-head{grid-template-columns:1fr;gap:2rem;margin-bottom:2.2rem}
-  .difference-problem{padding:0}
-  .difference-approach{border-left:0;border-top:1px solid rgba(0,0,0,.2);padding:1.5rem 0 0}
-  .difference h2{font-size:var(--text-h1)}
-  .difference .pressures{grid-template-columns:1fr}
-  .difference .pressure{border-right:0!important;border-bottom:1px solid rgba(0,0,0,.16)!important;padding:1.7rem 0 1.8rem}
-  .difference .pressure:last-child{border-bottom:0!important}
-  .difference .pressure h3{font-size:var(--text-h2-lg)}
-  .difference .pressure .pressure-lead{min-height:0}
-  .difference .pressure > p:not(.pressure-lead){font-size:var(--text-body)}
-}
+  .difference h2{font-size:var(--text-h1)}}
 
 
 /* One-screen Hero: reserve space for the animated proof ribbon below. */
@@ -642,33 +352,7 @@ section,.footer{position:relative;z-index:1}
   .hero{height:calc(100svh - var(--hero-proof-height));min-height:0}
   .hero h1{font-size:var(--text-display)}
   .hero-content{padding-bottom:calc(clamp(1.6rem,4.5svh,3rem) + clamp(2.7rem,12.6vw,5.3rem))}
-  .proof-ribbon .proof-v{font-size:var(--text-h2)}
-}
-
-
-/* Align the four Why Healthcare Is Different columns on shared text baselines.
-   Subgrid lets the tallest heading/lead determine the row height for its peers,
-   rather than pushing the following text down in only one column. */
-@supports (grid-template-rows:subgrid){
-  .difference .pressure{
-    display:grid;
-    grid-row:span 4;
-    grid-template-rows:subgrid;
-    row-gap:0;
-    align-content:start;
-  }
-}
-/* Keep alignment consistent for browsers without CSS subgrid support. */
-@supports not (grid-template-rows:subgrid){
-  @media(min-width:1101px){
-    .difference .pressure h3{min-height:3.05em}
-    .difference .pressure .pressure-lead{min-height:2.5em}
-  }
-  @media (min-width:761px) and (max-width:1100px) and (orientation:landscape){
-    .difference .pressure h3{min-height:2.1em}
-    .difference .pressure .pressure-lead{min-height:2.5em}
-  }
-}
+  .proof-ribbon .proof-v{font-size:var(--text-h2)}}
 
 /* Hero media and scrolling ribbon reliability fixes. */
 .hero-frames{background:#080b0f url("https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp") center/cover no-repeat}
@@ -689,29 +373,8 @@ html,body{overflow-x:clip}
 @media(max-height:520px){.hero-content{padding-top:var(--space-6)}}
 
 /* Hero adjustments: natural-speed video, no full-screen darkening, headline-only shade. */
-.hero .hero-frames { z-index: 0; }
-/* Left-side dark gradient over the Hero video, transparent on the right. */
-.hero .hero-overlay {
-  display: block !important;
-  position: absolute;
-  inset: 0;
-  z-index: 2; /* Above video (z=1), below headline (z=5). */
-  pointer-events: none;
-  background: linear-gradient(90deg,
-    rgba(3, 7, 13, 0.78) 0%,
-    rgba(3, 7, 13, 0.68) 22%,
-    rgba(3, 7, 13, 0.34) 43%,
-    rgba(3, 7, 13, 0.10) 56%,
-    rgba(3, 7, 13, 0) 66%) !important;
-}
-@media (max-width: 760px), (max-width:1100px) and (orientation:portrait){
-  .hero .hero-overlay {
-    background: linear-gradient(90deg,
-      rgba(3, 7, 13, 0.78) 0%,
-      rgba(3, 7, 13, 0.62) 55%,
-      rgba(3, 7, 13, 0) 100%) !important;
-  }
-}
+.hero .hero-frames { z-index: 0; }/* Left-side dark gradient over the Hero video, transparent on the right. */
+
 .hero .ucsf-bg-media {
   position: absolute;
   inset: 0;
@@ -786,8 +449,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     flex: 0 0 min(78vw, 20rem);
     width: min(78vw, 20rem);
     scroll-snap-align: start;
-  }
-}
+  }}
 /* Three equal, centred proof boxes with tighter vertical space. */
 :root { --hero-proof-height: clamp(5.75rem, 12.5svh, 7rem); }
 .proof-ribbon .proof-set {
@@ -809,57 +471,11 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Each proof point is a left-aligned block (eyebrow and text share one left edge), centred as a block in its column. */
 .proof-ribbon .proof-set .proof{display:grid;grid-template-columns:minmax(0,max-content);justify-content:center;justify-items:start;align-content:center;text-align:left}
 @media (max-width: 760px), (max-width:1100px) and (orientation:portrait){
-  .proof-ribbon .proof-set .proof { width: min(78vw, 20rem); }
-}
+  .proof-ribbon .proof-set .proof { width: min(78vw, 20rem); }}
 @media (prefers-reduced-motion: reduce) {
   .hero .ucsf-bg-media video { display: none !important; }
-  .hero .ucsf-bg-media { opacity: 0 !important; }
-}
+  .hero .ucsf-bg-media { opacity: 0 !important; }}/* Restored UCSF statistics: stacked, editorial four-column layout from reference. */
 
-
-/* Restored UCSF statistics: stacked, editorial four-column layout from reference. */
-.ucsf-proof-metrics .ucsf-metric,
-.ucsf-proof-metrics .ucsf-metric.amc-trigger {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 0;
-  min-width: 0;
-  padding: clamp(1.3rem, 2.1vw, 2rem) clamp(1.2rem, 2.2vw, 2.3rem);
-}
-.ucsf-proof-metrics .ucsf-metric strong {
-  display: block;
-  font-size: var(--text-h1);
-  line-height: .95;
-  letter-spacing: -.03em;
-  white-space: nowrap;
-}
-.ucsf-proof-metrics .ucsf-metric span {
-  margin-top: .55rem;
-  font-size: var(--text-eyebrow);
-  letter-spacing: .14em;
-  line-height: 1.55;
-}
-.ucsf-proof-metrics .ucsf-metric .metric-link {
-  margin-top: .45rem;
-  font-size: var(--text-eyebrow);
-  letter-spacing: .10em;
-  font-weight: 600;
-}
-.ucsf-proof-metrics .ucsf-metric.amc-trigger:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: -3px;
-}
-@media (max-width: 760px), (max-width:1100px) and (orientation:portrait){
-  .ucsf-proof-metrics .ucsf-metric:nth-child(2) {border-right:0}
-  .ucsf-proof-metrics .ucsf-metric:nth-child(-n+2) {border-bottom:1px solid var(--line)}
-  .ucsf-proof-metrics .ucsf-metric {min-height:155px}
-}
-@media (max-width: 390px) {
-  .ucsf-proof-metrics .ucsf-metric,
-  .ucsf-proof-metrics .ucsf-metric.amc-trigger {padding:1rem}
-}
 
 
 /* Stanford story slides 1-3: reference screenshot typography and full-image framing. */
@@ -958,8 +574,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .financial-risk--arcs .financial-graphic.is-visible .arcs-lock,
   .financial-risk--arcs .financial-graphic.is-visible .arcs-arrow-shaft,
   .financial-risk--arcs .financial-graphic.is-visible .arcs-arrow-head,
-  .financial-risk--arcs .financial-graphic.is-visible .arcs-callout {animation:none;}
-}
+  .financial-risk--arcs .financial-graphic.is-visible .arcs-callout {animation:none;}}
 .financial-risk--arcs .financial-benefits {
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -993,8 +608,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .financial-risk--arcs .financial-header {grid-template-columns:1fr;gap:1.5rem;}
   .financial-risk--arcs .financial-header h2 em {white-space:normal;}
   .financial-risk--arcs .financial-intro {margin-left:clamp(.5rem,1.05vw,1.2rem);}
-  .financial-risk--arcs .financial-benefit {padding-inline:clamp(1rem,2vw,1.5rem);}
-}
+  .financial-risk--arcs .financial-benefit {padding-inline:clamp(1rem,2vw,1.5rem);}}
 @media (max-width:700px), (max-width:1100px) and (orientation:portrait){
   .financial-risk--arcs {padding-block:var(--space-4);}
   .financial-risk--arcs .financial-header h2 {font-size:var(--text-h1);line-height:1.06;}
@@ -1011,8 +625,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     border-bottom:1px solid rgba(233,242,247,.27);
     min-height:0;
   }
-  .financial-risk--arcs .financial-benefit:last-child {border-bottom:0;}
-}
+  .financial-risk--arcs .financial-benefit:last-child {border-bottom:0;}}
 
 
 /* Match all three ARCS benefit descriptions on one shared baseline.
@@ -1028,8 +641,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     row-gap: clamp(.65rem, 1vw, 1rem);
     align-content: start;
   }
-  .financial-risk--arcs .financial-benefit h3 { margin-bottom: 0; }
-}
+  .financial-risk--arcs .financial-benefit h3 { margin-bottom: 0; }}
 @supports not (grid-template-rows: subgrid) {
   @media (min-width:1101px), (min-width:701px) and (orientation:landscape){
     .financial-risk--arcs .financial-benefit {
@@ -1037,38 +649,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
       flex-direction: column;
       row-gap: 0;
     }
-    .financial-risk--arcs .financial-benefit h3 { min-height: 3.18em; }
-  }
-}
-
-
-/* Four screenshot-matched healthcare sections | 2026-11-03
+    .financial-risk--arcs .financial-benefit h3 { min-height: 3.18em; }}}/* Four screenshot-matched healthcare sections | 2026-11-03
    All type uses the NYA display/body families and shared responsive tokens. */
-
 /* Delivered through collaboration – two equal panels and proof metrics */
-.nya-collaboration{background:#f8f6f1;color:var(--ink);padding:clamp(3rem,5vw,5.5rem) 0}
-.nya-collaboration .wrap{width:min(1540px,calc(100% - 2*var(--pad)))}
-.nya-collaboration .eyebrow{color:var(--green-on-light)}
-.nya-collaboration .collaboration-head{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,.75fr);gap:clamp(2rem,3vw,4rem);align-items:center;margin-bottom:clamp(2rem,3.4vw,3.5rem)}
-.nya-collaboration .collaboration-head h2{margin:0;font-family:var(--display);font-weight:300;font-size:var(--text-h1);line-height:.96;letter-spacing:-.025em;color:#111}
-.nya-collaboration h2 em{font-style:italic;font-weight:300;color:var(--green-on-light)}
-.nya-collaboration .collaboration-intro{border-left:1px solid rgba(21,27,29,.35);padding:clamp(.7rem,1vw,1.3rem) 0 clamp(.7rem,1vw,1.3rem) clamp(1.5rem,2.4vw,3rem);font-size:var(--text-body);line-height:1.65;color:#272b2e}
-.nya-collaboration .collaboration-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid rgba(21,27,29,.27);border-radius:5px;overflow:hidden;background:rgba(255,255,255,.1)}
-.nya-collaboration .collaboration-card{min-width:0;padding:clamp(1.75rem,3.2vw,3.5rem);display:flex;flex-direction:column;min-height:clamp(23rem,27vw,33rem);background:transparent}
-.nya-collaboration .collaboration-card+.collaboration-card{border-left:1px solid rgba(21,27,29,.2)}
-.nya-collaboration .collaboration-card>.eyebrow{margin-bottom:clamp(1rem,2vw,2rem);font-size:var(--text-eyebrow);font-weight:500}
-.nya-collaboration .collaboration-card h3{font-family:var(--display);font-size:var(--text-h2-lg);font-weight:300;line-height:1.02;margin:0 0 clamp(1rem,1.5vw,1.5rem);color:#111}
-.nya-collaboration .collaboration-card>p{font-size:var(--text-body);line-height:1.7;color:#272b2e;max-width:36rem}
-.nya-collaboration .collaboration-metrics{display:flex;align-items:center;gap:clamp(1rem,2vw,2.5rem);margin-top:auto;padding-top:clamp(2rem,4vw,4.5rem)}
-.nya-collaboration .collaboration-figure{font-family:var(--display);font-size:var(--text-stat);font-weight:300;letter-spacing:-.045em;color:var(--green-on-light);line-height:.92;white-space:nowrap}
-.nya-collaboration .collaboration-years{border-left:1px solid rgba(15,25,29,.32);padding-left:clamp(1.2rem,2.5vw,2.7rem);text-transform:uppercase;letter-spacing:.15em;color:#161927;font-weight:600;font-size:var(--text-small);line-height:1.35}
-.nya-collaboration .collaboration-metrics--response{gap:clamp(.6rem,1vw,1rem)}
-.nya-collaboration .collaboration-response{display:flex;align-items:center;gap:clamp(.4rem,1vw,1rem);min-width:0;flex:1}
-.nya-collaboration .collaboration-response+.collaboration-response{border-left:1px solid rgba(15,25,29,.32);padding-left:clamp(.7rem,1.5vw,1.5rem)}
-.nya-collaboration .collaboration-response .collaboration-figure{font-size:var(--text-h1)}
-.nya-collaboration .collaboration-response span{font-size:var(--text-small);line-height:1.42;color:#1c2430}
-@media (max-width:1040px), (max-width:1100px) and (orientation:portrait){.nya-collaboration .collaboration-head{grid-template-columns:1fr;gap:1rem}.nya-collaboration .collaboration-intro{border-left:0;padding:0}.nya-collaboration .collaboration-card{min-height:0}.nya-collaboration .collaboration-grid{grid-template-columns:1fr}.nya-collaboration .collaboration-card+.collaboration-card{border-left:0;border-top:1px solid rgba(21,27,29,.2)}.nya-collaboration .collaboration-metrics{padding-top:2.4rem}}
-@media (max-width:650px), (max-width:1100px) and (orientation:portrait){.nya-collaboration .collaboration-head h2 br{display:none}.nya-collaboration .collaboration-card{padding:1.4rem}.nya-collaboration .collaboration-metrics--response{flex-wrap:wrap;gap:1.1rem}.nya-collaboration .collaboration-response+.collaboration-response{border-left:0;padding-left:0}.nya-collaboration .collaboration-response{flex-basis:100%}}
+
 
 /* Basic vs NYA comprehensive soil-structure interaction – reference comparison */
 .ssi-compare--reference{background:radial-gradient(ellipse at 50% 42%,#042027 0%,#03151b 45%,#010a0f 100%);border-color:rgba(0,235,242,.18);padding:clamp(3rem,4.8vw,5rem) 0;color:#fff}
@@ -1090,9 +674,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .ssi-compare--reference .ssi-reference-list p:first-child{padding-top:0}
 .ssi-compare--reference .ssi-reference-list p:last-child{padding-bottom:0;border-bottom:0}
 .ssi-compare--reference .ssi-reference-list strong{font-weight:600;color:#fff}
-.ssi-compare--reference .ssi-reference-diagram{display:block;width:100%;height:auto;max-height:clamp(19rem,32vw,31rem);object-fit:contain;object-position:center}
-@media(max-width:1170px){.ssi-compare--reference .ssi-reference-grid{grid-template-columns:1fr}.ssi-compare--reference .ssi-reference-panel+.ssi-reference-panel{border-left:0;border-top:1px solid var(--gold)}.ssi-compare--reference .ssi-reference-body{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}.ssi-compare--reference .ssi-reference-diagram{max-height:30rem}}
-@media (max-width:600px), (max-width:1100px) and (orientation:portrait){.ssi-compare--reference .ssi-reference-heading br{display:none}.ssi-compare--reference .ssi-reference-body,.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body{grid-template-columns:1fr;gap:1.15rem}.ssi-compare--reference .ssi-reference-diagram{max-height:23rem;width:min(100%,22rem);margin:auto}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body .ssi-reference-diagram{order:2}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body .ssi-reference-list{order:1}.ssi-compare--reference .ssi-reference-list p{padding:.8rem 0}}
+@media(max-width:1170px){.ssi-compare--reference .ssi-reference-grid{grid-template-columns:1fr}.ssi-compare--reference .ssi-reference-panel+.ssi-reference-panel{border-left:0;border-top:1px solid var(--gold)}.ssi-compare--reference .ssi-reference-body{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}}
+@media (max-width:600px), (max-width:1100px) and (orientation:portrait){.ssi-compare--reference .ssi-reference-heading br{display:none}.ssi-compare--reference .ssi-reference-body,.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body{grid-template-columns:1fr;gap:1.15rem}.ssi-compare--reference .ssi-reference-panel--advanced .ssi-reference-body .ssi-reference-list{order:1}.ssi-compare--reference .ssi-reference-list p{padding:.8rem 0}}
 
 /* ARCS copy and three benefits from the supplied final reference – preserve SVG chart. */
 .financial-risk--arcs .financial-header h2{font-family:var(--display);font-size:var(--text-h1);line-height:1.03}
@@ -1103,9 +686,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .financial-risk--arcs .financial-benefit p{color:rgba(242,246,248,.83);font-size:var(--text-body);line-height:1.65}
 .financial-risk--arcs .financial-benefit{min-height:0;padding-bottom:.5rem}
 @media (min-width:1101px), (min-width:701px) and (orientation:landscape){.financial-risk--arcs .financial-benefits{grid-template-rows:auto auto auto}.financial-risk--arcs .financial-benefit{grid-row:span 3;grid-template-rows:subgrid;row-gap:.65rem;align-content:start}.financial-risk--arcs .financial-benefit h3{margin-bottom:0}}
-@media (max-width:700px), (max-width:1100px) and (orientation:portrait){.financial-risk--arcs .financial-benefit{padding-top:1.4rem}.financial-risk--arcs .financial-header h2 br{display:none}}
-
-</style>
+@media (max-width:700px), (max-width:1100px) and (orientation:portrait){.financial-risk--arcs .financial-benefit{padding-top:1.4rem}.financial-risk--arcs .financial-header h2 br{display:none}}</style>
 
 <style>
   .iso-film {
@@ -1141,8 +722,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .iso-name.iso-iso { color: var(--lake-500); }
   /* A narrow film: each name steps down to body size so it stays on one or two lines. */
   @container iso-film (max-width: 60rem) {
-    .iso-film .iso-name { font-size: max(16px, clamp(1.0625rem, 0.875rem + 0.25vw, 1.25rem)); }
-  }
+    .iso-film .iso-name { font-size: max(16px, clamp(1.0625rem, 0.875rem + 0.25vw, 1.25rem)); }}
   .iso-scene { position: relative; }
   .iso-art {
     position: absolute;
@@ -1273,13 +853,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  .ucsf-story-animation .iso-film{--film-max-h:calc(100cqh - .6rem);row-gap:.45rem;}
  .ucsf-story-animation .iso-strip{row-gap:.2rem;padding-top:.2rem;}
  .ucsf-story-animation .iso-strip-label{font-size:clamp(11px,2.4vw,14px);line-height:1.22;}
- .ucsf-story-animation .iso-name{font-size:clamp(12px,3.2vw,16px);line-height:1.12;}
-}
+ .ucsf-story-animation .iso-name{font-size:clamp(12px,3.2vw,16px);line-height:1.12;}}
 
 /* All section and slide eyebrows: exactly 2pt larger than the existing fluid type token. */
-.eyebrow { font-size: calc(var(--text-eyebrow) + 2pt) !important; }
-
-</style>
+.eyebrow { font-size: calc(var(--text-eyebrow) + 2pt) !important; }</style>
 
 <style id="nya-scrollytelling-module">
 /* Why Healthcare Is Different: cumulative, scroll-revealed chapter sequence.
@@ -1384,22 +961,18 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   min-height:clamp(12rem,25svh,20rem);padding:var(--space-3) 0;
 }
 @media (max-width:1099px), (max-width:1100px) and (orientation:portrait){
-  .nya-journey.is-flow .nya-journey-chapter{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-}
+  .nya-journey.is-flow .nya-journey-chapter{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 @media (max-width:640px), (max-width:1100px) and (orientation:portrait){
   .nya-journey-eyebrow{margin-bottom:var(--space-2)}
   .nya-journey-problem{font-size:var(--text-h2)}
   .nya-journey.is-flow .nya-journey-chapter{display:block;min-height:0;padding:var(--space-3) 0 var(--space-4)}
   .nya-journey-chapter h4{font-size:var(--text-h2-lg)}
   .nya-journey-chapter-number{font-size:var(--text-h1)}
-  .nya-journey-chapter p{margin-top:var(--space-2);line-height:1.6}
-}
+  .nya-journey-chapter p{margin-top:var(--space-2);line-height:1.6}}
 @media(prefers-reduced-motion:reduce){
   .nya-journey{height:auto!important}
   .nya-journey-stage{position:relative!important;height:auto!important;min-height:0!important}
-  .nya-journey-chapter{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important}
-}
-</style>
+  .nya-journey-chapter{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important}}</style>
 
 <style id="ssi-aligned-portrait-videos">
 /* SSI: symmetric panel proportions, matched video baselines and text row alignment. */
@@ -1461,8 +1034,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ssi-compare--reference.ssi-video-design .ssi-reference-body,
   .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-body{
     grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  }
-}
+  }}
 @media (max-width:640px), (max-width:1100px) and (orientation:portrait){
   .ssi-compare--reference.ssi-video-design{--ssi-media-height:clamp(21rem,114vw,33rem)}
   .ssi-compare--reference.ssi-video-design .ssi-reference-body,
@@ -1477,9 +1049,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     max-width:min(100%,22rem);margin-inline:auto;
   }
   .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-list{order:1}
-  .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-media{order:2}
-}
-</style>
+  .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-media{order:2}}</style>
 <style id="ssi-results-style">
 /* SSI: three result columns under the comparison grid */
 .ssi-results{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,1.1fr);align-items:stretch;margin-top:clamp(2rem,3.6vw,3.6rem)}
@@ -1496,9 +1066,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ssi-results{grid-template-columns:minmax(0,1fr)}
   .ssi-results-lead{padding:0 0 clamp(1.4rem,4vw,2rem)}
   .ssi-result{padding:clamp(1.4rem,4vw,2rem) 0 0;border-left:0;border-top:1px solid rgba(255,255,255,.4)}
-  .ssi-result + .ssi-result{margin-top:clamp(1.4rem,4vw,2rem)}
-}
-</style>
+  .ssi-result + .ssi-result{margin-top:clamp(1.4rem,4vw,2rem)}}</style>
 
 <style id="nya-rel-scrollytelling-style">
 /* Relationships: large fixed intro copy crossfades to its small center counterpart.
@@ -1529,14 +1097,12 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 }
 @media (max-width:1040px), (max-width:1100px) and (orientation:portrait){
  .nya-rel-intro h2{white-space:normal;font-size:clamp(2.75rem,5.1vw,3.8rem);}
- .nya-rel-intro p{font-size:clamp(1.15rem,2vw,1.55rem);}
-}
+ .nya-rel-intro p{font-size:clamp(1.15rem,2vw,1.55rem);}}
 @media (max-width:620px), (max-width:1100px) and (orientation:portrait){
  .nya-rel-intro{padding:1.5rem;}
  .nya-rel-intro__copy{transform:translateY(-0.5rem);}
  .nya-rel-intro h2{font-size:clamp(2.65rem,10vw,3.5rem);line-height:1.08;}
- .nya-rel-intro p{font-size:clamp(1.05rem,4.5vw,1.3rem);line-height:1.52;}
-}
+ .nya-rel-intro p{font-size:clamp(1.05rem,4.5vw,1.3rem);line-height:1.52;}}
 
 .nya-rel-world{
   position:absolute;top:50%;left:50%;width:1300px;height:1180px;
@@ -1615,9 +1181,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  .nya-rel-note--responsive p,.nya-rel-note--team p{font-size:calc(var(--text-eyebrow) + 1px);}
  .nya-rel-note--team{left:740px;top:790px;width:520px;}
  .nya-rel-note--team{height:340px;}
- .nya-rel-note--responsive{height:340px;}
-
-}
+ .nya-rel-note--responsive{height:340px;}}
 /* Larger type and curve-hugging wraps for the left, right and centre circles.
    Geometry is in the 1300px world space; polygons follow the circle arcs (14px inset). */
 .nya-rel-note--responsive{left:40px;top:655px;width:670px;height:500px;display:block;}
@@ -1653,10 +1217,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  .nya-rel-a11y-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-3);margin-top:var(--space-4);}
  .nya-rel-a11y article{border-top:1px solid var(--green-on-light);padding-top:var(--space-2);}
  .nya-rel-a11y h3{font-family:var(--display);font-size:var(--text-h2);font-weight:300;}
- .nya-rel-a11y article p{font-size:var(--text-body);line-height:1.6;margin-top:var(--space-1);text-align:justify;text-align-last:left;hyphens:none;-webkit-hyphens:none;word-break:normal;overflow-wrap:normal;}
-}
-@media (prefers-reduced-motion:reduce) and (max-width:800px), (max-width:1100px) and (orientation:portrait) and (prefers-reduced-motion:reduce){.nya-rel-a11y-grid{grid-template-columns:1fr;}}
-</style>
+ .nya-rel-a11y article p{font-size:var(--text-body);line-height:1.6;margin-top:var(--space-1);text-align:justify;text-align-last:left;hyphens:none;-webkit-hyphens:none;word-break:normal;overflow-wrap:normal;}}
+@media (prefers-reduced-motion:reduce) and (max-width:800px), (max-width:1100px) and (orientation:portrait) and (prefers-reduced-motion:reduce){.nya-rel-a11y-grid{grid-template-columns:1fr;}}</style>
 
 <style id="nya-ucsf-one-screen-snap">
 /* UCSF/Stanford technical-depth introduction: one viewport before the six-slide story.
@@ -1672,36 +1234,22 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ucsf-proof-intro .ucsf-proof-copy {
     min-height: 0;
     padding: var(--space-3) var(--pad);
-  }
-  .ucsf-proof-intro .ucsf-proof-lead {
-    margin-top: var(--space-2);
-    line-height: 1.58;
-  }
-  .ucsf-proof-intro .ucsf-proof-video {
-    height: 100%;
-    min-height: 0;
-  }
-}
+  }}
 /* When text cannot fit (short windows, larger reader fonts), preserve all the
    content rather than forcing it into a cropped viewport. */
 .ucsf-proof-intro.needs-flow {height:auto;min-height:100svh;}
 .ucsf-proof-intro.needs-flow .ucsf-proof-copy {padding-block:var(--space-4);}
 @media (max-width:850px), (max-height:639px), (max-width:1100px) and (orientation:portrait){
   .ucsf-proof-intro {height:auto;min-height:0;}
-  .ucsf-proof-intro .ucsf-proof-copy {padding-block:var(--space-4);}
-  .ucsf-proof-intro .ucsf-proof-video {height:auto;min-height:clamp(16rem,48svh,30rem);}
-}
+  .ucsf-proof-intro .ucsf-proof-copy {padding-block:var(--space-4);}}
 
 /* UCSF story slides 4–6: fit the supplied longer copy without reducing theme font sizes. */
 @media (min-width: 1101px) {
   .ucsf-story-steps .ucsf-step:nth-child(n+4) { padding-block: var(--space-3); }
-  .ucsf-story-steps .ucsf-step:nth-child(n+4) p { line-height: 1.55; margin-top: var(--space-2); }
-}
+  .ucsf-story-steps .ucsf-step:nth-child(n+4) p { line-height: 1.55; margin-top: var(--space-2); }}
 @media (min-width: 1101px) and (max-height: 760px) {
   .ucsf-story-steps .ucsf-step:nth-child(n+4) { padding-block: var(--space-1); }
-  .ucsf-story-steps .ucsf-step:nth-child(n+4) p { line-height: 1.5; }
-}
-</style>
+  .ucsf-story-steps .ucsf-step:nth-child(n+4) p { line-height: 1.5; }}</style>
 
 <style id="nya-project-card-copy-balance">
 /* The revised descriptions are much longer. Keep the NYA font family and headings,
@@ -1717,13 +1265,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   max-width:min(100%,35rem);
 }
 @media (min-width:1101px){
-  .project-grid .project.wide{min-height:340px;}
-}
+  .project-grid .project.wide{min-height:340px;}}
 /* Narrow laptops: the bottom-row cards are at their slimmest, where a title can take three lines, so they get a little more height. */
 @media (min-width:1101px) and (max-width:1279px){
-  .project-grid .project.wide{min-height:370px;}
-}
-</style>
+  .project-grid .project.wide{min-height:370px;}}</style>
 <style id="narrow-screens">
 /* Narrow screens: photos are shown whole, never cropped. */
 @media (max-width:1100px), (max-width:1100px) and (orientation:portrait){
@@ -1734,8 +1279,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ucsf-story-frame{height:auto;aspect-ratio:4/3;max-height:none;width:min(100%,calc(min(calc(100svh - 4rem),50svh) * 4 / 3));margin-inline:auto}
   .ucsf-story-frame .ucsf-story-image,.ucsf-story-single img{object-fit:contain}
   /* Pin below the fixed case-study nav (--range-nav-h, set by range-nav-behavior) so it never covers the picture's top. */
-  .ucsf-story-media{top:var(--range-nav-h,0px)}
-}
+  .ucsf-story-media{top:var(--range-nav-h,0px)}}
 /* Landscape phones: picture pinned on the left, slide text scrolling on the right (portrait stays stacked). */
 @media(max-width:1100px) and (orientation:landscape) and (max-height:500px){
   .ucsf-story{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--space-3)}
@@ -1745,9 +1289,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ucsf-story-frame .ucsf-story-image:not(.is-reference-contained),.ucsf-story-single img{object-fit:cover}
   .ucsf-story-frame.is-iso-active{background:#fffaf5;border-color:transparent}
   .ucsf-story-video{width:100%}
-  .ucsf-step{min-height:calc(100svh - var(--range-nav-h,0px));padding:2rem 0}
-}
-</style>
+  .ucsf-step{min-height:calc(100svh - var(--range-nav-h,0px));padding:2rem 0}}</style>
 <style id="range-nav-style">
 /* Range nav: the case-study run, from the first linked part to the end of the last. Hidden
    outside that run. A quiet top bar: four columns, each with a hairline track that fills while
@@ -1786,8 +1328,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .rn-current{display:flex;color:var(--rn-on);font-size:.6875rem;line-height:1.2;letter-spacing:.12em;text-transform:uppercase}
   .rn-overall{display:block;height:1px;margin-bottom:1px;background:var(--rn-track)}
   .rn-overall i{display:block;height:2px;margin-top:-.5px;background:var(--rn-fill);transform-origin:left;transform:scaleX(var(--overall,0))}
-  .range-nav{cursor:pointer;-webkit-tap-highlight-color:transparent}
-}
+  .range-nav{cursor:pointer;-webkit-tap-highlight-color:transparent}}
 /* Phones and upright tablets: the current part's name is a button. Tapping it, or the track under it, opens a small list of the
    parts plus the Hospital Gallery under the bar, the current one marked; picking one goes there. The list floats below the bar, so
    the bar's height (--range-nav-h, which pinned parts use) never changes. Closes on a pick, a tap elsewhere, a scroll or Esc. */
@@ -1802,8 +1343,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .range-nav .rn-menu a[aria-current="true"]{background:color-mix(in srgb,var(--rn-text) 8%,var(--rn-surface));box-shadow:inset 2px 0 0 var(--rn-mark)}
 .range-nav .rn-menu a:focus-visible{outline:2px solid var(--rn-text);outline-offset:-2px}
 /* The bar steps aside while a project pop-up is open (the pop-up sits on a lower layer). */
-html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-events:none}
-</style>
+html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-events:none}</style>
 <style id="nya-closing-style">
 /* ==== NYA FINALE COMBINED START (CSS) ==== The supplied artwork is the section; words sit between its posts and its cable draws itself with the scroll. */
 .nya-copyright{position:relative;z-index:1;background:#fff;color:#5b6168;text-align:center;padding:1.2rem var(--pad) 1.4rem;font-family:var(--body);font-size:var(--text-small);letter-spacing:.06em}
@@ -1840,10 +1380,8 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .is-pinned .nya-s33-lede::before{content:'';float:right;width:var(--wrap-w,0);height:var(--wrap-h,0);shape-outside:var(--wrap,none)}
 /* Laptops (flowing layout): the same right float gives the paragraph its diagonal right edge (set by the script). */
 .nya-s33:not(.is-pinned) .nya-s33-lede::before{content:'';float:right;width:var(--wrap-w,0);height:var(--wrap-h,0);shape-outside:var(--wrap,none)}
-.is-pinned .nya-s33-lede{margin-top:min(calc(1.1*var(--k)),1.9svh);max-width:none;font-size:var(--text-body);line-height:1.7}
+.is-pinned .nya-s33-lede{margin-top:min(calc(1.1*var(--k)),1.9svh);max-width:none;font-size:var(--text-body);line-height:1.7}/* The angled line is the artwork's own line, lifted out and uncovered up to the right with the scroll (--lp runs 0 to 1). */
 
-/* The angled line is the artwork's own line, lifted out and uncovered up to the right with the scroll (--lp runs 0 to 1). */
-.is-live .nya-s33-line{clip-path:inset(0 calc(94.8% - 94.8%*var(--lp,0)) 0 0);transition:clip-path .28s cubic-bezier(.22,.7,.2,1)}
 
 /* Six columns set to the artwork's own post spacing. The cards start just under the canopy roof (text at drawing row 556, the panel
    top 8 rows under the roof at 527), so the angled cable runs behind their upper part. The cards are only as tall as the longest
@@ -1862,9 +1400,8 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 @media(min-aspect-ratio:21/10){.is-pinned .nya-s33-lede{max-width:calc(54*var(--k))}}
 @media(min-aspect-ratio:22/10){.is-pinned .nya-s33-intro{top:2.6svh}.is-pinned .nya-s33-lede{font-size:max(15px,2.1svh)}}
 @media (max-width:899px), (max-width:1100px) and (orientation:portrait){.nya-s33-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 2rem}}
-@media(max-width:559px){.nya-s33-steps{grid-template-columns:1fr;gap:1.8rem}}
-/* No canopy (class is-no-canopy on the section): the roof, posts, cable, ground line and plants are not shown; the building and cards stay. */
-.nya-s33.is-no-canopy .nya-s33-base,.nya-s33.is-no-canopy .nya-s33-line{display:none}
+@media(max-width:559px){.nya-s33-steps{grid-template-columns:1fr;gap:1.8rem}}/* No canopy (class is-no-canopy on the section): the roof, posts, cable, ground line and plants are not shown; the building and cards stay. */
+
 /* Wherever the pillars show (900px and wider) the drawing spans the full width with its lawn (row 615 of 667) on the canopy ground line,
    behind the posts, cable and cards. */
 /* Zoomed 1.25x (Nov 10): 125% of the width, right-aligned so the building and tree stay in view; the extra runs off the left. */
@@ -1873,25 +1410,21 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
    drawing tucks further up under the words: 11% of the width = 185 rows; 6.3% (105 rows) for Larger, whose tree starts higher.
    The script (fitArt) then pulls it up further, as far as the words allow. The drawing never takes clicks meant for the words. */
 .nya-s33-art{pointer-events:none}
-@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 11%)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 6.3%)}}
-/* Review option, ?building=larger: the same drawing 1.3x larger again (162.5% wide), right-aligned. It grows downward: the red tower's top (row 236 of 667) stays
-   where it is at normal size (canopy row 509; the image starts at row 188 = 20.01%), so nothing new rises into the words; the lower
-   floors run down behind the cards and the image is cut off at the canopy's ground line (row 905, 20.9% up from its bottom). */
-@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33.is-full-large .nya-s33-art .nya-s33-full{left:auto;right:0;width:162.5%;max-width:none;top:20.01%;bottom:auto;clip-path:inset(0 0 20.9% 0)}.nya-s33.is-full-large:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33:not(.is-pinned) .nya-s33-art{margin-top:calc(.5rem - 11%)}}
 /* The building sits a little above the canopy's ground line (2.5 units, about 47px on a 1920px screen).
    The larger new drawing is anchored at its top, so it moves up with a negative top margin and its cut stays on the ground line. */
-@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33-art .nya-s33-full{margin-bottom:calc(2.5*var(--k))}.nya-s33.is-full-large .nya-s33-art .nya-s33-full{margin-bottom:0;margin-top:calc(-2.5*var(--k));clip-path:inset(0 0 16.29% 0)}}
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33-art .nya-s33-full{margin-bottom:calc(2.5*var(--k))}}
 /* Canopy off, 900px and wider: the hospital drawing fills the section. It is 4% wider and set past the right edge by its own empty
    margin (the building ends at column 1973 of 2000), so the building reaches the side, and its lawn (row 615 of 667) sits on the bottom edge (the 52 empty rows under it hang below and are clipped).
    Larger keeps its own size and top and simply runs to the bottom edge. */
-@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33.is-no-canopy .nya-s33-art .nya-s33-full{left:auto;right:-1.76%;width:130%;max-width:none;bottom:calc(-3.38*var(--k));margin-bottom:0}.nya-s33.is-no-canopy.is-full-large .nya-s33-art .nya-s33-full{right:-2.19%;width:162.5%;top:20.01%;bottom:auto;clip-path:none}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{overflow:hidden}}
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33.is-no-canopy .nya-s33-art .nya-s33-full{left:auto;right:-1.76%;width:130%;max-width:none;bottom:calc(-3.38*var(--k));margin-bottom:0}.nya-s33.is-no-canopy:not(.is-pinned) .nya-s33-art{overflow:hidden}}
 /* Desktop, full screen (class is-full, set by the script): the drawing is scaled up from its bottom-right corner by --zoom, so it
    fills the taller stage, the tree reaching near its top; its empty margins (right 1.76%, below the lawn 3.38 units) scale with it. */
 @media (min-width:1101px), (min-width:900px) and (orientation:landscape){.nya-s33.is-no-canopy.is-pinned.is-full .nya-s33-art .nya-s33-full{width:calc(130%*var(--zoom,1));right:calc(-1.76%*var(--zoom,1));bottom:calc(-3.38*var(--k)*var(--zoom,1))}}
 /* Phones and portrait tablets: no pillars. Only rows 76 to 528 of the canopy drawing (941 rows) show: the roof, with the hospital
    drawing standing on it (its lawn on row 488, at 80% of the width so its 615 rows fit the 412 above the roof, right-aligned),
    without the empty bays below. The cable hangs between the pillars, so it goes with them. */
-@media (max-width:899px), (max-width:1100px) and (orientation:portrait){.nya-s33-art{aspect-ratio:1672/452;margin-top:1.5rem;overflow:hidden}.nya-s33-art .nya-s33-base{top:-16.81%;height:208.19%}.nya-s33-art .nya-s33-line{display:none}.nya-s33-art .nya-s33-full{left:auto;right:0;bottom:auto;width:80.14%;height:auto;top:0}}
+@media (max-width:899px), (max-width:1100px) and (orientation:portrait){.nya-s33-art{aspect-ratio:1672/452;margin-top:1.5rem;overflow:hidden}.nya-s33-art .nya-s33-full{left:auto;right:0;bottom:auto;width:80.14%;height:auto;top:0}}
 /* Phones: crop it further to the building end (x 38% to 100%) and show it larger. */
 @media(max-width:699px){.nya-s33-stage{overflow-x:clip}.nya-s33-art{width:161.3%;margin-left:-61.3%}}
 /* Phones and tablets: the drawing's blank strip right of the building (columns 1973-2000 of 2000) is pushed past the screen edge,
@@ -1914,9 +1447,8 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
    longest title ("Responsiveness That Earns Trust" is 12.7 times its font size wide, so 7.4% of the card width fits it with room). */
 .nya-s33:not(.is-pinned) .nya-s33-copy{container-type:inline-size}
 .nya-s33:not(.is-pinned) .nya-s33-copy h3{font-size:var(--text-h2);font-size:min(var(--text-h2),7.4cqi);white-space:nowrap}
-.nya-s33:not(.is-pinned) .nya-s33-copy h3 br{display:none}
-/* Keeps this section's scroll motion smooth over the page-wide reduced-motion rule. */
-.nya-s33.is-live.is-forced .nya-s33-line{transition:clip-path .28s cubic-bezier(.22,.7,.2,1)!important}
+.nya-s33:not(.is-pinned) .nya-s33-copy h3 br{display:none}/* Keeps this section's scroll motion smooth over the page-wide reduced-motion rule. */
+
 .nya-s33.is-live.is-forced .nya-s33-full{transition:opacity .8s ease-out,transform .8s ease-out!important}
 /* The cards come up with the scroll, one after another: each fades in and rises 2.5rem in turn, left to right within a row (--cp
    runs 0 to 1 per card, set by the script). While the script measures the layout (is-fitting) the cards sit in place. */
@@ -2045,15 +1577,12 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   .uci-team-line{left:calc(.5rem - 1px)}
   .uci-team-step h3{justify-self:start;text-align:left}
   .uci-team-step{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--uci-pad) 0 var(--uci-pad) calc(1rem + var(--space-2))}
-  .uci-team-dot{left:0;top:calc(var(--uci-pad) + .54 * var(--text-h2-lg) - .5rem)}
-}
+  .uci-team-dot{left:0;top:calc(var(--uci-pad) + .54 * var(--text-h2-lg) - .5rem)}}
 @media(max-width:599px) and (orientation:portrait){.uci-team-media img{aspect-ratio:3/2}.uci-team-media{margin-top:calc(var(--space-1) - 50 / 1086 * 100%)}}
 @media(prefers-reduced-motion:reduce){
   .uci-team-head::after{transition:none}
   .uci-team.is-armed .uci-team-line{transform:none}
-  .uci-team.is-armed .uci-team-dot,.uci-team.is-armed .uci-team-step h3,.uci-team.is-armed .uci-team-body{opacity:1;transform:none;transition:none}
-}
-</style>
+  .uci-team.is-armed .uci-team-dot,.uci-team.is-armed .uci-team-step h3,.uci-team.is-armed .uci-team-body{opacity:1;transform:none;transition:none}}</style>
 <style id="ucsf-story-head-style">
 /* Technical Excellence header: eyebrow + title + paragraph arrive together; after a second scroll the eyebrow and
    paragraph fade, the title slides up into the eyebrow's place, and only the title stays pinned above the media. */
@@ -2095,8 +1624,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   /* Shorter slide blocks: the empty band between one slide's text and the next is much smaller. */
   .ucsf-step{min-height:62svh;padding:3rem 0}
   .ucsf-step:first-child{padding-top:calc(var(--ucsf-head-h-short,var(--ucsf-head-h)) + 3rem)}
-  .ucsf-story-media{padding-top:clamp(1.5rem,4svh,2.5rem)}
-}
+  .ucsf-story-media{padding-top:clamp(1.5rem,4svh,2.5rem)}}
 
 /* Landscape phones: same header behaviour as desktop. The eyebrow, title and paragraph show together; after a little scrolling the
    eyebrow and paragraph fade and the title (pinned below the section bar, two paddings below it) stays above the picture. The slide
@@ -2117,9 +1645,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   .ucsf-story.is-note-off .ucsf-story-media{top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h-short,var(--ucsf-head-h)));height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h-short,var(--ucsf-head-h)))}
   .ucsf-story-frame{width:min(100%,calc(var(--ucsf-avail-h) * 4 / 3));transition:width .5s var(--ease)}
   .ucsf-step{min-height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h));padding:1.2rem 0}
-  .ucsf-step h3{font-size:min(var(--text-h2-lg),4.6svh)}
-}
-</style>
+  .ucsf-step h3{font-size:min(var(--text-h2-lg),4.6svh)}}</style>
 <style id="hero-mobile-landscape">
 /* Portrait phones: show the hero video at its true 16:9 ratio (no stretching or cropping),
    with the headline on a dark panel directly below it. */
@@ -2135,16 +1661,13 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
     position: relative; z-index: 2; width: auto; margin: 0;
     padding: 1.4rem var(--pad) 1.8rem;
   }
-  .hero .hero-content h1 { background: none; padding: 0; border: 0; border-radius: 0; width: auto !important; max-width: 100%; }
-}
+  .hero .hero-content h1 { background: none; padding: 0; border: 0; border-radius: 0; width: auto !important; max-width: 100%; }}
 /* Landscape phones: headline sized to the screen height so the Hero and the proof strip fit on one screen. */
 @media (orientation: landscape) and (max-height: 500px) {
   .hero .hero-content { padding-top: var(--space-5); padding-bottom: var(--space-2); }
   .hero .hero-content h1 { font-size: min(var(--text-display), 14svh); padding: var(--space-1) var(--space-3) var(--space-2); }
   /* The Hero is much wider than 16:9 here, so crop the video instead of stretching it. */
-  .hero .ucsf-bg-media video { object-fit: cover; }
-}
-</style>
+  .hero .ucsf-bg-media video { object-fit: cover; }}</style>
 <style id="proof-mobile-marquee">
 /* Phones: the three proof points glide across continuously (second set is a hidden copy for a seamless loop). */
 .proof-ribbon .proof-set--loop { display: none; }
@@ -2161,14 +1684,11 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   .proof-ribbon .proof-set .proof {
     flex: 0 0 min(78vw, 20rem) !important; width: min(78vw, 20rem) !important;
     border-right: 1px solid var(--line) !important;
-  }
-}
+  }}
 @media (max-width: 760px) and (prefers-reduced-motion: reduce), (max-width:1100px) and (orientation:portrait) and (prefers-reduced-motion:reduce){
   .proof-ribbon .proof-track { animation: none !important; }
   .proof-ribbon .proof-marquee { overflow-x: auto !important; }
-  .proof-ribbon .proof-set--loop { display: none !important; }
-}
-</style>
+  .proof-ribbon .proof-set--loop { display: none !important; }}</style>
 <style id="nya-rel-final-style">
 /* Last screen after the full-diagram zoom-out: a clean diagram on the left, the numbered summary on the right. */
 .nya-rel-final{position:absolute;inset:0;z-index:5;display:none;opacity:0;visibility:hidden;pointer-events:none;background:#fff;
@@ -2210,8 +1730,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .nya-rel-after .nya-rel-final__panel li:last-child{border-bottom:0}
 .nya-rel-after .nya-rel-final__panel .n{font-family:var(--display);font-weight:300;font-size:clamp(2.6rem,min(4.6vw,8svh),4.6rem);line-height:.9;color:var(--green-on-light)}
 .nya-rel-after .nya-rel-final__panel h3{font-family:var(--display);font-weight:300;font-size:clamp(1.1rem,min(1.75vw,3.3svh),2.05rem);line-height:1.04;letter-spacing:normal;color:var(--ink);margin:0}
-.nya-rel-after .nya-rel-final__panel li p{margin:clamp(.3rem,.9svh,.6rem) 0 0;font-family:var(--body);font-size:clamp(.78rem,min(.92vw,1.75svh),.95rem);line-height:1.46;color:var(--ink2)}
-</style>
+.nya-rel-after .nya-rel-final__panel li p{margin:clamp(.3rem,.9svh,.6rem) 0 0;font-family:var(--body);font-size:clamp(.78rem,min(.92vw,1.75svh),.95rem);line-height:1.46;color:var(--ink2)}</style>
 <style id="nya-rel-after-style">
 /* Phones: instead of the cramped zoomed-out diagram, a clean diagram followed by the numbered list. */
 .nya-rel-after{display:none}
@@ -2231,9 +1750,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   .nya-rel-after .nya-rel-final__panel li{grid-template-columns:2.2rem minmax(0,1fr);gap:.8rem;padding:1rem 0}
   .nya-rel-after .nya-rel-final__panel .n{font-size:2.6rem}
   .nya-rel-after .nya-rel-final__panel h3{font-size:var(--text-h2)}
-  .nya-rel-after .nya-rel-final__panel li p{font-size:.9rem;line-height:1.5}
-}
-</style>
+  .nya-rel-after .nya-rel-final__panel li p{font-size:.9rem;line-height:1.5}}</style>
 <style id="nya-rel-phone-final">
 @media (max-width:1100px) and (orientation:portrait){
   .nya-rel-final{display:flex;align-items:center;justify-content:center;padding:var(--pad)}
@@ -2247,9 +1764,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   /* the list block follows directly under the pinned diagram, tucked up into its bottom margin */
   .nya-rel-after{position:relative;z-index:2;margin-top:-16svh}
   .nya-rel-after .nya-rel-final__diagram{display:none}
-  .nya-rel-after{padding-top:1rem}
-}
-</style>
+  .nya-rel-after{padding-top:1rem}}</style>
 <style id="nya-rel-after-reveal">
 /* Phones: the three points under the diagram appear one by one as they scroll into view (same reveal as the UC Irvine
    points: the title rises in first, then the text) but with no timeline line or dots. */
@@ -2259,9 +1774,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   .nya-rel-after.is-armed li p{opacity:0;transform:translateY(14px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
   .nya-rel-after.is-armed li.is-on .n,
   .nya-rel-after.is-armed li.is-on h3{opacity:1;transform:none;transition-delay:.15s}
-  .nya-rel-after.is-armed li.is-on p{opacity:1;transform:none;transition-delay:.35s}
-}
-</style>
+  .nya-rel-after.is-armed li.is-on p{opacity:1;transform:none;transition-delay:.35s}}</style>
 <style id="nya-rel-phone-start">
 /* Phones and tablets (900px and under, or portrait up to 1100px): no pinned zoom story. The section simply starts at the clean diagram, followed by the numbered list. */
 @media (max-width:1100px) and (orientation:portrait){
@@ -2269,22 +1782,16 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   .nya-rel-pin{position:static;height:auto;min-height:0;overflow:hidden;contain:none}
   .nya-rel-intro,.nya-rel-viewport{display:none!important}
   .nya-rel-after{margin-top:0;padding-top:clamp(2rem,8vw,3rem)}
-  .nya-rel-after .nya-rel-final__diagram{display:block}
-}
-</style>
+  .nya-rel-after .nya-rel-final__diagram{display:block}}</style>
 <style id="ssi-mobile-left-title">
 /* Phones: the "The NYA Approach" label and "NYA's Comprehensive SSI" title are left-aligned like everything else. */
 @media (max-width:720px), (max-width:1100px) and (orientation:portrait){
   .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-tag,
-  .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced h3{text-align:left}
-}
-</style>
+  .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced h3{text-align:left}}</style>
 <style id="tablet-page-margins">
 /* Upright tablets use the phone LAYOUT, but keep tablet-sized page margins and section spacing (the 1.25rem phone margin is for phones only). */
 @media (min-width:761px) and (max-width:1100px) and (orientation:portrait){
-  :root{--pad:clamp(1.4rem,5vw,5rem);--section:clamp(4.5rem,8vw,8rem)}
-}
-</style>
+  :root{--pad:clamp(1.4rem,5vw,5rem);--section:clamp(4.5rem,8vw,8rem)}}</style>
 <style id="nya-rel-final-fit">
 /* Pinned final screen: the circles' left edge sits exactly on the page margin (the drawing has 30/1300 of blank space around its circles). */
 .nya-rel-final .nya-rel-final__diagram{justify-self:start;transform:translateX(-2.31%)}
@@ -2301,18 +1808,14 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   .nya-rel-after .nya-rel-final__diagram{position:sticky;top:calc(var(--nav-inset,0px) + var(--space-2));justify-self:start;transform:translateX(-2.31%)}
   .nya-rel-after .nya-rel-final__panel h2{white-space:normal;font-size:var(--text-h2)}
   .nya-rel-after .nya-rel-final__panel h3{font-size:var(--text-h3)}
-  .nya-rel-after .nya-rel-final__panel .lead,.nya-rel-after .nya-rel-final__panel li p{font-size:var(--text-small);line-height:1.5}
-}
-</style>
+  .nya-rel-after .nya-rel-final__panel .lead,.nya-rel-after .nya-rel-final__panel li p{font-size:var(--text-small);line-height:1.5}}</style>
 <style id="hero-bottom-centre">
 /* Hero (desktop and landscape): no glass panel and no overlay. The headline sits centred just above the proof strip: the first line
    smaller, "NYA reduces the risk." larger. */
 @media (min-width:1101px), (orientation:landscape){
   .hero .hero-content{margin-inline:auto;text-align:center;width:min(1100px,calc(100% - 2*var(--pad)));padding-bottom:clamp(.9rem,3.2svh,2.4rem)}
   .hero .hero-content h1{width:auto;max-width:none;margin-inline:auto;font-size:calc(clamp(1.25rem,min(3.1vw,6.4svh),3.3rem) + 5pt);line-height:1.12;letter-spacing:-.01em;font-weight:600;font-style:normal;text-shadow:0 1px 2px rgba(2,8,28,.7),0 3px 9px rgba(2,8,28,.6),0 0 12px rgba(255,255,255,.4),0 0 28px rgba(160,215,255,.38),0 0 52px rgba(120,190,255,.22)!important}
-  .hero .hero-content h1 em{display:block;margin-top:.12em;font-size:1em;line-height:1.12;color:#fff;font-weight:600;font-style:italic;text-shadow:0 1px 2px rgba(2,8,28,.7),0 3px 9px rgba(2,8,28,.6),0 0 12px rgba(255,255,255,.4),0 0 28px rgba(160,215,255,.38),0 0 52px rgba(120,190,255,.22)!important}
-}
-</style>
+  .hero .hero-content h1 em{display:block;margin-top:.12em;font-size:1em;line-height:1.12;color:#fff;font-weight:600;font-style:italic;text-shadow:0 1px 2px rgba(2,8,28,.7),0 3px 9px rgba(2,8,28,.6),0 0 12px rgba(255,255,255,.4),0 0 28px rgba(160,215,255,.38),0 0 52px rgba(120,190,255,.22)!important}}</style>
 <style id="projects-head-centre">
 /* "Selected Healthcare Work": the eyebrow stays where it was (top left); the title is centred on one line and the sentence under it is centred. */
 #projects .projects-head{display:block}
@@ -2320,8 +1823,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 #projects .projects-head .value-note{max-width:60rem;margin:1rem auto 0;text-align:center}
 /* The visible space under the sentence (before the project grid) matches the visible space above it (under the title). The title's own
    spacing changes with its size, so this follows the window width. */
-#projects .projects-head{margin-bottom:clamp(10.5px,calc(18.5px - .506vw),16.5px)}
-</style>
+#projects .projects-head{margin-bottom:clamp(10.5px,calc(18.5px - .506vw),16.5px)}</style>
 <style id="approach-left-column">
 /* "NYA's approach", desktop: the left column is an opener (the sentences are centred across the whole column, using the page margin on the left). The label stays at the top; the two sentences are centred in the column at the
    same size as the point titles ("Cost Optimization"), with a large pale chevron between them. */
@@ -2332,8 +1834,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .nya-journey.is-pinned .nya-journey-problem::after{opacity:0;transform:translateY(-.8rem);transition:opacity 1.1s ease .15s,transform 1.1s cubic-bezier(.22,.7,.2,1) .15s}
 .nya-journey.is-pinned.is-chevron .nya-journey-problem::after{opacity:1;transform:none}
 .nya-journey.is-pinned .nya-journey-promise{margin:0 0 auto calc(1.75rem - var(--pad));padding-top:clamp(.8rem,3svh,1.8rem)}
-.nya-journey.is-pinned .nya-journey-promise h2{max-width:none;font-size:var(--text-h2-lg);line-height:1.1;letter-spacing:normal;text-wrap:balance}
-</style>
+.nya-journey.is-pinned .nya-journey-promise h2{max-width:none;font-size:var(--text-h2-lg);line-height:1.1;letter-spacing:normal;text-wrap:balance}</style>
 <style id="ssi-heading-centre">
 /* The SSI title is centred on the page; its eyebrow stays where it was. */
 .ssi-compare--reference .ssi-reference-heading{text-align:center}
@@ -2376,11 +1877,10 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 <header class="hero" id="hero">
   <div class="hero-frames" aria-hidden="true">
     <!-- The first frame is the video's own poster, so it costs nothing extra and keeps the
-         hero filled from the first paint. Frames 2-4 only ever show if the video fails or
+         hero filled from the first paint. Frames 2-3 only ever show if the video fails or
          reduced motion is on: they wait in data-bg and the script loads them if that happens,
-         instead of pulling 768 KB on the first screen of every desktop and landscape phone. -->
+         instead of pulling them on the first screen of every desktop and landscape phone. -->
     <div class="hero-frame active" style="background-image:url('https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp')"></div>
-    <div class="hero-frame" data-bg="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp"></div>
     <div class="hero-frame" data-bg="https://www.nyase.com/wp-content/uploads/2026/11/ucirvinedouglashospitalstructuralengineering.webp"></div>
     <div class="hero-frame" data-bg="https://www.nyase.com/wp-content/uploads/2026/11/centurycityhospital.webp"></div>
   </div>
@@ -2395,9 +1895,8 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   </div>
   <div class="hero-dots" aria-label="Healthcare project images">
     <button class="hero-dot active" type="button" data-index="0" aria-label="Show Stanford hospital image"></button>
-    <button class="hero-dot" type="button" data-index="1" aria-label="Show Stanford hospital image"></button>
-    <button class="hero-dot" type="button" data-index="2" aria-label="Show UC Irvine hospital image"></button>
-    <button class="hero-dot" type="button" data-index="3" aria-label="Show Century City hospital image"></button>
+    <button class="hero-dot" type="button" data-index="1" aria-label="Show UC Irvine hospital image"></button>
+    <button class="hero-dot" type="button" data-index="2" aria-label="Show Century City hospital image"></button>
   </div>
 </header>
 
@@ -2833,22 +2332,22 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
     </div>
     <div class="project-grid" id="project-grid">
       <article class="project featured" tabindex="0" data-category="new-construction advanced-analysis" data-name="UCSF Health Helen Diller Hospital at Parnassus" data-tag="New Construction – PBSD – SSI" data-location="San Francisco, CA" data-role="Structural Engineer of Record" data-scale="15-story acute care hospital tower" data-focus="PBSD · SSI · Dampers · SidePlate™" data-link="https://www.nyase.com/ucsf-health-helen-diller-hospital-at-parnassus/" data-desc="NYA is serving as Structural Engineer of Record for the UCSF Health Helen Diller Hospital at Parnassus. The project combines performance-based seismic design, soil-structure interaction, nonlinear analysis, Special Steel Moment Frames with SidePlate™ connections, fluid viscous dampers, advanced coordination, and a demanding healthcare review environment." data-img="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" alt="UCSF Health Helen Diller Hospital at Parnassus" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction – PBSD – SSI</div><h3>UCSF Helen Diller Hospital</h3><div class="project-outcome">Nearly 1 million SF on a steep triangular site, with dramatic cantilevers maximizing space and nearly 200 dampers enhancing seismic performance</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1024x768.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-768x576.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1024x768.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1536x1152.webp 1536w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-2048x1536.webp 2048w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(58vw, 945px)" alt="UCSF Health Helen Diller Hospital at Parnassus" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction – PBSD – SSI</div><h3>UCSF Helen Diller Hospital</h3><div class="project-outcome">Nearly 1 million SF on a steep triangular site, with dramatic cantilevers maximizing space and nearly 200 dampers enhancing seismic performance</div></div>
       </article>
       <article class="project std" tabindex="0" data-category="new-construction advanced-analysis" data-name="The New Stanford Hospital" data-tag="New Construction – Base Isolation" data-location="Palo Alto, CA" data-role="Structural Engineer of Record" data-scale="Four 7-story patient towers · 3-story podium" data-focus="Friction pendulum base isolation" data-link="https://www.nyase.com/the-new-stanford-hospital/" data-desc="NYA served as Structural Engineer of Record for The New Stanford Hospital, a $2 billion replacement healthcare facility with four seven-story patient towers rising from a three-story podium. The hospital uses advanced friction-pendulum base isolation and was engineered around the patient experience, including healing terraces, a 120-foot-diameter atrium, and a building configuration in which roughly one-third is cantilevered." data-img="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital.webp" alt="The New Stanford Hospital" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction – Base Isolation</div><h3>The New Stanford Hospital</h3><div class="project-outcome">A base-isolated hospital with a spectacular 120-foot column free atrium, engineered to maintain patient care after a major earthquake</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital-1024x768.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital-768x576.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital-1024x768.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital-1440x1080.webp 1440w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(41.6vw, 675px)" alt="The New Stanford Hospital" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction – Base Isolation</div><h3>The New Stanford Hospital</h3><div class="project-outcome">A base-isolated hospital with a spectacular 120-foot column free atrium, engineered to maintain patient care after a major earthquake</div></div>
       </article>
       <article class="project std" tabindex="0" data-category="new-construction advanced-analysis" data-name="UC Irvine Douglas Hospital" data-tag="New Construction" data-location="Irvine, CA" data-role="Structural Engineer of Record" data-scale="475,000 SF · 7 stories + basement" data-focus="Braced frames · shear walls · complex link" data-link="https://www.nyase.com/uc-irvine-douglas-hospital/" data-desc="NYA served as Structural Engineer of Record for UC Irvine Douglas Hospital, a 475,000-square-foot hospital tower with seven stories above grade and a full basement. The project is presented by NYA as California's first design-build hospital, among the first UC hospital projects delivered on schedule and within budget, with early OSHPD partnership enabling phased reviews and a faster construction start. The structural scope also includes a 92-foot 1A Link elevator tower supporting a 45-foot cantilevered corridor." data-img="https://www.nyase.com/wp-content/uploads/2026/11/ucirvinedouglashospitalstructuralengineering.webp">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/11/uci.webp" alt="UC Irvine Douglas Hospital" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction</div><h3>UC Irvine Douglas Hospital</h3><div class="project-outcome">California’s first design-build hospital pioneered phased structural approvals, delivering the project on schedule and within budget</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/uci-1024x576.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/uci-768x432.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/uci-1024x576.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/uci-1536x864.webp 1536w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(41.6vw, 675px)" alt="UC Irvine Douglas Hospital" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction</div><h3>UC Irvine Douglas Hospital</h3><div class="project-outcome">California’s first design-build hospital pioneered phased structural approvals, delivering the project on schedule and within budget</div></div>
       </article>
       <article class="project wide" tabindex="0" data-category="sb-1953 seismic-retrofit" data-name="Cedars-Sinai Medical Center" data-tag="Campus Projects – SB 1953" data-location="Los Angeles, CA" data-role="Seismic evaluation + ongoing campus work" data-scale="Multiple healthcare campus projects" data-focus="SB 1953 · seismic compliance" data-link="https://www.nyase.com/cedars-sinai-medical-center/" data-desc="NYA has provided structural engineering services for multiple projects at Cedars-Sinai Medical Center, supporting facility expansions and seismic compliance efforts across the campus, including seismic evaluation of the original 1970s main hospital building in accordance with California Senate Bill 1953 requirements." data-img="https://www.nyase.com/wp-content/uploads/2026/11/dscn.webp">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/11/cedarssinai.webp" alt="Cedars-Sinai Medical Center" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Campus Projects – SB 1953</div><h3>Cedars-Sinai Medical Center</h3><div class="project-outcome">Advanced seismic analysis proved a costly structural retrofit unnecessary, avoiding major construction and disruption to hospital operations</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/cedarssinai-1024x576.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/cedarssinai-768x432.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/cedarssinai-1024x576.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/cedarssinai-1536x864.webp 1536w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(33.3vw, 540px)" alt="Cedars-Sinai Medical Center" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Campus Projects – SB 1953</div><h3>Cedars-Sinai Medical Center</h3><div class="project-outcome">Advanced seismic analysis proved a costly structural retrofit unnecessary, avoiding major construction and disruption to hospital operations</div></div>
       </article>
       <article class="project wide" tabindex="0" data-category="sb-1953 seismic-retrofit" data-name="UCSD Hillcrest Medical Center" data-tag="Seismic Evaluation – SB 1953" data-location="San Diego, CA" data-role="Structural evaluation + upgrade planning" data-scale="Multi-building hospital campus" data-focus="SB 1953 · carbon fiber strengthening" data-link="https://www.nyase.com/ucsd-hillcrest-medical-center/" data-desc="NYA performed structural evaluation and seismic upgrade planning for UC San Diego Medical Center Hillcrest, including SB 1953 compliance analysis, carbon fiber column strengthening, and hospital structural upgrades across buildings constructed during different periods." data-img="https://www.nyase.com/wp-content/uploads/2026/11/hillcrest.webp">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsdmedicalcenterhillcrest.webp" alt="UCSD Hillcrest Medical Center" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Evaluation – SB 1953</div><h3>UCSD Hillcrest Medical Center</h3><div class="project-outcome">A two-month carbon fiber seismic retrofit at less than one-tenth the cost of conventional strengthening, while the hospital remained operational</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsdmedicalcenterhillcrest-1024x576.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/ucsdmedicalcenterhillcrest-768x432.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/ucsdmedicalcenterhillcrest-1024x576.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/ucsdmedicalcenterhillcrest-1536x864.webp 1536w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(33.3vw, 540px)" alt="UCSD Hillcrest Medical Center" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Evaluation – SB 1953</div><h3>UCSD Hillcrest Medical Center</h3><div class="project-outcome">A two-month carbon fiber seismic retrofit at less than one-tenth the cost of conventional strengthening, while the hospital remained operational</div></div>
       </article>
       <article class="project wide" tabindex="0" data-category="seismic-retrofit sb-1953" data-name="Century City Hospital Seismic Upgrade" data-tag="Seismic Upgrade" data-location="Los Angeles, CA" data-role="SPC-2 / NPC-2 upgrades" data-scale="Main hospital + central plant" data-focus="Concrete shear walls · roof diaphragm strengthening" data-link="https://www.nyase.com/century-city-hospital-seismic-upgrade/" data-desc="NYA provided SPC-2 and NPC-2 upgrades for the Century City Hospital main hospital building and central plant. The upgrade used new concrete shear walls and strengthening of the existing roof diaphragm, with OSHPD acceptance for HAZUS SPC-2 compliance and construction completed in 2014." data-img="https://www.nyase.com/wp-content/uploads/2026/11/centurycityhospital.webp">
-        <img src="https://www.nyase.com/wp-content/uploads/2026/11/centurycitymedicalcenter.webp" alt="Century City Hospital Seismic Upgrade" loading="lazy"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Upgrade</div><h3>Century City Hospital Upgrade</h3><div class="project-outcome">Seismic upgrades helped transform a shuttered hospital into a 138-bed rehabilitation center, bringing an existing facility back into service</div></div>
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/centurycitymedicalcenter-1024x683.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/centurycitymedicalcenter-768x512.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/centurycitymedicalcenter-1024x683.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/centurycitymedicalcenter-1232x822.webp 1232w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(33.3vw, 540px)" alt="Century City Hospital Seismic Upgrade" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Upgrade</div><h3>Century City Hospital Upgrade</h3><div class="project-outcome">Seismic upgrades helped transform a shuttered hospital into a 138-bed rehabilitation center, bringing an existing facility back into service</div></div>
       </article>
     </div>
   </div>
@@ -2947,7 +2446,6 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   var ucsfVideo = document.getElementById('ucsf-story-video');
   var ucsfAnimation = document.getElementById('ucsf-story-animation');
   var ucsfFrame = document.querySelector('.ucsf-story-frame');
-  var ucsfProgress = document.getElementById('ucsf-story-progress');
   var ucsfIndex = -1;
   // A video with a custom start offset needs a custom loop. Native HTML
   // looping always restarts at 0, even if the initial playback seeks to 5s.
@@ -3030,7 +2528,6 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
       ucsfImage.alt = step.dataset.alt || '';
       ucsfImage.style.display = 'block';
     }
-    if (ucsfProgress) ucsfProgress.style.transform = 'translateY(' + (index * 100) + '%)';
     ucsfIndex = index;
     // Point the player at the next step's film one step early. preload="metadata" means this
     // costs a header rather than the file, but it opens the connection, so the video is not
@@ -3069,76 +2566,6 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 
 
 
-<script>
-(function(){
-  'use strict';
-
-  var ssiModes=Array.prototype.slice.call(document.querySelectorAll('.ssi-mode'));
-  var ssiDetail=document.getElementById('ssi-detail');
-  var ssiLabel=document.getElementById('ssi-detail-label');
-  var ssiTitle=document.getElementById('ssi-detail-title');
-  var ssiCopy=document.getElementById('ssi-detail-copy');
-  var ssiBenefits=document.getElementById('ssi-benefits');
-  var ssiData={
-  "fixed": {
-    "label": "Fixed-Base Analysis",
-    "title": "Conventional design overlooks the soil’s role in earthquake response.",
-    "copy": "Fixed-base analysis was the conventional approach, treating the building as anchored to an immovable base. Soil flexibility and energy dissipation were excluded, leaving an incomplete picture of earthquake response and overlooking opportunities to reduce structural demands and material costs.",
-    "benefits": [
-      "Soil flexibility ignored",
-      "Energy dissipation excluded",
-      "Foundation movement unrepresented",
-      "Material savings overlooked"
-    ]
-  },
-  "basic": {
-    "label": "Basic SSI",
-    "title": "Basic SSI captures foundation flexibility but leaves savings unrealized.",
-    "copy": "Basic SSI uses simplified springs to represent how foundations move and rotate during an earthquake. It does not fully capture how surrounding soil dissipates energy or interacts with basement walls. Those simplifications retain conservative design forces, increasing the steel and concrete required compared with NYA’s detailed analysis.",
-    "benefits": [
-      "Simplified soil behavior",
-      "Incomplete energy dissipation",
-      "Conservative design forces",
-      "Material savings unrealized"
-    ]
-  },
-  "nya": {
-    "label": "NYA’s Detailed SSI",
-    "title": "Capture what the soil contributes so you don’t pay for unnecessary structure.",
-    "copy": "Soil can deform and dissipate energy during an earthquake. NYA’s detailed SSI analysis accounts for that behavior around and beneath the basement, demonstrating where lower structural and foundation demands are justified. Our approach, approved by HCAI at UCSF, creates opportunities to reduce steel, concrete, and construction costs.",
-    "benefits": [
-      "More complete soil modeling",
-      "Lower design demands",
-      "Less material",
-      "Lower construction cost"
-    ]
-  }
-};
-  ssiModes.forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var key=this.getAttribute('data-ssi'),d=ssiData[key];if(!d)return;
-      ssiModes.forEach(function(b){b.classList.remove('active');b.setAttribute('aria-selected','false');});
-      this.classList.add('active');this.setAttribute('aria-selected','true');
-      ssiDetail.setAttribute('data-ssi-mode',key);
-      ssiLabel.textContent=d.label;
-      ssiTitle.textContent=d.title;ssiCopy.textContent=d.copy;
-      ssiBenefits.innerHTML=d.benefits.map(function(x){return '<div class="ssi-benefit">'+x+'</div>';}).join('');
-    });
-  });
-
-  var trigger=document.getElementById('amc-trigger'),drawer=document.getElementById('amc-drawer'),close=document.getElementById('amc-close'),backdrop=document.getElementById('amc-backdrop'),last=null;
-  function openAMC(){if(!drawer)return;last=document.activeElement;drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');if(trigger)trigger.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';if(close)close.focus();}
-  function closeAMC(){if(!drawer)return;drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');if(trigger)trigger.setAttribute('aria-expanded','false');document.body.style.overflow='';if(last&&last.focus)last.focus();}
-  if(trigger)trigger.addEventListener('click',openAMC);if(close)close.addEventListener('click',closeAMC);if(backdrop)backdrop.addEventListener('click',closeAMC);
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'&&drawer&&drawer.classList.contains('open'))closeAMC();
-    if(e.key==='Tab'&&drawer&&drawer.classList.contains('open')){
-      var f=drawer.querySelectorAll('button,[href],[tabindex]:not([tabindex="-1"])');if(!f.length)return;var first=f[0],lastEl=f[f.length-1];
-      if(e.shiftKey&&document.activeElement===first){e.preventDefault();lastEl.focus();}else if(!e.shiftKey&&document.activeElement===lastEl){e.preventDefault();first.focus();}
-    }
-  });
-})();
-</script>
 
 
 <script id="hero-video-source">
@@ -4351,8 +3778,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     --pad:max(clamp(1.4rem, 5vw, 5rem), min(4.1667vw, 7.4074vh));
     font-size:var(--text-body);
     font-variation-settings:"opsz" 18.8;
-  }
-}
+  }}
 .amc-funnel .eyebrow{color:var(--green-on-light)}
 .amc-funnel-pin{position:-webkit-sticky;position:sticky;top:0;height:100svh;overflow:hidden;padding-top:var(--amc-nav,36px)}
 .amc-funnel-track{position:relative;display:flex;align-items:center;width:max-content;height:100%;will-change:transform}
@@ -4410,16 +3836,14 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
    the two-column layout. */
 @media (max-width:71.25em), (max-height:500px) and (orientation:landscape){
   .amc-funnel-list{grid-template-columns:minmax(0,var(--amc-measure))}
-  .amc-funnel-item{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-2) 0}
-}
+  .amc-funnel-item{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-2) 0}}
 /* Portrait phones: the screen, not the measure, sets the column; fill lines and only
    avoid a lone last word (balance would leave every line visibly short). */
 @media(max-width:37.5em){.amc-funnel-item p{text-wrap:pretty}}
 /* Short landscape phones: tighter rows so less of the list needs panning. */
 @media(max-height:500px) and (orientation:landscape){
   .amc-funnel-item{padding-block:var(--space-1)}
-  .amc-funnel-label{margin-bottom:var(--space-1)}
-}
+  .amc-funnel-label{margin-bottom:var(--space-1)}}
 /* Static layout unless the script pins the scene (.is-pinned): covers no JS, reduced
    motion and screens too short to pin. No pinning, panels stacked and centred, lines
    hidden, everything shown. */
@@ -4429,8 +3853,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel:not(.is-pinned) .amc-funnel-gap,.amc-funnel:not(.is-pinned) .amc-funnel-lines{display:none}
 .amc-funnel:not(.is-pinned) .amc-funnel-panel{margin-inline:auto;opacity:1!important}
 .amc-funnel:not(.is-pinned) .amc-funnel-label,.amc-funnel:not(.is-pinned) .amc-funnel-item,.amc-funnel:not(.is-pinned) .amc-funnel-msg{opacity:1;transform:none}
-.amc-funnel:not(.is-pinned) .amc-funnel-panel--outcomes .amc-funnel-list{border-top-color:rgba(0,0,0,.15)}
-</style>
+.amc-funnel:not(.is-pinned) .amc-funnel-panel--outcomes .amc-funnel-list{border-top-color:rgba(0,0,0,.15)}</style>
 <script id="amc-funnel-behavior">
 (function(){
   var sec=document.getElementById('amc-funnel');if(!sec)return;
