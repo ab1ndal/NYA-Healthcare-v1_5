@@ -1935,10 +1935,10 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .nya-s33.is-scene .nya-s33-scene{display:flex;flex-direction:column;position:relative}
 /* The drawing is sized by its height (--art-h, from the lawn up); it is right-aligned past the edge by its empty margin (27 of
    2000 columns) and its 52 empty rows under the lawn hang below the frame, so the building reaches the side and the lawn the foot. */
-.nya-s33.is-scene .nya-s33-art{order:2;flex:none;position:sticky;bottom:0;width:auto;height:var(--art-h);aspect-ratio:auto;margin:calc(var(--art-h)*-.45) 0 0;overflow:hidden;z-index:1}
+.nya-s33.is-scene .nya-s33-art{order:2;flex:none;position:relative;width:auto;height:var(--art-h);aspect-ratio:auto;margin:calc(var(--art-h)*-.45) 0 0;overflow:hidden;z-index:1}
 .nya-s33.is-scene .nya-s33-art .nya-s33-full{inset:auto;right:calc(var(--art-h)*-.0439);bottom:calc(var(--art-h)*-.0846);width:auto;height:calc(var(--art-h)*1.0846);max-width:none}
-/* Phones: the points run down the page in order; the building stays at the foot of the screen while they pass over it (sticky),
-   then ends the section with its top 45% under the last points. */
+/* Phones and upright tablets: the points run down the page in order, coming up two at a time as they reach the screen; the
+   building follows them as the conclusion, its top 45% under the last points, and fades in once they are all up. */
 /* The heading and paragraph stay in front of the drawing as it rises into view, so the tree passes behind the words. */
 .nya-s33.is-scene .nya-s33-intro{position:relative;z-index:4}
 .nya-s33.is-scene .nya-s33-steps{order:1;position:relative;z-index:3;margin:clamp(1.5rem,5vw,2.5rem) var(--pad) 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem}
@@ -1957,14 +1957,6 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .nya-s33.is-live.is-forced.is-scene .nya-s33-full{transition:opacity .6s ease-out,transform .6s ease-out!important}
 /* The copyright line follows close under the lawn. */
 .nya-s33.is-scene+.nya-copyright,.nya-s33.is-scene~.nya-copyright{padding-top:.7rem}
-/* Upright tablets, where the heading, the paragraph and all six points fit above the building (class is-scene-all, set by the
-   script): the whole section pins as one screen, the building at the foot, and the rows of points fill in over it in turn as the
-   reader scrolls through the section (that screen plus 120% of the screen). The script places the points' bottom edge. */
-.nya-s33.is-scene-all{height:220svh}
-.nya-s33.is-scene-all .nya-s33-stage{position:sticky;top:0;height:100svh;overflow:hidden;padding-top:min(var(--section),9svh)}
-.nya-s33.is-scene-all .nya-s33-run,.nya-s33.is-scene-all .nya-s33-scene{display:block;position:absolute;inset:0;height:auto}
-.nya-s33.is-scene-all .nya-s33-art{position:absolute;left:0;right:0;bottom:0;margin:0}
-.nya-s33.is-scene-all .nya-s33-steps{position:absolute;left:var(--pad);right:var(--pad);bottom:calc(var(--art-h)*.55);margin:0}
 /* ==== NYA FINALE COMBINED END (CSS) ==== */
 </style>
 <style id="uci-team-style">
@@ -4476,7 +4468,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   function applyPair(){
     cardList().forEach((li,i)=>li.classList.toggle('is-on',Math.floor(i/2)<=pair));
     clearTimeout(buildT);
-    if(pair===lastPair())buildT=setTimeout(()=>{sceneBuilt=true;section.style.setProperty('--hp','1')},650);
+    if(pair===lastPair())buildT=setTimeout(()=>{sceneBuilt=true;request()},650);
     else{sceneBuilt=false;section.style.setProperty('--hp','0')}
   }
   function stepPair(){
@@ -4500,23 +4492,16 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     // card is fully in soon after it enters and the screen never shows an empty space where cards should be. At the very end of
     // the page every card is fully in.
     const end=scrollY+vh>=document.documentElement.scrollHeight-2,rows=[];
-    // Phones: a pair comes up once its first point (where it sits, not mid-rise) has risen above the middle of the building at
-    // the foot of the screen. Upright tablets with the whole section pinned: the pairs come up at the start, a third and two
-    // thirds of the way through the section. At the end of the page all six show.
+    // Phones and upright tablets: a pair comes up once its first point (where it sits, not mid-rise) is 85% of the way down the
+    // screen, so the points follow the scroll. At the end of the page all six show.
     if(scene){
       // The building comes in after the last pair (applyPair).
-      section.style.setProperty('--hp',sceneBuilt?'1':'0');
+      section.style.setProperty('--hp',sceneBuilt&&a.top<vh*.95?'1':'0');
       const cards=cardList(),st=steps.getBoundingClientRect().top;
-      if(section.classList.contains('is-scene-all')){
-        const r=section.getBoundingClientRect(),t=clamp(-r.top/Math.max(1,r.height-stage.offsetHeight));
-        const due=st+cards[0].offsetTop<vh*.9;
-        targetPair=end?2:!due?-1:t<1/3?0:t<2/3?1:2;
-      }else{
-        const line=vh-art.offsetHeight*.5;
-        targetPair=-1;
-        for(let k=0;k*2<cards.length;k++)if(st+cards[k*2].offsetTop<line)targetPair=k;
-        if(end)targetPair=Math.ceil(cards.length/2)-1;
-      }
+      const line=vh*.85;
+      targetPair=-1;
+      for(let k=0;k*2<cards.length;k++)if(st+cards[k*2].offsetTop<line)targetPair=k;
+      if(end)targetPair=Math.ceil(cards.length/2)-1;
       if(!pairing)stepPair();
       return;
     }
@@ -4731,21 +4716,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     if(pinned&&!cardsFit()){pinned=false;section.classList.remove('is-pinned');section.style.removeProperty('--fit');fitIntro()}
     scene=!pinned&&phone.matches;
     section.classList.toggle('is-scene',scene);
-    // The heading and paragraph pin with the points where they end at least 1.2rem above the points' place.
+    // Phones and tablets scroll straight through.
     section.classList.remove('is-scene-all');
-    if(scene){
-      section.classList.add('is-scene-all');
-      const room=steps.getBoundingClientRect().top-intro.getBoundingClientRect().bottom;
-      if(room<parseFloat(getComputedStyle(document.documentElement).fontSize)*1.2)section.classList.remove('is-scene-all');
-    }
-    // With the heading pinned too: raise the points toward the middle of the free space between the paragraph and the drawing,
-    // by at most 35% of the drawing's height, so they still stand over its top.
     steps.style.bottom='';
-    if(section.classList.contains('is-scene-all')){
-      const artH=art.offsetHeight,below=intro.getBoundingClientRect().bottom-stage.getBoundingClientRect().top;
-      const free=stage.offsetHeight-artH*.55-steps.offsetHeight-below;
-      steps.style.bottom=(artH*.55+Math.max(0,Math.min(free/2,artH*.35)))+'px';
-    }
     if(!scene)cardList().forEach(li=>li.classList.remove('is-on','is-past'));
     else applyPair();
     fitStage();
