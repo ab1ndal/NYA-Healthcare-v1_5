@@ -1973,6 +1973,8 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 /* Phones: the copyright line fits on one line: slightly tighter letter-spacing and a size set by the screen width (its text is
    about 26.7 times its font size wide at this spacing), from 15px down to no less than 11px, where it may still wrap. */
 @media(max-width:559px){.nya-copyright{letter-spacing:.02em;font-size:max(11px,min(var(--text-small),calc((100vw - 2*var(--pad))/27.5)))}}
+/* Very narrow phones (under 360px, e.g. 320px): no letter-spacing and 12px side padding, so the line still fits at 11px. */
+@media(max-width:359px){.nya-copyright{letter-spacing:0;padding-left:12px;padding-right:12px}}
 /* ==== NYA FINALE COMBINED END (CSS) ==== */
 </style>
 <style id="uci-team-style">
