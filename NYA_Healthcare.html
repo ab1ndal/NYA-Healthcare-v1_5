@@ -3539,7 +3539,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     if(mode==='flow'){
       // On narrow/short screens, don't show point 1 merely because it is
       // already in the viewport. Require scrolling into the section first.
-      if(story.getBoundingClientRect().top> -Math.min(64,innerHeight*.08))return;
+      // Point 1 waits for the section to be scrolled in; that wait is 25% shorter than it was (the old threshold sat 64px past the top).
+      const wait0=Math.min(64,innerHeight*.08);
+      if(story.getBoundingClientRect().top>-wait0+.25*(innerHeight+wait0))return;
       rows.forEach((row,i)=>{
         // A lower trigger for later rows keeps each reveal distinct on mobile.
         const trigger=innerHeight*(i===0?.66:.48);
