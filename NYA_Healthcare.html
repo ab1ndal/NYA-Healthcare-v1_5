@@ -4605,10 +4605,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // Canopy layout: make the stage only as tall as its content, so the heading starts a set margin below the section top.
   // Shortening the stage lifts the drawing (it sits at the bottom), so the words are placed again and the height is checked once more.
   let allowStack=true;
-  // Full screen: the heading starts about six of the paragraph's lines below the top margin (6% of the screen height), and on
+  // Full screen: the heading starts about four of the paragraph's lines below the top margin (6% of the screen height), and on
   // landscape screens that are tall for their width (iPads, 4:3 up to 3:2) the drawing is enlarged less.
   const squarish=()=>innerWidth/innerHeight<1.5;
-  const fullPad=()=>Math.max(48,innerHeight*.06)+6*(parseFloat(getComputedStyle(lede).lineHeight)||28);
+  const fullPad=()=>Math.max(48,innerHeight*.06)+4*(parseFloat(getComputedStyle(lede).lineHeight)||28);
   function fitStage(){
     stage.style.height='';
     section.classList.remove('is-full');
@@ -4685,6 +4685,36 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     request();
   }
   addEventListener('scroll',request,{passive:true});
+  // Snap: when the reader stops scrolling down (0.15s without a scroll event) with the conclusion mostly on screen (60% or more,
+  // but not all of it), glide the rest of the way to the end of the page so the whole section shows. Only where the section and
+  // the copyright line fit on one screen; never while a finger is on the screen, when scrolling up, or under a pop-up. Script
+  // only: CSS scroll-snap on the page breaks scrollbar clicks and slow trackpad swipes (see the README).
+  {
+    const copy=document.querySelector('.nya-copyright');
+    let lastY=scrollY,down=false,idle=0,touching=false,snapping=0;
+    const snapMotion=matchMedia('(prefers-reduced-motion: reduce)');
+    addEventListener('touchstart',()=>{touching=true},{passive:true});
+    addEventListener('touchend',()=>{touching=false},{passive:true});
+    addEventListener('touchcancel',()=>{touching=false},{passive:true});
+    addEventListener('scroll',()=>{
+      const y=scrollY;
+      if(y!==lastY)down=y>lastY;
+      lastY=y;
+      clearTimeout(idle);
+      if(snapping&&performance.now()<snapping)return;
+      snapping=0;
+      idle=setTimeout(()=>{
+        if(!down||touching||document.documentElement.style.overflow==='hidden'||document.body.style.overflow==='hidden')return;
+        const vh=innerHeight,max=document.documentElement.scrollHeight-vh,r=section.getBoundingClientRect();
+        if(scrollY>=max-2)return;
+        if(r.height+(copy?copy.offsetHeight:0)>vh+2)return;
+        const seen=(Math.min(vh,r.bottom)-Math.max(0,r.top))/r.height;
+        if(seen<.6||seen>=.999)return;
+        snapping=performance.now()+900;
+        scrollTo({top:max,behavior:snapMotion.matches?'auto':'smooth'});
+      },150);
+    },{passive:true});
+  }
   addEventListener('resize',setup,{passive:true});
   building.addEventListener('load',setup);
   addEventListener('load',setup);
