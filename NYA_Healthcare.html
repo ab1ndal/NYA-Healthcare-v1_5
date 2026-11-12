@@ -4685,19 +4685,23 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     request();
   }
   addEventListener('scroll',request,{passive:true});
-  // Snap: when the reader stops scrolling down (0.3s without a scroll event) with the conclusion mostly on screen (60% or more,
-  // but not all of it), glide the rest of the way to the end of the page so the whole section shows. The glide is our own, eased
-  // in and out over 0.9 to 1.4s (longer for longer distances), and any wheel, key, touch or press stops it at once. Only where
-  // the section and the copyright line fit on one screen; never while a finger is on the screen, when scrolling up, or under a
-  // pop-up. Script only: CSS scroll-snap on the page breaks scrollbar clicks and slow trackpad swipes (see the README).
+  // Snap: when the reader stops scrolling down (0.4s without a scroll event or any wheel or key input) with at least half of the
+  // conclusion on screen (but not all of it), glide the rest of the way to the end of the page so the whole section shows. The
+  // glide is our own, eased in and out over 0.9 to 1.4s (longer for longer distances). Wheeling down during it is absorbed (it is
+  // going down anyway); wheeling up, a key, a press or a touch stops it, and it then waits until the reader has scrolled on at
+  // least 40px. Only where the section and the copyright line fit on one screen; never while a finger is on the screen, when
+  // scrolling up, or under a pop-up. Script only: CSS scroll-snap on the page breaks scrollbar clicks and slow trackpad swipes
+  // (see the README).
   {
-    const copy=document.querySelector('.nya-copyright');
-    let lastY=scrollY,down=false,idle=0,touching=false,glide=0;
+    const copy=document.querySelector('.nya-copyright'),root=document.documentElement;
+    let lastY=scrollY,down=false,idle=0,touching=false,glide=0,lastInput=0,heldAt=null;
     const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
     // The page scrolls smoothly by default (html{scroll-behavior:smooth}), which would smooth each step again; it is set to auto
     // only while the glide runs.
-    const root=document.documentElement;
-    const stopGlide=()=>{if(glide){cancelAnimationFrame(glide);glide=0;root.style.scrollBehavior=''}};
+    function stopGlide(){
+      if(!glide)return;
+      cancelAnimationFrame(glide);glide=0;root.style.scrollBehavior='';heldAt=scrollY;
+    }
     function glideTo(to){
       const from=scrollY,dist=to-from;
       // It glides for everyone, like the rest of this section's motion (a jump with system animations off felt abrupt).
@@ -4712,25 +4716,37 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       };
       glide=requestAnimationFrame(frame);
     }
-    for(const ev of ['wheel','keydown','mousedown','touchstart'])addEventListener(ev,stopGlide,{passive:true});
-    addEventListener('touchstart',()=>{touching=true},{passive:true});
+    addEventListener('wheel',e=>{
+      lastInput=performance.now();
+      if(!glide)return;
+      if(e.deltaY>0&&!e.ctrlKey)e.preventDefault();else stopGlide();
+    },{passive:false});
+    addEventListener('keydown',()=>{lastInput=performance.now();stopGlide()},{passive:true});
+    addEventListener('mousedown',stopGlide,{passive:true});
+    addEventListener('touchstart',()=>{touching=true;stopGlide()},{passive:true});
     addEventListener('touchend',()=>{touching=false},{passive:true});
     addEventListener('touchcancel',()=>{touching=false},{passive:true});
+    function check(){
+      idle=0;
+      const quiet=performance.now()-lastInput;
+      if(quiet<400){idle=setTimeout(check,410-quiet);return}
+      if(!down||touching||root.style.overflow==='hidden'||document.body.style.overflow==='hidden')return;
+      if(heldAt!==null&&Math.abs(scrollY-heldAt)<40)return;
+      heldAt=null;
+      const vh=innerHeight,max=root.scrollHeight-vh,r=section.getBoundingClientRect();
+      if(scrollY>=max-2)return;
+      if(r.height+(copy?copy.offsetHeight:0)>vh+8)return;
+      const seen=(Math.min(vh,r.bottom)-Math.max(0,r.top))/r.height;
+      if(seen<.5||seen>=.995)return;
+      glideTo(max);
+    }
     addEventListener('scroll',()=>{
       if(glide)return;
       const y=scrollY;
-      if(y!==lastY)down=y>lastY;
-      lastY=y;
+      // Only real moves set the direction: the browser can settle a fraction of a pixel back at the end of a scroll.
+      if(Math.abs(y-lastY)>2){down=y>lastY;lastY=y}
       clearTimeout(idle);
-      idle=setTimeout(()=>{
-        if(!down||touching||document.documentElement.style.overflow==='hidden'||document.body.style.overflow==='hidden')return;
-        const vh=innerHeight,max=document.documentElement.scrollHeight-vh,r=section.getBoundingClientRect();
-        if(scrollY>=max-2)return;
-        if(r.height+(copy?copy.offsetHeight:0)>vh+2)return;
-        const seen=(Math.min(vh,r.bottom)-Math.max(0,r.top))/r.height;
-        if(seen<.6||seen>=.999)return;
-        glideTo(max);
-      },300);
+      idle=setTimeout(check,400);
     },{passive:true});
   }
   addEventListener('resize',setup,{passive:true});
