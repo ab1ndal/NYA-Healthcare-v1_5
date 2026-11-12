@@ -2280,6 +2280,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 #projects .projects-head{display:block}
 #projects .projects-head h2{text-align:center;white-space:nowrap;font-size:min(var(--text-display),5.4vw)}
 #projects .projects-head .value-note{max-width:60rem;margin:1rem auto 0;text-align:center}
+/* The visible space under the sentence (before the project grid) matches the visible space above it (under the title). The title's own
+   spacing changes with its size, so this follows the window width. */
+#projects .projects-head{margin-bottom:clamp(10.5px,calc(18.5px - .506vw),16.5px)}
 </style>
 <style id="approach-left-column">
 /* "NYA's approach", desktop: the left column is an opener (the sentences are centred across the whole column, using the page margin on the left). The label stays at the top; the two sentences are centred in the column at the
