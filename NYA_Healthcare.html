@@ -4600,9 +4600,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       }
     };
     if(section.classList.contains('is-full')){
-      const top=()=>{intro.style.top='0px';const st=stage.getBoundingClientRect();intro.style.top=(Math.max(48,innerHeight*.06)-(intro.getBoundingClientRect().top-st.top))+'px';wrapLede(bands,gap)};
+      // The paragraph keeps only its diagonal edge here; the tree may pass behind its right end (the words stay in front).
+      const top=()=>{intro.style.top='0px';const st=stage.getBoundingClientRect();intro.style.top=(Math.max(48,innerHeight*.06)-(intro.getBoundingClientRect().top-st.top))+'px';wrapLede([],gap)};
       top();
-      if(Math.max(0,...lineRects(title).map(r=>clash(bands,r,gap)))>0){section.classList.add('is-stacked');top()}
+      if(allowStack&&Math.max(0,...lineRects(title).map(r=>clash(bands,r,gap)))>0){section.classList.add('is-stacked');top()}
       return;
     }
     settle();
@@ -4659,6 +4660,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
   // Canopy layout: make the stage only as tall as its content, so the heading starts a set margin below the section top.
   // Shortening the stage lifts the drawing (it sits at the bottom), so the words are placed again and the height is checked once more.
+  let allowStack=true;
   function fitStage(){
     stage.style.height='';
     section.classList.remove('is-full');
@@ -4678,22 +4680,26 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     if(avail>h+2){
       section.classList.add('is-full');
       stage.style.height=avail+'px';
-      let z=Math.max(1,2.503*avail*.97/stage.clientWidth);
+      // Start a quarter larger than the size that just fills the stage (the tree's top then runs off the top edge), so the
+      // building stands higher; the loop below brings it down until the tree is clear of the heading.
+      // At most 1.5 (the drawing is 2000px wide, so on very large screens more would look soft).
+      let z=Math.min(1.5,Math.max(1,2.503*avail*.97/stage.clientWidth)*1.25);
       section.style.setProperty('--zoom',z.toFixed(4));
       fitIntro();
-      // The paragraph wraps around the drawing; where the tree would reach into its four full-width lines, scale the drawing up
-      // less, until the tree is clear of the paragraph by the usual gap.
-      // Each line only reaches as far right as the diagonal allows (line i: 1 - DIAG x i of the full width), so the tree only has
-      // to clear that, which lets the drawing grow more. Like wrapLede, it looks half a line below each line too.
-      const inWay=()=>{const L=lede.getBoundingClientRect(),w=parseFloat(lede.style.maxWidth)||L.width,lh=parseFloat(getComputedStyle(lede).lineHeight)||24,bands=outline(art.getBoundingClientRect()),g=Math.max(18,innerHeight*.035);
-        for(let i=0;i*lh<L.height-1;i++){const top=L.top+i*lh;if(clash(bands,{left:L.left,right:L.left+w*(1-DIAG*i),top,bottom:top+lh*1.5},g)>0)return true}
-        return false};
-      // On short screens it may go a little under its normal size (it is 130% of the width, so it still spans it).
+      // The drawing grows as far as it can while the tree stays clear of the heading (on one line); it may pass behind the
+      // paragraph's right end, whose words stay in front.
+      const inWay=()=>{const bands=outline(art.getBoundingClientRect()),g=Math.max(18,innerHeight*.035);
+        return lineRects(title).some(r=>clash(bands,r,g)>0)};
+      // On short screens it may go a little under its normal size (it is 130% of the width, so it still spans it). The heading
+      // only breaks onto two lines if even that is not enough.
+      allowStack=false;fitIntro();
       for(let n=0;n<40&&z>.8&&inWay();n++){
         z=Math.max(.8,z-.02);
         section.style.setProperty('--zoom',z.toFixed(4));
         fitIntro();
       }
+      allowStack=true;
+      if(inWay())fitIntro();
     }
   }
   // Older Safari (before iOS 16) has no container units: give --k (1% of the stage width) in pixels instead.
