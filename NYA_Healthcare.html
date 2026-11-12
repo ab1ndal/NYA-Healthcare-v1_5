@@ -1908,7 +1908,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 /* Flowing layout: each card title on one line, at the card-title size, scaled down only when the card is too narrow for the
    longest title ("Responsiveness That Earns Trust" is 12.7 times its font size wide, so 7.4% of the card width fits it with room). */
 .nya-s33:not(.is-pinned) .nya-s33-copy{container-type:inline-size}
-.nya-s33:not(.is-pinned) .nya-s33-copy h3{font-size:min(var(--text-h2),7.4cqi);white-space:nowrap}
+.nya-s33:not(.is-pinned) .nya-s33-copy h3{font-size:var(--text-h2);font-size:min(var(--text-h2),7.4cqi);white-space:nowrap}
 .nya-s33:not(.is-pinned) .nya-s33-copy h3 br{display:none}
 /* Keeps this section's scroll motion smooth over the page-wide reduced-motion rule. */
 .nya-s33.is-live.is-forced .nya-s33-line{transition:clip-path .28s cubic-bezier(.22,.7,.2,1)!important}
@@ -4536,13 +4536,14 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       if(!allIn||!shown){section.style.setProperty('--hp','0');if(allIn)setTimeout(request,120);}
     }
     // Desktop, where the cards stand over the drawing: the scroll sets the target. q runs from the cards' row top at the bottom of
-    // the screen (0) to the end of the page (1); card k is due once q passes the start of its slot in the first 80%, and the
-    // building once q passes 85%. step() then brings them in at a steady pace.
+    // the screen (0) to the end of the page (1); card k is due once q passes the start of its slot in the first half, and the
+    // building once all six are due. step() then brings them in at a steady pace.
     if(pinned){
       const st=section.querySelector('.nya-s33-steps').getBoundingClientRect(),toEnd=Math.max(0,document.documentElement.scrollHeight-vh-scrollY);
       const q=end?1:clamp((vh-st.top)/Math.max(1,vh-st.top+toEnd)),n=cardList().length;
-      target=q<=0?0:Math.min(n,Math.floor(q/.8*n)+1);
-      targetBuilt=q>=.85;
+      target=q<=0?0:Math.min(n,Math.floor(q/.5*n)+1);
+      // The building is due as soon as every card is (step() then waits for card 6 to finish), not only near the page end.
+      targetBuilt=target>=n;
       applyReveal();
       if(!stepping)step();
     }
@@ -4697,8 +4698,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       fitIntro();
       // The paragraph wraps around the drawing; where the tree would reach into its four full-width lines, scale the drawing up
       // less, until the tree is clear of the paragraph by the usual gap.
-      const inWay=()=>{const L=lede.getBoundingClientRect(),w=parseFloat(lede.style.maxWidth)||L.width;
-        return clash(outline(art.getBoundingClientRect()),{left:L.left,right:L.left+w,top:L.top,bottom:L.bottom},Math.max(18,innerHeight*.035))>0};
+      // Each line only reaches as far right as the diagonal allows (line i: 1 - DIAG x i of the full width), so the tree only has
+      // to clear that, which lets the drawing grow more. Like wrapLede, it looks half a line below each line too.
+      const inWay=()=>{const L=lede.getBoundingClientRect(),w=parseFloat(lede.style.maxWidth)||L.width,lh=parseFloat(getComputedStyle(lede).lineHeight)||24,bands=outline(art.getBoundingClientRect()),g=Math.max(18,innerHeight*.035);
+        for(let i=0;i*lh<L.height-1;i++){const top=L.top+i*lh;if(clash(bands,{left:L.left,right:L.left+w*(1-DIAG*i),top,bottom:top+lh*1.5},g)>0)return true}
+        return false};
       // On short screens it may go a little under its normal size (it is 130% of the width, so it still spans it).
       for(let n=0;n<40&&z>.8&&inWay();n++){
         z=Math.max(.8,z-.02);
@@ -4707,8 +4711,13 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       }
     }
   }
+  // Older Safari (before iOS 16) has no container units: give --k (1% of the stage width) in pixels instead.
+  const noCq=!(window.CSS&&CSS.supports&&CSS.supports('width','1cqw'));
   function setup(){
     section.classList.add('is-fitting');
+    // Start from scratch: the full-screen state of the last run must not steer this one (placeWords reads is-full).
+    section.classList.remove('is-full');section.style.removeProperty('--zoom');
+    if(noCq)section.style.setProperty('--k',(stage.clientWidth/100)+'px');
     stage.style.height='';
     pinned=PIN&&roomy.matches;
     section.classList.toggle('is-pinned',pinned);
