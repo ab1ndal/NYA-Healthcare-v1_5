@@ -1940,10 +1940,11 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .nya-s33.is-scene .nya-s33-scene{display:flex;flex-direction:column;position:relative}
 /* The drawing is sized by its height (--art-h, from the lawn up); it is right-aligned past the edge by its empty margin (27 of
    2000 columns) and its 52 empty rows under the lawn hang below the frame, so the building reaches the side and the lawn the foot. */
-.nya-s33.is-scene .nya-s33-art{order:2;flex:none;position:relative;width:auto;height:var(--art-h);aspect-ratio:auto;margin:calc(var(--art-h)*-.45) 0 0;overflow:hidden;z-index:1}
+.nya-s33.is-scene .nya-s33-art{order:2;flex:none;position:relative;width:auto;height:var(--art-h);aspect-ratio:auto;margin:clamp(1.5rem,5vw,2.5rem) 0 0;overflow:hidden;z-index:1}
 .nya-s33.is-scene .nya-s33-art .nya-s33-full{inset:auto;right:calc(var(--art-h)*-.0439);bottom:calc(var(--art-h)*-.0846);width:auto;height:calc(var(--art-h)*1.0846);max-width:none}
 /* Phones and upright tablets: the points run down the page in order, coming up two at a time as they reach the screen; the
-   building follows them as the conclusion, its top 45% under the last points, and fades in once they are all up. */
+   building follows them as the conclusion, entirely below the last points with a gap (never behind them), and fades in once
+   they are all up. */
 /* The heading and paragraph stay in front of the drawing as it rises into view, so the tree passes behind the words. */
 .nya-s33.is-scene .nya-s33-intro{position:relative;z-index:4}
 /* Phones and upright tablets: the heading and paragraph are centred above the cards, the heading a size larger (1.15x) on two
