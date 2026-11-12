@@ -39,6 +39,7 @@ All images and videos are hosted on nyase.com WordPress and linked by URL. On 20
 - **Images:** WebP, quality ~80, max 2400px wide (no wider than they display at 2x). Exception: full-bleed photos may go to 2880px for 1440px laptops at 2x (e.g. the UCI photo `ucidouglaswhite-1.webp`).
 - **Videos:** H.264 MP4, no audio, `+faststart`, scaled to display size (command in `TODO.md`). Every `<video>` keeps a `poster` image so phones don't show a blank box.
 - **Uploading:** add as new files in WordPress, never replace existing ones (other pages may use them). WordPress renames images on upload, removing hyphens and trailing numbers (e.g. `nya-closing-base.webp` → `nyaclosingbase.webp`). Copy the final URL from the Media Library, not the local filename.
+- **Files too big for the WordPress uploader** (about 45–50 MB and up, e.g. the hero videos): MB can raise the WordPress upload limit, or upload them through cPanel on GoDaddy into the `wp-content/uploads/YYYY/MM/` folder of hospitals.nyase.com instead (cPanel keeps the file name as is, and the file won't appear in the Media Library). As of 2026-11-11 all media, including the hero video `#ucsf-bg-video`, is on www.nyase.com — nothing is served from hospitals.nyase.com.
 
 ## Scroll regression check
 

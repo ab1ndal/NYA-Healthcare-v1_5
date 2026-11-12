@@ -20,6 +20,8 @@ Status: `Not started` · `In progress` · `Blocked` · `Done`
 | V5 | Update video `src` URLs in `NYA_Healthcare.html` | AB | Done | |
 | V6 | Change hero video `#ucsf-bg-video` `preload="auto"` → `preload="metadata"` | AB | Done | |
 | V7 | Verify fast playback on live site | AB | Not started | |
+| V8 | Upload hero videos `stanford-animation-720.mp4` (24 MB), `-1080.mp4` (53 MB), `-1440.mp4` (93 MB) to nyase.com WordPress | MB | Done | Uploaded 2026-11-11 to `www.nyase.com/wp-content/uploads/2026/11/`. MB raised the WordPress upload limit instead of using cPanel/hospitals.nyase.com — all media now back on one host. Remote sizes verified against local (25,277,349 / 55,623,867 / 97,278,416 bytes, exact match) |
+| V9 | Put the WordPress URLs into `data-src-720/1080/1440` on `#ucsf-bg-video` | AB | Done | Now `www.nyase.com/.../stanford-animation-{720,1080,1440}.mp4`, replacing old unoptimized `Stanford_Animation.mp4` |
 
 Encode command:
 ```

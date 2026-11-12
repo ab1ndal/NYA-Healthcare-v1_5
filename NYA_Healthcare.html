@@ -2313,9 +2313,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
     <div class="hero-frame" style="background-image:url('https://www.nyase.com/wp-content/uploads/2026/11/centurycityhospital.webp')"></div>
   </div>
   <div class="ucsf-bg-media" id="ucsf-bg-media">
-    <video id="ucsf-bg-video" autoplay muted loop playsinline preload="metadata" poster="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp" tabindex="-1">
-      <source src="https://hospitals.nyase.com/wp-content/uploads/2026/11/Stanford_Animation.mp4" type="video/mp4">
-    </video>
+    <video id="ucsf-bg-video" autoplay muted loop playsinline preload="metadata" poster="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp" tabindex="-1"
+      data-src-720="https://www.nyase.com/wp-content/uploads/2026/11/stanford-animation-720.mp4"
+      data-src-1080="https://www.nyase.com/wp-content/uploads/2026/11/stanford-animation-1080.mp4"
+      data-src-1440="https://www.nyase.com/wp-content/uploads/2026/11/stanford-animation-1440.mp4"></video>
   </div>
   <div class="hero-content reveal">
     <h1 class="display">Hospital projects are <span class="nowrap">high-stakes.</span><br><em>NYA reduces the risk.</em></h1>
@@ -3029,6 +3030,50 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 })();
 </script>
 
+
+<script id="hero-video-source">
+/* Hero video: load the smallest file that is still sharp at the size the video is drawn.
+   Needed width = drawn box x devicePixelRatio, widened when cover/fill crops a 16:9 frame.
+   Only steps up (rotation, window resize), never down, so a file is never fetched twice.
+   No file at all with reduced motion: the poster shows instead. */
+(function(){
+  var video=document.getElementById('ucsf-bg-video');
+  if(!video)return;
+  var tiers=[720,1080,1440];
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var current=0;
+  function neededTier(){
+    var r=video.getBoundingClientRect();
+    var w=Math.max(r.width,r.height*16/9)*(window.devicePixelRatio||1);
+    for(var i=0;i<tiers.length;i++){if(w<=tiers[i]*16/9)return tiers[i];}
+    return tiers[tiers.length-1];
+  }
+  function pick(){
+    if(reduced.matches)return;
+    var tier=neededTier();
+    if(tier<=current)return;
+    var url=video.getAttribute('data-src-'+tier);
+    if(!url)return;
+    var first=current===0,t=video.currentTime;
+    current=tier;
+    if(!first&&video.currentSrc===url)return;
+    video.src=url;
+    if(!first){
+      video.addEventListener('loadedmetadata',function(){
+        try{video.currentTime=t;}catch(e){}
+        var p=video.play();if(p&&p.catch)p.catch(function(){});
+      },{once:true});
+    }
+  }
+  pick();
+  var timer;
+  function onResize(){clearTimeout(timer);timer=setTimeout(function(){requestAnimationFrame(pick);},250);}
+  window.addEventListener('resize',onResize,{passive:true});
+  window.addEventListener('orientationchange',onResize,{passive:true});
+  if(typeof reduced.addEventListener==='function')reduced.addEventListener('change',pick);
+  else if(typeof reduced.addListener==='function')reduced.addListener(pick);
+})();
+</script>
 
 <script>
 (function(){
