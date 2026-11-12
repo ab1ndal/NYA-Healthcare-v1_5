@@ -1839,29 +1839,6 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 /* The SSI title is centred on the page; its eyebrow stays where it was. */
 .ssi-compare--reference .ssi-reference-heading{text-align:center}
 </style>
-<style id="mobile-burger">
-/* Phones, upright tablets and landscape phones: the case-study progress bar gives way to a burger menu with the same items
-   plus "Selected Healthcare Work". The bar stays in the page, invisible, so every pinned part keeps the room it reserved under it. */
-.nya-burger,.nya-burger-menu{display:none}
-@media (max-width:760px), (max-width:1100px) and (orientation:portrait), (max-width:1100px) and (max-height:500px) and (orientation:landscape){
-  .range-nav,.range-nav.is-on{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
-  .nya-burger{display:flex;position:fixed;z-index:1100;top:max(8px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));width:44px;height:44px;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;border:1px solid rgba(255,255,255,.3);border-radius:50%;background:rgba(10,12,15,.8);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .25s ease,visibility 0s}
-  .nya-burger:focus-visible{outline:2px solid #fff;outline-offset:3px}
-  .nya-burger span{display:block;width:18px;height:2px;border-radius:2px;background:#fff;transition:transform .25s ease,opacity .2s ease}
-  .nya-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .nya-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
-  .nya-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .nya-burger-menu{display:block;position:fixed;z-index:1090;top:calc(max(8px,env(safe-area-inset-top)) + 52px);right:max(12px,env(safe-area-inset-right));width:min(320px,calc(100vw - 24px));max-height:calc(100svh - 76px);overflow-y:auto;padding:6px 0;background:#0a0c0f;border:1px solid rgba(255,255,255,.14);border-radius:10px;box-shadow:0 16px 40px rgba(0,0,0,.42)}
-  .nya-burger-menu[hidden]{display:none}
-  .nya-burger-menu a{display:flex;align-items:center;gap:14px;min-height:48px;padding:0 18px;color:rgba(232,230,224,.78);font-family:var(--body);font-size:.8125rem;font-weight:500;line-height:1.25;letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
-  .nya-burger-menu a .n{flex:none;min-width:1.7em;color:var(--gold);font-variant-numeric:tabular-nums}
-  .nya-burger-menu a:hover,.nya-burger-menu a[aria-current="true"]{color:#fff}
-  .nya-burger-menu a[aria-current="true"]{background:rgba(255,255,255,.07);box-shadow:inset 2px 0 0 var(--gold)}
-  .nya-burger-menu a:focus-visible{outline:2px solid #fff;outline-offset:-2px}
-  html:has(#project-modal.open) .nya-burger,html:has(#project-modal.open) .nya-burger-menu{opacity:0;visibility:hidden;pointer-events:none}
-}
-@media (max-height:500px) and (orientation:landscape){.nya-burger{width:40px;height:40px;gap:4px;top:max(6px,env(safe-area-inset-top))}.nya-burger span{width:16px}.nya-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}.nya-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}.nya-burger-menu{top:calc(max(6px,env(safe-area-inset-top)) + 46px);max-height:calc(100svh - 58px)}.nya-burger-menu a{min-height:42px}}
-</style>
 </head>
 <body id="top">
 
@@ -3217,14 +3194,6 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   document.fonts && document.fonts.ready && document.fonts.ready.then(checkFit);
 })();
 </script>
-<button type="button" class="nya-burger" id="nya-burger" aria-label="Menu" aria-expanded="false" aria-controls="nya-burger-menu"><span></span><span></span><span></span></button>
-<nav class="nya-burger-menu" id="nya-burger-menu" aria-label="Sections" hidden>
-  <a href="#cost-certainty" data-label="Cost Certainty"></a>
-  <a href="#ucsf-case-study" data-label="Technical Excellence"></a>
-  <a href="#relationships-story" data-label="Collaboration and Partnership"></a>
-  <a href="#uci-delivery-proof" data-label="Schedule and Project Delivery"></a>
-  <a href="#projects" data-label="Selected Healthcare Work"></a>
-</nav>
 <nav class="range-nav" id="range-nav" aria-label="Case studies" data-tone="dark">
   <button type="button" class="rn-current" aria-expanded="false" aria-controls="rn-menu"><span class="rn-num" aria-hidden="true"></span><span class="rn-current-label"></span><span class="rn-caret" aria-hidden="true"></span></button>
   <span class="rn-overall" aria-hidden="true"><i></i></span>
@@ -4615,40 +4584,6 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
   addEventListener('load',fit);
   fit();
-})();
-</script>
-<script id="mobile-burger-script">
-(function(){
-  var btn=document.getElementById('nya-burger'),menu=document.getElementById('nya-burger-menu');
-  if(!btn||!menu)return;
-  var mobile=window.matchMedia('(max-width:760px), (max-width:1100px) and (orientation:portrait), (max-width:1100px) and (max-height:500px) and (orientation:landscape)');
-  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
-  // Entries follow the page, numbered in order.
-  var entries=[].slice.call(menu.querySelectorAll('a')).map(function(a){return {a:a,el:document.getElementById(a.getAttribute('href').slice(1))}}).filter(function(e){return e.el});
-  entries.sort(function(x,y){return x.el.compareDocumentPosition(y.el)&Node.DOCUMENT_POSITION_FOLLOWING?-1:1});
-  entries.forEach(function(e,k){
-    var n=document.createElement('span');n.className='n';n.setAttribute('aria-hidden','true');n.textContent=String(k+1).padStart(2,'0');
-    var l=document.createElement('span');l.textContent=e.a.dataset.label;
-    e.a.textContent='';e.a.append(n,l);menu.appendChild(e.a);
-    e.a.addEventListener('click',function(ev){ev.preventDefault();close(false);goTo(e.el)});
-  });
-  var openY=0;
-  function open(){menu.hidden=false;btn.setAttribute('aria-expanded','true');openY=scrollY;update()}
-  function close(refocus){if(menu.hidden)return;menu.hidden=true;btn.setAttribute('aria-expanded','false');if(refocus)btn.focus()}
-  function goTo(el){el.scrollIntoView({behavior:reduced.matches?'auto':'smooth',block:'start'});var u=new URL(location.href);u.hash=el.id;history.replaceState(null,'',u)}
-  btn.addEventListener('click',function(){if(menu.hidden)open();else close(false)});
-  document.addEventListener('pointerdown',function(e){if(!menu.hidden&&!menu.contains(e.target)&&!btn.contains(e.target))close(false)},true);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!menu.hidden)close(true)});
-  window.addEventListener('scroll',function(){if(!menu.hidden&&Math.abs(scrollY-openY)>24)close(false)},{passive:true});
-  if(mobile.addEventListener)mobile.addEventListener('change',function(){close(false)});
-  // Marks the part in view (the last one whose top has passed the middle of the screen).
-  function update(){
-    var y=scrollY+innerHeight/2,idx=-1;
-    entries.forEach(function(e,k){if(e.el.getBoundingClientRect().top+scrollY<=y)idx=k});
-    var last=entries[entries.length-1];
-    if(idx===entries.length-1&&last&&y>last.el.getBoundingClientRect().bottom+scrollY)idx=-1;
-    entries.forEach(function(e,k){if(k===idx)e.a.setAttribute('aria-current','true');else e.a.removeAttribute('aria-current')});
-  }
 })();
 </script>
 </body>
