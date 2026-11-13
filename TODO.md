@@ -50,3 +50,24 @@ ffmpeg -i in.mp4 -vf "scale=-2:1080,fps=30" -c:v libx264 -crf 26 -preset slow -a
 | D3 | Make repo public, enable GitHub Pages | AB | Done |
 | D4 | Verify external links (all https; nyase.com images allow hotlinking) | AB | Done |
 | D5 | Diagnose slow video playback | AB | Done |
+
+## Book of projects (gallery alternate)
+
+Design: `docs/superpowers/specs/2026-11-12-book-of-projects-design.md` · Plan: `docs/superpowers/plans/2026-11-12-book-of-projects.md`
+
+Scroll-driven three.js book shown as Option 2 beside the current gallery. Plain HTML chapters are the base layer and fallback. Commits stay local until AB says to push.
+
+| # | Task | Owner | Status | Notes |
+|---|------|-------|--------|-------|
+| B0 | Throwaway spike: opening, one bending page turn, Stanford photo layers | AB | In progress | AB judges the look before B1 starts |
+| B1 | Option switch: current gallery = Option 1 (default), book = Option 2 | AB | Not started | |
+| B2 | HTML chapters (base layer, print, reduced motion) | AB | Not started | Today's copy unchanged |
+| B3 | Gate, pinned stage, scroll state, lazy three.js | AB | Not started | Adds `three-0.187.0.min.js` beside the HTML |
+| B4 | Book scene: cover, opening, page turns, exit | AB | Not started | |
+| B5 | Real text on the page, fit test | AB | Not started | |
+| B6 | Contents, Previous / Next, keyboard focus | AB | Not started | |
+| B7 | Fallbacks: resize, failed load, lost GPU context, slow device | AB | Not started | |
+| B8 | Pop-up photo layers | AB | Not started | Layers uploaded to WordPress by MB |
+| B9 | Scroll test, Lighthouse, device checks, README | AB | Not started | |
+| B10 | Choose Option 1 or Option 2 | AB | Not started | Removing the other is a separate change |
+| B11 | Sign off copy corrections found by research (design doc section 9) | AB | Not started | UC Irvine city, Stanford scale line, UCSF square footage, Cedars-Sinai retrofit wording, Hillcrest and Century City ratings |
