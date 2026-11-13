@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>New Gallery | Nabih Youssef Associates</title>
+<link rel="icon" type="image/png" href="https://www.nyase.com/wp-content/uploads/2026/07/nabihyoussefassociateslogomark.png?v=20260724">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<!-- NEW GALLERY: a standalone section, developed on its own (branch new-gallery) and added to NYA_Healthcare.html once it is final.
+     Open this file with the live server to review it. Styles below are only the ones the gallery needs. -->
+<style id="gallery-base">
+:before,:after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c0f;--surface:#111318;--card:#161a22;--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.18);
+  --text:#e8e6e0;--muted:rgba(255,255,255,.68);--white:#fff;--gold:#22d3ff;--green-on-light:#007a9e;--blue:#6b9fcf;
+  --light:#ece9e1;--light2:#ded9ce;--ink:#151515;--ink2:#5b5a56;
+  --display:'Cormorant Garamond',Georgia,serif;--body:'DM Sans',sans-serif;
+  /* Responsive type: rem respects reader defaults, vw adds modest fluidity. */
+  --text-display: clamp(2.625rem, 1.7rem + 4.1vw, 6.5rem);
+  --text-stat: clamp(3.5rem, 2.25rem + 5.5vw, 8.75rem);
+  --text-h1: clamp(2rem, 1.5rem + 2.3vw, 4rem);
+  --text-h2: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+  --text-h2-lg: clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem);
+  --text-h3: clamp(1.25rem, 1.05rem + 0.5vw, 1.75rem);
+  --text-body: max(16px, clamp(1.0625rem, 0.875rem + 0.25vw, 1.25rem));
+  --text-small: max(14px, 0.9375rem);
+  --text-eyebrow: max(12px, 0.8125rem);
+  /* Decorative watermark uses the same bounded rem + vw approach. */
+  --text-watermark: clamp(9rem, 6rem + 18vw, 22rem);
+
+  /* Eight-pixel spacing rhythm; rem also responds to reader preferences. */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6.5rem;
+  --ease:cubic-bezier(.16,1,.3,1);--pad:clamp(1.4rem,5vw,5rem);--section:clamp(4.5rem,8vw,8rem)
+}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:var(--text-body);line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit}
+.wrap{width:min(1620px,calc(100% - 2*var(--pad)));margin-inline:auto}
+body *{font-variant-numeric:lining-nums}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:var(--text-eyebrow);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.eyebrow:before{content:"";width:34px;height:1px;background:currentColor;flex:0 0 auto}
+.display{font-family:var(--display);font-weight:300;letter-spacing:-.02em;line-height:1.03}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.reveal.is-visible{opacity:1;transform:none}
+.value-note{max-width:420px;color:var(--muted);font-size:var(--text-body)}
+.projects{padding:var(--space-5) 0 var(--section);background:#0d1014;border-top:1px solid var(--line)}
+.projects-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:1.7rem}
+.projects h2{font-size:var(--text-display)}
+.projects-head h2 em{color:var(--gold);font-weight:300;font-style:italic}
+.project-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.project{position:relative;overflow:hidden;min-height:330px;cursor:pointer;background:#111;opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.project.is-visible{opacity:1;transform:none}
+.project.featured{grid-column:span 7;grid-row:span 2;min-height:680px}
+.project.std{grid-column:span 5}
+.project.wide{grid-column:span 4;min-height:300px}
+.project img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.58) saturate(.9);transition:.8s var(--ease)}
+.project:hover img{transform:scale(1.045);filter:brightness(.7) saturate(1)}
+.project:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,7,9,.94) 0%,rgba(5,7,9,.2) 60%,transparent 100%)}
+.project-body{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:clamp(1.4rem,2.8vw,2.4rem)}
+.project-tag{font-size:var(--text-eyebrow);letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.project h3{font-family:var(--display);font-weight:300;color:#fff;line-height:1.08;font-size:var(--text-h2-lg)}
+.project-outcome{font-size:var(--text-body);color:rgba(255,255,255,.8);margin-top:.8rem;max-width:470px;line-height:1.55}
+.project-arrow{position:absolute;z-index:3;top:1.2rem;right:1.2rem;width:38px;height:38px;border:1px solid rgba(255,255,255,.25);border-radius:50%;display:grid;place-items:center;color:var(--gold);opacity:0;transform:translateX(-5px);transition:.3s}
+.project:hover .project-arrow{opacity:1;transform:none}
+.cta .wrap{position:relative;z-index:2}
+.cta .eyebrow{color:var(--green-on-light)}
+.modal{position:fixed;inset:0;z-index:100;display:flex;opacity:0;pointer-events:none;transition:.3s}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-backdrop{position:absolute;inset:0;background:rgba(4,5,7,.78);backdrop-filter:blur(6px)}
+.modal-panel{position:relative;margin-left:auto;width:min(600px,96vw);height:100%;overflow:auto;overscroll-behavior:contain;background:var(--card);border-left:1px solid var(--line);transform:translateX(45px);transition:.45s var(--ease);z-index:2}
+.modal.open .modal-panel{transform:none}
+.modal-hero{height:300px;background-size:cover;background-position:center;position:relative}
+.modal-hero:after{content:"";position:absolute;inset:auto 0 0;height:120px;background:linear-gradient(transparent,var(--card))}
+.modal-close{position:absolute;top:1.1rem;right:1.1rem;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;font-size:var(--text-h3);cursor:pointer;z-index:3}
+.modal-body{padding:2rem 2rem 3rem}
+.modal-tag{font-size:var(--text-eyebrow);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.modal-title{font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.05;font-weight:300;color:#fff;margin-bottom:1.4rem}
+.modal-specs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:1.4rem}
+.modal-spec{background:var(--surface);padding:1rem}
+.modal-spec-k{font-size:var(--text-eyebrow);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}
+.modal-spec-v{font-size:var(--text-small);color:#fff}
+.modal-desc{font-size:var(--text-body);color:rgba(255,255,255,.78);line-height:1.75;margin-bottom:1.5rem}
+.modal-link{display:inline-flex;align-items:center;gap:8px;font-size:var(--text-eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(34,211,255,.45)}
+@media (max-width:1100px), (max-width:1100px) and (orientation:portrait){
+.project.featured,.project.std,.project.wide{grid-column:span 12;grid-row:auto;min-height:420px}
+}
+@media (max-width:760px), (max-width:1100px) and (orientation:portrait){
+:root{--pad:1.25rem;--section:4.5rem}
+.projects-head{align-items:flex-start;flex-direction:column}
+.project.featured,.project.std,.project.wide{min-height:360px}
+.modal-specs{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+.reveal,.project{opacity:1!important;transform:none!important}
+}
+section{position:relative;z-index:1}
+body{overflow-x:clip}
+/* All section and slide eyebrows: exactly 2pt larger than the existing fluid type token. */
+.eyebrow{ font-size: calc(var(--text-eyebrow) + 2pt) !important; }
+more compact project-card description treatment. */
+.project-grid .project-outcome{
+  font-family:var(--body);
+  font-size:clamp(.9375rem,.875rem + .20vw,1.0625rem);
+  font-weight:300;
+  line-height:1.5;
+  letter-spacing:0;
+  color:rgba(255,255,255,.88);
+  margin-top:.65rem;
+  max-width:min(100%,35rem);
+}
+@media (min-width:1101px){
+.project-grid .project.wide{min-height:340px;}
+}
+a tap elsewhere{font-family:inherit;font-weight:inherit;background:none;border:0;padding:0;margin:0;text-align:left;align-items:center;cursor:pointer}
+/* "Selected Healthcare Work": the eyebrow stays where it was (top left); the title is centred on one line and the sentence under it is centred. */
+#projects .projects-head{display:block}
+#projects .projects-head h2{text-align:center;white-space:nowrap;font-size:min(var(--text-display),5.4vw)}
+#projects .projects-head .value-note{max-width:60rem;margin:1rem auto 0;text-align:center}
+so this follows the window width. */
+#projects .projects-head{margin-bottom:clamp(10.5px,calc(18.5px - .506vw),16.5px)}
+
+</style>
+</head>
+<body>
+<section class="projects" id="projects">
+  <div class="wrap">
+    <div class="projects-head">
+      <div class="reveal"><div class="eyebrow">Selected Healthcare Work</div><h2 class="display">Your hospital deserves <em>proven hands</em></h2></div>
+      <p class="value-note reveal">Select a project to see its role, scale, structural focus, and project story.</p>
+    </div>
+    <div class="project-grid" id="project-grid">
+      <article class="project featured" tabindex="0" data-category="new-construction advanced-analysis" data-name="UCSF Health Helen Diller Hospital at Parnassus" data-tag="New Construction – PBSD – SSI" data-location="San Francisco, CA" data-role="Structural Engineer of Record" data-scale="15-story acute care hospital tower" data-focus="PBSD · SSI · Dampers · SidePlate™" data-link="https://www.nyase.com/ucsf-health-helen-diller-hospital-at-parnassus/" data-desc="NYA is serving as Structural Engineer of Record for the UCSF Health Helen Diller Hospital at Parnassus. The project combines performance-based seismic design, soil-structure interaction, nonlinear analysis, Special Steel Moment Frames with SidePlate™ connections, fluid viscous dampers, advanced coordination, and a demanding healthcare review environment." data-img="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp">
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1024x768.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-768x576.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1024x768.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1536x1152.webp 1536w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-2048x1536.webp 2048w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(58vw, 945px)" alt="UCSF Health Helen Diller Hospital at Parnassus" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction – PBSD – SSI</div><h3>UCSF Helen Diller Hospital</h3><div class="project-outcome">Nearly 1 million SF on a steep triangular site, with dramatic cantilevers maximizing space and nearly 200 dampers enhancing seismic performance</div></div>
+      </article>
+      <article class="project std" tabindex="0" data-category="new-construction advanced-analysis" data-name="The New Stanford Hospital" data-tag="New Construction – Base Isolation" data-location="Palo Alto, CA" data-role="Structural Engineer of Record" data-scale="Four 7-story patient towers · 3-story podium" data-focus="Friction pendulum base isolation" data-link="https://www.nyase.com/the-new-stanford-hospital/" data-desc="NYA served as Structural Engineer of Record for The New Stanford Hospital, a $2 billion replacement healthcare facility with four seven-story patient towers rising from a three-story podium. The hospital uses advanced friction-pendulum base isolation and was engineered around the patient experience, including healing terraces, a 120-foot-diameter atrium, and a building configuration in which roughly one-third is cantilevered." data-img="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp">
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital-1024x768.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital-768x576.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital-1024x768.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital-1440x1080.webp 1440w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(41.6vw, 675px)" alt="The New Stanford Hospital" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction – Base Isolation</div><h3>The New Stanford Hospital</h3><div class="project-outcome">A base-isolated hospital with a spectacular 120-foot column free atrium, engineered to maintain patient care after a major earthquake</div></div>
+      </article>
+      <article class="project std" tabindex="0" data-category="new-construction advanced-analysis" data-name="UC Irvine Douglas Hospital" data-tag="New Construction" data-location="Irvine, CA" data-role="Structural Engineer of Record" data-scale="475,000 SF · 7 stories + basement" data-focus="Braced frames · shear walls · complex link" data-link="https://www.nyase.com/uc-irvine-douglas-hospital/" data-desc="NYA served as Structural Engineer of Record for UC Irvine Douglas Hospital, a 475,000-square-foot hospital tower with seven stories above grade and a full basement. The project is presented by NYA as California's first design-build hospital, among the first UC hospital projects delivered on schedule and within budget, with early OSHPD partnership enabling phased reviews and a faster construction start. The structural scope also includes a 92-foot 1A Link elevator tower supporting a 45-foot cantilevered corridor." data-img="https://www.nyase.com/wp-content/uploads/2026/11/ucirvinedouglashospitalstructuralengineering.webp">
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/uci-1024x576.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/uci-768x432.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/uci-1024x576.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/uci-1536x864.webp 1536w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(41.6vw, 675px)" alt="UC Irvine Douglas Hospital" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">New Construction</div><h3>UC Irvine Douglas Hospital</h3><div class="project-outcome">California’s first design-build hospital pioneered phased structural approvals, delivering the project on schedule and within budget</div></div>
+      </article>
+      <article class="project wide" tabindex="0" data-category="sb-1953 seismic-retrofit" data-name="Cedars-Sinai Medical Center" data-tag="Campus Projects – SB 1953" data-location="Los Angeles, CA" data-role="Seismic evaluation + ongoing campus work" data-scale="Multiple healthcare campus projects" data-focus="SB 1953 · seismic compliance" data-link="https://www.nyase.com/cedars-sinai-medical-center/" data-desc="NYA has provided structural engineering services for multiple projects at Cedars-Sinai Medical Center, supporting facility expansions and seismic compliance efforts across the campus, including seismic evaluation of the original 1970s main hospital building in accordance with California Senate Bill 1953 requirements." data-img="https://www.nyase.com/wp-content/uploads/2026/11/dscn.webp">
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/cedarssinai-1024x576.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/cedarssinai-768x432.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/cedarssinai-1024x576.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/cedarssinai-1536x864.webp 1536w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(33.3vw, 540px)" alt="Cedars-Sinai Medical Center" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Campus Projects – SB 1953</div><h3>Cedars-Sinai Medical Center</h3><div class="project-outcome">Advanced seismic analysis proved a costly structural retrofit unnecessary, avoiding major construction and disruption to hospital operations</div></div>
+      </article>
+      <article class="project wide" tabindex="0" data-category="sb-1953 seismic-retrofit" data-name="UCSD Hillcrest Medical Center" data-tag="Seismic Evaluation – SB 1953" data-location="San Diego, CA" data-role="Structural evaluation + upgrade planning" data-scale="Multi-building hospital campus" data-focus="SB 1953 · carbon fiber strengthening" data-link="https://www.nyase.com/ucsd-hillcrest-medical-center/" data-desc="NYA performed structural evaluation and seismic upgrade planning for UC San Diego Medical Center Hillcrest, including SB 1953 compliance analysis, carbon fiber column strengthening, and hospital structural upgrades across buildings constructed during different periods." data-img="https://www.nyase.com/wp-content/uploads/2026/11/hillcrest.webp">
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsdmedicalcenterhillcrest-1024x576.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/ucsdmedicalcenterhillcrest-768x432.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/ucsdmedicalcenterhillcrest-1024x576.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/ucsdmedicalcenterhillcrest-1536x864.webp 1536w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(33.3vw, 540px)" alt="UCSD Hillcrest Medical Center" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Evaluation – SB 1953</div><h3>UCSD Hillcrest Medical Center</h3><div class="project-outcome">A two-month carbon fiber seismic retrofit at less than one-tenth the cost of conventional strengthening, while the hospital remained operational</div></div>
+      </article>
+      <article class="project wide" tabindex="0" data-category="seismic-retrofit sb-1953" data-name="Century City Hospital Seismic Upgrade" data-tag="Seismic Upgrade" data-location="Los Angeles, CA" data-role="SPC-2 / NPC-2 upgrades" data-scale="Main hospital + central plant" data-focus="Concrete shear walls · roof diaphragm strengthening" data-link="https://www.nyase.com/century-city-hospital-seismic-upgrade/" data-desc="NYA provided SPC-2 and NPC-2 upgrades for the Century City Hospital main hospital building and central plant. The upgrade used new concrete shear walls and strengthening of the existing roof diaphragm, with OSHPD acceptance for HAZUS SPC-2 compliance and construction completed in 2014." data-img="https://www.nyase.com/wp-content/uploads/2026/11/centurycityhospital.webp">
+        <img src="https://www.nyase.com/wp-content/uploads/2026/11/centurycitymedicalcenter-1024x683.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/centurycitymedicalcenter-768x512.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/centurycitymedicalcenter-1024x683.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/centurycitymedicalcenter-1232x822.webp 1232w" sizes="(max-width:760px) calc(100vw - 2.5rem), (max-width:1100px) 90vw, min(33.3vw, 540px)" alt="Century City Hospital Seismic Upgrade" loading="lazy" decoding="async"><div class="project-arrow">→</div><div class="project-body"><div class="project-tag">Seismic Upgrade</div><h3>Century City Hospital Upgrade</h3><div class="project-outcome">Seismic upgrades helped transform a shuttered hospital into a 138-bed rehabilitation center, bringing an existing facility back into service</div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="modal" id="project-modal" inert role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-panel" role="document">
+    <div class="modal-hero" id="modal-hero"><button class="modal-close" id="modal-close" type="button" aria-label="Close project details">×</button></div>
+    <div class="modal-body">
+      <div class="modal-tag" id="modal-tag"></div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-specs" id="modal-specs"></div>
+      <p class="modal-desc" id="modal-desc"></p>
+      <a class="modal-link" id="modal-link" href="#">View Full Project →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  // Scroll reveal (same behaviour as the main page).
+  var reveal=document.querySelectorAll('.reveal,.project');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})},{threshold:.12});
+    reveal.forEach(function(el){io.observe(el)});
+  }else{reveal.forEach(function(el){el.classList.add('is-visible')})}
+
+  // Project pop-up (same behaviour as the main page).
+  var projects=document.querySelectorAll('.project');
+  var modal=document.getElementById('project-modal'),modalHero=document.getElementById('modal-hero'),modalTag=document.getElementById('modal-tag'),modalTitle=document.getElementById('modal-title'),modalSpecs=document.getElementById('modal-specs'),modalDesc=document.getElementById('modal-desc'),modalLink=document.getElementById('modal-link'),modalClose=document.getElementById('modal-close'),modalBackdrop=document.getElementById('modal-backdrop'),lastFocus=null;
+  function openModal(p){lastFocus=document.activeElement;modalHero.style.backgroundImage='url("'+p.dataset.img+'")';modalTag.textContent=p.dataset.tag||'';modalTitle.textContent=p.dataset.name||'';modalDesc.textContent=p.dataset.desc||'';modalLink.href=p.dataset.link||'#';var specs=[['Location',p.dataset.location],['Role',p.dataset.role],['Scale',p.dataset.scale],['Structural Focus',p.dataset.focus]];modalSpecs.innerHTML=specs.map(function(s){return '<div class="modal-spec"><div class="modal-spec-k">'+s[0]+'</div><div class="modal-spec-v">'+s[1]+'</div></div>'}).join('');modal.inert=false;modal.classList.add('open');document.documentElement.style.overflow='hidden';modalClose.focus()}
+  function closeModal(){modal.classList.remove('open');modal.inert=true;document.documentElement.style.overflow='';if(lastFocus)lastFocus.focus()}
+  projects.forEach(function(p){p.addEventListener('click',function(){openModal(this)});p.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(this)}})});
+  modalClose.addEventListener('click',closeModal);modalBackdrop.addEventListener('click',closeModal);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();if(e.key==='Tab'&&modal.classList.contains('open')){var f=modal.querySelectorAll('button,a[href]');var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+})();
+</script>
+</body>
+</html>
