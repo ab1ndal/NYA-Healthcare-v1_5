@@ -1859,6 +1859,20 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 /* The SSI title is centred on the page; its eyebrow stays where it was. */
 .ssi-compare--reference .ssi-reference-heading{text-align:center}
 </style>
+<style id="hero-scroll-arrow">
+/* The scroll-down arrow from nyase.com: a light-grey arrow (no circle), 42px, bouncing, centred at the bottom of the hero. It is shown on
+   desktop and landscape screens that are tall enough (nyase.com hides it on phones and on very short windows) and the headline rises to make room. */
+.hero-scroll-arrow-c{display:none}
+@media (min-width:1101px) and (min-height:584px), (min-width:768px) and (min-height:584px) and (orientation:landscape){
+  .hero-scroll-arrow-c{display:block;position:absolute;z-index:500;left:0;right:0;bottom:0;text-align:center;pointer-events:none}
+  .hero-scroll-arrow{display:inline-block;line-height:0;padding:10px;position:relative;bottom:4px;cursor:pointer;pointer-events:auto;animation:hero-arrow-bounce 2s infinite}
+  .hero-scroll-arrow svg{display:block;width:42px;height:42px;fill:rgb(200,191,191)}
+  .hero-scroll-arrow-c:hover .hero-scroll-arrow svg,.hero-scroll-arrow-c:focus-visible .hero-scroll-arrow svg{fill:#fff}
+  .hero-scroll-arrow-c:focus-visible{outline:2px solid #fff;outline-offset:-6px}
+  .hero .hero-content{padding-bottom:calc(clamp(.9rem,3.2svh,2.4rem) + 74px)} /* 54px for the arrow + 20px for its bounce */
+}
+@keyframes hero-arrow-bounce{0%,100%,20%,50%,80%{transform:translateY(0)}40%{transform:translateY(-20px)}60%{transform:translateY(-10px)}}
+</style>
 </head>
 <body id="top">
 
@@ -1895,6 +1909,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
     <button class="hero-dot" type="button" data-index="1" aria-label="Show UC Irvine hospital image"></button>
     <button class="hero-dot" type="button" data-index="2" aria-label="Show Century City hospital image"></button>
   </div>
+  <a class="hero-scroll-arrow-c" href="#difference-story" aria-label="Scroll down"><span class="hero-scroll-arrow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z"/></svg></span></a>
 </header>
 
 <section class="proof-ribbon" aria-label="NYA healthcare proof points">
