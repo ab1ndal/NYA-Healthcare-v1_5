@@ -255,7 +255,14 @@ section,.footer{position:relative;z-index:1}
 /* Slide 6: image fills the entire media frame; do not letterbox or add padding. */
 .ucsf-story-single{padding:0;gap:0;background:transparent}
 .ucsf-story-single img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
-.ucsf-story-frame.is-full-bleed{border:0}/* Updated team and UCI copy, using the existing light theme and typefaces. */
+.ucsf-story-frame.is-full-bleed{border:0}
+/* The picture panels (built by the script): one per slide, on top of each other; the scroll sets each one's opacity, so the
+   pictures cross-fade in step with the text instead of swapping. The film's panel has the film's light background. */
+.ucsf-story-frame.is-strip{overflow:hidden}
+.ucsf-strip{position:absolute;inset:0;z-index:2}
+.ucsf-panel{position:absolute;inset:0;overflow:hidden}
+.ucsf-panel.is-film{background:#fffaf5}
+/* Updated team and UCI copy, using the existing light theme and typefaces. */
 
 
 
@@ -2475,101 +2482,98 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
       if (replay && replay.catch) replay.catch(function(){});
     });
   }
-  function hideUcsfSingle() {
-    if (!ucsfSingle) return;
-    ucsfSingle.hidden = true;
-    ucsfSingle.classList.remove('is-visible');
-  }
-  function showUcsfSingle() {
-    if (!ucsfSingle) return;
-    ucsfSingle.hidden = false;
-    ucsfSingle.classList.add('is-visible');
-  }
+  // The pictures cross-fade with the text. The frame holds one panel per slide (photo, photo, the base-isolation film, photo,
+  // the damper video, the MEP rack photo), all on top of each other, and the scroll sets how far each shows: as the next
+  // slide's text passes the picture, the old picture fades out and the new one fades in, in step with the text. Picture
+  // beside the text (desktop, iPad, phones turned sideways): the fade runs while the top edge of the next slide's block crosses
+  // the middle 40% of the frame. Picture above the text (phones, upright tablets): while it crosses the middle 40% of the
+  // visible area below the picture. The slide whose picture is more than half in is the active one: its text is bright and,
+  // on the video slide, the video plays. A panel at zero opacity is taken out of the layout, so the film and video rest.
+  var ucsfMedia = document.querySelector('.ucsf-story-media'), ucsfCol = document.querySelector('.ucsf-story-steps');
+  var ucsfStrip = null, ucsfPanels = [], ucsfVideoPanel = -1;
   function setUcsfFrameRatio(step) {
     if (!ucsfFrame) return;
     var ratio = step.dataset.frameRatio;
     if (ratio) ucsfFrame.style.setProperty('--ucsf-frame-ratio', ratio);
     ucsfFrame.classList.toggle('is-ratio-set', !!ratio);
   }
+  function buildUcsfStrip() {
+    if (!ucsfFrame || !ucsfSteps.length) return;
+    ucsfStrip = document.createElement('div');
+    ucsfStrip.className = 'ucsf-strip';
+    ucsfSteps.forEach(function(step, i){
+      var panel = document.createElement('div');
+      panel.className = 'ucsf-panel';
+      if (step.dataset.film === 'base-isolation' && ucsfAnimation) {
+        ucsfAnimation.hidden = false;
+        panel.classList.add('is-film');
+        panel.appendChild(ucsfAnimation);
+      } else if (step.dataset.video && ucsfVideo) {
+        ucsfVideo.src = step.dataset.video;
+        ucsfVideo.style.display = 'block';
+        ucsfVideoPanel = i;
+        panel.appendChild(ucsfVideo);
+      } else if (step.dataset.layout === 'single' && ucsfSingle) {
+        ucsfSingle.hidden = false;
+        ucsfSingle.classList.add('is-visible');
+        panel.appendChild(ucsfSingle);
+      } else if (step.dataset.image) {
+        var img = document.createElement('img');
+        img.className = 'ucsf-story-image' + (step.dataset.fit === 'contain' ? ' is-reference-contained' : '');
+        img.src = step.dataset.image;
+        img.alt = step.dataset.alt || '';
+        img.decoding = 'async';
+        if (i > 1) img.loading = 'lazy';
+        panel.appendChild(img);
+      }
+      ucsfStrip.appendChild(panel);
+      ucsfPanels.push(panel);
+    });
+    if (ucsfImage) ucsfImage.style.display = 'none';
+    ucsfFrame.appendChild(ucsfStrip);
+    ucsfFrame.classList.add('is-strip');
+    setUcsfFrameRatio(ucsfSteps[0]);
+  }
   function setUcsfStep(index) {
-    if (!ucsfSteps.length || index < 0 || index >= ucsfSteps.length || index === ucsfIndex) return;
-    var step = ucsfSteps[index];
-    ucsfSteps.forEach(function(el, i){ el.classList.toggle('is-active', i === index); });
-    if (ucsfVideo) { ucsfVideo.pause(); ucsfVideo.style.display = 'none'; }
-    hideUcsfSingle();
-    var isFilmStep = step.dataset.film === 'base-isolation';
-    var isSingleStep = step.dataset.layout === 'single';
-    if (ucsfAnimation) ucsfAnimation.hidden = !isFilmStep;
-    if (ucsfFrame) ucsfFrame.classList.toggle('is-iso-active', isFilmStep);
-    if (ucsfFrame) ucsfFrame.classList.toggle('is-full-bleed', isSingleStep);
-    if (isFilmStep && ucsfAnimation) {
-      ucsfImage.style.display = 'none';
-    } else if (step.dataset.video && ucsfVideo) {
-      ucsfImage.style.display = 'none';
-      if (ucsfVideo.getAttribute('src') !== step.dataset.video) ucsfVideo.src = step.dataset.video;
-      ucsfVideo.style.display = 'block';
-      var startAt = Number(step.dataset.videoStart || 0);
-      // If a video declares a custom start offset, replay it from that offset.
-      ucsfVideo.loop = !(startAt > 0);
-      function playUcsfVideo() {
-        if (!step.classList.contains('is-active') || ucsfVideo.getAttribute('src') !== step.dataset.video) return;
-        var play = ucsfVideo.play();
-        if (play && play.catch) play.catch(function(){});
-      }
-      if (startAt > 0) {
-        // Seek only after metadata is available for videos with a start offset.
-        var seekAndPlay = function() {
-          if (!step.classList.contains('is-active') || ucsfVideo.getAttribute('src') !== step.dataset.video) return;
-          var end = ucsfVideo.duration;
-          var offset = Number.isFinite(end) && end > 0 ? Math.min(startAt, Math.max(0, end - .1)) : startAt;
-          try { ucsfVideo.currentTime = offset; } catch (e) {}
-          playUcsfVideo();
-        };
-        if (ucsfVideo.readyState >= 1) seekAndPlay();
-        else ucsfVideo.addEventListener('loadedmetadata', seekAndPlay, {once:true});
-      } else {
-        playUcsfVideo();
-      }
-    } else if (isSingleStep) {
-      ucsfImage.style.display = 'none';
-      showUcsfSingle();
-    } else {
-      ucsfImage.src = step.dataset.image;
-      ucsfImage.classList.toggle('is-reference-contained', step.dataset.fit === 'contain');
-      ucsfImage.alt = step.dataset.alt || '';
-      ucsfImage.style.display = 'block';
-    }
+    if (index === ucsfIndex) return;
     ucsfIndex = index;
-    // Point the player at the next step's film one step early. preload="metadata" means this
-    // costs a header rather than the file, but it opens the connection, so the video is not
-    // fetched stone cold the moment the reader arrives at it.
-    var next = ucsfSteps[index + 1];
-    if (next && next.dataset.video && ucsfVideo && !ucsfVideo.getAttribute('src'))
-      ucsfVideo.src = next.dataset.video;
-    setUcsfFrameRatio(step);
+    ucsfSteps.forEach(function(el, i){ el.classList.toggle('is-active', i === index); });
+    if (!ucsfVideo) return;
+    if (index === ucsfVideoPanel) {
+      var step = ucsfSteps[index], startAt = Number(step.dataset.videoStart || 0);
+      ucsfVideo.loop = !(startAt > 0);
+      var play = function(){ var p = ucsfVideo.play(); if (p && p.catch) p.catch(function(){}); };
+      if (startAt > 0 && ucsfVideo.currentTime < startAt) {
+        var seek = function(){ try { ucsfVideo.currentTime = startAt; } catch (e) {} play(); };
+        if (ucsfVideo.readyState >= 1) seek(); else ucsfVideo.addEventListener('loadedmetadata', seek, {once:true});
+      } else play();
+    } else ucsfVideo.pause();
   }
   if (ucsfSteps.length) {
-    // The slide shown is the one whose text sits by the picture. Picture beside the text (desktop, iPad, phones turned
-    // sideways): the text level with the middle of the picture. Picture above the text (phones, upright tablets): the text in
-    // the middle of the visible area below the picture. (A fixed line 48% down the screen put the wrong text by the picture.)
-    var ucsfMedia = document.querySelector('.ucsf-story-media'), ucsfCol = document.querySelector('.ucsf-story-steps');
+    buildUcsfStrip();
+    var ucsfTick = 0;
     var updateUcsfOnScroll = function(){
-      var anchor = window.innerHeight * 0.48;
-      if (ucsfMedia && ucsfCol && ucsfFrame) {
-        var m = ucsfMedia.getBoundingClientRect(), c = ucsfCol.getBoundingClientRect(), f = ucsfFrame.getBoundingClientRect();
-        var stacked = m.left < c.right - 10 && m.right > c.left + 10;
-        anchor = stacked ? (Math.max(0, m.bottom) + window.innerHeight) / 2 : (f.top + f.bottom) / 2;
+      ucsfTick = 0;
+      if (!ucsfStrip || !ucsfMedia || !ucsfCol) return;
+      var vh = window.innerHeight, m = ucsfMedia.getBoundingClientRect(), c = ucsfCol.getBoundingClientRect(), f = ucsfFrame.getBoundingClientRect();
+      var stacked = m.left < c.right - 10 && m.right > c.left + 10;
+      // The zone the seam crosses (from a down to b); the fade runs over its middle 40%.
+      var a = stacked ? vh : f.bottom, b = stacked ? Math.max(0, m.bottom) : f.top;
+      var pos = 0;
+      for (var k = 1; k < ucsfSteps.length; k++) {
+        var seam = ucsfSteps[k].getBoundingClientRect().top, through = (a - seam) / Math.max(1, a - b);
+        pos += Math.max(0, Math.min(1, (through - .3) / .4));
       }
-      var best = 0, closest = Infinity;
-      ucsfSteps.forEach(function(step, i){
-        var box = step.getBoundingClientRect();
-        var distance = anchor < box.top ? box.top - anchor : anchor > box.bottom ? anchor - box.bottom : 0;
-        if (distance < closest) { closest = distance; best = i; }
+      ucsfPanels.forEach(function(panel, i){
+        var o = Math.max(0, 1 - Math.abs(pos - i));
+        panel.style.opacity = o.toFixed(3);
+        panel.style.display = o > 0 ? '' : 'none';
       });
-      setUcsfStep(best);
+      setUcsfStep(Math.min(ucsfSteps.length - 1, Math.round(pos)));
     };
-    window.addEventListener('scroll', updateUcsfOnScroll, {passive:true});
-    window.addEventListener('resize', updateUcsfOnScroll);
+    var requestUcsf = function(){ if (!ucsfTick) ucsfTick = requestAnimationFrame(updateUcsfOnScroll); };
+    window.addEventListener('scroll', requestUcsf, {passive:true});
+    window.addEventListener('resize', requestUcsf);
     updateUcsfOnScroll();
   }
 
