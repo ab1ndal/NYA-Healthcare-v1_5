@@ -504,7 +504,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 /* NYA construction savings / ARCS — reference-driven replacement. */
 .financial-risk--arcs {
-  padding:clamp(2.6rem, 3.3vw, 3.4rem) 0 clamp(2.7rem, 4.4vw, 4.5rem);
+  padding:clamp(2.6rem, 3.3vw, 3.4rem) 0 var(--space-4);
   background:radial-gradient(ellipse at 50% 42%, #042027 0%, #03151b 45%, #010a0f 100%);
   color:#f8f8f5;
 }
@@ -665,7 +665,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 
 /* Basic vs NYA comprehensive soil-structure interaction – reference comparison */
-.ssi-compare--reference{background:radial-gradient(ellipse at 50% 42%,#042027 0%,#03151b 45%,#010a0f 100%);border-color:rgba(0,235,242,.18);padding:clamp(3rem,4.8vw,5rem) 0;color:#fff}
+.ssi-compare--reference{background:radial-gradient(ellipse at 50% 42%,#042027 0%,#03151b 45%,#010a0f 100%);border-color:rgba(0,235,242,.18);padding:clamp(3rem,4.8vw,var(--space-5)) 0 clamp(3rem,4.8vw,5rem);color:#fff}
 /* Same dark overlay as the other dark sections (.value) while the page background video plays. */
 .webgl-ready .ssi-compare--reference,.ucsf-bg-ready .ssi-compare--reference{background:linear-gradient(90deg,rgba(6,10,15,.83) 0%,rgba(7,11,16,.72) 48%,rgba(8,13,19,.54) 100%)}
 .ssi-compare--reference .wrap{width:min(1640px,calc(100% - 2*var(--pad)))}
