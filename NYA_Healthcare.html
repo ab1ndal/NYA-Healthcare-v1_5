@@ -1584,7 +1584,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .ucsf-story-head h2 br{display:none}
 .ucsf-story-head .value-note{max-width:none;margin:1rem 0 0;padding:0;text-align:left;text-align-last:left;hyphens:none;-webkit-hyphens:none}
 .ucsf-step h3{font-size:var(--text-h2-lg)}
-@media(max-width:1100px){.ucsf-story-media{top:var(--ucsf-nav,0px)}}
+/* Phones and tablets: the pinned picture block gets its own graphics layer, so the browser moves it on the fast scrolling path
+   and it stays put while the page scrolls (without it, phones showed it riding up with the page and snapping back). */
+@media(max-width:1100px){.ucsf-story-media{top:var(--ucsf-nav,0px);will-change:transform;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}}
 @media(min-width:1101px){
   /* Desktop only: the centred, justified block under the title. Phones and tablets stay left-aligned. */
   /* Desktop: the eyebrow stays at the left; the title and the paragraph are centred on the page. */
