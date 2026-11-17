@@ -1082,37 +1082,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Relationships: large fixed intro copy crossfades to its small center counterpart.
    The camera reveals three equal circles, using the existing page typography. */
 @supports (overflow:clip) {body{overflow-x:clip;}}
-.nya-rel-story{position:relative;height:660svh;background:#fff;color:var(--ink);isolation:isolate;}
+.nya-rel-story{position:relative;height:598svh;background:#fff;color:var(--ink);isolation:isolate;}
 .nya-rel-pin{position:sticky;top:0;height:100svh;width:100%;overflow:hidden;background:#fff;contain:paint;}
 .nya-rel-viewport{position:relative;width:100%;height:100%;overflow:hidden;}
-/* The larger, fixed-size opening message is a separate visual layer.
-   It crossfades to the center copy; no type size animates on scroll. */
-.nya-rel-intro{
-  position:absolute;inset:0;z-index:3;display:flex;
-  align-items:center;justify-content:center;
-  padding:clamp(1.25rem,4vw,4.5rem);
-  text-align:center;pointer-events:none;opacity:1;will-change:opacity;
-}
-.nya-rel-intro__copy{width:100%;max-width:1550px;transform:translateY(-0.6rem);}
-.nya-rel-intro h2{
-  font-family:var(--display);font-size:clamp(3.2rem,4.95vw,6rem);
-  font-weight:300;line-height:1.08;letter-spacing:-.02em;
-  color:var(--ink);white-space:nowrap;
-}
-.nya-rel-intro p{
-  max-width:1120px;margin:clamp(1rem,2.2vh,1.6rem) auto 0;
-  font-family:var(--body);font-size:clamp(1.35rem,1.7vw,1.9rem);
-  font-weight:400;line-height:1.48;letter-spacing:-.015em;color:var(--ink2);
-  text-align:justify;text-align-last:center;hyphens:none;-webkit-hyphens:none;word-break:normal;overflow-wrap:normal;
-}
-@media (max-width:1040px), (max-width:1100px) and (orientation:portrait){
- .nya-rel-intro h2{white-space:normal;font-size:clamp(2.75rem,5.1vw,3.8rem);}
- .nya-rel-intro p{font-size:clamp(1.15rem,2vw,1.55rem);}}
-@media (max-width:620px), (max-width:1100px) and (orientation:portrait){
- .nya-rel-intro{padding:1.5rem;}
- .nya-rel-intro__copy{transform:translateY(-0.5rem);}
- .nya-rel-intro h2{font-size:clamp(2.65rem,10vw,3.5rem);line-height:1.08;}
- .nya-rel-intro p{font-size:clamp(1.05rem,4.5vw,1.3rem);line-height:1.52;}}
 
 .nya-rel-world{
   position:absolute;top:50%;left:50%;width:1300px;height:1180px;
@@ -1198,8 +1170,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-note--responsive h3{font-size:40px;line-height:1.05;text-align:center;margin:0;}
 .nya-rel-note--responsive p{font-size:22px;line-height:1.34;margin:40px 0 0;}
 .nya-rel-note--responsive .nya-rel-stat{margin-top:4px;padding-left:46px;}
-.nya-rel-note--responsive .nya-rel-stat small span{display:block;}
-.nya-rel-note--responsive .nya-rel-cap-l2{margin-left:196px;}
+.nya-rel-note--responsive .nya-rel-stat small span{display:inline;}
+.nya-rel-note--responsive .nya-rel-stat small{letter-spacing:.08em;} /* the whole caption fits on one line beside the curve */
+.nya-rel-note--responsive .nya-rel-cap-l2{margin-left:0;}
 .nya-rel-shape--l{float:left;width:226px;height:490px;shape-outside:polygon(0px 0px,14px 0px,12px 10px,10px 20px,8px 30px,7px 40px,6px 50px,5px 60px,4px 70px,4px 80px,4px 90px,4px 100px,4px 110px,5px 120px,6px 130px,7px 140px,8px 150px,10px 160px,12px 170px,14px 180px,16px 190px,19px 200px,22px 210px,25px 220px,28px 230px,32px 240px,36px 250px,40px 260px,45px 270px,49px 280px,55px 290px,60px 300px,66px 310px,73px 320px,79px 330px,87px 340px,94px 350px,102px 360px,111px 370px,120px 380px,130px 390px,141px 400px,152px 410px,164px 420px,177px 430px,192px 440px,208px 450px,224px 460px,224px 470px,224px 480px,224px 490px,0px 490px);}
 .nya-rel-shape--r{float:right;width:444px;height:490px;shape-outside:polygon(444px 0px,6px 0px,12px 10px,19px 20px,25px 30px,33px 40px,40px 50px,48px 60px,57px 70px,66px 80px,76px 90px,87px 100px,98px 110px,110px 120px,123px 130px,138px 140px,154px 150px,156px 160px,158px 170px,160px 180px,162px 190px,165px 200px,168px 210px,171px 220px,174px 230px,178px 240px,182px 250px,186px 260px,191px 270px,195px 280px,201px 290px,206px 300px,212px 310px,219px 320px,225px 330px,233px 340px,240px 350px,248px 360px,257px 370px,266px 380px,276px 390px,287px 400px,298px 410px,310px 420px,323px 430px,338px 440px,354px 450px,371px 460px,391px 470px,414px 480px,442px 490px,444px 490px);}
 .nya-rel-note--team{left:590px;top:655px;width:670px;height:500px;display:block;}
@@ -1217,7 +1190,6 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-rel-shape--cr{float:right;width:210px;height:520px;shape-outside:polygon(210px 0px,150px 0px,150px 10px,150px 20px,150px 30px,150px 40px,150px 50px,150px 60px,150px 70px,156px 80px,161px 90px,166px 100px,171px 110px,175px 120px,179px 130px,183px 140px,186px 150px,189px 160px,192px 170px,195px 180px,197px 190px,199px 200px,201px 210px,202px 220px,203px 230px,204px 240px,205px 250px,206px 260px,206px 270px,206px 280px,206px 290px,205px 300px,204px 310px,203px 320px,197px 330px,178px 340px,156px 350px,150px 360px,150px 370px,150px 380px,150px 390px,150px 400px,150px 410px,150px 420px,150px 430px,150px 440px,150px 450px,150px 460px,150px 470px,150px 480px,150px 490px,150px 500px,150px 510px,150px 520px,210px 520px);}
 /* Keyboard/assistive/reduced-motion fallback provides ordinary readable text. */
 @media(prefers-reduced-motion:reduce){
- .nya-rel-intro{display:none!important;}
  .nya-rel-story{height:auto;}
  .nya-rel-pin{position:relative;height:auto;min-height:0;overflow:visible;contain:none;}
  .nya-rel-viewport{display:none;}
@@ -1799,7 +1771,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 @media (max-width:1100px) and (orientation:portrait){
   .nya-rel-story{height:auto!important;min-height:0}
   .nya-rel-pin{position:static;height:auto;min-height:0;overflow:hidden;contain:none}
-  .nya-rel-intro,.nya-rel-viewport{display:none!important}
+  .nya-rel-viewport{display:none!important}
   .nya-rel-after{margin-top:0;padding-top:clamp(2rem,8vw,3rem)}
   .nya-rel-after .nya-rel-final__diagram{display:block}}</style>
 <style id="ssi-mobile-left-title">
@@ -2218,12 +2190,6 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 
 <section class="nya-rel-story" id="relationships-story" aria-labelledby="team-relationships-title">
  <div class="nya-rel-pin">
-  <div class="nya-rel-intro" aria-hidden="true">
-   <div class="nya-rel-intro__copy">
-    <h2>The relationships that define how we deliver</h2>
-    <p>Established working relationships reduce the uncertainty that puts hospital projects at risk. NYA combines a cohesive, experienced team with close HCAI collaboration and a commitment to architects and contractors, keeping decisions consistent, approvals advancing, and construction moving.</p>
-   </div>
-  </div>
   <div class="nya-rel-viewport">
    <div class="nya-rel-world" aria-hidden="true">
     <svg class="nya-rel-rings" viewBox="0 0 1300 1180" aria-hidden="true" focusable="false">
@@ -2263,7 +2229,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
      <div class="fl fl-title" style="left:50%;top:11.5%">Partnering with HCAI</div>
      <div class="fl fl-stat" style="left:50%;top:18.2%">1 of only 5</div>
      <div class="fl fl-cap" style="left:50%;top:24.3%;width:24cqw">HCAI-approved plan check firms</div>
-     <div class="fl fl-center" style="left:50%;top:58.5%;width:28cqw">The relationships that define how we deliver</div>
+     <div class="fl fl-center" style="left:50%;top:52.5%;width:28cqw">The relationships that define how we deliver</div>
      <div class="fl fl-title" style="left:18.5%;top:68.6%;width:26cqw">Responsiveness that earns trust</div>
      <div class="fl fl-stat" style="left:23.5%;top:83%">One day or less</div>
      <div class="fl fl-cap" style="left:27.5%;top:89.8%;width:22cqw">49% of RFIs answered in one day or less.</div>
@@ -2301,7 +2267,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
      <div class="fl fl-title" style="left:50%;top:11.5%">Partnering with HCAI</div>
      <div class="fl fl-stat" style="left:50%;top:18.2%">1 of only 5</div>
      <div class="fl fl-cap" style="left:50%;top:24.3%;width:24cqw">HCAI-approved plan check firms</div>
-     <div class="fl fl-center" style="left:50%;top:58.5%;width:28cqw">The relationships that define how we deliver</div>
+     <div class="fl fl-center" style="left:50%;top:52.5%;width:28cqw">The relationships that define how we deliver</div>
      <div class="fl fl-title" style="left:18.5%;top:68.6%;width:26cqw">Responsiveness that earns trust</div>
      <div class="fl fl-stat" style="left:23.2%;top:83%">One day or less</div>
      <div class="fl fl-cap" style="left:27.5%;top:89.8%;width:22cqw">49% of RFIs answered in one day or less.</div>
@@ -3368,7 +3334,6 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
  const world=story.querySelector('.nya-rel-world');
  const rings=story.querySelector('.nya-rel-rings');
  const center=story.querySelector('.nya-rel-center');
- const intro=story.querySelector('.nya-rel-intro');
  const hcai=story.querySelector('.nya-rel-note--hcai');
  const responsive=story.querySelector('.nya-rel-note--responsive');
  const team=story.querySelector('.nya-rel-note--team');
@@ -3388,10 +3353,11 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
  const desktop=[
   {p:0,    x:650,y:665,z:3.38,name:'center'},
   {p:.08,  x:650,y:665,z:3.38,name:'center'},
-  {p:.20,  x:650,y:665,z:1.35,name:'center'},
+  // The story starts on the diagram at the same zoom as the HCAI message, and keeps it as the camera moves up to that message.
+  {p:.2186,x:650,y:665,z:2.30,name:'center'},   /* = the first scroll position of the section (.20 / .915) */
 
-  {p:.29,  x:650,y:150,z:1.95,name:'hcai'},
-  {p:.32,  x:650,y:150,z:1.95,name:'hcai'},
+  // This first move takes exactly as much scrolling as the HCAI -> Responsiveness move (615px at a 900px-tall window), from the very first scroll.
+  {p:.3386,x:650,y:150,z:2.30,name:'hcai'},
   // The HCAI close-up stays centered on its complete statistic + copy,
   // matching the arrival target instead of drifting left when zooming.
   {p:.40,  x:650,y:228,z:2.30,name:'hcai-text'},
@@ -3434,7 +3400,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
     let z=lerp(a.z,b.z,t);
     // The three messages share ONE zoom: the largest at which the tallest/widest of them still fits the window (width and height),
     // so the top, left and right messages always have the same type size, including on short landscape phones.
-    if(['hcai','hcai-text','responsive-text','team-text'].indexOf(nm)>-1){
+    if(['center','hcai','hcai-text','responsive-text','team-text'].indexOf(nm)>-1){
       const fit=getFit(),navH=(document.getElementById('range-nav')||{}).offsetHeight||0;
       const blocks=[[730,300],[700,540],[700,540]];
       let cap=Infinity;
@@ -3452,27 +3418,22 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   const rect=story.getBoundingClientRect();
   const extent=Math.max(1,story.offsetHeight-innerHeight);
   const rawProgress=clamp(-rect.top/extent);
-  // Opening stage (old 0-.20) now takes half the scroll; later stages keep their length.
-  const OPEN=.111;
-  const progress0=rawProgress<=OPEN?rawProgress/OPEN*.20:.20+(rawProgress-OPEN)/(1-OPEN)*.80;
+  // No opening slide any more: the story starts on the diagram with its centre message (old timeline position .20), and every later stage keeps its length.
+  const progress0=.20+rawProgress*.80;
   // Earlier stages keep their length; the final screen then holds for the remaining ~8% of the scroll.
   const progress=clamp(progress0/.915);
   desired=sample(progress);
   desired.fit=getFit();
-  // The opening message is large and fixed-size. It crossfades with the
-  // center message as the same camera moves from the intro toward the rings.
-  // Neither headline nor paragraph changes font size during the transition.
-  desired.introOpacity=1-ease((progress-.09)/.07);
-  desired.ring=ease((progress-.145)/.145);
+  desired.ring=1;
   const overview=ease((progress-.935)/.06);
   // Bring in the smaller, theme-formatted copy as the introduction fades;
   // hide it during peripheral closeups, then reveal it for the full diagram.
-  const centerEntrance=ease((progress-.155)/.065);
-  const centerExit=1-ease((progress-.245)/.065);
+  const centerEntrance=1;
+  const centerExit=1-ease((progress-.245)/.07);
   desired.centerOpacity=Math.max(centerEntrance*centerExit,overview);
   const focus=(a,b,c,d)=>Math.max(overview,ease((progress-a)/(b-a))*(1-ease((progress-c)/(d-c))));
   // Keep each text block visible throughout its EXTRA zoom-in scroll beat.
-  desired.hcaiOpacity=focus(.225,.29,.465,.535);
+  desired.hcaiOpacity=focus(.27,.3386,.465,.535);
   desired.responsiveOpacity=focus(.48,.54,.70,.765);
   desired.teamOpacity=Math.max(overview,ease((progress-.71)/.06));
   // After the Team close-up the page goes straight to the final screen (no paragraph-filled overview in between):
@@ -3486,12 +3447,10 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   if(reduced.matches||!desired){running=false;return;}
   if(!current)current={...desired};
   const blend=.27;
-  for(const k of ['x','y','z','fit','ring','introOpacity','centerOpacity','hcaiOpacity','responsiveOpacity','teamOpacity','finalOpacity','worldOpacity'])current[k]=lerp(current[k],desired[k],blend);
+  for(const k of ['x','y','z','fit','ring','centerOpacity','hcaiOpacity','responsiveOpacity','teamOpacity','finalOpacity','worldOpacity'])current[k]=lerp(current[k],desired[k],blend);
   const scale=current.z*current.fit;
   world.style.transform=`translate3d(${(-current.x*scale).toFixed(2)}px,${(-current.y*scale).toFixed(2)}px,0) scale(${scale.toFixed(5)})`;
   rings.style.opacity=String(clamp(current.ring));
-  intro.style.opacity=String(clamp(current.introOpacity));
-  intro.style.visibility=current.introOpacity<.012?'hidden':'visible';
   center.style.opacity=String(clamp(current.centerOpacity));
   hcai.style.opacity=String(clamp(current.hcaiOpacity));
   responsive.style.opacity=String(clamp(current.responsiveOpacity));
@@ -3499,7 +3458,7 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
   world.style.opacity=String(clamp(current.worldOpacity));
   if(finalEl){finalEl.style.opacity=String(clamp(current.finalOpacity));finalEl.style.visibility=current.finalOpacity<.01?'hidden':'visible';}
   const err=Math.max(Math.abs(current.x-desired.x),Math.abs(current.y-desired.y),Math.abs(current.z-desired.z)*100,Math.abs(current.fit-desired.fit)*100,Math.abs(current.ring-desired.ring)*100,
-    ...['introOpacity','centerOpacity','hcaiOpacity','responsiveOpacity','teamOpacity','finalOpacity','worldOpacity'].map(k=>Math.abs(current[k]-desired[k])*100));
+    ...['centerOpacity','hcaiOpacity','responsiveOpacity','teamOpacity','finalOpacity','worldOpacity'].map(k=>Math.abs(current[k]-desired[k])*100));
   if(err>.03)requestAnimationFrame(frame);else{current={...desired};running=false;}
  }
  function schedule(){if(!ticking){ticking=true;requestAnimationFrame(()=>{ticking=false;capture();});}}
