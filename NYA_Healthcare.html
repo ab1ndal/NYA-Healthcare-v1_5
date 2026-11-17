@@ -256,11 +256,14 @@ section,.footer{position:relative;z-index:1}
 .ucsf-story-single{padding:0;gap:0;background:transparent}
 .ucsf-story-single img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
 .ucsf-story-frame.is-full-bleed{border:0}
-/* The picture panels (built by the script): one per slide, on top of each other; the scroll sets each one's opacity, so the
-   pictures cross-fade in step with the text instead of swapping. The film's panel has the film's light background. */
+/* The picture panels (built by the script): one per slide, on top of each other. The one shown (is-on) fades in over 0.6s
+   while the one before fades out; the fade plays to the end on its own. Opacity only, so it also plays with system
+   animations off (this beats the page-wide reduced-motion rule). The film's panel has the film's light background. */
 .ucsf-story-frame.is-strip{overflow:hidden}
 .ucsf-strip{position:absolute;inset:0;z-index:2}
-.ucsf-panel{position:absolute;inset:0;overflow:hidden}
+.ucsf-panel{position:absolute;inset:0;overflow:hidden;opacity:0}
+.ucsf-story-frame .ucsf-panel{transition:opacity .6s ease!important}
+.ucsf-panel.is-on{opacity:1}
 .ucsf-panel.is-film{background:#fffaf5}
 /* Updated team and UCI copy, using the existing light theme and typefaces. */
 
@@ -2482,13 +2485,13 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
       if (replay && replay.catch) replay.catch(function(){});
     });
   }
-  // The pictures cross-fade with the text. The frame holds one panel per slide (photo, photo, the base-isolation film, photo,
-  // the damper video, the MEP rack photo), all on top of each other, and the scroll sets how far each shows: as the next
-  // slide's text passes the picture, the old picture fades out and the new one fades in, in step with the text. Picture
-  // beside the text (desktop, iPad, phones turned sideways): the fade runs while the top edge of the next slide's block crosses
-  // the middle 40% of the frame. Picture above the text (phones, upright tablets): while it crosses the middle 40% of the
-  // visible area below the picture. The slide whose picture is more than half in is the active one: its text is bright and,
-  // on the video slide, the video plays. A panel at zero opacity is taken out of the layout, so the film and video rest.
+  // The pictures cross-fade, fire and forget. The frame holds one panel per slide (photo, photo, the base-isolation film,
+  // photo, the damper video, the MEP rack photo), all on top of each other. The scroll only decides which slide is shown: the
+  // next one once the top edge of its text block passes the middle of the picture (desktop, iPad, phones turned sideways), or
+  // the middle of the visible text area below the picture (phones, upright tablets). The change itself is a 0.6s cross-fade
+  // that plays to the end by itself, whatever the scroll does; scrolling back past the point fades back. The shown slide's
+  // text is bright and, on the video slide, the video plays. The outgoing panel leaves the layout once it has faded, so the
+  // film and video rest.
   var ucsfMedia = document.querySelector('.ucsf-story-media'), ucsfCol = document.querySelector('.ucsf-story-steps');
   var ucsfStrip = null, ucsfPanels = [], ucsfVideoPanel = -1;
   function setUcsfFrameRatio(step) {
@@ -2534,6 +2537,22 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
     ucsfFrame.classList.add('is-strip');
     setUcsfFrameRatio(ucsfSteps[0]);
   }
+  // Show one panel: it fades in (0.6s, CSS) while the one before fades out and then leaves the layout.
+  var ucsfShown = -1;
+  function showUcsfPanel(index) {
+    if (index === ucsfShown) return;
+    ucsfShown = index;
+    ucsfPanels.forEach(function(panel, i){
+      clearTimeout(panel.ucsfOff);
+      if (i === index) {
+        if (panel.style.display === 'none') { panel.style.display = ''; void panel.offsetWidth; }
+        panel.classList.add('is-on');
+      } else if (panel.classList.contains('is-on')) {
+        panel.classList.remove('is-on');
+        panel.ucsfOff = setTimeout(function(){ if (!panel.classList.contains('is-on')) panel.style.display = 'none'; }, 650);
+      } else panel.style.display = 'none';
+    });
+  }
   function setUcsfStep(index) {
     if (index === ucsfIndex) return;
     ucsfIndex = index;
@@ -2557,19 +2576,13 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
       if (!ucsfStrip || !ucsfMedia || !ucsfCol) return;
       var vh = window.innerHeight, m = ucsfMedia.getBoundingClientRect(), c = ucsfCol.getBoundingClientRect(), f = ucsfFrame.getBoundingClientRect();
       var stacked = m.left < c.right - 10 && m.right > c.left + 10;
-      // The zone the seam crosses (from a down to b); the fade runs over its middle 40%.
-      var a = stacked ? vh : f.bottom, b = stacked ? Math.max(0, m.bottom) : f.top;
+      // The next slide is due once the top edge of its text block passes the middle of the zone it crosses (a down to b).
+      var a = stacked ? vh : f.bottom, b = stacked ? Math.max(0, m.bottom) : f.top, mid = (a + b) / 2;
       var pos = 0;
-      for (var k = 1; k < ucsfSteps.length; k++) {
-        var seam = ucsfSteps[k].getBoundingClientRect().top, through = (a - seam) / Math.max(1, a - b);
-        pos += Math.max(0, Math.min(1, (through - .3) / .4));
-      }
-      ucsfPanels.forEach(function(panel, i){
-        var o = Math.max(0, 1 - Math.abs(pos - i));
-        panel.style.opacity = o.toFixed(3);
-        panel.style.display = o > 0 ? '' : 'none';
-      });
-      setUcsfStep(Math.min(ucsfSteps.length - 1, Math.round(pos)));
+      for (var k = 1; k < ucsfSteps.length; k++) if (ucsfSteps[k].getBoundingClientRect().top < mid) pos = k;
+      var index = Math.min(ucsfSteps.length - 1, Math.round(pos));
+      showUcsfPanel(index);
+      setUcsfStep(index);
     };
     var requestUcsf = function(){ if (!ucsfTick) ucsfTick = requestAnimationFrame(updateUcsfOnScroll); };
     window.addEventListener('scroll', requestUcsf, {passive:true});
