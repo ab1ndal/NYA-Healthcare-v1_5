@@ -59,7 +59,7 @@ Scroll-driven three.js book shown as Option 2 beside the current gallery. Plain 
 
 | # | Task | Owner | Status | Notes |
 |---|------|-------|--------|-------|
-| B0 | Throwaway spike: opening, one bending page turn, Stanford photo layers | AB | In progress | AB judges the look before B1 starts. Latest (v10) is tracked in `book-of-projects/`; earlier versions stay in the ignored `spike/` folder |
+| B0 | Throwaway spike: opening, one bending page turn, Stanford photo layers | AB | In progress | AB judges the look before B1 starts. Latest (v10) is in `book-of-projects/`, earlier versions in `spike/`; both folders are gitignored (local only) |
 | B1 | Option switch: current gallery = Option 1 (default), book = Option 2 | AB | Not started | |
 | B2 | HTML chapters (base layer, print, reduced motion) | AB | Not started | Today's copy unchanged |
 | B3 | Gate, pinned stage, scroll state, lazy three.js | AB | Not started | Adds `three-0.187.0.min.js` beside the HTML |
@@ -71,6 +71,6 @@ Scroll-driven three.js book shown as Option 2 beside the current gallery. Plain 
 | B9 | Scroll test, Lighthouse, device checks, README | AB | Not started | |
 | B10 | Choose Option 1 or Option 2 | AB | Not started | Removing the other is a separate change |
 | B11 | Sign off copy corrections found by research (design doc section 9) | AB | Not started | UC Irvine city, Stanford scale line, UCSF square footage, Cedars-Sinai retrofit wording, Hillcrest and Century City ratings |
-| B12 | Pick a pop-up style in `book-of-projects/index.html` (1 watercolor in pieces, 2 paper diorama warm studio, 3 paper diorama dark stage) | AB | Not started | View: `cd book-of-projects && python -m http.server 8766 --bind 127.0.0.1`. Folder holds 5.2 MB of WebP layers in the repo, against the media rule, because WordPress sends no CORS header for WebGL textures. Move to WordPress once MB adds the header |
+| B12 | Pick a pop-up style in `book-of-projects/index.html` (1 watercolor in pieces, 2 paper diorama warm studio, 3 paper diorama dark stage) | AB | Not started | View: `cd book-of-projects && python -m http.server 8766 --bind 127.0.0.1`. Folder is gitignored (local only). Its WebP layers need WordPress hosting with a CORS header for WebGL textures before this can ship; MB to add the header |
 | B13 | Confirm VA San Diego outcome sentence and structural focus | AB | Draft in place | Written from BD+C's project description (six stories, early 1970s, new foundations, exterior stair towers with integrated braced framing). No NYA source yet |
 | B14 | Confirm calls made where AB's content block and public sources disagree | AB | Calls made | Stanford area shown as 824,000 SF (Stanford Medicine), not the block's 850,000 SF. UCSF outcome sentence now says 880,000 SF, not "Nearly 1 million SF". Stanford architect kept as in the block (Rafael Viñoly Architects & Perkins Eastman). Stanford Medicine Cancer Center left out: no artwork. Chapters stay in date order |
