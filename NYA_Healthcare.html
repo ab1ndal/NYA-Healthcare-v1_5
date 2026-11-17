@@ -1958,10 +1958,10 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   </div>
 </section>
 
-<!-- ======== PART: Cost Certainty ========
+<!-- ======== PART: Cost Optimization ========
      ARCS chart, SSI comparison and the UCSF savings. Self-contained: to reorder, move
      everything from this comment to its END PART line. The case-study nav follows the page order. -->
-<div class="page-part" id="cost-certainty">
+<div class="page-part" id="cost-optimization">
 
   <section class="value financial-risk financial-risk--arcs" id="arcs-studies" aria-labelledby="financial-risk-title">
     <div class="wrap">
@@ -2071,7 +2071,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
     </div>
   </section>
 </div>
-<!-- ======== END PART: Cost Certainty ======== -->
+<!-- ======== END PART: Cost Optimization ======== -->
 
 <!-- ======== PART: Technical Excellence ========
      UCSF / Stanford intro and the six-slide story. Self-contained: to reorder, move
@@ -3232,7 +3232,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 <nav class="range-nav" id="range-nav" aria-label="Case studies" data-tone="dark">
   <button type="button" class="rn-current" aria-expanded="false" aria-controls="rn-menu"><span class="rn-num" aria-hidden="true"></span><span class="rn-current-label"></span><span class="rn-caret" aria-hidden="true"></span></button>
   <span class="rn-overall" aria-hidden="true"><i></i></span>
-  <a href="#cost-certainty" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">1</span><span class="range-nav-label">Cost Optimization</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
+  <a href="#cost-optimization" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">1</span><span class="range-nav-label">Cost Optimization</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
   <a href="#ucsf-case-study" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">2</span><span class="range-nav-label">Technical Excellence</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
   <a href="#relationships-story" data-tone="light"><span class="rn-head"><span class="rn-num" aria-hidden="true">3</span><span class="range-nav-label">Collaboration and Partnership</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
   <a href="#uci-delivery-proof" data-tone="light"><span class="rn-head"><span class="rn-num" aria-hidden="true">4</span><span class="range-nav-label">Schedule and Project Delivery</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
@@ -3937,17 +3937,17 @@ function initArcsChart(svg){
 }
 document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 </script>
-<script id="arcs-snap">
-/* ARCS snap: when the reader stops scrolling down (0.4s with no scroll, wheel or key input) while the top of the ARCS
-   section is still below the top of the window, but within a third of a screen, glide the rest of the way so the section
-   starts at the top of the window. Down only: once the section top has passed the top of the window the reader is free
+<script id="cost-optimization-snap">
+/* Cost Optimization snap: when the reader stops scrolling down (0.4s with no scroll, wheel or key input) while the top of the
+   ARCS section, the SSI comparison or the AMC drivers funnel is still below the top of the window, but within the top 20% of the screen, glide the rest
+   of the way so that section starts at the top of the window. Down only: once the section top has passed the top of the window the reader is free
    to stop anywhere inside it, and scrolling up never pulls the page back down. Never while a finger is down or under a
    pop-up. Any wheel, key, press or touch stops the glide, and it then waits until the reader has moved at least 40px.
    Script only, like the Approach and finale snaps: CSS scroll-snap on the page breaks scrollbar clicks and slow
    trackpad swipes (see the README). */
 (function(){
-  const section=document.getElementById('arcs-studies');
-  if(!section)return;
+  const sections=['arcs-studies','ssi-comparison','amc-funnel'].map(id=>document.getElementById(id)).filter(Boolean);
+  if(!sections.length)return;
   const root=document.documentElement;
   let lastY=scrollY,down=false,idle=0,glide=0,touching=false,lastInput=0,heldAt=null;
   const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
@@ -3983,9 +3983,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     if(!down||touching||root.style.overflow==='hidden'||document.body.style.overflow==='hidden')return;
     if(heldAt!==null&&Math.abs(scrollY-heldAt)<40)return;
     heldAt=null;
-    const top=section.getBoundingClientRect().top;
-    if(top<2||top>innerHeight/3)return;
-    glideTo(scrollY+top);
+    for(const s of sections){
+      const top=s.getBoundingClientRect().top;
+      if(top>=2&&top<=innerHeight*.2){glideTo(scrollY+top);return}
+    }
   }
   addEventListener('scroll',()=>{
     if(glide)return;
