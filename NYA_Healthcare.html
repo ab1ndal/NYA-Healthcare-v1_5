@@ -1312,12 +1312,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* The bar steps aside while a project pop-up is open (the pop-up sits on a lower layer). */
 html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-events:none}</style>
 <style id="approach-nav-morph-style">
-/* NYA's approach -> case-study nav (desktop), two design options (see approach-nav-morph):
-   1 = when a card reaches the bar, its number and title lift off and shrink into its column of #range-nav while the
-       card scrolls on underneath;
-   2 = each card docks under the bar: its title strip stays put while the rest of the card scrolls up beneath it, then the
-       strip closes with the card's bottom edge, which rises into that part's progress line while the number and title
-       shrink into its label.
+/* NYA's approach -> case-study nav (desktop), see approach-nav-morph: each card docks under the bar. Its title strip
+   stays put while the rest of the card scrolls up beneath it, then the strip closes with the card's bottom edge, which
+   rises into that part's progress line while the number and title shrink into its label in #range-nav.
    Scroll-driven, card by card, so it reverses on the way back up. While it runs the bar uses its light tone (white, ink
    labels), and keeps it until the dark Cost Optimization part (ARCS) reaches the bar; then it changes tone as it does
    between any two parts.
@@ -1327,35 +1324,17 @@ html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-eve
 .nya-morph-ghost{position:absolute;left:0;top:0;margin:0;transform-origin:0 0;color:var(--ink)}
 .nya-morph-ghost.is-line{white-space:nowrap}
 .nya-morph-ghost.is-num{color:var(--green-on-light)}
-/* Option 2's docked strip: a white panel and four 1px lines, stretched with transforms so it never animates layout. */
-.nya-morph-rule{position:absolute;left:0;top:0;width:1px;height:1px;transform-origin:0 0;background:rgba(12,18,20,.16)}
+/* The docked strip: a white panel and four 1px lines, stretched with transforms so it never animates layout. */
+.nya-morph-rule{position:absolute;left:0;top:0;width:1px;height:1px;transform-origin:0 0;background:rgba(12,18,20,.16);will-change:transform,opacity}
 .nya-morph-rule.is-top{height:2px;background:var(--green-on-light)}
 .nya-morph-rule.is-box{background:#fff}
-.nya-morph-layer.is-opt-2 .nya-morph-rule{will-change:transform,opacity}
-.nya-morph-layer:not(.is-opt-2) .nya-morph-rule{display:none}
 .range-nav.rn-morphing{--rn-text:#151515;--rn-mark:#151515;--rn-surface:#ffffff;
   opacity:var(--rn-bg,0);visibility:visible;transform:none;transition:none;pointer-events:none}
 /* Once every card has landed, the white bar works as the nav (until the dark part reaches it and it changes tone). */
 .range-nav.rn-morphing.rn-morph-done{pointer-events:auto}
 .range-nav.rn-morphing > a .rn-head,
-.range-nav.rn-morph-bars > a .rn-bar{opacity:var(--rn-lab,0)}
-/* Option 1: a card's real number and title step aside while their stand-ins are out (opacity, so they stay in the
-   accessibility tree). Option 2 needs none: the real card scrolls on under the docked strip and the bar. */
-.nya-journey-chapter.is-lifted h3,
-.nya-journey-chapter.is-lifted .nya-journey-chapter-number{opacity:0}
-html:has(#project-modal.open) .nya-morph-layer{display:none}
-/* Floating option selector: shown only while its section is on screen. */
-.opt-switch{position:fixed;right:var(--space-3);bottom:var(--space-3);z-index:950;display:flex;align-items:center;gap:4px;padding:5px;border-radius:999px;
-  background:#0b0f14;border:1px solid var(--line2);
-  font-size:var(--text-small);line-height:1;opacity:0;visibility:hidden;transform:translateY(16px);
-  transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s linear .35s}
-.opt-switch.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s}
-.opt-switch-k{padding:0 .6rem 0 .8rem;font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.opt-switch button{appearance:none;border:0;border-radius:999px;min-height:44px;padding:0 .9rem;background:transparent;color:var(--text);font:inherit;white-space:nowrap;cursor:pointer;transition:background-color .25s,color .25s}
-.opt-switch button:hover{background:rgba(255,255,255,.08)}
-.opt-switch button[aria-pressed="true"]{background:var(--gold);color:#061016}
-.opt-switch button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-@media(max-width:480px),(max-height:500px){.opt-switch{right:var(--space-2);bottom:var(--space-2)}.opt-switch-k{display:none}}</style>
+.range-nav.rn-morphing > a .rn-bar{opacity:var(--rn-lab,0)}
+html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 <style id="nya-closing-style">
 /* ==== NYA FINALE COMBINED START (CSS) ==== The supplied artwork is the section; words sit between its posts and its cable draws itself with the scroll. */
 .nya-copyright{position:relative;z-index:1;background:#fff;color:#5b6168;text-align:center;padding:1.2rem var(--pad) 1.4rem;font-family:var(--body);font-size:var(--text-small);letter-spacing:.06em}
@@ -1931,7 +1910,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
   </div>
 </section>
 
-<section class="nya-journey" id="difference-story" aria-labelledby="why-healthcare-heading" data-approach-option="2">
+<section class="nya-journey" id="difference-story" aria-labelledby="why-healthcare-heading">
   <div class="nya-journey-stage">
     <div class="nya-journey-layout">
       <div class="nya-journey-head">
@@ -1977,11 +1956,6 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
     </div>
   </div>
 </section>
-<div class="opt-switch" id="approach-switch" role="group" aria-label="Transition from the approach cards into the case-study bar">
-  <span class="opt-switch-k" aria-hidden="true">Nav transition</span>
-  <button type="button" data-approach-opt="1" aria-pressed="false">Option 1</button>
-  <button type="button" data-approach-opt="2" aria-pressed="true">Option 2</button>
-</div>
 
 <!-- ======== PART: Cost Certainty ========
      ARCS chart, SSI comparison and the UCSF savings. Self-contained: to reorder, move
@@ -3366,19 +3340,16 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
   const story=document.getElementById('difference-story');
   const nav=document.getElementById('range-nav');
   if(!story||!nav)return;
-  // Two design options for this transition, picked with #approach-switch (data-approach-option on the section):
-  //   1 = when a card reaches the bar, its number and title lift off and shrink into its label while the card scrolls on;
-  //   2 = each card docks under the bar: its title strip stays put while the rest of the card scrolls up beneath it (the
-  //       card shortens), then the strip closes with the card's bottom edge, which rises into that part's progress line
-  //       while the number and title shrink into its label. Moves 1:1 with the scroll.
-  const opt=()=>story.dataset.approachOption==='1'?1:2;
+  // Each card docks under the bar: its title strip stays put while the rest of the card scrolls up beneath it (the card
+  // shortens), then the strip closes with the card's bottom edge, which rises into that part's progress line while the
+  // number and title shrink into its label. Moves 1:1 with the scroll.
   // Pair each card with its nav link by name ("&" and "and" count as the same), so moving a PART keeps the pairs right.
   const key=t=>t.toLowerCase().replace(/&/g,'and').replace(/[^a-z]/g,'');
   const navLinks=Array.from(nav.querySelectorAll(':scope > a'));
   const layer=document.createElement('div');
   layer.className='nya-morph-layer';layer.hidden=true;layer.setAttribute('aria-hidden','true');
   const el=(cls,text)=>{const d=document.createElement('div');d.className=cls;if(text!=null)d.textContent=text;layer.appendChild(d);return d;};
-  // Option 2's docked strip for each card: a white panel and the four lines of its frame, drawn under the moving text.
+  // The docked strip for each card: a white panel and the four lines of its frame, drawn under the moving text.
   const cards=[];
   story.querySelectorAll('.nya-journey-chapter').forEach(card=>{
     const h=card.querySelector('h3');
@@ -3417,7 +3388,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
   const px=v=>v.toFixed(1)+'px';
   // Hairlines sit on whole device pixels so they stay crisp instead of shimmering as they move.
   const dpx=v=>(Math.round(v*devicePixelRatio)/devicePixelRatio)+'px';
-  let raf=0,on=false,sized=false,mode=0;
+  let raf=0,on=false,sized=false;
   // Each ghost copies its source's type (and, for the wrapped title, its width) so it starts as an exact stand-in.
   function copyStyle(){
     flights.forEach(f=>{
@@ -3435,13 +3406,11 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
   function stop(){
     if(!on)return;
     on=false;layer.hidden=true;
-    nav.classList.remove('rn-morphing','rn-morph-bars','rn-morph-done');
-    cards.forEach(c=>c.card.classList.remove('is-lifted'));
+    nav.classList.remove('rn-morphing','rn-morph-done');
   }
   function start(){
-    on=true;sized=false;mode=opt();layer.hidden=false;
-    layer.classList.toggle('is-opt-2',mode===2);
-    nav.classList.add('rn-morphing');nav.classList.toggle('rn-morph-bars',mode===2);
+    on=true;sized=false;layer.hidden=false;
+    nav.classList.add('rn-morphing');
   }
   // Moves every title and number ghost: from where it sits (from[i], a rect) to its place in the bar, by t = f.card's
   // progress; scales so the one-line title fits the label; cross-fades the wrapped and one-line titles, and mid-flight
@@ -3482,26 +3451,24 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
   function frame(){
     raf=0;
     if(phone.matches||reduced.matches){stop();return;}
-    if(on&&mode!==opt())stop();
     const vh=innerHeight;
     // The bar switches itself on once the first case study reaches the middle of the screen (s1). It keeps the light tone
     // (white, set here) until that dark part actually reaches the bar; from there the bar runs itself.
     const s1=first.getBoundingClientRect().top+scrollY-vh/2;
     const under=first.getBoundingClientRect().top<=nav.offsetHeight;
     const far=scrollY>=s1+vh,past=scrollY>=s1&&nav.classList.contains('is-on')&&under;
-    if(opt()===2)frame2(vh,far,past);else frame1(vh,far,past);
+    dock(vh,far,past);
   }
-  // Shared by both options: where each card is relative to the bar. nb = the bar's height (it sits at the top of the screen
-  // once shown). p: the card's top travelling the last quarter screen down to the bar (the bar fades in). docked: its top
-  // has reached the bar. m: progress into the bar, 0 to 1, as the card scrolls on by the height of its title row (option 1)
-  // or as its bottom edge rises from the foot of the title strip to the bar (option 2).
-  function measure(vh,nb,two){
+  // Where each card is relative to the bar. nb = the bar's height (it sits at the top of the screen once shown).
+  // p: the card's top travelling the last quarter screen down to the bar (the bar fades in). docked: its top has reached
+  // the bar. m: progress into the bar, 0 to 1, as its bottom edge rises from the foot of the title strip to the bar.
+  function measure(vh,nb){
     return cards.map(c=>{
       const r=c.card.getBoundingClientRect(),hd=c.head.getBoundingClientRect();
       const rowH=hd.bottom-r.top,stripH=rowH+(c.padB||0);
       c.p=clamp((nb+vh*.25-r.top)/(vh*.25));
       c.docked=r.top<=nb;
-      c.m=two?clamp((nb+stripH-r.bottom)/stripH):clamp((nb-r.top)/rowH);
+      c.m=clamp((nb+stripH-r.bottom)/stripH);
       return {r,stripH};
     });
   }
@@ -3519,31 +3486,16 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
     cards.forEach(c=>c.link.style.setProperty('--rn-lab',smooth(.97,1,c.m).toFixed(3)));
     nav.classList.toggle('rn-morph-done',done);
   }
-  function frame1(vh,far,past){
-    // Option 1: nothing moves until a card's top meets the bar. Then its number and title lift off and hold their place
-    // while the card (frame and text) scrolls on up under the bar; over the height of the title row they rise and shrink
-    // into the label, 1:1 with the scroll, staying just ahead of the card's text coming up behind them.
-    const nb=nav.offsetHeight;
-    let geo=measure(vh,nb,false);
-    const most=Math.max(...cards.map(c=>c.p)),done=cards.every(c=>c.m>=1);
-    if(far||most<=0||(past&&done)){stop();return;}
-    if(!on)start();
-    if(!sized){copyStyle();geo=measure(vh,nb,false);}
-    placeTitles(dockedFrom(geo,nb),c=>c.m,c=>c.docked?1:0,c=>c.docked?1-smooth(.97,1,c.m):0);
-    // The real number and title step aside only while their stand-ins are out.
-    cards.forEach(c=>c.card.classList.toggle('is-lifted',c.docked));
-    finish(most,done);
-  }
-  function frame2(vh,far,past){
-    // Option 2: when a card's top meets the bar, the strip down to the end of its title row (frame, number and title)
+  function dock(vh,far,past){
+    // When a card's top meets the bar, the strip down to the end of its title row (frame, number and title)
     // stays put under the bar while the rest of the card scrolls up beneath it. Then, as the card's bottom edge rises from
     // the strip's foot to the bar, the frame fades and the number and title fly into the label.
     const nb=nav.offsetHeight;
-    let geo=measure(vh,nb,true);
+    let geo=measure(vh,nb);
     const most=Math.max(...cards.map(c=>c.p)),done=cards.every(c=>c.m>=1);
     if(far||most<=0||(past&&done)){stop();return;}
     if(!on)start();
-    if(!sized){copyStyle();geo=measure(vh,nb,true);}
+    if(!sized){copyStyle();geo=measure(vh,nb);}
     placeTitles(dockedFrom(geo,nb),c=>smooth(0,1,c.m),c=>c.docked?1:0,c=>c.docked?1-smooth(.97,1,c.m):0);
     cards.forEach((c,i)=>{
       const {r,stripH}=geo[i];
@@ -3571,19 +3523,6 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
   addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{sized=false;schedule();},120);},{passive:true});
   phone.addEventListener('change',schedule);reduced.addEventListener('change',schedule);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{sized=false;schedule();});
-
-  // Option selector: shown only while the section is on screen.
-  const sw=document.getElementById('approach-switch');
-  if(sw){
-    sw.addEventListener('click',e=>{
-      const b=e.target.closest('button[data-approach-opt]');if(!b)return;
-      story.dataset.approachOption=b.dataset.approachOpt;
-      sw.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
-      stop();schedule();
-    });
-    if('IntersectionObserver' in window)new IntersectionObserver(es=>sw.classList.toggle('is-on',es[0].isIntersecting),{rootMargin:'-30% 0px -30% 0px'}).observe(story);
-    else sw.classList.add('is-on');
-  }
   schedule();
 })();
 </script>
