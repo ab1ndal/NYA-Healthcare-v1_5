@@ -1597,11 +1597,12 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   /* Desktop: the eyebrow stays at the left; the title and the paragraph are centred on the page. */
   .ucsf-story-head h2{text-align:center}
   .ucsf-story-head .value-note{text-align:justify;text-align-last:center}
-  .ucsf-story-head{position:sticky;top:var(--ucsf-nav,0px);z-index:6;padding-top:clamp(1.2rem,3svh,2.2rem);padding-bottom:clamp(.8rem,2svh,1.4rem);pointer-events:none}
+  .ucsf-story-head{position:sticky;top:var(--ucsf-nav,0px);z-index:6;padding-top:var(--ucsf-head-pt);padding-bottom:clamp(.8rem,2svh,1.4rem);pointer-events:none}
   /* Black backdrop is its own layer: its height shrinks when the paragraph fades; the header's layout box never changes. */
   .ucsf-story-head::before{content:"";position:absolute;z-index:-1;top:0;left:calc(50% - 50vw);width:100vw;height:100%;background:#070a0d;transition:height .5s var(--ease)}
   .ucsf-story.is-note-off .ucsf-story-head::before{height:var(--ucsf-head-h-short,100%)}
-  .ucsf-story{padding-top:clamp(3rem,6vw,5rem)}
+  /* The eyebrow sits --space-5 below the section's top edge (the header's own padding included), like the other sections. */
+  .ucsf-story{--ucsf-head-pt:clamp(1.2rem,3svh,2.2rem);padding-top:calc(var(--space-5) - var(--ucsf-head-pt))}
   /* The paragraph fades without changing the header's height, so nothing below it shifts while scrolling. */
   .ucsf-story-head .value-note{transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear 0s}
   .ucsf-story.is-note-off .ucsf-story-head .value-note{opacity:0!important;transform:translateY(-.6rem)!important;visibility:hidden;pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear .45s}
