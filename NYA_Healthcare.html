@@ -3257,10 +3257,10 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
 <nav class="range-nav" id="range-nav" aria-label="Case studies" data-tone="dark">
   <button type="button" class="rn-current" aria-expanded="false" aria-controls="rn-menu"><span class="rn-num" aria-hidden="true"></span><span class="rn-current-label"></span><span class="rn-caret" aria-hidden="true"></span></button>
   <span class="rn-overall" aria-hidden="true"><i></i></span>
-  <a href="#cost-certainty" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">01</span><span class="range-nav-label">Cost Optimization</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
-  <a href="#ucsf-case-study" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">02</span><span class="range-nav-label">Technical Excellence</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
-  <a href="#relationships-story" data-tone="light"><span class="rn-head"><span class="rn-num" aria-hidden="true">03</span><span class="range-nav-label">Collaboration and Partnership</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
-  <a href="#uci-delivery-proof" data-tone="light"><span class="rn-head"><span class="rn-num" aria-hidden="true">04</span><span class="range-nav-label">Schedule and Project Delivery</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
+  <a href="#cost-certainty" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">1</span><span class="range-nav-label">Cost Optimization</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
+  <a href="#ucsf-case-study" data-tone="dark"><span class="rn-head"><span class="rn-num" aria-hidden="true">2</span><span class="range-nav-label">Technical Excellence</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
+  <a href="#relationships-story" data-tone="light"><span class="rn-head"><span class="rn-num" aria-hidden="true">3</span><span class="range-nav-label">Collaboration and Partnership</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
+  <a href="#uci-delivery-proof" data-tone="light"><span class="rn-head"><span class="rn-num" aria-hidden="true">4</span><span class="range-nav-label">Schedule and Project Delivery</span></span><span class="rn-bar" aria-hidden="true"><i></i></span></a>
 </nav>
 <script id="range-nav-behavior">
 (function(){
@@ -3272,7 +3272,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
     .map(a=>({a,el:document.getElementById(a.getAttribute('href').slice(1))})).filter(i=>i.el)
     .sort((x,y)=>x.el.compareDocumentPosition(y.el)&Node.DOCUMENT_POSITION_FOLLOWING?-1:1);
   if(!items.length)return;
-  items.forEach((it,k)=>{nav.appendChild(it.a);it.a.querySelector('.rn-num').textContent=String(k+1).padStart(2,'0');});
+  items.forEach((it,k)=>{nav.appendChild(it.a);it.a.querySelector('.rn-num').textContent=String(k+1);});
   const links=items.map(i=>i.a);
   const curNum=nav.querySelector('.rn-current .rn-num'),curLabel=nav.querySelector('.rn-current-label');
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -3288,7 +3288,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
   menu.className='rn-menu';menu.id='rn-menu';menu.hidden=true;
   entries.forEach((e,k)=>{
     const a=document.createElement('a'),n=document.createElement('span'),l=document.createElement('span');
-    a.href='#'+e.el.id;n.className='rn-num';n.setAttribute('aria-hidden','true');n.textContent=String(k+1).padStart(2,'0');l.textContent=e.label;
+    a.href='#'+e.el.id;n.className='rn-num';n.setAttribute('aria-hidden','true');n.textContent=String(k+1);l.textContent=e.label;
     a.append(n,l);menu.appendChild(a);e.m=a;
     a.addEventListener('click',ev=>{ev.preventDefault();closeMenu(false);goTo(e.el);});
   });
@@ -3337,7 +3337,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
       const e=entries[idx];
       if(idx<items.length)items[idx].a.setAttribute('aria-current','true');
       e.m.setAttribute('aria-current','true');nav.dataset.tone=e.tone;
-      curNum.textContent=String(idx+1).padStart(2,'0');curLabel.textContent=e.label;
+      curNum.textContent=String(idx+1);curLabel.textContent=e.label;
       toggle.setAttribute('aria-label','Sections. Current: '+e.label);
     }else{
       closeMenu(false);
@@ -3391,13 +3391,19 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
   });
   // One flight per moving piece, from an element in the card to one in the bar:
   //   wrap = the title as it wraps in the card (fades out early); line = the same title on one line (fades in);
-  //   num = the card number, flying to the bar's 01-04.
+  //   num = the card number, flying to the bar's number;
+  //   cap = a copy of the bar's own label or number (its type, caps and spacing) flying alongside the title or number
+  //         (of), kept to the same width; it cross-fades in mid-flight so what reaches the bar already matches it.
   const flights=[];
   cards.forEach(c=>{
     const label=c.link.querySelector('.range-nav-label'),rnNum=c.link.querySelector('.rn-num');
     const line={from:c.h,to:label,el:el('nya-morph-ghost is-line',c.h.textContent),kind:'line',card:c};
-    flights.push({from:c.h,to:label,el:el('nya-morph-ghost',c.h.textContent),kind:'wrap',scaleBy:line,card:c},line);
-    if(c.n&&rnNum)flights.push({from:c.n,to:rnNum,el:el('nya-morph-ghost is-line is-num',c.n.textContent),kind:'num',card:c});
+    flights.push({from:c.h,to:label,el:el('nya-morph-ghost',c.h.textContent),kind:'wrap',scaleBy:line,card:c},line,
+      {from:label,to:label,el:el('nya-morph-ghost is-line',label.textContent),kind:'cap',of:line,card:c});
+    if(c.n&&rnNum){
+      const num={from:c.n,to:rnNum,el:el('nya-morph-ghost is-line is-num',c.n.textContent),kind:'num',card:c};
+      flights.push(num,{from:rnNum,to:rnNum,el:el('nya-morph-ghost is-line',rnNum.textContent),kind:'cap',of:num,card:c});
+    }
   });
   // The bar shows from the first case study (the first link, in page order) reaching the middle of the screen.
   const first=navLinks[0]&&document.getElementById(navLinks[0].getAttribute('href').slice(1));
@@ -3419,6 +3425,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
       st.fontFamily=cs.fontFamily;st.fontSize=cs.fontSize;st.fontWeight=cs.fontWeight;
       st.lineHeight=cs.lineHeight;st.letterSpacing=cs.letterSpacing;
       st.width=f.kind==='wrap'?f.from.getBoundingClientRect().width+'px':'auto';
+      // The bar's copies take its case and colour too (the bar is in its light tone while this runs).
+      if(f.kind==='cap'){st.textTransform=cs.textTransform;st.color=cs.color;f.el.textContent=f.from.textContent;}
     });
     cards.forEach(c=>{c.padB=parseFloat(getComputedStyle(c.card).paddingBottom)||0;});
     flights.forEach(f=>{f.w=f.el.offsetWidth;f.h=f.el.offsetHeight;});
@@ -3436,8 +3444,10 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
     nav.classList.add('rn-morphing');nav.classList.toggle('rn-morph-bars',mode===2);
   }
   // Moves every title and number ghost: from where it sits (from[i], a rect) to its place in the bar, by t = f.card's
-  // progress; scales so the one-line title fits the label; cross-fades the wrapped and one-line titles.
-  function placeTitles(from,tOf,landOf){
+  // progress; scales so the one-line title fits the label; cross-fades the wrapped and one-line titles, and mid-flight
+  // (t .45 to .8) cross-fades the card's serif title and number into the bar's own caps. capOf = how much of the bar's
+  // copy shows (it hands over to the real label at the very end).
+  function placeTitles(from,tOf,landOf,capOf){
     const to=flights.map(f=>f.to.getBoundingClientRect());
     const ks=flights.map((f,i)=>{
       const ref=f.scaleBy||f,l=to[i],e=tOf(f.card);
@@ -3450,12 +3460,23 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
       f.swap=f.scaleBy.swap=smooth(1,.93,ks[i].k*f.scaleBy.w/f.w);
     });
     flights.forEach((f,i)=>{
+      if(f.kind==='cap')return;
       const a=from[i],l=to[i];
-      const {s,k,ref,e}=ks[i],swap=f.swap||0,land=landOf(f.card);
+      const {s,k,ref,e}=ks[i],swap=f.swap||0,land=landOf(f.card)*(1-smooth(.45,.8,e));
       const x=a.left+(l.left-a.left)*e;
       const y=a.top+(l.top+(l.height-ref.h*s)/2-a.top)*e;
+      f.x=x;f.y=y;f.k=k;f.e=e;
       f.el.style.transform='translate('+px(x)+','+px(y)+') scale('+k.toFixed(4)+')';
       f.el.style.opacity=String(f.kind==='wrap'?land*(1-swap):f.kind==='line'?land*swap:land);
+    });
+    // The bar's copy rides with its title or number: same left edge, same middle, as wide as the title is now, growing
+    // or shrinking to its own natural size by the time it lands.
+    flights.forEach(f=>{
+      if(f.kind!=='cap')return;
+      const o=f.of,e=o.e,kc=o.w*o.k/f.w+(1-o.w*o.k/f.w)*e;
+      const y=o.y+(o.h*o.k-f.h*kc)/2;
+      f.el.style.transform='translate('+px(o.x)+','+px(y)+') scale('+kc.toFixed(4)+')';
+      f.el.style.opacity=String(smooth(.45,.8,e)*capOf(f.card));
     });
   }
   function frame(){
@@ -3495,7 +3516,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
   function finish(most,done){
     // The bar fades in as the first card approaches it; each label (and its line) appears as its own card lands.
     nav.style.setProperty('--rn-bg',smooth(0,1,most).toFixed(3));
-    cards.forEach(c=>c.link.style.setProperty('--rn-lab',smooth(.9,1,c.m).toFixed(3)));
+    cards.forEach(c=>c.link.style.setProperty('--rn-lab',smooth(.97,1,c.m).toFixed(3)));
     nav.classList.toggle('rn-morph-done',done);
   }
   function frame1(vh,far,past){
@@ -3508,7 +3529,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
     if(far||most<=0||(past&&done)){stop();return;}
     if(!on)start();
     if(!sized){copyStyle();geo=measure(vh,nb,false);}
-    placeTitles(dockedFrom(geo,nb),c=>c.m,c=>c.docked?1-smooth(.85,.97,c.m):0);
+    placeTitles(dockedFrom(geo,nb),c=>c.m,c=>c.docked?1:0,c=>c.docked?1-smooth(.97,1,c.m):0);
     // The real number and title step aside only while their stand-ins are out.
     cards.forEach(c=>c.card.classList.toggle('is-lifted',c.docked));
     finish(most,done);
@@ -3523,7 +3544,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}
     if(far||most<=0||(past&&done)){stop();return;}
     if(!on)start();
     if(!sized){copyStyle();geo=measure(vh,nb,true);}
-    placeTitles(dockedFrom(geo,nb),c=>smooth(0,1,c.m),c=>c.docked?1-smooth(.85,.97,c.m):0);
+    placeTitles(dockedFrom(geo,nb),c=>smooth(0,1,c.m),c=>c.docked?1:0,c=>c.docked?1-smooth(.97,1,c.m):0);
     cards.forEach((c,i)=>{
       const {r,stripH}=geo[i];
       const show=c.docked?'':'none';
@@ -3975,6 +3996,66 @@ function initArcsChart(svg){
   if(!lastKey) render(DESKTOP); // hidden at load: draw something
 }
 document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
+</script>
+<script id="arcs-snap">
+/* ARCS snap: when the reader stops scrolling down (0.4s with no scroll, wheel or key input) while the top of the ARCS
+   section is still below the top of the window, but within a third of a screen, glide the rest of the way so the section
+   starts at the top of the window. Down only: once the section top has passed the top of the window the reader is free
+   to stop anywhere inside it, and scrolling up never pulls the page back down. Never while a finger is down or under a
+   pop-up. Any wheel, key, press or touch stops the glide, and it then waits until the reader has moved at least 40px.
+   Script only, like the Approach and finale snaps: CSS scroll-snap on the page breaks scrollbar clicks and slow
+   trackpad swipes (see the README). */
+(function(){
+  const section=document.getElementById('arcs-studies');
+  if(!section)return;
+  const root=document.documentElement;
+  let lastY=scrollY,down=false,idle=0,glide=0,touching=false,lastInput=0,heldAt=null;
+  const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+  function stopGlide(){
+    if(!glide)return;
+    cancelAnimationFrame(glide);glide=0;root.style.scrollBehavior='';heldAt=scrollY;
+  }
+  function glideTo(to){
+    const from=scrollY,dist=to-from;
+    if(Math.abs(dist)<2)return;
+    const dur=Math.min(900,Math.max(500,400+Math.abs(dist)*1.5)),t0=performance.now();
+    // html{scroll-behavior:smooth} would smooth each step again, so it is off while the glide runs.
+    root.style.scrollBehavior='auto';
+    const frame=now=>{
+      const k=Math.min(1,(now-t0)/dur);
+      scrollTo(0,from+dist*ease(k));
+      lastY=scrollY;
+      if(k<1)glide=requestAnimationFrame(frame);else{glide=0;root.style.scrollBehavior=''}
+    };
+    glide=requestAnimationFrame(frame);
+  }
+  const input=()=>{lastInput=performance.now();stopGlide()};
+  addEventListener('wheel',input,{passive:true});
+  addEventListener('keydown',input,{passive:true});
+  addEventListener('mousedown',input,{passive:true});
+  addEventListener('touchstart',()=>{touching=true;input()},{passive:true});
+  addEventListener('touchend',()=>{touching=false},{passive:true});
+  addEventListener('touchcancel',()=>{touching=false},{passive:true});
+  function check(){
+    idle=0;
+    const quiet=performance.now()-lastInput;
+    if(quiet<400){idle=setTimeout(check,410-quiet);return}
+    if(!down||touching||root.style.overflow==='hidden'||document.body.style.overflow==='hidden')return;
+    if(heldAt!==null&&Math.abs(scrollY-heldAt)<40)return;
+    heldAt=null;
+    const top=section.getBoundingClientRect().top;
+    if(top<2||top>innerHeight/3)return;
+    glideTo(scrollY+top);
+  }
+  addEventListener('scroll',()=>{
+    if(glide)return;
+    const y=scrollY;
+    // Only real moves set the direction: the browser can settle a fraction of a pixel back at the end of a scroll.
+    if(Math.abs(y-lastY)>2){down=y>lastY;lastY=y}
+    clearTimeout(idle);
+    idle=setTimeout(check,400);
+  },{passive:true});
+})();
 </script>
 
 <style id="amc-funnel-style">
