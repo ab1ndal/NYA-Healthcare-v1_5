@@ -619,7 +619,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .financial-risk--arcs .financial-header h2 em {white-space:normal;}
   .financial-risk--arcs .financial-intro {margin-left:clamp(.5rem,1.05vw,1.2rem);}
   .financial-risk--arcs .financial-benefit {padding-inline:clamp(1rem,2vw,1.5rem);}}
-@media (max-width:700px), (max-width:1100px) and (orientation:portrait){
+@media (max-width:700px), (max-width:1100px) and (orientation:portrait), (max-width:899px) and (orientation:landscape){
   .financial-risk--arcs {padding-block:var(--space-4);}
   .financial-risk--arcs .financial-header h2 {font-size:var(--text-h1);line-height:1.06;}
   .financial-risk--arcs .financial-intro {padding-left:1rem;line-height:1.7;}
@@ -639,8 +639,10 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 
 /* Match all three ARCS benefit descriptions on one shared baseline.
-   The tallest headline sets the height for the heading row, including at zoom. */
-@media (min-width:1101px), (min-width:701px) and (orientation:landscape){
+   The tallest headline sets the height for the heading row, including at zoom.
+   Landscape stays three-up only from 900px: below that (phone sideways, laptop at 175%+ zoom)
+   columns shrink to ~250px and bullets run 4–5 lines, so the cards stack instead. */
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){
   .financial-risk--arcs .financial-benefits {
     grid-template-rows: auto auto;
   }
@@ -653,7 +655,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   }
   .financial-risk--arcs .financial-benefit h3 { margin-bottom: 0; }}
 @supports not (grid-template-rows: subgrid) {
-  @media (min-width:1101px), (min-width:701px) and (orientation:landscape){
+  @media (min-width:1101px), (min-width:900px) and (orientation:landscape){
     .financial-risk--arcs .financial-benefit {
       display: flex;
       flex-direction: column;
@@ -690,13 +692,15 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* ARCS copy and three benefits from the supplied final reference – preserve SVG chart. */
 .financial-risk--arcs .financial-header h2{font-family:var(--display);font-size:var(--text-h1);line-height:1.03}
 .financial-risk--arcs .financial-header h2 em{white-space:normal;color:var(--gold)}
-.financial-risk--arcs .financial-intro{font-size:var(--text-body)}
+.financial-risk--arcs .financial-intro{font-size:var(--text-body);text-wrap:pretty}
 .financial-risk--arcs .arcs-benefit-tag{font-size:var(--text-eyebrow);letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:clamp(.65rem,1vw,.9rem)}
-.financial-risk--arcs .financial-benefit h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2);line-height:1.07}
+.financial-risk--arcs .financial-benefit h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2);line-height:1.07;text-wrap:balance}
 .financial-risk--arcs .financial-benefit p{color:rgba(242,246,248,.83);font-size:var(--text-body);line-height:1.65}
 .financial-risk--arcs .financial-benefit{min-height:0;padding-bottom:.5rem}
-@media (min-width:1101px), (min-width:701px) and (orientation:landscape){.financial-risk--arcs .financial-benefits{grid-template-rows:auto auto auto}.financial-risk--arcs .financial-benefit{grid-row:span 3;grid-template-rows:subgrid;row-gap:.65rem;align-content:start}.financial-risk--arcs .financial-benefit h3{margin-bottom:0}}
-@media (max-width:700px), (max-width:1100px) and (orientation:portrait){.financial-risk--arcs .financial-benefit{padding-top:1.4rem}.financial-risk--arcs .financial-header h2 br{display:none}}</style>
+@media (min-width:1101px), (min-width:900px) and (orientation:landscape){.financial-risk--arcs .financial-benefits{grid-template-rows:auto auto auto}.financial-risk--arcs .financial-benefit{grid-row:span 3;grid-template-rows:subgrid;row-gap:.65rem;align-content:start}.financial-risk--arcs .financial-benefit h3{margin-bottom:0}}
+@media (max-width:700px), (max-width:1100px) and (orientation:portrait), (max-width:899px) and (orientation:landscape){.financial-risk--arcs .financial-benefit{padding-top:1.4rem}.financial-risk--arcs .financial-header h2 br{display:none}}
+/* Bulleted card body: a <ul> takes the <p> slot (third child) so it stays on the shared subgrid row. */
+.financial-risk--arcs .financial-benefit ul{margin:0;padding-left:1.15em;color:rgba(242,246,248,.83);font-size:var(--text-body);line-height:1.65;max-width:30rem;text-wrap:pretty}.financial-risk--arcs .financial-benefit li+li{margin-top:.35em}.financial-risk--arcs .financial-benefit li::marker{color:var(--gold)}.financial-risk--arcs .financial-benefit .arcs-li-label{color:var(--gold)}</style>
 
 <style>
   .iso-film {
@@ -1968,7 +1972,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
     <div class="wrap">
       <div class="eyebrow reveal"><span>Advanced Rapid Concept Studies (ARCS)</span></div>
       <div class="financial-header">
-        <h2 id="financial-risk-title" class="display reveal">Better informed structural <br>decisions lead to lower <br><em>construction costs</em></h2>
+        <h2 id="financial-risk-title" class="display reveal">Bring <em>construction costs</em> <br>down by understanding <br>cost drivers earlier</h2>
         <p class="financial-intro reveal">NYA’s Advanced Rapid Concept Studies (ARCS) bring Design Development-level precision into the earliest design stages. Combining advanced technology with extensive hospital experience, ARCS reveals cost and performance implications long before critical decisions are made.</p>
       </div>
       <div class="financial-graphic reveal">
@@ -1982,9 +1986,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
         <p class="arcs-caption">Conceptual illustration of anticipated structural cost ranges</p>
       </div>
       <div class="financial-benefits">
-        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Rapid Evaluation</div><h3>Compare options with confidence</h3><p>ARCS rapidly explores multiple structural systems, including moment frames, braced frames, dampers, and base isolation, allowing the team to compare alternatives and identify the best approach while design flexibility is greatest.</p></article>
-        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Advanced Analysis</div><h3>DD level detail in SD</h3><p>NYA’s in-house computational capabilities and nonlinear time history analysis deliver detailed seismic performance, material quantities, and reliable cost information typically unavailable until later design phases, providing a more solid basis for early decisions.</p></article>
-        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Real-World Experience</div><h3>Proven at Stanford and UCSF</h3><p>Developed during the New Stanford Hospital Project, ARCS enabled cost informed comparisons of structural systems with and without base isolation. It was fully implemented during the UCSF Helen Diller Hospital project, where it expedited the selection of a damped moment frame maximizing seismic performance and architectural flexibility within budget.</p></article>
+        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Rapid Evaluation</div><h3>Compare options confidently</h3><ul><li>Identify the optimal system while design flexibility is greatest</li><li>Compare alternatives side by side on cost and seismic performance</li><li>Rapidly evaluate multiple structural systems including moment frames, braced frames, dampers, and base isolation</li></ul></article>
+        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Advanced Analysis</div><h3>DD-level detail in SD</h3><ul><li>Provide reliable cost information earlier for better-informed decisions</li><li>Deliver detailed seismic performance assessments and material quantities at SD</li><li>Leverage in-house computational capabilities and experience for early nonlinear time history analysis</li></ul></article>
+        <article class="financial-benefit reveal"><div class="arcs-benefit-tag">Real-World Experience</div><h3>Proven at Stanford and UCSF</h3><ul><li>Maximize seismic performance and architectural flexibility within budget</li><li><span class="arcs-li-label">Stanford:</span> Developed ARCS to compare structural systems with and without base isolation, including cost implications</li><li><span class="arcs-li-label">UCSF:</span> Fully implemented ARCS to accelerate damped moment frame selection</li></ul></article>
       </div>
     </div>
   </section>
@@ -2046,7 +2050,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
       <div class="amc-funnel-track">
         <svg class="amc-funnel-lines" aria-hidden="true" focusable="false"></svg>
         <div class="amc-funnel-panel amc-funnel-panel--drivers">
-          <div class="eyebrow amc-funnel-label">The Drivers</div>
+          <div class="eyebrow amc-funnel-label">The Drivers of Innovation</div>
           <ul class="amc-funnel-list">
             <li class="amc-funnel-item"><h3>Team Synergy</h3><p>An integrated, multidisciplinary team that collaborates to develop innovative solutions</p></li>
             <li class="amc-funnel-item"><h3>Technical Expertise</h3><p>Pioneering capabilities in SSI, advanced seismic analysis, and performance-based design</p></li>
