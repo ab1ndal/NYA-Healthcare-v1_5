@@ -489,7 +489,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 
 
 /* Stanford story slides 1-3: reference screenshot typography and full-image framing. */
-.ucsf-story-steps .ucsf-step:nth-child(-n+3) h3 em {
+.tx-imm-card h3 em {
   color: var(--gold);
   font-style: italic;
   font-weight: 300;
@@ -1210,13 +1210,14 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ucsf-proof-intro {height:auto;min-height:0;}
   .ucsf-proof-intro .ucsf-proof-copy {padding-block:var(--space-4);}}
 
-/* UCSF story slides 4–6: fit the supplied longer copy without reducing theme font sizes. */
+/* UCSF story slides (the Stanford ones are the immersive scene above them): fit the supplied longer copy without reducing
+   theme font sizes. */
 @media (min-width: 1101px) {
-  .ucsf-story-steps .ucsf-step:nth-child(n+4) { padding-block: var(--space-3); }
-  .ucsf-story-steps .ucsf-step:nth-child(n+4) p { line-height: 1.55; margin-top: var(--space-2); }}
+  .ucsf-story-steps .ucsf-step { padding-block: var(--space-3); }
+  .ucsf-story-steps .ucsf-step p { line-height: 1.55; margin-top: var(--space-2); }}
 @media (min-width: 1101px) and (max-height: 760px) {
-  .ucsf-story-steps .ucsf-step:nth-child(n+4) { padding-block: var(--space-1); }
-  .ucsf-story-steps .ucsf-step:nth-child(n+4) p { line-height: 1.5; }}</style>
+  .ucsf-story-steps .ucsf-step { padding-block: var(--space-1); }
+  .ucsf-story-steps .ucsf-step p { line-height: 1.5; }}</style>
 
 <style id="nya-project-card-copy-balance">
 /* The revised descriptions are much longer. Keep the NYA font family and headings,
@@ -1645,6 +1646,60 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .ucsf-story-frame{width:min(100%,calc(var(--ucsf-avail-h) * 4 / 3));transition:width .5s var(--ease)}
   .ucsf-step{min-height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h));padding:1.2rem 0}
   .ucsf-step h3{font-size:min(var(--text-h2-lg),4.6svh)}}</style>
+<style id="tx-imm-style">
+/* Technical Excellence, Stanford: two layers. The stage (photo) is pinned below the section title and its camera moves
+   slowly with the scroll (script); the cards scroll over it at normal speed. The stage and the cards share one grid cell. */
+.tx-imm{grid-column:1 / -1;position:relative;z-index:1;display:grid;width:100vw;margin-left:calc(50% - 50vw);--tx-top:var(--ucsf-nav,0px)}
+.tx-imm-stage,.tx-imm-steps{grid-area:1 / 1;min-width:0}
+.tx-imm-stage{position:-webkit-sticky;position:sticky;top:var(--tx-top);height:calc(100svh - var(--tx-top));align-self:start;overflow:hidden;background:#070a0d;isolation:isolate}
+.tx-imm-view{position:absolute;left:0;top:0;width:100%;height:var(--tx-photo-h,100%);overflow:hidden}
+.tx-imm-view::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(7,10,13,.5),rgba(7,10,13,0) 20%,rgba(7,10,13,0) 72%,rgba(7,10,13,.65))}
+.tx-imm-scene{position:absolute;left:0;top:0;width:1600px;height:1067px;transform-origin:0 0;will-change:transform;isolation:isolate}
+.tx-imm-photo{display:block;width:100%;height:100%;filter:grayscale(1) contrast(1.05) brightness(.8)}
+.tx-imm-tint,.tx-imm-line{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
+.tx-imm-tint{mix-blend-mode:color}
+.tx-imm-tint path{fill:var(--gold)}
+.tx-imm-line path{fill:none;stroke:var(--gold);stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.tx-imm[data-step="0"] .tx-imm-tint{opacity:.72}
+.tx-imm[data-step="0"] .tx-imm-line{opacity:.75}
+/* Round inset photos (atrium, isolator bearing): fade and grow in while their slide is the one on screen. */
+.tx-imm-inset{position:absolute;margin:0;width:clamp(150px,15vw,280px);aspect-ratio:1;border-radius:50%;overflow:hidden;background:#10161d;
+  border:2px solid rgba(255,255,255,.85);box-shadow:0 18px 50px rgba(0,0,0,.45);opacity:0;transform:scale(.85)}
+.tx-imm-inset img,.tx-imm-inset svg{display:block;width:100%;height:100%;object-fit:cover}
+.tx-imm-inset.is-atrium{left:max(var(--pad),5%);top:12%}
+.tx-imm-inset.is-bearing{right:max(var(--pad),5%);top:12%}
+.tx-imm[data-step="1"] .tx-imm-inset.is-atrium,.tx-imm[data-step="2"] .tx-imm-inset.is-bearing{opacity:1;transform:none}
+/* The highlight and the insets fade with everyone's settings (opacity and size only); this beats the page-wide rule. */
+.tx-imm .tx-imm-tint,.tx-imm .tx-imm-line{transition:opacity .9s ease!important}
+.tx-imm .tx-imm-inset{transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.2,1)!important}
+/* The cards */
+.tx-imm-steps{position:relative;z-index:1;width:100%;max-width:1650px;margin:0 auto;padding:40svh var(--pad) 12svh}
+.tx-imm-step{min-height:calc(100svh - var(--tx-top));display:flex;align-items:center;justify-content:flex-end;padding:3rem 0}
+.tx-imm-step.is-left{justify-content:flex-start}
+.tx-imm-card{width:min(100%,560px);background:rgba(8,11,14,.92);border:1px solid rgba(255,255,255,.1);padding:clamp(1.6rem,2.6vw,2.75rem);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.tx-imm-card .eyebrow{margin-bottom:.8rem}
+.tx-imm-card h3{font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.05;font-weight:300;color:#fff}
+.tx-imm-card p{margin-top:1rem;color:rgba(255,255,255,.76);font-size:var(--text-body);line-height:1.7}
+/* Desktop and phones on their side: the section title stays pinned, so the stage starts below it. */
+@media (min-width:1101px), (max-width:1100px) and (orientation:landscape) and (max-height:500px){
+  .tx-imm{--tx-top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h))}
+  .ucsf-story.is-note-off .tx-imm{--tx-top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h-short,var(--ucsf-head-h)))}
+  .tx-imm-stage{transition:top .5s var(--ease),height .5s var(--ease)}}
+@media (max-width:1100px) and (orientation:landscape) and (max-height:500px){
+  .tx-imm-card{width:min(100%,54vw);padding:1.2rem 1.4rem}
+  .tx-imm-card h3{font-size:min(var(--text-h2-lg),5svh)}
+  .tx-imm-card p{font-size:.92rem;line-height:1.55;margin-top:.6rem}
+  .tx-imm-inset{width:clamp(96px,26svh,150px);top:8%}}
+/* Upright phones and tablets: the photo fills the top of the screen (--tx-photo-h, set by the script) and the cards rise over
+   the lower part; the inset sits in the top right corner. */
+@media (max-width:1100px) and (orientation:portrait){
+  .tx-imm-step{min-height:calc(75svh - var(--tx-top));align-items:flex-end;justify-content:center;padding:2rem 0 clamp(1rem,4svh,2rem)}
+  .tx-imm-step.is-left{justify-content:center}
+  .tx-imm-card{background:rgba(8,11,14,.94);padding:1.4rem 1.3rem}
+  .tx-imm-card p{font-size:max(15px,.95rem);line-height:1.62}
+  .tx-imm-inset{width:clamp(104px,30vw,190px);top:1rem}
+  .tx-imm-inset.is-atrium,.tx-imm-inset.is-bearing{left:auto;right:var(--pad)}}
+</style>
 <style id="hero-mobile-landscape">
 /* Portrait phones: the hero video box is square (1:1); the video fills it without stretching (its sides are trimmed, centred),
    with the headline on a dark panel directly below it. */
@@ -2084,6 +2139,50 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
       <h2 class="display reveal">Technical depth that turns engineering insight <em>into value</em></h2>
       <p class="value-note reveal">NYA combines advanced analysis with proven engineering judgment to reduce the risk of redesign, added cost, and delay, as demonstrated on two of our flagship projects: The New Stanford Hospital and UCSF’s Helen Diller Hospital.</p>
     </div>
+    <!-- Stanford, immersive: the photo pinned under the title (moved by a slow scroll-driven camera), the cards scroll over it. -->
+    <div class="tx-imm" id="tx-imm" data-step="-1" data-cam=".5 .5 .5 .5 1" data-cam-m=".5 .45 .5 .5 1">
+      <div class="tx-imm-stage" aria-hidden="true">
+        <div class="tx-imm-view">
+          <div class="tx-imm-scene">
+            <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
+            <svg class="tx-imm-tint" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><path d="M262 262L697 470L700 700L572 694L400 700L172 708L140 696L134 486Z M808 466L1300 258L1318 262L1360 485L1360 690L1354 708L952 690L810 690Z"/></svg>
+            <svg class="tx-imm-line" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><path d="M262 262L697 470L700 700L572 694L400 700L172 708L140 696L134 486Z M808 466L1300 258L1318 262L1360 485L1360 690L1354 708L952 690L810 690Z"/></svg>
+          </div>
+        </div>
+        <figure class="tx-imm-inset is-atrium"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" decoding="async"></figure>
+        <!-- Stand-in drawing of a friction pendulum isolator bearing, until the photo arrives. -->
+        <figure class="tx-imm-inset is-bearing"><svg viewBox="0 0 200 200" focusable="false">
+          <rect width="200" height="200" fill="#10161d"/>
+          <rect x="22" y="44" width="156" height="12" fill="#3b4652"/>
+          <rect x="22" y="144" width="156" height="12" fill="#3b4652"/>
+          <g stroke="#d9dee3" stroke-width="2.5" stroke-linejoin="round">
+            <path d="M36 56H164V80Q100 64 36 80Z" fill="#56616d"/>
+            <path d="M36 144H164V120Q100 136 36 120Z" fill="#56616d"/>
+            <path d="M74 84Q100 76 126 84V116Q100 124 74 116Z" fill="#7d8894"/>
+          </g>
+          <rect x="86" y="95" width="28" height="10" rx="2" fill="#22d3ff"/>
+        </svg></figure>
+      </div>
+      <div class="tx-imm-steps">
+      <article class="tx-imm-step" data-cam=".45 .44 .36 .5 1.1" data-cam-m=".5 .45 .5 .5 1"><div class="tx-imm-card">
+          <div class="eyebrow">Structural Ingenuity</div>
+          <h3>Making Stanford’s complex patient towers <em>a reality</em></h3>
+          <p>Stanford’s vision called for four patient towers cantilevered nearly 30 feet beyond their supporting columns, creating demanding structural and vibration challenges.</p>
+          <p>NYA had to carefully balance the weight of the projecting floors, control vibration, and integrate the towers with the hospital’s seismic system. Through advanced analysis and engineering judgment, NYA developed a multi-story steel framing solution that met these competing demands.</p>
+          <p>For Stanford, the result was the realization of its ambitious vision without compromise.</p>
+      </div></article>
+      <article class="tx-imm-step" data-cam=".5 .68 .36 .56 1.4" data-cam-m=".5 .66 .5 .5 1.35"><div class="tx-imm-card">
+          <div class="eyebrow">Architectural Vision</div>
+          <h3>Engineering Stanford’s vision for a <em>brighter, more welcoming hospital.</em></h3>
+          <p>Stanford’s atrium welcomes patients and families with daylight and open space. To achieve the nearly 120-foot skylight without bulky framing or columns, NYA designed a shallow grid of slender steel pipes. Advanced analysis allowed NYA to keep the structure light while meeting demanding engineering requirements, delivering the openness Stanford envisioned.</p>
+      </div></article>
+      <article class="tx-imm-step is-left" data-cam=".55 .76 .66 .6 1.3" data-cam-m=".45 .74 .5 .55 1.25"><div class="tx-imm-card">
+          <div class="eyebrow">Seismic Leadership</div>
+          <h3>Helping Stanford keep caring for patients <em>after an earthquake</em></h3>
+          <p>NYA drew on its pioneering seismic isolation expertise to design a system that supports Stanford’s goal of uninterrupted care. By reducing shaking within the hospital, the system helps protect patients, staff, and medical equipment. NYA’s technical expertise brought that protection into the design, reducing the risk of damage and disruption.</p>
+      </div></article>
+      </div>
+    </div>
     <div class="ucsf-story-media" aria-live="polite">
       <div class="ucsf-story-frame">
         
@@ -2141,28 +2240,11 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
         <div class="ucsf-story-single" id="ucsf-story-single" aria-label="UCSF prefabricated MEP rack photograph" hidden>
           <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfprefabmeprack.webp" alt="Prefabricated MEP rack at UCSF Helen Diller Hospital" width="1024" height="768" decoding="async">
         </div>
-        <img class="ucsf-story-image" id="ucsf-story-image" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="Stanford hospital patient towers with long cantilevered floors at dusk" width="1600" height="1067" decoding="async">
+        <img class="ucsf-story-image" id="ucsf-story-image" src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1536x1152.webp" alt="UCSF Health Helen Diller Hospital at Parnassus" width="1536" height="1152" decoding="async">
       </div>
     </div>
     <div class="ucsf-story-steps">
-            <article class="ucsf-step is-active" data-image="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" data-fit="cover" data-frame-ratio="4 / 3" data-alt="Stanford hospital patient towers with long cantilevered floors at dusk" data-label="Structural ingenuity"><div class="eyebrow">Structural Ingenuity</div>
-        <h3>Making Stanford’s complex patient towers <em>a reality</em></h3>
-        <p>Stanford’s vision called for four patient towers cantilevered nearly 30 feet beyond their supporting columns, creating demanding structural and vibration challenges.</p>
-        <p>NYA had to carefully balance the weight of the projecting floors, control vibration, and integrate the towers with the hospital’s seismic system. Through advanced analysis and engineering judgment, NYA developed a multi-story steel framing solution that met these competing demands.</p>
-        <p>For Stanford, the result was the realization of its ambitious vision without compromise.</p>
-      </article>
-
-      <article class="ucsf-step" data-frame-ratio="4 / 3" data-image="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1.webp" data-fit="cover" data-alt="Bright interior atrium with lattice skylight at the Stanford hospital" data-label="Architectural vision"><div class="eyebrow">Architectural Vision</div>
-        <h3>Engineering Stanford’s vision for a <em>brighter, more welcoming hospital.</em></h3>
-        <p>Stanford’s atrium welcomes patients and families with daylight and open space. To achieve the nearly 120-foot skylight without bulky framing or columns, NYA designed a shallow grid of slender steel pipes. Advanced analysis allowed NYA to keep the structure light while meeting demanding engineering requirements, delivering the openness Stanford envisioned.</p>
-      </article>
-
-      <article class="ucsf-step" data-frame-ratio="4 / 3" data-film="base-isolation" data-alt="Animated comparison of fixed-base and base-isolated hospital buildings" data-label="Seismic leadership"><div class="eyebrow">Seismic Leadership</div>
-        <h3>Helping Stanford keep caring for patients <em>after an earthquake</em></h3>
-        <p>NYA drew on its pioneering seismic isolation expertise to design a system that supports Stanford’s goal of uninterrupted care. By reducing shaking within the hospital, the system helps protect patients, staff, and medical equipment. NYA’s technical expertise brought that protection into the design, reducing the risk of damage and disruption.</p>
-      </article>
-
-      <article class="ucsf-step" data-frame-ratio="4 / 3" data-image="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" data-alt="UCSF Health Helen Diller Hospital at Parnassus" data-label="The site sets the problem"><div class="eyebrow">Site Ingenuity</div>
+      <article class="ucsf-step is-active" data-frame-ratio="4 / 3" data-image="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" data-alt="UCSF Health Helen Diller Hospital at Parnassus" data-label="The site sets the problem"><div class="eyebrow">Site Ingenuity</div>
         <h3>Engineering a nearly million-square-foot hospital <em>on a very small site</em></h3>
         <p>UCSF envisioned a major new hospital on a steep, triangular site surrounded by existing buildings, roads, and underground utilities. The limited footprint left little room for the large, flexible floors essential to modern healthcare.</p>
         <p>NYA engineered a way to make every square foot count. Dramatic cantilevers extended usable floors beyond their supporting columns, while an innovative structural system accommodated shifting floorplates as the tower rose. Together, these solutions maximized the space available within the site’s restrictive geometry.</p>
@@ -4786,6 +4868,67 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
   addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(update)}},{passive:true});
   update();
+})();
+</script>
+<script id="tx-imm-script">
+// Technical Excellence, Stanford: the scroll moves a camera over the pinned photo. Each card has a camera (data-cam; data-cam-m
+// on upright screens); the box has the starting one. While a card travels from the middle of the stage to the next card's
+// place, the camera moves between their two settings, eased, and it follows the scroll with a little lag so wheel steps glide.
+// The card nearest the middle of the stage is the active one (data-step on the box): it switches the tower highlight and the
+// inset photos on and off.
+(function(){
+  var box=document.getElementById('tx-imm');
+  if(!box)return;
+  var stage=box.querySelector('.tx-imm-stage'),view=box.querySelector('.tx-imm-view'),scene=box.querySelector('.tx-imm-scene');
+  var steps=[].slice.call(box.querySelectorAll('.tx-imm-step'));
+  var cards=steps.map(function(s){return s.querySelector('.tx-imm-card')});
+  var IW=1600,IH=1067;
+  var side=window.matchMedia('(min-width:1101px), (orientation:landscape) and (max-height:500px)');
+  function read(attr){return [box].concat(steps).map(function(el){return (el.getAttribute(attr)||'.5 .5 .5 .5 1').trim().split(/\s+/).map(Number)})}
+  var camSide=read('data-cam'),camUp=read('data-cam-m');
+  var cur=null,raf=0,active=null;
+  function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
+  function mix(a,b,u){return a.map(function(v,i){return v+(b[i]-v)*u})}
+  function goal(){
+    var list=side.matches?camSide:camUp,sr=stage.getBoundingClientRect(),H=sr.height||1,mid=sr.top+H/2;
+    var c=cards.map(function(el){var r=el.getBoundingClientRect();return (r.top+r.bottom)/2-mid});
+    var act=0,best=Infinity;
+    c.forEach(function(v,k){if(Math.abs(v)<best){best=Math.abs(v);act=k}});
+    if(c[0]>H*.55)act=-1;
+    var cam;
+    if(c[0]>=0)cam=mix(list[0],list[1],ease(Math.max(0,Math.min(1,1-c[0]/H))));
+    else{
+      var k=0;while(k<c.length-1&&c[k+1]<=0)k++;
+      cam=k===c.length-1?list[k+1]:mix(list[k+1],list[k+2],ease(-c[k]/Math.max(1,c[k+1]-c[k])));
+    }
+    return {cam:cam,act:act};
+  }
+  function place(cam){
+    var W=stage.clientWidth,H=stage.clientHeight;
+    // Upright screens: the photo takes the top 62% of the stage; elsewhere all of it.
+    var R=side.matches||W>H?H:Math.round(H*.62);
+    view.style.setProperty('--tx-photo-h',R+'px');
+    var s=Math.max(W/IW,R/IH)*cam[4],w=IW*s,h=IH*s;
+    var x=Math.min(0,Math.max(W-w,cam[2]*W-cam[0]*w)),y=Math.min(0,Math.max(R-h,cam[3]*R-cam[1]*h));
+    scene.style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0) scale('+s.toFixed(4)+')';
+  }
+  function frame(){
+    raf=0;
+    var r=box.getBoundingClientRect();
+    if(r.bottom<-200||r.top>innerHeight+200){cur=null;return}
+    var g=goal();
+    if(g.act!==active){active=g.act;box.setAttribute('data-step',active)}
+    var moving=false;
+    if(!cur)cur=g.cam.slice();
+    else cur=cur.map(function(v,i){var d=g.cam[i]-v;if(Math.abs(d)>.0005){moving=true;return v+d*.16}return g.cam[i]});
+    place(cur);
+    if(moving)raf=requestAnimationFrame(frame);
+  }
+  function kick(){if(!raf)raf=requestAnimationFrame(frame)}
+  addEventListener('scroll',kick,{passive:true});
+  addEventListener('resize',function(){cur=null;kick()},{passive:true});
+  if(side.addEventListener)side.addEventListener('change',function(){cur=null;kick()});
+  kick();
 })();
 </script>
 <script id="nya-rel-after-reveal-script">
