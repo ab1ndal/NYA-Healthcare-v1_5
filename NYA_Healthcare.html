@@ -1658,10 +1658,10 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 /* Slide 1: the photo's own colour comes back inside a hard-edged circle on the left tower's cantilever, with a thin light
    ring (both in the photo's own coordinates, so they move and scale with it). */
 .tx-imm-color{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;
-  -webkit-mask-image:radial-gradient(circle 215px at 250px 615px,#000 99.5%,transparent 100%);
-  mask-image:radial-gradient(circle 215px at 250px 615px,#000 99.5%,transparent 100%)}
+  -webkit-mask-image:radial-gradient(circle 165px at 330px 615px,#000 99.5%,transparent 100%);
+  mask-image:radial-gradient(circle 165px at 330px 615px,#000 99.5%,transparent 100%)}
 .tx-imm-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;opacity:0;pointer-events:none}
-.tx-imm-ring circle{fill:none;stroke:#fff;stroke-opacity:.9;stroke-width:2;vector-effect:non-scaling-stroke}
+.tx-imm-ring circle{fill:none;stroke:#fff;stroke-opacity:.5;stroke-width:.5;vector-effect:non-scaling-stroke}
 .tx-imm.is-ready[data-step="0"] .tx-imm-ring{opacity:1}
 /* Everything waits for the photo (is-ready, set by the script). */
 .tx-imm .tx-imm-photo{opacity:0}
@@ -2154,13 +2154,13 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
           <div class="tx-imm-scene">
             <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
             <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
-            <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="250" cy="615" r="215"/></svg>
+            <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="330" cy="615" r="165"/></svg>
           </div>
         </div>
-        <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" decoding="async"></figure>
+        <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" decoding="async"></figure>
         <!-- Base isolators under the Utah State Capitol: Mike Renlund, CC BY 2.0, via Wikimedia Commons (credited under slide 3).
              To move to the WordPress Media Library before it goes live. -->
-        <figure class="tx-imm-inset is-bearing" data-anchor=".77 .77" data-dir="1"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Base_isolators_under_the_Utah_State_Capitol.jpg/960px-Base_isolators_under_the_Utah_State_Capitol.jpg" alt="" width="960" height="643" fetchpriority="low" decoding="async" referrerpolicy="no-referrer"></figure>
+        <figure class="tx-imm-inset is-bearing" data-anchor=".77 .77" data-dx="20" data-dir="1"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Base_isolators_under_the_Utah_State_Capitol.jpg/960px-Base_isolators_under_the_Utah_State_Capitol.jpg" alt="" width="960" height="643" fetchpriority="low" decoding="async" referrerpolicy="no-referrer"></figure>
       </div>
       <div class="tx-imm-steps">
       <article class="tx-imm-step" data-cam=".5 .242 .5 .03 1" data-cam-m=".3 .5 .5 .5 1"><div class="tx-imm-card">
@@ -4890,7 +4890,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var cur=null,raf=0,active=null;
   var insets=[].slice.call(box.querySelectorAll('.tx-imm-inset')).map(function(el){
     var a=el.getAttribute('data-anchor').split(' ').map(Number);
-    return {el:el,fx:a[0],fy:a[1],dir:Number(el.getAttribute('data-dir'))||1,card:cards[el.classList.contains('is-atrium')?1:2]};
+    return {el:el,fx:a[0],fy:a[1],dx:Number(el.getAttribute('data-dx'))||0,dir:Number(el.getAttribute('data-dir'))||1,card:cards[el.classList.contains('is-atrium')?1:2]};
   });
   var photo=box.querySelector('.tx-imm-photo');
   function ready(){box.classList.add('is-ready')}
@@ -4924,7 +4924,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     // and kept inside the photo area.
     var pad=Math.max(16,W*.04),sl=stage.getBoundingClientRect().left;
     insets.forEach(function(it){
-      var D=it.el.offsetWidth,cx=x+it.fx*w,cy=y+it.fy*h;
+      var D=it.el.offsetWidth,cx=x+it.fx*w+it.dx,cy=y+it.fy*h;  // data-dx: screen px right of the anchor (review notes)
       if(!upright.matches&&it.card){
         var cr=it.card.getBoundingClientRect();
         if(it.dir>0)cx=Math.max(cx,cr.right-sl+24+D/2);else cx=Math.min(cx,cr.left-sl-24-D/2);
