@@ -1660,8 +1660,11 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm-tint{mix-blend-mode:color}
 .tx-imm-tint path{fill:var(--gold)}
 .tx-imm-line path{fill:none;stroke:var(--gold);stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.tx-imm[data-step="0"] .tx-imm-tint{opacity:.72}
-.tx-imm[data-step="0"] .tx-imm-line{opacity:.75}
+/* The highlight waits for the photo (is-ready, set by the script), so a slow photo never shows bare blue shapes. */
+.tx-imm.is-ready[data-step="0"] .tx-imm-tint{opacity:.72}
+.tx-imm.is-ready[data-step="0"] .tx-imm-line{opacity:.75}
+.tx-imm .tx-imm-photo{opacity:0;transition:opacity .8s ease!important}
+.tx-imm.is-ready .tx-imm-photo{opacity:1}
 /* Round inset photos (atrium, isolator bearing): fade and grow in while their slide is the one on screen. */
 .tx-imm-inset{position:absolute;margin:0;width:clamp(150px,15vw,280px);aspect-ratio:1;border-radius:50%;overflow:hidden;background:#10161d;
   border:2px solid rgba(255,255,255,.85);box-shadow:0 18px 50px rgba(0,0,0,.45);opacity:0;transform:scale(.85)}
@@ -4887,6 +4890,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   function read(attr){return [box].concat(steps).map(function(el){return (el.getAttribute(attr)||'.5 .5 .5 .5 1').trim().split(/\s+/).map(Number)})}
   var camSide=read('data-cam'),camUp=read('data-cam-m');
   var cur=null,raf=0,active=null;
+  var photo=box.querySelector('.tx-imm-photo');
+  function ready(){box.classList.add('is-ready')}
+  if(photo.complete&&photo.naturalWidth)ready();else{photo.addEventListener('load',ready);photo.addEventListener('error',ready)}
   function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
   function mix(a,b,u){return a.map(function(v,i){return v+(b[i]-v)*u})}
   function goal(){
