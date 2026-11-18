@@ -1654,10 +1654,10 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm-stage{position:-webkit-sticky;position:sticky;top:var(--tx-top);height:calc(100svh - var(--tx-top));align-self:start;overflow:hidden;background:#070a0d;isolation:isolate}
 .tx-imm-view{position:absolute;left:0;top:0;width:100%;height:var(--tx-photo-h,100%);overflow:hidden}
 .tx-imm-scene{position:absolute;left:0;top:0;width:1600px;height:1067px;transform-origin:0 0;will-change:transform;isolation:isolate}
-.tx-imm-photo{display:block;width:100%;height:100%;filter:grayscale(1) contrast(1.05) brightness(.96)}
+.tx-imm-photo{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:grayscale(1) contrast(1.05) brightness(.96)}
 /* Slide 1: the photo's own colour comes back inside a hard-edged circle on the left tower's cantilever, with a thin light
    ring (both in the photo's own coordinates, so they move and scale with it). */
-.tx-imm-color{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;
+.tx-imm-color{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;opacity:0;
   -webkit-mask-image:radial-gradient(circle 165px at 330px 615px,#000 99.5%,transparent 100%);
   mask-image:radial-gradient(circle 165px at 330px 615px,#000 99.5%,transparent 100%)}
 .tx-imm-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;opacity:0;pointer-events:none}
@@ -2152,8 +2152,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
       <div class="tx-imm-stage" aria-hidden="true">
         <div class="tx-imm-view">
           <div class="tx-imm-scene">
-            <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
-            <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
+            <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" alt="" width="2300" height="1725" decoding="async">
+            <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" alt="" width="2300" height="1725" decoding="async">
             <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="330" cy="615" r="165"/></svg>
           </div>
         </div>
