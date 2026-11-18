@@ -1043,9 +1043,8 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-media{order:2}}</style>
 <style id="ssi-results-style">
 /* SSI: three result columns under the comparison grid */
-.ssi-results{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,1.1fr);align-items:stretch;margin-top:clamp(2rem,3.6vw,3.6rem)}
-.ssi-results-lead{padding-right:clamp(1.2rem,2.6vw,2.8rem);min-width:0}
-.ssi-results-lead .eyebrow{margin-bottom:clamp(.8rem,1.6vw,1.4rem)}
+.ssi-results{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,1.1fr);align-items:stretch;margin:clamp(2rem,3.6vw,3.6rem) 0 clamp(2rem,3.4vw,3.4rem)}
+.ssi-results-lead{padding-right:clamp(1.2rem,2.6vw,2.8rem);min-width:0;align-self:center}
 .ssi-results-lead h3{font-size:var(--text-h1);font-weight:300;line-height:1.02;letter-spacing:-.02em;color:#fff;margin:0}
 .ssi-result{padding:0 clamp(1.2rem,2.6vw,2.8rem);border-left:1px solid rgba(255,255,255,.4);min-width:0}
 .ssi-result:last-child{padding-right:0}
@@ -1836,6 +1835,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 <style id="ssi-heading-centre">
 /* The SSI title is centred on the page; its eyebrow stays where it was. */
 .ssi-compare--reference .ssi-reference-heading{text-align:center}
+/* Intro sits tight under the title; the title's usual gap to the results row moves below the intro. */
+.ssi-compare--reference .ssi-reference-heading:has(+ .ssi-reference-intro){margin-bottom:clamp(.7rem,1vw,1rem)}
+.ssi-compare--reference .ssi-reference-intro{max-width:80rem;margin:0 auto clamp(1.7rem,2.5vw,2.7rem);text-align:center;font-size:var(--text-body);line-height:1.5;color:rgba(221,233,238,.85);text-wrap:balance}
 </style>
 <style id="hero-scroll-arrow">
 /* The scroll-down arrow from nyase.com: a thin light-grey line arrow (no circle), 32px, centred at the bottom of the hero, with the same calm motion as
@@ -1988,11 +1990,11 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   <section class="ssi-compare ssi-compare--reference ssi-video-design" id="ssi-comparison" aria-labelledby="ssi-comparison-title">
     <div class="wrap">
       <div class="eyebrow reveal">Soil-Structure Interaction (SSI)</div>
-      <h2 class="ssi-reference-heading display reveal" id="ssi-comparison-title">NYA’s comprehensive SSI analysis reveals<br> <em>savings</em> conventional methods miss</h2>
+      <h2 class="ssi-reference-heading display reveal" id="ssi-comparison-title">An innovative way to <em>save money</em> on foundations</h2>
+      <p class="ssi-reference-intro reveal">Soil-Structure Interaction (SSI) analysis is required by HCAI for foundation design. Most firms use rudimentary methods that result in unnecessarily costly foundations. NYA takes a more advanced approach, uncovering savings others miss.</p>
       <div class="ssi-results reveal">
         <div class="ssi-results-lead">
-          <div class="eyebrow">Proven Results</div>
-          <h3 class="display" id="ssi-results-title">NYA SSI’s measurable outcomes</h3>
+          <h3 class="display" id="ssi-results-title">NYA’s proven results</h3>
         </div>
         <article class="ssi-result" aria-labelledby="ssi-result-1">
           <div class="ssi-result-tag">UCSF Helen Diller Hospital</div>
