@@ -1647,56 +1647,45 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .ucsf-step{min-height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h));padding:1.2rem 0}
   .ucsf-step h3{font-size:min(var(--text-h2-lg),4.6svh)}}</style>
 <style id="tx-imm-style">
-/* Technical Excellence, Stanford: two layers. The stage (photo) is pinned below the section title and its camera moves
-   slowly with the scroll (script); the cards scroll over it at normal speed. The stage and the cards share one grid cell. */
+/* Technical Excellence, Stanford: two layers. The stage (photo) is pinned below the section title and stays still; the cards
+   scroll over it at normal speed. The stage and the cards share one grid cell. */
 .tx-imm{grid-column:1 / -1;position:relative;z-index:1;display:grid;width:100vw;margin-left:calc(50% - 50vw);--tx-top:var(--ucsf-nav,0px)}
 .tx-imm-stage,.tx-imm-steps{grid-area:1 / 1;min-width:0}
 .tx-imm-stage{position:-webkit-sticky;position:sticky;top:var(--tx-top);height:calc(100svh - var(--tx-top));align-self:start;overflow:hidden;background:#070a0d;isolation:isolate}
 .tx-imm-view{position:absolute;left:0;top:0;width:100%;height:var(--tx-photo-h,100%);overflow:hidden}
-.tx-imm-view::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(7,10,13,.35),rgba(7,10,13,0) 18%,rgba(7,10,13,0) 75%,rgba(7,10,13,.45))}
 .tx-imm-scene{position:absolute;left:0;top:0;width:1600px;height:1067px;transform-origin:0 0;will-change:transform;isolation:isolate}
 .tx-imm-photo{display:block;width:100%;height:100%;filter:grayscale(1) contrast(1.05) brightness(.96)}
-/* Slide 2: the atrium (the red strip in the middle of the building) in its own colour, clipped to its outline. */
-.tx-imm-color{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0}
-.tx-imm-tint,.tx-imm-line{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.tx-imm-tint{mix-blend-mode:color;opacity:0}
-.tx-imm-tint path{fill:var(--gold)}
-.tx-imm-tint .tw{fill-opacity:.35}
-.tx-imm-line .hl{opacity:0}
-.tx-imm-line path,.tx-imm-line rect{fill:none;stroke:var(--gold);stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.tx-imm-line .tw{stroke-opacity:.45;stroke-width:1.5}
-.tx-imm-line .ground{stroke-width:3}
-.tx-imm-line .pads rect{fill:var(--gold);fill-opacity:.85}
-.tx-imm-line .mat{stroke-dasharray:6 6}
-.tx-imm.is-ready[data-step="1"] .tx-imm-color{opacity:1}
-.tx-imm.is-ready[data-step="0"] .hl-0,.tx-imm.is-ready[data-step="1"] .hl-1,.tx-imm.is-ready[data-step="2"] .hl-2{opacity:1}
-/* The highlight waits for the photo (is-ready, set by the script), so a slow photo never shows bare blue shapes. */
-.tx-imm.is-ready[data-step="0"] .tx-imm-tint{opacity:.85}
-.tx-imm .tx-imm-photo{opacity:0;transition:opacity .8s ease!important}
-.tx-imm.is-ready .tx-imm-photo{opacity:1}
-/* Round inset photos (atrium, isolator bearing): fade and grow in while their slide is the one on screen. */
-.tx-imm-inset{position:absolute;margin:0;width:clamp(150px,15vw,280px);aspect-ratio:1;border-radius:50%;overflow:hidden;background:#10161d;
-  border:2px solid rgba(255,255,255,.85);box-shadow:0 18px 50px rgba(0,0,0,.45);opacity:0;transform:scale(.85)}
+/* Slide 1: the photo's own colour comes back inside a hard-edged circle on the left tower's cantilever, with a thin light
+   ring (both in the photo's own coordinates, so they move and scale with it). */
+.tx-imm-color{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;
+  -webkit-mask-image:radial-gradient(circle 215px at 250px 615px,#000 99.5%,transparent 100%);
+  mask-image:radial-gradient(circle 215px at 250px 615px,#000 99.5%,transparent 100%)}
+.tx-imm-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;opacity:0;pointer-events:none}
+.tx-imm-ring circle{fill:none;stroke:#fff;stroke-opacity:.9;stroke-width:2;vector-effect:non-scaling-stroke}
+.tx-imm.is-ready[data-step="0"] .tx-imm-ring{opacity:1}
+/* Everything waits for the photo (is-ready, set by the script). */
+.tx-imm .tx-imm-photo{opacity:0}
+.tx-imm.is-ready .tx-imm-photo,.tx-imm.is-ready[data-step="0"] .tx-imm-color{opacity:1}
+/* Round photos (atrium, isolator bearing): centred on the part of the building they show (data-anchor, placed by the script),
+   kept clear of the card; they fade and grow in while their slide is the one on screen. */
+.tx-imm-inset{position:absolute;left:0;top:0;margin:0;width:clamp(160px,min(23vw,44svh),360px);aspect-ratio:1;border-radius:50%;overflow:hidden;
+  background:#10161d;box-shadow:0 22px 60px rgba(0,0,0,.4);opacity:0;transform:scale(.85)}
 .tx-imm-inset img,.tx-imm-inset svg{display:block;width:100%;height:100%;object-fit:cover}
-/* Each circle is placed by the script beside the point of the photo it shows (data-anchor), with a thin leader line to it. */
-.tx-imm-inset{left:0;top:0}
-.tx-imm-lead{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.tx-imm-lead g{opacity:0}
-.tx-imm-lead line{stroke:#fff;stroke-width:1.5}
-.tx-imm-lead circle{fill:var(--gold);stroke:#fff;stroke-width:1.5}
 .tx-imm[data-step="1"] .tx-imm-inset.is-atrium,.tx-imm[data-step="2"] .tx-imm-inset.is-bearing{opacity:1;transform:none}
-.tx-imm[data-step="1"] .tx-imm-lead .is-atrium,.tx-imm[data-step="2"] .tx-imm-lead .is-bearing{opacity:1}
-/* The highlight and the insets fade with everyone's settings (opacity and size only); this beats the page-wide rule. */
-.tx-imm .tx-imm-tint,.tx-imm .tx-imm-line .hl,.tx-imm .tx-imm-color,.tx-imm .tx-imm-lead g{transition:opacity .9s ease!important}
+/* The fades play with everyone's settings (opacity and size only); this beats the page-wide rule. */
+.tx-imm .tx-imm-photo,.tx-imm .tx-imm-color,.tx-imm .tx-imm-ring{transition:opacity .9s ease!important}
 .tx-imm .tx-imm-inset{transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.2,1)!important}
 /* The cards */
 .tx-imm-steps{position:relative;z-index:1;width:100%;max-width:1650px;margin:0 auto;padding:40svh var(--pad) 12svh}
 .tx-imm-step{min-height:calc(100svh - var(--tx-top));display:flex;align-items:center;justify-content:flex-end;padding:3rem 0}
 .tx-imm-step.is-left{justify-content:flex-start}
+.tx-imm-step.is-narrow .tx-imm-card{width:min(100%,460px)}
 .tx-imm-card{width:min(100%,560px);background:rgba(8,11,14,.92);border:1px solid rgba(255,255,255,.1);padding:clamp(1.6rem,2.6vw,2.75rem);box-shadow:0 24px 60px rgba(0,0,0,.35)}
 .tx-imm-card .eyebrow{margin-bottom:.8rem}
 .tx-imm-card h3{font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.05;font-weight:300;color:#fff}
 .tx-imm-card p{margin-top:1rem;color:rgba(255,255,255,.76);font-size:var(--text-body);line-height:1.7}
+.tx-imm-card p.tx-imm-credit{margin-top:1.2rem;font-size:max(11px,.72rem);line-height:1.4;color:rgba(255,255,255,.45)}
+.tx-imm-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 /* Desktop and phones on their side: the section title stays pinned, so the stage starts below it. */
 @media (min-width:1101px), (max-width:1100px) and (orientation:landscape) and (max-height:500px){
   .tx-imm{--tx-top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h))}
@@ -1706,7 +1695,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .tx-imm-card{width:min(100%,54vw);padding:1.2rem 1.4rem}
   .tx-imm-card h3{font-size:min(var(--text-h2-lg),5svh)}
   .tx-imm-card p{font-size:.92rem;line-height:1.55;margin-top:.6rem}
-  .tx-imm-inset{width:clamp(96px,26svh,150px)}}
+  .tx-imm-inset{width:clamp(96px,30svh,160px)}}
 /* Upright phones and tablets: the cards are too tall to sit over the photo, so the photo is pinned at the top (half the screen)
    and the cards slide up from below and pass under it. */
 @media (max-width:1100px) and (orientation:portrait){
@@ -1715,8 +1704,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .tx-imm-steps{padding:calc(var(--tx-stage-h) + 1.5rem) var(--pad) 1rem}
   .tx-imm-step,.tx-imm-step.is-left{min-height:0;justify-content:center;padding:0 0 3rem}
   .tx-imm-card{background:rgba(8,11,14,.94);padding:1.4rem 1.3rem}
+  .tx-imm-step.is-narrow .tx-imm-card{width:min(100%,560px)}
   .tx-imm-card p{font-size:max(15px,.95rem);line-height:1.62}
-  .tx-imm-inset{width:clamp(104px,30vw,190px)}}
+  .tx-imm-inset{width:clamp(110px,32vw,220px)}}
 </style>
 <style id="hero-mobile-landscape">
 /* Portrait phones: the hero video box is square (1:1); the video fills it without stretching (its sides are trimmed, centred),
@@ -2158,52 +2148,38 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
       <p class="value-note reveal">NYA combines advanced analysis with proven engineering judgment to reduce the risk of redesign, added cost, and delay, as demonstrated on two of our flagship projects: The New Stanford Hospital and UCSF’s Helen Diller Hospital.</p>
     </div>
     <!-- Stanford, immersive: the photo pinned under the title (moved by a slow scroll-driven camera), the cards scroll over it. -->
-    <div class="tx-imm" id="tx-imm" data-step="-1" data-cam=".5 .45 .5 .5 1" data-cam-m=".5 .45 .5 .5 1">
+    <div class="tx-imm" id="tx-imm" data-step="-1" data-cam=".5 .242 .5 .03 1" data-cam-m=".5 .5 .5 .5 1">
       <div class="tx-imm-stage" aria-hidden="true">
         <div class="tx-imm-view">
           <div class="tx-imm-scene">
             <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
-            <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async" style="clip-path:polygon(34.75% 65.60%,57.25% 65.60%,57.25% 72.73%,34.75% 72.73%)">
-            <svg class="tx-imm-tint" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><path class="tw" d="M262 262L697 470L700 701L570 701L330 660L250 662L250 706L140 704L134 486Z M810 466L1300 258L1318 262L1360 485L1360 700L1252 716L1252 680L1210 657L1170 660L930 700L812 701Z"/><path class="sf" d="M140 696L265 598L272 600L700 696L700 701L570 701L330 660L250 662L250 706L140 704Z M815 697L1305 597L1310 600L1360 696L1360 700L1252 716L1252 680L1210 657L1170 660L930 700L815 701Z"/></svg>
-            <svg class="tx-imm-line" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false">
-              <g class="hl hl-0"><path class="tw" d="M262 262L697 470L700 701L570 701L330 660L250 662L250 706L140 704L134 486Z M810 466L1300 258L1318 262L1360 485L1360 700L1252 716L1252 680L1210 657L1170 660L930 700L812 701Z"/><path class="sf" d="M140 696L265 598L272 600L700 696L700 701L570 701L330 660L250 662L250 706L140 704Z M815 697L1305 597L1310 600L1360 696L1360 700L1252 716L1252 680L1210 657L1170 660L930 700L815 701Z"/></g>
-              <g class="hl hl-1"><path d="M556 700L916 700L916 776L556 776Z"/></g>
-              <g class="hl hl-2"><path class="ground" d="M150 884L1250 890"/><g class="pads"><rect x="187" y="889" width="26" height="12" rx="2"/><rect x="287" y="890" width="26" height="12" rx="2"/><rect x="387" y="890" width="26" height="12" rx="2"/><rect x="487" y="891" width="26" height="12" rx="2"/><rect x="587" y="891" width="26" height="12" rx="2"/><rect x="687" y="892" width="26" height="12" rx="2"/><rect x="787" y="893" width="26" height="12" rx="2"/><rect x="887" y="893" width="26" height="12" rx="2"/><rect x="987" y="894" width="26" height="12" rx="2"/><rect x="1087" y="894" width="26" height="12" rx="2"/><rect x="1187" y="895" width="26" height="12" rx="2"/></g><path class="mat" d="M150 908L1250 914"/></g>
-            </svg>
+            <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
+            <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="250" cy="615" r="215"/></svg>
           </div>
         </div>
-        <svg class="tx-imm-lead" focusable="false"><g class="is-atrium"><line/><circle r="4"/></g><g class="is-bearing"><line/><circle r="4"/></g></svg>
-        <figure class="tx-imm-inset is-atrium" data-anchor=".4675 .6917" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" decoding="async"></figure>
-        <!-- Stand-in drawing of a friction pendulum isolator bearing, until the photo arrives. -->
-        <figure class="tx-imm-inset is-bearing" data-anchor=".47 .834" data-dir="1"><svg viewBox="0 0 200 200" focusable="false">
-          <rect width="200" height="200" fill="#10161d"/>
-          <rect x="22" y="44" width="156" height="12" fill="#3b4652"/>
-          <rect x="22" y="144" width="156" height="12" fill="#3b4652"/>
-          <g stroke="#d9dee3" stroke-width="2.5" stroke-linejoin="round">
-            <path d="M36 56H164V80Q100 64 36 80Z" fill="#56616d"/>
-            <path d="M36 144H164V120Q100 136 36 120Z" fill="#56616d"/>
-            <path d="M74 84Q100 76 126 84V116Q100 124 74 116Z" fill="#7d8894"/>
-          </g>
-          <rect x="86" y="95" width="28" height="10" rx="2" fill="#22d3ff"/>
-        </svg></figure>
+        <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" decoding="async"></figure>
+        <!-- Base isolators under the Utah State Capitol: Mike Renlund, CC BY 2.0, via Wikimedia Commons (credited under slide 3).
+             To move to the WordPress Media Library before it goes live. -->
+        <figure class="tx-imm-inset is-bearing" data-anchor=".77 .77" data-dir="1"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Base_isolators_under_the_Utah_State_Capitol.jpg/960px-Base_isolators_under_the_Utah_State_Capitol.jpg" alt="" width="960" height="643" fetchpriority="low" decoding="async" referrerpolicy="no-referrer"></figure>
       </div>
       <div class="tx-imm-steps">
-      <article class="tx-imm-step" data-cam=".5 .52 .4 .5 1" data-cam-m=".5 .5 .5 .5 1"><div class="tx-imm-card">
+      <article class="tx-imm-step" data-cam=".5 .242 .5 .03 1" data-cam-m=".3 .5 .5 .5 1"><div class="tx-imm-card">
           <div class="eyebrow">Structural Ingenuity</div>
           <h3>Making Stanford’s complex patient towers <em>a reality</em></h3>
           <p>Stanford’s vision called for four patient towers cantilevered nearly 30 feet beyond their supporting columns, creating demanding structural and vibration challenges.</p>
           <p>NYA had to carefully balance the weight of the projecting floors, control vibration, and integrate the towers with the hospital’s seismic system. Through advanced analysis and engineering judgment, NYA developed a multi-story steel framing solution that met these competing demands.</p>
           <p>For Stanford, the result was the realization of its ambitious vision without compromise.</p>
       </div></article>
-      <article class="tx-imm-step" data-cam=".47 .69 .4 .56 1" data-cam-m=".47 .69 .5 .55 1"><div class="tx-imm-card">
+      <article class="tx-imm-step is-narrow" data-cam=".5 .242 .5 .03 1" data-cam-m=".46 .5 .5 .5 1"><div class="tx-imm-card">
           <div class="eyebrow">Architectural Vision</div>
           <h3>Engineering Stanford’s vision for a <em>brighter, more welcoming hospital.</em></h3>
           <p>Stanford’s atrium welcomes patients and families with daylight and open space. To achieve the nearly 120-foot skylight without bulky framing or columns, NYA designed a shallow grid of slender steel pipes. Advanced analysis allowed NYA to keep the structure light while meeting demanding engineering requirements, delivering the openness Stanford envisioned.</p>
       </div></article>
-      <article class="tx-imm-step is-left" data-cam=".47 .83 .6 .64 1" data-cam-m=".47 .8 .5 .6 1"><div class="tx-imm-card">
+      <article class="tx-imm-step is-left" data-cam=".5 .242 .5 .03 1" data-cam-m=".7 .5 .5 .5 1"><div class="tx-imm-card">
           <div class="eyebrow">Seismic Leadership</div>
           <h3>Helping Stanford keep caring for patients <em>after an earthquake</em></h3>
           <p>NYA drew on its pioneering seismic isolation expertise to design a system that supports Stanford’s goal of uninterrupted care. By reducing shaking within the hospital, the system helps protect patients, staff, and medical equipment. NYA’s technical expertise brought that protection into the design, reducing the risk of damage and disruption.</p>
+          <p class="tx-imm-credit">Isolator photo: <a href="https://commons.wikimedia.org/wiki/File:Base_isolators_under_the_Utah_State_Capitol.jpg" target="_blank" rel="noopener">Mike Renlund</a>, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a></p>
       </div></article>
       </div>
     </div>
@@ -4895,12 +4871,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 })();
 </script>
 <script id="tx-imm-script">
-// Technical Excellence, Stanford: the scroll drifts the pinned photo (no zoom: it always just covers the stage). Each card has
-// a framing (data-cam; data-cam-m on upright screens: which point of the photo sits where); the box has the starting one.
-// While a card travels from the middle of the stage to the next card's place, the photo drifts between their two framings,
-// eased, and it follows the scroll with a little lag so wheel steps glide. The card nearest the middle of the stage is the
-// active one (data-step on the box): it switches the highlights and the round photos, and each round photo sits beside the
-// point of the building it shows, with a leader line to it.
+// Technical Excellence, Stanford: the pinned photo always just covers the stage (no zoom). Each card has a framing (data-cam;
+// data-cam-m on upright screens: which point of the photo sits where); the box has the starting one. Side by side they are all
+// the same, so the photo stays still; on upright screens it pans sideways between them, eased, following the scroll with a
+// little lag. The card nearest the middle of the zone it crosses is the active one (data-step on the box): it switches the
+// colour patch and the round photos; each round photo is centred on the part of the building it shows.
 (function(){
   var box=document.getElementById('tx-imm');
   if(!box)return;
@@ -4914,10 +4889,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var camSide=read('data-cam'),camUp=read('data-cam-m');
   var cur=null,raf=0,active=null;
   var insets=[].slice.call(box.querySelectorAll('.tx-imm-inset')).map(function(el){
-    var a=el.getAttribute('data-anchor').split(' ').map(Number),cls=el.classList.contains('is-atrium')?'.is-atrium':'.is-bearing';
-    var g=box.querySelector('.tx-imm-lead '+cls);
-    return {el:el,fx:a[0],fy:a[1],dir:Number(el.getAttribute('data-dir'))||1,line:g.querySelector('line'),dot:g.querySelector('circle'),
-      card:cards[cls==='.is-atrium'?1:2]};
+    var a=el.getAttribute('data-anchor').split(' ').map(Number);
+    return {el:el,fx:a[0],fy:a[1],dir:Number(el.getAttribute('data-dir'))||1,card:cards[el.classList.contains('is-atrium')?1:2]};
   });
   var photo=box.querySelector('.tx-imm-photo');
   function ready(){box.classList.add('is-ready')}
@@ -4947,22 +4920,17 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     var s=Math.max(W/IW,R/IH)*cam[4],w=IW*s,h=IH*s;
     var x=Math.min(0,Math.max(W-w,cam[2]*W-cam[0]*w)),y=Math.min(0,Math.max(R-h,cam[3]*R-cam[1]*h));
     scene.style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0) scale('+s.toFixed(4)+')';
-    // Round photos: up and to one side of their anchor point, kept inside the photo area.
-    var pad=Math.max(16,W*.04);
+    // Round photos: centred on their anchor point, pushed clear of the card (dir: -1 card on the right, 1 card on the left)
+    // and kept inside the photo area.
+    var pad=Math.max(16,W*.04),sl=stage.getBoundingClientRect().left;
     insets.forEach(function(it){
-      var D=it.el.offsetWidth,ax=x+it.fx*w,ay=y+it.fy*h;
-      var cx=ax+it.dir*D*1.5,cy=Math.min(R-D/2-12,Math.max(12+D/2,ay-D*1.05));
-      // Beside the card, never behind it (the card keeps its side while it scrolls).
+      var D=it.el.offsetWidth,cx=x+it.fx*w,cy=y+it.fy*h;
       if(!upright.matches&&it.card){
-        var sl=stage.getBoundingClientRect().left,cr=it.card.getBoundingClientRect();
-        if(it.dir>0)cx=Math.max(cx,cr.right-sl+16+D/2);else cx=Math.min(cx,cr.left-sl-16-D/2);
+        var cr=it.card.getBoundingClientRect();
+        if(it.dir>0)cx=Math.max(cx,cr.right-sl+24+D/2);else cx=Math.min(cx,cr.left-sl-24-D/2);
       }
-      cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));
+      cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));cy=Math.min(R-D/2-12,Math.max(12+D/2,cy));
       it.el.style.left=(cx-D/2).toFixed(1)+'px';it.el.style.top=(cy-D/2).toFixed(1)+'px';
-      var dx=ax-cx,dy=ay-cy,l=Math.sqrt(dx*dx+dy*dy)||1;
-      it.line.setAttribute('x1',(cx+dx/l*D/2).toFixed(1));it.line.setAttribute('y1',(cy+dy/l*D/2).toFixed(1));
-      it.line.setAttribute('x2',ax.toFixed(1));it.line.setAttribute('y2',ay.toFixed(1));
-      it.dot.setAttribute('cx',ax.toFixed(1));it.dot.setAttribute('cy',ay.toFixed(1));
     });
   }
   function frame(){
