@@ -1067,7 +1067,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* Relationships: large fixed intro copy crossfades to its small center counterpart.
    The camera reveals three equal circles, using the existing page typography. */
 @supports (overflow:clip) {body{overflow-x:clip;}}
-.nya-rel-story{position:relative;height:598svh;background:#fff;color:var(--ink);isolation:isolate;}
+.nya-rel-story{position:relative;height:622svh;background:#fff;color:var(--ink);isolation:isolate;}
 .nya-rel-pin{position:sticky;top:0;height:100svh;width:100%;overflow:hidden;background:#fff;contain:paint;}
 .nya-rel-viewport{position:relative;width:100%;height:100%;overflow:hidden;}
 
@@ -3553,27 +3553,23 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
  // Waypoints are scroll positions, not timed animations; scrolling back
  // retraces every stage smoothly, including all three close-ups.
  const desktop=[
-  {p:0,    x:650,y:665,z:3.38,name:'center'},
-  {p:.08,  x:650,y:665,z:3.38,name:'center'},
-  // The story starts on the diagram at the same zoom as the HCAI message, and keeps it as the camera moves up to that message.
-  {p:.2186,x:650,y:665,z:2.30,name:'center'},   /* = the first scroll position of the section (.20 / .915) */
+  // Order: top message -> left message -> right message -> the centre message -> the final screen.
+  // The camera keeps one zoom throughout; every move takes the same scrolling (.12 of the timeline) and every message is held for .09.
+  {p:0,    x:650,y:228,z:2.30,name:'hcai-text'},
+  {p:.3086,x:650,y:228,z:2.30,name:'hcai-text'},
 
-  // This first move takes exactly as much scrolling as the HCAI -> Responsiveness move (615px at a 900px-tall window), from the very first scroll.
-  {p:.3386,x:650,y:150,z:2.30,name:'hcai'},
-  // The HCAI close-up stays centered on its complete statistic + copy,
-  // matching the arrival target instead of drifting left when zooming.
-  {p:.40,  x:650,y:228,z:2.30,name:'hcai-text'},
-  {p:.44,  x:650,y:228,z:2.30,name:'hcai-text'},
+  // Centre both the narrative and the offset RFI statistic as a group.
+  {p:.4286,x:370,y:900,z:2.30,name:'responsive-text'},
+  {p:.5186,x:370,y:900,z:2.30,name:'responsive-text'},
 
-  // From here the camera only pans between the three messages at one constant zoom (no zoom out / zoom in between them).
-  // Center both the narrative and the offset RFI statistic as a group.
-  {p:.56,  x:370,y:900,z:2.30,name:'responsive-text'},
-  {p:.66,  x:370,y:900,z:2.30,name:'responsive-text'},
+  {p:.6386,x:930,y:900,z:2.30,name:'team-text'},
+  {p:.7286,x:930,y:900,z:2.30,name:'team-text'},
 
-  {p:.80,  x:930,y:900,z:2.30,name:'team-text'},
-  {p:.90,  x:930,y:900,z:2.30,name:'team-text'},
+  // y:620 is the middle of the shape where the three circles overlap (it spans y 376 to 864), so that shape sits in the middle of the page.
+  {p:.8486,x:650,y:620,z:2.30,name:'center'},
+  {p:.9386,x:650,y:620,z:2.30,name:'center'},
 
-  {p:.975, x:650,y:590,z:1.03,name:'overview'},
+  {p:.985, x:650,y:590,z:1.03,name:'overview'},
   {p:1,    x:650,y:590,z:1.03,name:'overview'}
  ];
  // Mobile keeps the same waypoint order while framing each text block
@@ -3627,21 +3623,17 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   desired=sample(progress);
   desired.fit=getFit();
   desired.ring=1;
-  const overview=ease((progress-.935)/.06);
-  // Bring in the smaller, theme-formatted copy as the introduction fades;
-  // hide it during peripheral closeups, then reveal it for the full diagram.
-  const centerEntrance=1;
-  const centerExit=1-ease((progress-.245)/.07);
-  desired.centerOpacity=Math.max(centerEntrance*centerExit,overview);
+  // The camera visits the messages in this order: top, left, right, centre. Each fades in as the camera arrives and out as it leaves.
+  const overview=ease((progress-.9686)/.06);
   const focus=(a,b,c,d)=>Math.max(overview,ease((progress-a)/(b-a))*(1-ease((progress-c)/(d-c))));
-  // Keep each text block visible throughout its EXTRA zoom-in scroll beat.
-  desired.hcaiOpacity=focus(.27,.3386,.465,.535);
-  desired.responsiveOpacity=focus(.48,.54,.70,.765);
-  desired.teamOpacity=Math.max(overview,ease((progress-.71)/.06));
-  // After the Team close-up the page goes straight to the final screen (no paragraph-filled overview in between):
+  desired.hcaiOpacity=focus(0,.01,.3286,.3986);
+  desired.responsiveOpacity=focus(.3486,.4086,.5586,.6236);
+  desired.teamOpacity=focus(.5686,.6286,.7686,.8286);
+  desired.centerOpacity=Math.max(overview,ease((progress-.7686)/.06));
+  // After the centre message the page goes straight to the final screen (no paragraph-filled overview in between):
   // the diagram fades away first, then the final screen fades in.
-  desired.worldOpacity=shortLandscape.matches?1:1-ease((progress-.925)/.035);
-  desired.finalOpacity=ease((progress-.955)/.035);
+  desired.worldOpacity=shortLandscape.matches?1:1-ease((progress-.9386)/.035);
+  desired.finalOpacity=ease((progress-.9686)/.0314);
   story.dataset.cameraScene=desired.name;
   if(!running){running=true;requestAnimationFrame(frame);}
  }
