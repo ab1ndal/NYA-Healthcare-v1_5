@@ -2131,7 +2131,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
           <p>Through a single innovative AMC, NYA secured HCAI approval for a more efficient structural solution, delivering over $2 million in steel-cost savings while reducing embodied carbon.</p>
         </article>
         <article class="amc-savings-panel amc-savings-panel--credibility reveal">
-          <h3>The Credibility Behind the Innovation</h3>
+          <h3>The Credibility <span>Behind the Innovation</span></h3>
           <p>Innovation only delivers value when it gets approved. NYA’s technical credibility with HCAI has helped secure</p>
           <p class="amc-savings-stat">24 approvals out of 24</p>
           <p>AMCs submitted at UCSF.</p>
@@ -4079,10 +4079,24 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 
 <style id="amc-savings-style">
 /* AMC savings: three panels joined as chevrons, left to right on wide screens and top to bottom
-   below 900px. Each panel's point nests in the next one's notch (--amc-tip deep), with a thin
+   below 1100px, where the side columns get too narrow for their headings and the badge. Each panel's point nests in the next one's notch (--amc-tip deep), with a thin
    seam of the section background between them. z-index keeps the section above the fixed
    WebGL backdrop (z-index:0). */
 .amc-savings{position:relative;z-index:1;background:#f6f3ec;color:var(--ink);padding:var(--section) 0;--amc-tip:clamp(1.75rem,3.2vw,3.5rem);--amc-seam:6px}
+/* Page type and spacing tokens stop growing near 1920px, which leaves this band small on
+   larger screens. Above 1920px each token may grow past its normal value in proportion to the
+   screen width (the second term is the token's 1920px value scaled by width/1920). */
+@media(min-width:1921px){
+  .amc-savings{
+    --text-h1:max(clamp(2rem, 1.5rem + 2.3vw, 4rem), 3.3333vw);
+    --text-h2:max(clamp(1.5rem, 1.25rem + 1vw, 2.25rem), 1.875vw);
+    --text-stat:max(clamp(3.5rem, 2.25rem + 5.5vw, 8.75rem), 7.2917vw);
+    --text-body:max(16px, clamp(1.0625rem, 0.875rem + 0.25vw, 1.25rem), 1.0417vw);
+    --space-2:max(1rem, .83333vw);--space-3:max(1.5rem, 1.25vw);--space-4:max(2.5rem, 2.0833vw);--space-5:max(4rem, 3.3333vw);
+    --amc-tip:2.9167vw;--amc-seam:.3125vw;
+    font-size:var(--text-body);
+  }
+  .amc-savings .wrap{width:84.375vw}}
 .amc-savings-title{font-family:var(--display);font-weight:600;font-size:var(--text-h1);line-height:1.05;letter-spacing:.04em;text-transform:uppercase;text-align:center;color:var(--ink);text-wrap:balance}
 .amc-savings-title span{display:block;color:var(--green-on-light)}
 .amc-savings-band{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr);align-items:stretch;margin-top:var(--space-5);filter:drop-shadow(0 18px 28px rgba(52,44,30,.16))}
@@ -4102,15 +4116,19 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-savings-word{padding-left:.3em}
 .amc-savings-figure{font-size:var(--text-stat);line-height:.95;letter-spacing:-.02em}
 .amc-savings-panel--result p{max-width:28em;margin-top:var(--space-4);color:rgba(255,255,255,.8)}
+.amc-savings-panel--credibility h3 span{display:block}
 .amc-savings-panel--credibility{margin-left:calc(var(--amc-seam) - var(--amc-tip));padding:var(--space-4) var(--space-4) var(--space-4) calc(var(--amc-tip) + var(--space-2));clip-path:polygon(0 0,100% 0,100% 100%,0 100%,var(--amc-tip) 50%)}
-.amc-savings-stat{align-self:flex-start;white-space:nowrap;margin-left:calc(-1 * var(--space-3));padding:.3em .8em .3em 1em;background:#e8e1d1;font-family:var(--display);font-weight:600;font-size:var(--text-h2);line-height:1.15;color:var(--ink)!important;clip-path:polygon(.45em 0,100% 0,100% 100%,0 100%)}
-@media(max-width:900px){
-  .amc-savings-band{grid-template-columns:minmax(0,1fr)}
+.amc-savings-stat{align-self:flex-start;text-wrap:balance;margin-left:calc(-1 * var(--space-3));padding:.3em .8em .3em 1em;background:#e8e1d1;font-family:var(--display);font-weight:600;font-size:var(--text-h2);line-height:1.15;color:var(--ink)!important;clip-path:polygon(.45em 0,100% 0,100% 100%,0 100%)}
+/* Just above the stack point the side columns are still narrow: give them width from the centre panel. */
+@media(min-width:1101px) and (max-width:1480px){.amc-savings-band{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,1fr)} .amc-savings-stat{font-size:var(--text-h3)}}
+@media(max-width:1100px){
+  /* Stacked, the band keeps a reading measure and the chevrons keep their angle on tablets. */
+  .amc-savings-band{grid-template-columns:minmax(0,1fr);max-width:40rem;margin-inline:auto}
   .amc-savings-panel--ambition,.amc-savings-panel--credibility{margin-block:0;margin-inline:var(--space-3)}
   .amc-savings-panel--ambition{padding:var(--space-4) var(--space-3) calc(var(--amc-tip) + var(--space-3));clip-path:polygon(0 0,100% 0,100% calc(100% - var(--amc-tip)),50% 100%,0 calc(100% - var(--amc-tip)))}
   .amc-savings-panel--result{margin-left:0;margin-top:calc(var(--amc-seam) - var(--amc-tip));padding:calc(var(--amc-tip) + var(--space-4)) var(--space-3);clip-path:polygon(0 0,50% var(--amc-tip),100% 0,100% calc(100% - var(--amc-tip)),50% 100%,0 calc(100% - var(--amc-tip)))}
   .amc-savings-panel--credibility{margin-top:calc(var(--amc-seam) - var(--amc-tip));padding:calc(var(--amc-tip) + var(--space-3)) var(--space-3) var(--space-4);clip-path:polygon(0 0,50% var(--amc-tip),100% 0,100% 100%,0 100%)}
-  .amc-savings-stat{margin-left:0;white-space:normal}}
+  .amc-savings-stat{margin-left:0}}
 </style>
 <!-- ==== NYA FINALE COMBINED START (JS) ==== -->
 <script id="nya-s33-behavior">
