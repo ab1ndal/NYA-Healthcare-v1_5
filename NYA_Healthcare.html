@@ -4263,10 +4263,16 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel-pin{position:-webkit-sticky;position:sticky;top:0;height:100svh;overflow:hidden;padding-top:var(--amc-nav,36px)}
 .amc-funnel-track{position:relative;display:flex;align-items:center;width:max-content;height:100%;will-change:transform}
 .amc-funnel-lines{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
-/* 1px like the page's dividers. Inputs are neutral; lines to outcomes carry the accent. */
+/* 1px like the page's dividers. Lines into the drivers are neutral; from the drivers on, the
+   lines carry the accent and meet in one node, so the outcomes read as the drivers' combined
+   result rather than one outcome per driver. */
 .amc-funnel-lines path{fill:none;stroke-width:1;stroke-linecap:round}
 .amc-funnel-lines .is-in-line{stroke:rgba(21,21,21,.3)}
 .amc-funnel-lines .is-out-line{stroke:var(--green-on-light)}
+.amc-funnel-node{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:center;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.amc-funnel-node.is-in{opacity:1;transform:none}
+.amc-funnel-node .ring{fill:#fff;stroke:var(--green-on-light);stroke-width:1}
+.amc-funnel-node .core{fill:var(--green-on-light)}
 /* Side panels shrink-wrap their list so the dividers end where the text does; the script
    centres panels by their own width, so centring and lead lines follow. */
 .amc-funnel-panel{position:relative;z-index:1;flex:none;width:fit-content;max-width:calc(100vw - 2 * var(--pad))}
@@ -4346,7 +4352,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // landscape phones with bars), so the section stays static.
   var MIN_PIN_HEIGHT=300;
   function pinnable(){return !reduce.matches&&window.innerHeight>=MIN_PIN_HEIGHT}
-  var NS='http://www.w3.org/2000/svg',MIN_DRAWN_PX=16;
+  var NS='http://www.w3.org/2000/svg',MIN_DRAWN_PX=16,NODE_R=9,NODE_CORE_R=3,NODE_SPREAD=.75,node=null;
   // Scroll timeline, in px of scroll: hold message -> slide to drivers -> hold drivers ->
   // slide to outcomes -> hold outcomes. X = track offset that centres each panel (in track
   // order: message, drivers, outcomes); D = how far each panel pans vertically while held.
@@ -4373,7 +4379,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     // fresh measure before anything below reads sizes.
     lists.forEach(function(l){l.style.display='none'});void sec.offsetWidth;
     lists.forEach(function(l){l.style.display=''});
-    svg.textContent='';lines=[];
+    svg.textContent='';lines=[];node=null;
     var pinned=pinnable();sec.classList.toggle('is-pinned',pinned);
     if(!pinned){sec.style.height='';track.style.transform='';cPanel.style.opacity='';dPanel.style.opacity='';return}
     var nav=document.getElementById('range-nav');sec.style.setProperty('--amc-nav',((nav&&nav.offsetHeight)||30)+6+'px');
@@ -4395,19 +4401,32 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     var total=0;for(var k in phase)total+=phase[k];
     sec.style.height=Math.round(pin.offsetHeight+total)+'px';
     svg.setAttribute('width',W);svg.setAttribute('height',H);svg.setAttribute('viewBox','0 0 '+W+' '+H);
-    // Message fans out to each driver; the drivers then gather at a point midway to the
-    // outcomes and fan out again to each outcome (together, not one driver per outcome).
+    // Message fans out to each driver; the drivers then converge on one node midway to the
+    // outcomes, and the outcomes fan out from it (together, not one driver per outcome).
     var m=rel(msgText),d=rel(dPanel),o=rel(oPanel),gap=8,n=drivers.length,k=outcomes.length;
     var hubX=(d.r+o.l)/2,hubY=d.cy;
+    // Each line meets the ring at its own point (spread over +-NODE_SPREAD rad), so the lines
+    // read as spokes of the node instead of merging into one thick stem before it.
+    function onRing(i,count,dir){var a=count>1?(i/(count-1)*2-1)*NODE_SPREAD:0;
+      return [hubX+dir*NODE_R*Math.cos(a),hubY+NODE_R*Math.sin(a)]}
     drivers.forEach(function(it,i){
       var h=rel(it.querySelector('h3'));
       addLine(curve(m.r+28,m.cy+(i-(n-1)/2)*gap,h.l-20,h.cy,.25,.85),'is-in-line','fan',i,it);
-      addLine(curve(d.r+24,rel(it).cy,hubX,hubY+(i-(n-1)/2)*gap,.1,.85),'is-in-line','gather',i,null);
+      var e=onRing(i,n,-1);
+      addLine(curve(d.r+24,rel(it).cy,e[0],e[1],.1,1),'is-out-line','gather',i,null);
     });
     outcomes.forEach(function(it,i){
       var h=rel(it.querySelector('h3'));
-      addLine(curve(hubX,hubY+(i-(k-1)/2)*gap,h.l-20,h.cy,.15,.85),'is-out-line','out',i,it);
+      var s0=onRing(i,k,1);
+      addLine(curve(s0[0],s0[1],h.l-20,h.cy,0,.85),'is-out-line','out',i,it);
     });
+    // Node drawn last so it sits over the line ends.
+    node=document.createElementNS(NS,'g');node.setAttribute('class','amc-funnel-node');
+    [['ring',NODE_R-.5],['core',NODE_CORE_R]].forEach(function(c){
+      var e=document.createElementNS(NS,'circle');e.setAttribute('class',c[0]);
+      e.setAttribute('cx',hubX);e.setAttribute('cy',hubY);e.setAttribute('r',c[1]);node.appendChild(e);
+    });
+    svg.appendChild(node);
     void sec.offsetWidth;sec.classList.remove('is-measuring');
     lines.forEach(function(L){L.f=-1});
   }
@@ -4450,6 +4469,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       L.p.style.strokeDashoffset=(L.len*(1-f)).toFixed(1);L.p.style.visibility=L.len*f>=MIN_DRAWN_PX?'visible':'hidden';
       if(L.target)L.target.classList.toggle('is-in',f>=.97);
     });
+    // Node appears as the last driver line reaches it (gather ends at t2=.5), before the outcomes leave it.
+    if(node)node.classList.toggle('is-in',t2>=.45);
     // A scene fades only in the back half of its exit, so the lines never float free of it.
     cPanel.style.opacity=(1-clamp((t1-.5)/.4,0,1)).toFixed(3);
     // Drivers hold full strength longer: the gather lines start at their right edge.
