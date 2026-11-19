@@ -3623,6 +3623,10 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
       st.width=f.kind==='wrap'?f.from.getBoundingClientRect().width+'px':'auto';
       // The bar's copies take its case and colour too (the bar is in its light tone while this runs).
       if(f.kind==='cap'){st.textTransform=cs.textTransform;st.color=cs.color;f.el.textContent=f.from.textContent;}
+      // A label that wraps in the bar (narrower desktops) gets a copy that wraps the same way, so it lands in the label's shape.
+      if(f.kind==='cap'&&f.from.classList.contains('range-nav-label')){
+        st.width=f.from.getBoundingClientRect().width+'px';st.whiteSpace='normal';st.textWrap='balance';
+      }
     });
     cards.forEach(c=>{c.padB=parseFloat(getComputedStyle(c.card).paddingBottom)||0;});
     flights.forEach(f=>{f.w=f.el.offsetWidth;f.h=f.el.offsetHeight;});
