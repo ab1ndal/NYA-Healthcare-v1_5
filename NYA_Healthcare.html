@@ -2321,7 +2321,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
           </div>
         </div>
         <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" loading="lazy" decoding="async"></figure>
-        <figure class="tx-imm-inset is-bearing is-film" data-anchor=".77 .77" data-dx="20" data-center="0" data-dir="1">
+        <figure class="tx-imm-inset is-bearing is-film" data-anchor=".77 .77" data-dx="20" data-center="0" data-rise data-gap="40" data-dir="1">
         <div class="ucsf-story-animation" id="ucsf-story-animation" aria-label="Animated comparison of earthquake motion with and without base isolation">
 <div class="iso-film" tabindex="0" role="img" aria-label="This animation shows the same ground motion shaking a six-story fixed-base building and the same building supported by triple friction pendulum bearings, with the top floor of each opened up to show a cabinet and a monitor cart. In the fixed-base building the frame cracks, the cabinet tips over and the cart slides across the room. In the isolated building the equipment stays in place.">
     <div class="iso-names">
@@ -5112,7 +5112,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var cur=null,raf=0,active=null,last=null;
   var insets=[].slice.call(box.querySelectorAll('.tx-imm-inset')).map(function(el){
     var a=el.getAttribute('data-anchor').split(' ').map(Number);
-    return {el:el,fx:a[0],fy:a[1],dx:Number(el.getAttribute('data-dx'))||0,dir:Number(el.getAttribute('data-dir'))||1,gap:el.hasAttribute('data-gap')?Number(el.getAttribute('data-gap')):24,gd:Number(el.getAttribute('data-gd'))||0,edge:el.hasAttribute('data-edge'),center:el.hasAttribute('data-center'),reveal:el.hasAttribute('data-reveal'),push:el.hasAttribute('data-push'),card:cards[el.hasAttribute('data-card')?Number(el.getAttribute('data-card')):el.classList.contains('is-atrium')?1:2],first:el.getAttribute('data-card')==='0'};
+    return {el:el,fx:a[0],fy:a[1],dx:Number(el.getAttribute('data-dx'))||0,dir:Number(el.getAttribute('data-dir'))||1,gap:el.hasAttribute('data-gap')?Number(el.getAttribute('data-gap')):24,gd:Number(el.getAttribute('data-gd'))||0,edge:el.hasAttribute('data-edge'),center:el.hasAttribute('data-center'),reveal:el.hasAttribute('data-reveal'),push:el.hasAttribute('data-push'),rise:el.hasAttribute('data-rise'),card:cards[el.hasAttribute('data-card')?Number(el.getAttribute('data-card')):el.classList.contains('is-atrium')?1:2],first:el.getAttribute('data-card')==='0'};
   });
   var photo=box.querySelector('.tx-imm-photo');
   function ready(){box.classList.add('is-ready')}
@@ -5161,6 +5161,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         var pb=cards[cards.indexOf(it.card)+1];if(pb){var pr=pb.getBoundingClientRect();cx=(pr.left+pr.right)/2-sl}
       }
       cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));cy=Math.min(R-Dh/2-12*k,Math.max(12*k+Dh/2,cy));
+      if(it.rise&&!upright.matches&&it.card){  // data-rise: follows the previous card up from below the stage, a gap under it, and stops at its centred height
+        var rc=cards[cards.indexOf(it.card)-1];if(rc)cy=Math.max(cy,rc.getBoundingClientRect().bottom-stage.getBoundingClientRect().top+it.gap*k+Dh/2);
+      }
       if(it.edge&&!upright.matches){  // the flush-left circle rises as far as it can without touching the other one
         var ot=insets.filter(function(q){return q!==it&&q.el.classList.contains('is-bearing')})[0];
         // rectangles: if they share any width, this one sits at least 18px below the other
@@ -5192,6 +5195,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         }
         it.el.classList.toggle('is-shown',clear&&vis>=Math.min(.55,.9*sr2.height/Math.max(1,kr.height)));
       }
+      if(it.rise&&!upright.matches)it.el.classList.add('is-shown');  // a rising inset is never faded: it is simply below the stage (clipped) until it slides in
       it.el.style.left=(cx-D/2).toFixed(1)+'px';it.el.style.top=(cy-Dh/2).toFixed(1)+'px';
     });
   }
