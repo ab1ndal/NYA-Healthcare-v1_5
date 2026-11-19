@@ -875,9 +875,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-journey{
   --journey-line:rgba(12,18,20,.16);
   --journey-accent:var(--green-on-light);
-  /* Lead-in blue: the lightest clear blue that still passes AA (4.78:1 on white). */
-  --journey-lead:#0f76c2;
-  /* Promise headline: a deeper shade of the same blue, so thin display strokes still read as strong. */
+  /* Promise headline: a deep blue, so thin display strokes still read as strong. */
   --journey-promise:#0b62a8;
   position:relative;z-index:1;isolation:isolate;
   color:var(--ink);background:#fff;
@@ -912,7 +910,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   font-family:var(--display);font-size:clamp(var(--text-h2-lg),3.6cqi,var(--text-h1));font-weight:300;
   line-height:1.1;letter-spacing:normal;color:var(--ink);margin:0;text-wrap:balance;
 }
-/* The promise headline is one uniform blue (a deeper shade of the lead-in blue), not accented per word. */
+/* The promise headline is one uniform blue, not accented per word. */
 .nya-journey-promise h2{color:var(--journey-promise)}
 .nya-journey-promise h2 em{color:inherit;font-weight:inherit;font-style:normal}
 /* Three chevrons growing small to large (same arm angle, even spacing), so the mark reads as a build-up, not a ">" sign. */
@@ -921,7 +919,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .nya-journey-body{min-width:0}
 .nya-journey-lead{
   font-family:var(--body);font-size:var(--text-h2);font-weight:400;
-  line-height:1.55;color:var(--journey-lead);text-align:center;margin:0 0 var(--space-2);
+  line-height:1.55;color:var(--ink);text-align:center;margin:0 0 var(--space-2);
 }
 /* Four cards under the statement. */
 .nya-journey-chapters{
