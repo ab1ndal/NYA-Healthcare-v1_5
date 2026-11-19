@@ -1701,6 +1701,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm-inset{position:absolute;left:0;top:0;margin:0;width:clamp(160px,min(23vw,44svh),360px);aspect-ratio:1;border-radius:50%;overflow:hidden;
   background:#10161d;box-shadow:0 22px 60px rgba(0,0,0,.4);opacity:0;transform:scale(.85)}
 .tx-imm-inset img,.tx-imm-inset svg{display:block;width:100%;height:100%;object-fit:cover}
+/* Stanford, Base Isolation: the original base isolation film in place of the round photo, in a light 4:3 panel. */
+.tx-imm-inset.is-film{width:clamp(280px,min(36vw,62svh),560px);aspect-ratio:4 / 3;border-radius:4px;background:#fffaf5}
+.tx-imm-inset.is-film .iso-art{width:100%;height:100%}
 .tx-imm[data-step="1"] .tx-imm-inset.is-atrium:not([data-center]),.tx-imm[data-step="2"] .tx-imm-inset.is-bearing:not([data-reveal]),
 .tx-imm-inset.is-atrium.is-shown,.tx-imm-inset.is-bearing.is-shown{opacity:1;transform:none}
 /* The fades play with everyone's settings (opacity and size only); this beats the page-wide rule. */
@@ -1748,7 +1751,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .tx-imm-step.is-narrow .tx-imm-card{width:min(100%,560px)}
   .tx-imm-card p{font-size:max(15px,.95rem);line-height:1.62}
   .tx-imm-list li{font-size:max(15px,.95rem);line-height:1.58}
-  .tx-imm-inset{width:clamp(110px,32vw,220px)}}
+  .tx-imm-inset{width:clamp(110px,32vw,220px)}
+  /* the base isolation film: as wide as the screen allows, centred in the pinned photo */
+  .tx-imm-inset.is-film{width:min(calc(100vw - 2*var(--pad)),calc((var(--tx-stage-h) - 24px) * 4 / 3),560px)}}
 </style>
 <style id="hero-mobile-landscape">
 /* Portrait phones: the hero video box is square (1:1); the video fills it without stretching (its sides are trimmed, centred),
@@ -2251,9 +2256,57 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
           </div>
         </div>
         <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" decoding="async"></figure>
-        <!-- Base isolators under the Utah State Capitol: Mike Renlund, CC BY 2.0, via Wikimedia Commons (credited under slide 3).
-             To move to the WordPress Media Library before it goes live. -->
-        <figure class="tx-imm-inset is-bearing" data-anchor=".77 .77" data-dx="20" data-dir="1"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Base_isolators_under_the_Utah_State_Capitol.jpg/960px-Base_isolators_under_the_Utah_State_Capitol.jpg" alt="" width="960" height="643" fetchpriority="low" decoding="async" referrerpolicy="no-referrer"></figure>
+        <figure class="tx-imm-inset is-bearing is-film" data-anchor=".77 .77" data-dx="20" data-dir="1">
+        <div class="ucsf-story-animation" id="ucsf-story-animation" aria-label="Animated comparison of earthquake motion with and without base isolation">
+<div class="iso-film" tabindex="0" role="img" aria-label="This animation shows the same ground motion shaking a six-story fixed-base building and the same building supported by triple friction pendulum bearings, with the top floor of each opened up to show a cabinet and a monitor cart. In the fixed-base building the frame cracks, the cabinet tips over and the cart slides across the room. In the isolated building the equipment stays in place.">
+    <div class="iso-names">
+      <span class="iso-name">Without base isolation</span>
+      <span class="iso-name iso-iso">With base isolation</span>
+    </div>
+    <div class="iso-scene">
+      <svg class="iso-art" aria-hidden="true">
+        <g data-part="soilL"><rect class="iso-soil" data-part="soilRectL" height="46" /><path class="iso-axis" data-part="hatchL" /></g>
+        <g data-part="soilR"><rect class="iso-soil" data-part="soilRectR" height="46" /><path class="iso-axis" data-part="hatchR" /></g>
+        <path class="iso-wall" data-part="fWall" />
+        <path class="iso-window" data-part="fWindows" />
+        <path class="iso-slab" data-part="fSlabs" />
+        <path class="iso-room" data-part="fRoom" />
+        <path class="iso-items" data-part="fItems" />
+        <path class="iso-cap" data-part="fCap" />
+        <path class="iso-spall" data-part="spalls" />
+        <path class="iso-crack" data-part="cracks" />
+        <g data-part="bl"></g>
+        <g data-part="br"></g>
+        <rect class="iso-conc" data-part="mat" />
+        <g data-part="isoBody">
+          <path class="iso-wall iso-iso" data-part="iWall" />
+          <path class="iso-window iso-iso" data-part="iWindows" />
+          <path class="iso-slab iso-iso" data-part="iSlabs" />
+          <path class="iso-room iso-iso" data-part="iRoom" />
+          <path class="iso-items iso-iso" data-part="iItems" />
+          <path class="iso-cap iso-iso" data-part="iCap" />
+        </g>
+      </svg>
+    </div>
+    <div class="iso-below">
+      <div class="iso-strip">
+        <svg viewBox="0 0 1000 240" aria-hidden="true">
+          <line class="iso-strip-axis" x1="0" y1="120" x2="1000" y2="120" />
+          <path class="iso-trace" data-part="traceF" />
+        </svg>
+        <p class="iso-strip-label">Greater shaking transmitted to the building and its systems.</p>
+      </div>
+      <div class="iso-strip">
+        <svg viewBox="0 0 1000 240" aria-hidden="true">
+          <line class="iso-strip-axis" x1="0" y1="120" x2="1000" y2="120" />
+          <path class="iso-trace iso-iso" data-part="traceI" />
+        </svg>
+        <p class="iso-strip-label">Reduced shaking transmitted to the building and its systems.</p>
+      </div>
+    </div>
+  </div>
+        </div>
+        </figure>
       </div>
       <div class="tx-imm-steps">
       <article class="tx-imm-step" data-cam=".5 .242 .5 .03 1" data-cam-m=".3 .5 .5 .5 1"><div class="tx-imm-card">
@@ -2285,7 +2338,6 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
             <li><strong>NYA’s Solution:</strong> Applied pioneering base isolation expertise to significantly reduce shaking transmitted into the hospital.</li>
             <li><strong>The Result:</strong> Reduced risk of structural damage, equipment disruption, and interruption to patient care.</li>
           </ul>
-          <p class="tx-imm-credit">Isolator photo: <a href="https://commons.wikimedia.org/wiki/File:Base_isolators_under_the_Utah_State_Capitol.jpg" target="_blank" rel="noopener">Mike Renlund</a>, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a></p>
       </div></article>
       </div>
     </div>
@@ -5016,14 +5068,14 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     // data-yref: the circles keep the heights they had with the photo framed by this (focus, screen) pair, whatever the photo framing now is
     var yy=y;if(box.hasAttribute('data-yref')){var q=box.getAttribute('data-yref').split(' ').map(Number);yy=Math.min(0,Math.max(R-h,q[1]*R-q[0]*h))}
     insets.forEach(function(it){
-      var D=it.el.offsetWidth,cx=x+it.fx*w+it.dx,cy=yy+it.fy*h;  // data-dx: screen px right of the anchor (review notes)
+      var D=it.el.offsetWidth,Dh=it.el.offsetHeight,cx=x+it.fx*w+it.dx,cy=yy+it.fy*h;  // data-dx: screen px right of the anchor (review notes)
       if(!upright.matches&&it.card){
         var cr=it.card.getBoundingClientRect();
         if(it.edge)cx=(sl+W)-cr.right+D/2;  // flush-left circle: its margin from the left edge equals the card's margin from the right edge
         else if(it.dir>0)cx=Math.max(cx,cr.right-sl+it.gap+it.gd*D+D/2);else cx=Math.min(cx,cr.left-sl-it.gap-it.gd*D-D/2);
       }
       if(it.center&&!upright.matches&&it.card){cx=((it.card.getBoundingClientRect().right-sl)+W)/2;cy=R/2+(Number(it.el.getAttribute('data-center'))||0)}  // centred in the free space beside the card
-      cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));cy=Math.min(R-D/2-12,Math.max(12+D/2,cy));
+      cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));cy=Math.min(R-Dh/2-12,Math.max(12+Dh/2,cy));
       if(it.edge&&!upright.matches){  // the flush-left circle rises as far as it can without touching the other one
         var ot=insets.filter(function(q){return q!==it&&q.el.classList.contains('is-bearing')})[0];
         if(ot&&ot.cx!=null){var need=D+18,ddx=cx-ot.cx;if(Math.abs(ddx)<need)cy=Math.max(cy,ot.cy+Math.sqrt(need*need-ddx*ddx))}
@@ -5032,17 +5084,18 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         var nx=cards[cards.indexOf(it.card)+1];
         if(nx){var pen=(cy+D/2+40)-(nx.getBoundingClientRect().top-stage.getBoundingClientRect().top);if(pen>0)cy-=pen*1.9}  // pushed early and about twice as far as the box has risen
       }
+      if(upright.matches&&it.el.classList.contains('is-film')){cx=W/2;cy=R/2}  // upright screens: the film sits centred in the photo
       it.cx=cx;it.cy=cy;
       if(!it.center&&it.card){  // gone before the next card reaches it: fades once that card's top is 140px below the circle
         var nc=cards[cards.indexOf(it.card)+1];
-        it.el.classList.toggle('is-cleared',!!nc&&nc.getBoundingClientRect().top-stage.getBoundingClientRect().top<cy+D/2+140);
+        it.el.classList.toggle('is-cleared',!!nc&&nc.getBoundingClientRect().top-stage.getBoundingClientRect().top<cy+Dh/2+140);
       }
       if((it.center||it.reveal)&&it.card){  // appears once 55% of its card is on screen
         var kr=it.card.getBoundingClientRect(),sr2=stage.getBoundingClientRect();
         var vis=Math.max(0,Math.min(kr.bottom,sr2.bottom)-Math.max(kr.top,sr2.top))/Math.max(1,kr.height);
         it.el.classList.toggle('is-shown',vis>=Math.min(.55,.9*sr2.height/Math.max(1,kr.height)));
       }
-      it.el.style.left=(cx-D/2).toFixed(1)+'px';it.el.style.top=(cy-D/2).toFixed(1)+'px';
+      it.el.style.left=(cx-D/2).toFixed(1)+'px';it.el.style.top=(cy-Dh/2).toFixed(1)+'px';
     });
   }
   function frame(){
