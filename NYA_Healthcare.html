@@ -1734,7 +1734,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm.is-ready .tx-imm-photo,.tx-imm.is-ready.is-lit[data-step="0"] .tx-imm-color{opacity:1}
 /* Round photos (atrium, isolator bearing): centred on the part of the building they show (data-anchor, placed by the script),
    kept clear of the card; they fade and grow in while their slide is the one on screen. */
-.tx-imm-inset{position:absolute;left:0;top:0;margin:0;width:clamp(10rem,min(23vw,44svh),22.5rem);aspect-ratio:1;border-radius:50%;overflow:hidden;
+.tx-imm-inset{--tx-d:clamp(10rem,min(23vw,44svh),22.5rem);position:absolute;left:0;top:0;margin:0;width:var(--tx-d);aspect-ratio:1;border-radius:50%;overflow:hidden;
   background:#10161d;box-shadow:0 22px 60px rgba(0,0,0,.4);opacity:0;transform:scale(.85)}
 .tx-imm-inset img,.tx-imm-inset svg{display:block;width:100%;height:100%;object-fit:cover}
 /* Stanford, Base Isolation: the original base isolation film in place of the round photo, in a light 4:3 panel. */
@@ -1742,11 +1742,16 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm-inset.is-film .iso-art{width:100%;height:100%}
 .tx-imm[data-step="1"] .tx-imm-inset.is-atrium:not([data-center]),.tx-imm[data-step="2"] .tx-imm-inset.is-bearing:not([data-reveal]),
 .tx-imm-inset.is-atrium.is-shown,.tx-imm-inset.is-bearing.is-shown,.tx-imm-inset.is-site.is-shown{opacity:1;transform:none}
-/* UCSF site plan: the circle spans about 880px of the 1203x1254 image, centred on 615,600, so the whole red outline
-   shows with a margin. */
-/* UCSF damper frame: shifted left so the "Sideplate connection" label on the right stays inside the circle */
-#tx-imm .tx-imm-inset.is-atrium img{object-position:72% 50%}
-.tx-imm-inset.is-site img{position:absolute;left:-19.9%;top:-18.2%;width:136.7%;height:142.5%;max-width:none;object-fit:fill}
+/* UCSF photos: rectangles in each picture's own shape, so nothing is cropped; as wide as the circles were. */
+.tx-imm-inset.is-site,#tx-imm .tx-imm-inset.is-atrium,.tx-imm-inset.is-mep,.tx-imm-inset.is-late{border-radius:4px}
+.tx-imm-inset.is-site{aspect-ratio:619 / 550}
+#tx-imm .tx-imm-inset.is-atrium{aspect-ratio:816 / 607}
+/* the bathroom pod photo is nearly square: as tall as the others are wide */
+.tx-imm-inset.is-mep{aspect-ratio:1512 / 1586;width:calc(var(--tx-d) * 1512 / 1586)}
+/* Photo caption: the page's caption size (12px), white on a soft dark fade along the bottom edge */
+.tx-imm-cap{position:absolute;left:0;right:0;bottom:0;padding:1.6rem .8rem .55rem;background:linear-gradient(to bottom,transparent,rgba(5,8,11,.72));
+  color:#fff;font-family:var(--body);font-size:.75rem;line-height:1.3;letter-spacing:.06em;pointer-events:none}
+.tx-imm-inset.is-late{aspect-ratio:1024 / 768}
 /* The fades play with everyone's settings (opacity and size only); this beats the page-wide rule. */
 .tx-imm .tx-imm-photo{transition:opacity .9s ease!important}
 /* the colour circle and its ring use the round photos' timing */
@@ -1785,7 +1790,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .tx-imm-card h3{font-size:min(var(--text-h2-lg),5svh)}
   .tx-imm-card p{font-size:.92rem;line-height:1.55;margin-top:.6rem}
   .tx-imm-list{margin-top:.7rem;gap:.55rem}.tx-imm-list li{font-size:.92rem;line-height:1.5;padding-left:1.4rem}.tx-imm-list li::before{width:.55rem;height:.55rem}
-  .tx-imm-inset{width:clamp(6rem,30svh,10rem)}}
+  .tx-imm-inset{--tx-d:clamp(6rem,30svh,10rem)}}
 /* Upright phones and tablets: the cards are too tall to sit over the photo, so the photo is pinned at the top (half the screen)
    and the cards slide up from below and pass under it. */
 @media (max-width:1100px) and (orientation:portrait){
@@ -1797,7 +1802,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .tx-imm-step.is-narrow .tx-imm-card{width:min(100%,35rem)}
   /* body text at the theme's body size, as in the other sections */
   .tx-imm-card p,.tx-imm-list li{font-size:var(--text-body);line-height:1.7}
-  .tx-imm-inset{width:clamp(6.875rem,32vw,13.75rem)}
+  .tx-imm-inset{--tx-d:clamp(6.875rem,32vw,13.75rem)}
   /* the base isolation film: as wide as the screen allows, centred in the pinned photo */
   .tx-imm-inset.is-film{width:min(calc(100vw - 2*var(--pad)),calc((var(--tx-stage-h) - 1.5rem) * 4 / 3),35rem)}}
 </style>
@@ -2402,8 +2407,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
           </div>
         </div>
         <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-gap="260" data-center="70" data-push data-dir="1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/smrfdamper.png" alt="" width="816" height="607" fetchpriority="low" loading="lazy" decoding="async"></figure>
-        <figure class="tx-imm-inset is-site" data-card="0" data-push data-anchor=".3 .6" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsf_site_extended_full_rectangular.png" alt="" width="1203" height="1254" fetchpriority="low" loading="lazy" decoding="async"></figure>
-        <figure class="tx-imm-inset is-bearing is-mep" data-reveal data-anchor=".9 .5" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/nyareducestherisk-2.png" alt="" width="701" height="780" fetchpriority="low" loading="lazy" decoding="async"></figure>
+        <figure class="tx-imm-inset is-site" data-card="0" data-push data-anchor=".3 .6" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfsite.png" alt="" width="619" height="550" fetchpriority="low" loading="lazy" decoding="async"></figure>
+        <figure class="tx-imm-inset is-bearing is-mep" data-reveal data-anchor=".9 .5" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/preview-e1795121973303.png" alt="" width="1512" height="1586" fetchpriority="low" loading="lazy" decoding="async"><figcaption class="tx-imm-cap">Bathroom Pod</figcaption></figure>
         <figure class="tx-imm-inset is-bearing is-late" data-reveal data-anchor=".55 .66" data-dx="0" data-gap="24" data-edge="1" data-late="1" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/.jpeg" alt="" width="1024" height="768" fetchpriority="low" loading="lazy" decoding="async"></figure>
       </div>
       <div class="tx-imm-steps">
@@ -5148,14 +5153,15 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));cy=Math.min(R-Dh/2-12*k,Math.max(12*k+Dh/2,cy));
       if(it.edge&&!upright.matches){  // the flush-left circle rises as far as it can without touching the other one
         var ot=insets.filter(function(q){return q!==it&&q.el.classList.contains('is-bearing')})[0];
-        if(ot&&ot.cx!=null){var need=D+18*k,ddx=cx-ot.cx;if(Math.abs(ddx)<need)cy=Math.max(cy,ot.cy+Math.sqrt(need*need-ddx*ddx))}
+        // rectangles: if they share any width, this one sits at least 18px below the other
+        if(ot&&ot.cx!=null){if(Math.abs(cx-ot.cx)<(D+ot.D)/2+18*k)cy=Math.max(cy,ot.cy+(Dh+ot.Dh)/2+18*k)}
       }
       if((it.center||it.push)&&!upright.matches&&it.card){  // the next box rises from below and pushes the circle up and out of the photo
         var nx=cards[cards.indexOf(it.card)+1];
         if(nx){var pen=(cy+D/2+40*k)-(nx.getBoundingClientRect().top-stage.getBoundingClientRect().top);if(pen>0)cy-=pen*1.9}  // pushed early and about twice as far as the box has risen
       }
       if(upright.matches&&it.el.classList.contains('is-film')){cx=W/2;cy=R/2}  // upright screens: the film sits centred in the photo
-      it.cx=cx;it.cy=cy;
+      it.cx=cx;it.cy=cy;it.D=D;it.Dh=Dh;
       if(!it.center&&!(it.push&&!upright.matches)&&it.card){  // gone before the next card reaches it: fades once that card's top is 140px below the circle
         var nc=cards[cards.indexOf(it.card)+1];
         it.el.classList.toggle('is-cleared',!!nc&&nc.getBoundingClientRect().top-stage.getBoundingClientRect().top<cy+Dh/2+140*k);
@@ -5168,7 +5174,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         var vis=Math.max(0,Math.min(kr.bottom,sr2.bottom)-Math.max(kr.top,sr2.top))/Math.max(1,kr.height);
         var clear=true;
         if(it.reveal&&!upright.matches){  // also waits until the previous card has moved up clear of the circle (24px gap)
-          var pc=cards[cards.indexOf(it.card)-1];if(pc)clear=pc.getBoundingClientRect().bottom-sr2.top<cy-Dh/2-24;
+          var pc=cards[cards.indexOf(it.card)-1];if(pc)clear=pc.getBoundingClientRect().bottom-sr2.top<cy-Dh/2-24*k;
         }
         if(it.el.hasAttribute('data-late')){  // the late circle never comes before the other circle of its card
           var first=insets.filter(function(q){return q!==it&&q.card===it.card&&q.reveal&&!q.el.hasAttribute('data-late')})[0];
