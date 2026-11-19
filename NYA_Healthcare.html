@@ -4427,6 +4427,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     phase.holdDrivers=vh*.45+D[1]*2.5;
     phase.toOutcomes=Math.max(X[2]-X[1],vh*.9);
     phase.holdOutcomes=vh*.4+D[2]*2.5;
+    // Whole scene runs on ~80% of the scroll it was tuned with, so it moves a little quicker.
+    for(var q in phase)phase[q]*=.8;
     var total=0;for(var k in phase)total+=phase[k];
     sec.style.height=Math.round(pin.offsetHeight+total)+'px';
     svg.setAttribute('width',W);svg.setAttribute('height',H);svg.setAttribute('viewBox','0 0 '+W+' '+H);
