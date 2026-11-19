@@ -1745,7 +1745,11 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 /* UCSF photos: rectangles in each picture's own shape, so nothing is cropped; as wide as the circles were. */
 .tx-imm-inset.is-site,#tx-imm .tx-imm-inset.is-atrium,.tx-imm-inset.is-mep,.tx-imm-inset.is-late{border-radius:4px}
 .tx-imm-inset.is-site{aspect-ratio:619 / 550}
-#tx-imm .tx-imm-inset.is-atrium{aspect-ratio:816 / 607}
+/* Damper frame: larger so its labels read, with the empty right edge (past the sideplate label) cropped off.
+   It sits centred over the next card, so below ~1180px wide it shrinks back toward the old size (180vw - 1730px
+   tracks the free width between the two cards) rather than slide under the text card. */
+#tx-imm .tx-imm-inset.is-atrium{aspect-ratio:720 / 607;width:max(var(--tx-d),min(calc(var(--tx-d) * 1.45),calc(180vw - 1730px)))}
+#tx-imm .tx-imm-inset.is-atrium img{object-position:left center}
 /* the bathroom pod photo is nearly square: as tall as the others are wide */
 .tx-imm-inset.is-mep{aspect-ratio:1512 / 1586;width:calc(var(--tx-d) * 1512 / 1586)}
 /* Photo caption: the page's caption size (12px), white on a soft dark fade along the bottom edge */
