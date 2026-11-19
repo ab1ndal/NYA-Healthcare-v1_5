@@ -64,7 +64,7 @@ async function jump(p, y) { await p.evaluate(y => { scrollTo({ top: y, behavior:
 const p0 = await open();
 const g = await p0.evaluate(() => {
   const cs = e => getComputedStyle(e), de = document.documentElement, b = document.body;
-  const pins = ['difference-story', 'amc-funnel', 'ucsf-case-study', 'relationships-story', 'uci-delivery-proof', 'nya-s33']
+  const pins = ['difference-story', 'ucsf-case-study', 'relationships-story', 'uci-delivery-proof', 'nya-s33']
     .map(id => document.getElementById(id) || document.querySelector('.' + id)).filter(Boolean)
     .map(s => ({ id: s.id || s.className.split(' ')[0], top: Math.round(s.getBoundingClientRect().top + scrollY), h: s.offsetHeight }));
   return { snapHtml: cs(de).scrollSnapType, snapBody: cs(b).scrollSnapType, ovHtml: cs(de).overflowY, ovBody: cs(b).overflowY,
