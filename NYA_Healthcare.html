@@ -1655,17 +1655,25 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm-view{position:absolute;left:0;top:0;width:100%;height:var(--tx-photo-h,100%);overflow:hidden}
 .tx-imm-scene{position:absolute;left:0;top:0;width:1600px;height:1067px;transform-origin:0 0;will-change:transform;isolation:isolate}
 .tx-imm-photo{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:grayscale(1) contrast(1.05) brightness(.96)}
+/* Stanford, slide 1: the photo's own colour comes back inside a hard-edged circle on the left tower's cantilever, with a thin light ring. */
+.tx-imm-color{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;
+  -webkit-mask-image:radial-gradient(circle 165px at 330px 615px,#000 99.5%,transparent 100%);
+  mask-image:radial-gradient(circle 165px at 330px 615px,#000 99.5%,transparent 100%)}
+.tx-imm-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;opacity:0;pointer-events:none}
+.tx-imm-ring circle{fill:none;stroke:#fff;stroke-opacity:.5;stroke-width:.5;vector-effect:non-scaling-stroke}
+.tx-imm.is-ready[data-step="0"] .tx-imm-ring{opacity:1}
 /* Everything waits for the photo (is-ready, set by the script). */
 .tx-imm .tx-imm-photo{opacity:0}
-.tx-imm.is-ready .tx-imm-photo{opacity:1}
+.tx-imm.is-ready .tx-imm-photo,.tx-imm.is-ready[data-step="0"] .tx-imm-color{opacity:1}
 /* Round photos (atrium, isolator bearing): centred on the part of the building they show (data-anchor, placed by the script),
    kept clear of the card; they fade and grow in while their slide is the one on screen. */
 .tx-imm-inset{position:absolute;left:0;top:0;margin:0;width:clamp(160px,min(23vw,44svh),360px);aspect-ratio:1;border-radius:50%;overflow:hidden;
   background:#10161d;box-shadow:0 22px 60px rgba(0,0,0,.4);opacity:0;transform:scale(.85)}
 .tx-imm-inset img,.tx-imm-inset svg{display:block;width:100%;height:100%;object-fit:cover}
+.tx-imm[data-step="1"] .tx-imm-inset.is-atrium:not([data-center]),.tx-imm[data-step="2"] .tx-imm-inset.is-bearing:not([data-reveal]),
 .tx-imm-inset.is-atrium.is-shown,.tx-imm-inset.is-bearing.is-shown{opacity:1;transform:none}
 /* The fades play with everyone's settings (opacity and size only); this beats the page-wide rule. */
-.tx-imm .tx-imm-photo{transition:opacity .9s ease!important}
+.tx-imm .tx-imm-photo,.tx-imm .tx-imm-color,.tx-imm .tx-imm-ring{transition:opacity .9s ease!important}
 .tx-imm .tx-imm-inset{transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.2,1)!important}
 /* the second circle of the last slide arrives after the first */
 .tx-imm .tx-imm-inset.is-late.is-shown{transition-delay:.55s!important}
@@ -2149,6 +2157,42 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
       <p class="value-note reveal">NYA combines advanced analysis with proven engineering judgment to reduce the risk of redesign, added cost, and delay, as demonstrated on two of our flagship projects: The New Stanford Hospital and UCSF’s Helen Diller Hospital.</p>
     </div>
     <!-- Stanford, immersive: the photo pinned under the title (moved by a slow scroll-driven camera), the cards scroll over it. -->
+    <div class="tx-imm" id="tx-imm-stanford" data-step="-1" data-cam=".5 .242 .5 .03 1" data-cam-m=".5 .5 .5 .5 1">
+      <div class="tx-imm-stage" aria-hidden="true">
+        <div class="tx-imm-view">
+          <div class="tx-imm-scene">
+            <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
+            <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
+            <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="330" cy="615" r="165"/></svg>
+          </div>
+        </div>
+        <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" decoding="async"></figure>
+        <!-- Base isolators under the Utah State Capitol: Mike Renlund, CC BY 2.0, via Wikimedia Commons (credited under slide 3).
+             To move to the WordPress Media Library before it goes live. -->
+        <figure class="tx-imm-inset is-bearing" data-anchor=".77 .77" data-dx="20" data-dir="1"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Base_isolators_under_the_Utah_State_Capitol.jpg/960px-Base_isolators_under_the_Utah_State_Capitol.jpg" alt="" width="960" height="643" fetchpriority="low" decoding="async" referrerpolicy="no-referrer"></figure>
+      </div>
+      <div class="tx-imm-steps">
+      <article class="tx-imm-step" data-cam=".5 .242 .5 .03 1" data-cam-m=".3 .5 .5 .5 1"><div class="tx-imm-card">
+          <div class="eyebrow">Structural Ingenuity</div>
+          <h3>Making Stanford’s complex patient towers <em>a reality</em></h3>
+          <p>Stanford’s vision called for four patient towers cantilevered nearly 30 feet beyond their supporting columns, creating demanding structural and vibration challenges.</p>
+          <p>NYA had to carefully balance the weight of the projecting floors, control vibration, and integrate the towers with the hospital’s seismic system. Through advanced analysis and engineering judgment, NYA developed a multi-story steel framing solution that met these competing demands.</p>
+          <p>For Stanford, the result was the realization of its ambitious vision without compromise.</p>
+      </div></article>
+      <article class="tx-imm-step is-narrow" data-cam=".5 .242 .5 .03 1" data-cam-m=".46 .5 .5 .5 1"><div class="tx-imm-card">
+          <div class="eyebrow">Architectural Vision</div>
+          <h3>Engineering Stanford’s vision for a <em>brighter, more welcoming hospital.</em></h3>
+          <p>Stanford’s atrium welcomes patients and families with daylight and open space. To achieve the nearly 120-foot skylight without bulky framing or columns, NYA designed a shallow grid of slender steel pipes. Advanced analysis allowed NYA to keep the structure light while meeting demanding engineering requirements, delivering the openness Stanford envisioned.</p>
+      </div></article>
+      <article class="tx-imm-step is-left" data-cam=".5 .242 .5 .03 1" data-cam-m=".7 .5 .5 .5 1"><div class="tx-imm-card">
+          <div class="eyebrow">Seismic Leadership</div>
+          <h3>Helping Stanford keep caring for patients <em>after an earthquake</em></h3>
+          <p>NYA drew on its pioneering seismic isolation expertise to design a system that supports Stanford’s goal of uninterrupted care. By reducing shaking within the hospital, the system helps protect patients, staff, and medical equipment. NYA’s technical expertise brought that protection into the design, reducing the risk of damage and disruption.</p>
+          <p class="tx-imm-credit">Isolator photo: <a href="https://commons.wikimedia.org/wiki/File:Base_isolators_under_the_Utah_State_Capitol.jpg" target="_blank" rel="noopener">Mike Renlund</a>, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a></p>
+      </div></article>
+      </div>
+    </div>
+    <!-- UCSF, immersive: same scene, continuing straight on from Stanford. -->
     <div class="tx-imm" id="tx-imm" data-step="-1" data-cam=".5 .242 .5 .03 1" data-cam-m=".5 .5 .5 .5 1">
       <div class="tx-imm-stage" aria-hidden="true">
         <div class="tx-imm-view">
@@ -2157,8 +2201,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
           </div>
         </div>
         <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-gap="260" data-center="70" data-dir="1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/nyareducestherisk.png" alt="" width="974" height="864" fetchpriority="low" decoding="async"></figure>
-        <figure class="tx-imm-inset is-bearing is-mep" data-anchor=".9 .5" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/nyareducestherisk-2.png" alt="" width="701" height="780" fetchpriority="low" decoding="async"></figure>
-        <figure class="tx-imm-inset is-bearing is-late" data-anchor=".55 .66" data-dx="0" data-gap="24" data-edge="1" data-late="1" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/.jpeg" alt="" width="1024" height="768" fetchpriority="low" decoding="async"></figure>
+        <figure class="tx-imm-inset is-bearing is-mep" data-reveal data-anchor=".9 .5" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/nyareducestherisk-2.png" alt="" width="701" height="780" fetchpriority="low" decoding="async"></figure>
+        <figure class="tx-imm-inset is-bearing is-late" data-reveal data-anchor=".55 .66" data-dx="0" data-gap="24" data-edge="1" data-late="1" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/.jpeg" alt="" width="1024" height="768" fetchpriority="low" decoding="async"></figure>
       </div>
       <div class="tx-imm-steps">
       <article class="tx-imm-step" data-cam=".5 .242 .5 .03 1" data-cam-m=".3 .5 .5 .5 1"><div class="tx-imm-card">
@@ -2192,89 +2236,6 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
           </ul>
       </div></article>
       </div>
-    </div>
-    <div class="ucsf-story-media" aria-live="polite">
-      <div class="ucsf-story-frame">
-        
-        <video class="ucsf-story-video" id="ucsf-story-video" muted loop playsinline preload="metadata" aria-label="UCSF engineering animation" style="display:none"></video>
-        <div class="ucsf-story-animation" id="ucsf-story-animation" hidden aria-label="Animated comparison of earthquake motion with and without base isolation">
-<div class="iso-film" tabindex="0" role="img" aria-label="This animation shows the same ground motion shaking a six-story fixed-base building and the same building supported by triple friction pendulum bearings, with the top floor of each opened up to show a cabinet and a monitor cart. In the fixed-base building the frame cracks, the cabinet tips over and the cart slides across the room. In the isolated building the equipment stays in place.">
-    <div class="iso-names">
-      <span class="iso-name">Without base isolation</span>
-      <span class="iso-name iso-iso">With base isolation</span>
-    </div>
-    <div class="iso-scene">
-      <svg class="iso-art" aria-hidden="true">
-        <g data-part="soilL"><rect class="iso-soil" data-part="soilRectL" height="46" /><path class="iso-axis" data-part="hatchL" /></g>
-        <g data-part="soilR"><rect class="iso-soil" data-part="soilRectR" height="46" /><path class="iso-axis" data-part="hatchR" /></g>
-        <path class="iso-wall" data-part="fWall" />
-        <path class="iso-window" data-part="fWindows" />
-        <path class="iso-slab" data-part="fSlabs" />
-        <path class="iso-room" data-part="fRoom" />
-        <path class="iso-items" data-part="fItems" />
-        <path class="iso-cap" data-part="fCap" />
-        <path class="iso-spall" data-part="spalls" />
-        <path class="iso-crack" data-part="cracks" />
-        <g data-part="bl"></g>
-        <g data-part="br"></g>
-        <rect class="iso-conc" data-part="mat" />
-        <g data-part="isoBody">
-          <path class="iso-wall iso-iso" data-part="iWall" />
-          <path class="iso-window iso-iso" data-part="iWindows" />
-          <path class="iso-slab iso-iso" data-part="iSlabs" />
-          <path class="iso-room iso-iso" data-part="iRoom" />
-          <path class="iso-items iso-iso" data-part="iItems" />
-          <path class="iso-cap iso-iso" data-part="iCap" />
-        </g>
-      </svg>
-    </div>
-    <div class="iso-below">
-      <div class="iso-strip">
-        <svg viewBox="0 0 1000 240" aria-hidden="true">
-          <line class="iso-strip-axis" x1="0" y1="120" x2="1000" y2="120" />
-          <path class="iso-trace" data-part="traceF" />
-        </svg>
-        <p class="iso-strip-label">Greater shaking transmitted to the building and its systems.</p>
-      </div>
-      <div class="iso-strip">
-        <svg viewBox="0 0 1000 240" aria-hidden="true">
-          <line class="iso-strip-axis" x1="0" y1="120" x2="1000" y2="120" />
-          <path class="iso-trace iso-iso" data-part="traceI" />
-        </svg>
-        <p class="iso-strip-label">Reduced shaking transmitted to the building and its systems.</p>
-      </div>
-    </div>
-  </div>
-        </div>
-
-        <div class="ucsf-story-single" id="ucsf-story-single" aria-label="UCSF prefabricated MEP rack photograph" hidden>
-          <img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfprefabmeprack.webp" alt="Prefabricated MEP rack at UCSF Helen Diller Hospital" width="1024" height="768" decoding="async">
-        </div>
-        <img class="ucsf-story-image" id="ucsf-story-image" src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1536x1152.webp" alt="UCSF Health Helen Diller Hospital at Parnassus" width="1536" height="1152" decoding="async">
-      </div>
-    </div>
-    <div class="ucsf-story-steps">
-      <article class="ucsf-step is-active" data-frame-ratio="4 / 3" data-image="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" data-alt="UCSF Health Helen Diller Hospital at Parnassus" data-label="The site sets the problem"><div class="eyebrow">Site Ingenuity</div>
-        <h3>Engineering a nearly million-square-foot hospital <em>on a very small site</em></h3>
-        <p>UCSF envisioned a major new hospital on a steep, triangular site surrounded by existing buildings, roads, and underground utilities. The limited footprint left little room for the large, flexible floors essential to modern healthcare.</p>
-        <p>NYA engineered a way to make every square foot count. Dramatic cantilevers extended usable floors beyond their supporting columns, while an innovative structural system accommodated shifting floorplates as the tower rose. Together, these solutions maximized the space available within the site’s restrictive geometry.</p>
-        <p>The result was a structural design that made UCSF’s nearly million-square-foot hospital possible on a site that seemed far too small to accommodate it.</p>
-      </article>
-
-      <article class="ucsf-step" data-frame-ratio="4 / 3" data-video="https://www.nyase.com/wp-content/uploads/2026/11/with-dampers-960.mp4" data-alt="Fluid viscous damper animation" data-label="Choose the right system"><div class="eyebrow">Architectural Freedom</div>
-        <h3>Making UCSF’s bold architecture possible <em>through innovative seismic design</em></h3>
-        <p>UCSF needed to fit an architecturally ambitious hospital onto a severely constrained site while meeting California’s demanding seismic requirements. Conventional seismic systems would have occupied precious space and imposed significant restrictions on the building’s design.</p>
-        <p>NYA engineered an innovative system combining steel moment frames with nearly 200 fluid viscous dampers. By dissipating earthquake energy without relying on restrictive walls or bracing, the system accommodated the building’s dramatic geometry and preserved its open, flexible spaces.</p>
-        <p>The result was a hospital designed for powerful earthquakes, with the architectural freedom and usable space UCSF envisioned.</p>
-      </article>
-
-      <article class="ucsf-step" data-frame-ratio="4 / 3" data-layout="single" data-alt="Prefabricated MEP rack photograph" data-label="Dissipate seismic energy"><div class="eyebrow">Collaboration</div>
-        <h3>Helping UCSF build more efficiently through two <em>California hospital firsts</em></h3>
-        <p>UCSF saw an opportunity to simplify construction through prefabricated MEP racks and bathroom pods. But making these innovations work required multiple engineering disciplines to resolve competing requirements before construction.</p>
-        <p>NYA brought the MEP teams together to coordinate shared racks and engineered the structural supports needed to accommodate them. This coordination also minimized MEP clashes before construction. NYA also coordinated the building structure to receive prefabricated bathroom pods.</p>
-        <p>The result was two California hospital firsts, making installation more efficient, reducing rework, and lowering construction costs for UCSF.</p>
-      </article>
-
     </div>
   </div>
 </section>
@@ -4886,9 +4847,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 // the same, so the photo stays still; on upright screens it pans sideways between them, eased, following the scroll with a
 // little lag. The card nearest the middle of the zone it crosses is the active one (data-step on the box): it switches the
 // colour patch and the round photos; each round photo is centred on the part of the building it shows.
-(function(){
-  var box=document.getElementById('tx-imm');
-  if(!box)return;
+[].slice.call(document.querySelectorAll('.tx-imm')).forEach(function(box){
   var stage=box.querySelector('.tx-imm-stage'),view=box.querySelector('.tx-imm-view'),scene=box.querySelector('.tx-imm-scene');
   var steps=[].slice.call(box.querySelectorAll('.tx-imm-step'));
   var cards=steps.map(function(s){return s.querySelector('.tx-imm-card')});
@@ -4900,7 +4859,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var cur=null,raf=0,active=null;
   var insets=[].slice.call(box.querySelectorAll('.tx-imm-inset')).map(function(el){
     var a=el.getAttribute('data-anchor').split(' ').map(Number);
-    return {el:el,fx:a[0],fy:a[1],dx:Number(el.getAttribute('data-dx'))||0,dir:Number(el.getAttribute('data-dir'))||1,gap:el.hasAttribute('data-gap')?Number(el.getAttribute('data-gap')):24,gd:Number(el.getAttribute('data-gd'))||0,edge:el.hasAttribute('data-edge'),center:el.hasAttribute('data-center'),card:cards[el.classList.contains('is-atrium')?1:2]};
+    return {el:el,fx:a[0],fy:a[1],dx:Number(el.getAttribute('data-dx'))||0,dir:Number(el.getAttribute('data-dir'))||1,gap:el.hasAttribute('data-gap')?Number(el.getAttribute('data-gap')):24,gd:Number(el.getAttribute('data-gd'))||0,edge:el.hasAttribute('data-edge'),center:el.hasAttribute('data-center'),reveal:el.hasAttribute('data-reveal'),card:cards[el.classList.contains('is-atrium')?1:2]};
   });
   var photo=box.querySelector('.tx-imm-photo');
   function ready(){box.classList.add('is-ready')}
@@ -4951,7 +4910,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         if(nx){var pen=(cy+D/2+40)-(nx.getBoundingClientRect().top-stage.getBoundingClientRect().top);if(pen>0)cy-=pen*1.9}  // pushed early and about twice as far as the box has risen
       }
       it.cx=cx;it.cy=cy;
-      if((it.center||it.el.classList.contains('is-bearing'))&&it.card){  // appears once 55% of its card is on screen
+      if((it.center||it.reveal)&&it.card){  // appears once 55% of its card is on screen
         var kr=it.card.getBoundingClientRect(),sr2=stage.getBoundingClientRect();
         var vis=Math.max(0,Math.min(kr.bottom,sr2.bottom)-Math.max(kr.top,sr2.top))/Math.max(1,kr.height);
         it.el.classList.toggle('is-shown',vis>=Math.min(.55,.9*sr2.height/Math.max(1,kr.height)));
@@ -4976,7 +4935,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   addEventListener('resize',function(){cur=null;kick()},{passive:true});
   if(side.addEventListener)side.addEventListener('change',function(){cur=null;kick()});
   kick();
-})();
+});
 </script>
 <script id="nya-rel-after-reveal-script">
 (function(){
