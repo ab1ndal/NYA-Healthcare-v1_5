@@ -1634,7 +1634,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .ucsf-story.is-note-off .ucsf-story-head .value-note{opacity:0!important;transform:translateY(-.6rem)!important;visibility:hidden;pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear .45s}
   /* Eyebrow fades in place; the title moves up by the eyebrow's height (--ucsf-eyebrow-h, set by script). */
   .ucsf-story.is-note-off .ucsf-story-head .eyebrow{opacity:0!important;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
-  .ucsf-story.is-note-off .ucsf-story-head h2{transform:translateY(calc(-1 * var(--ucsf-eyebrow-h,0px)))!important;transition:transform .5s var(--ease)}
+  .ucsf-story.is-note-off .ucsf-story-head h2{transform:translateY(calc(-1 * var(--ucsf-title-shift,var(--ucsf-eyebrow-h,0px))))!important;transition:transform .5s var(--ease)}
   .ucsf-story-media{top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h));height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h));padding-top:1rem;padding-bottom:1.5rem;transition:top .5s var(--ease),height .5s var(--ease)}
   .ucsf-story.is-note-off .ucsf-story-media{top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h-short,var(--ucsf-head-h)));height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h-short,var(--ucsf-head-h)))}
   .ucsf-story-frame{height:100%;max-height:760px}
@@ -1665,7 +1665,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .ucsf-story-head .value-note{margin:.4rem auto 0;max-width:none;font-size:clamp(.72rem,2.5svh,.9rem);line-height:1.4;text-align:center;text-align-last:center;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear 0s}
   .ucsf-story.is-note-off .ucsf-story-head .value-note{opacity:0!important;transform:translateY(-.6rem)!important;visibility:hidden;pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s linear .45s}
   .ucsf-story.is-note-off .ucsf-story-head .eyebrow{opacity:0!important;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
-  .ucsf-story.is-note-off .ucsf-story-head h2{transform:translateY(calc(-1 * var(--ucsf-eyebrow-h,0px)))!important;transition:transform .5s var(--ease)}
+  .ucsf-story.is-note-off .ucsf-story-head h2{transform:translateY(calc(-1 * var(--ucsf-title-shift,var(--ucsf-eyebrow-h,0px))))!important;transition:transform .5s var(--ease)}
   .ucsf-story-media{top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h));height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h));padding:.5rem 0;transition:top .5s var(--ease),height .5s var(--ease)}
   .ucsf-story.is-note-off .ucsf-story-media{top:calc(var(--ucsf-nav,0px) + var(--ucsf-head-h-short,var(--ucsf-head-h)));height:calc(100svh - var(--ucsf-nav,0px) - var(--ucsf-head-h-short,var(--ucsf-head-h)))}
   .ucsf-story-frame{width:min(100%,calc(var(--ucsf-avail-h) * 4 / 3));transition:width .5s var(--ease)}
@@ -1681,18 +1681,17 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm-scene{position:absolute;left:0;top:0;width:1600px;height:1067px;transform-origin:0 0;will-change:transform;isolation:isolate}
 .tx-imm-photo{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:grayscale(1) contrast(1.05) brightness(.96)}
 /* Stanford, slide 1: the photo's own colour comes back inside a hard-edged circle on the left tower's cantilever, with a thin light ring. */
-.tx-imm-color{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;
-  -webkit-mask-image:radial-gradient(circle 165px at 330px 615px,#000 99.5%,transparent 100%);
-  mask-image:radial-gradient(circle 165px at 330px 615px,#000 99.5%,transparent 100%)}
+/* The circle grows in like the round photos (85% to full size while it fades in): the mask radius is animated (--tx-r). */
+@property --tx-r{syntax:"<length>";inherits:false;initial-value:165px}
+.tx-imm-color{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;--tx-r:140.25px;filter:saturate(1.45) contrast(1.12);
+  -webkit-mask-image:radial-gradient(circle var(--tx-r) at 330px 615px,#000 99.5%,transparent 100%);
+  mask-image:radial-gradient(circle var(--tx-r) at 330px 615px,#000 99.5%,transparent 100%)}
+.tx-imm.is-ready.is-lit[data-step="0"] .tx-imm-color{--tx-r:165px}
 .tx-imm-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;opacity:0;pointer-events:none}
-.tx-imm-ring circle{fill:none;stroke:#fff;stroke-opacity:.5;stroke-width:.5;vector-effect:non-scaling-stroke}
+.tx-imm-ring circle{fill:none;stroke:#fff;stroke-opacity:.5;stroke-width:.5;vector-effect:non-scaling-stroke;transform-box:view-box;transform-origin:330px 615px;transform:scale(.85)}
+.tx-imm.is-ready.is-lit[data-step="0"] .tx-imm-ring circle{transform:none}
 /* The colour circle waits until the first card has been scrolled two more wheel clicks (is-lit, set by the script). */
 .tx-imm.is-ready.is-lit[data-step="0"] .tx-imm-ring{opacity:1}
-/* Two cyan rings keep growing out of the circle's edge and fading, one after the other, so the eye finds the circle. */
-.tx-imm-ring circle.tx-imm-pulse{stroke:var(--cyan);stroke-opacity:1;stroke-width:1.5;opacity:0;transform-box:view-box;transform-origin:330px 615px;
-  animation:tx-imm-pulse 2.8s cubic-bezier(.2,.6,.3,1) infinite}
-.tx-imm-ring circle.tx-imm-pulse + circle.tx-imm-pulse{animation-delay:1.4s}
-@keyframes tx-imm-pulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.28);opacity:0}}
 /* Everything waits for the photo (is-ready, set by the script). */
 .tx-imm .tx-imm-photo{opacity:0}
 .tx-imm.is-ready .tx-imm-photo,.tx-imm.is-ready.is-lit[data-step="0"] .tx-imm-color{opacity:1}
@@ -1705,9 +1704,18 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm-inset.is-film{width:clamp(280px,min(36vw,62svh),560px);aspect-ratio:4 / 3;border-radius:4px;background:#fffaf5}
 .tx-imm-inset.is-film .iso-art{width:100%;height:100%}
 .tx-imm[data-step="1"] .tx-imm-inset.is-atrium:not([data-center]),.tx-imm[data-step="2"] .tx-imm-inset.is-bearing:not([data-reveal]),
-.tx-imm-inset.is-atrium.is-shown,.tx-imm-inset.is-bearing.is-shown{opacity:1;transform:none}
+.tx-imm-inset.is-atrium.is-shown,.tx-imm-inset.is-bearing.is-shown,.tx-imm-inset.is-site.is-shown{opacity:1;transform:none}
+/* UCSF site plan: the circle spans about 880px of the 1203x1254 image, centred on 615,600, so the whole red outline
+   shows with a margin. */
+/* UCSF damper frame: shifted left so the "Sideplate connection" label on the right stays inside the circle */
+#tx-imm .tx-imm-inset.is-atrium img{object-position:72% 50%}
+.tx-imm-inset.is-site img{position:absolute;left:-19.9%;top:-18.2%;width:136.7%;height:142.5%;max-width:none;object-fit:fill}
 /* The fades play with everyone's settings (opacity and size only); this beats the page-wide rule. */
-.tx-imm .tx-imm-photo,.tx-imm .tx-imm-color,.tx-imm .tx-imm-ring{transition:opacity .9s ease!important}
+.tx-imm .tx-imm-photo{transition:opacity .9s ease!important}
+/* the colour circle and its ring use the round photos' timing */
+.tx-imm .tx-imm-color{transition:opacity .6s ease,--tx-r .8s cubic-bezier(.2,.7,.2,1)!important}
+.tx-imm .tx-imm-ring{transition:opacity .6s ease!important}
+.tx-imm .tx-imm-ring circle{transition:transform .8s cubic-bezier(.2,.7,.2,1)!important}
 .tx-imm .tx-imm-inset{transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.2,1)!important}
 /* A round photo fades out as the next card comes up towards it, before they touch (is-cleared, set by the script). */
 .tx-imm .tx-imm-inset.is-cleared{opacity:0!important;transform:scale(.85)!important;transition-delay:0s!important}
@@ -2256,7 +2264,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
           <div class="tx-imm-scene">
             <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
             <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
-            <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="330" cy="615" r="165"/><circle class="tx-imm-pulse" cx="330" cy="615" r="165"/><circle class="tx-imm-pulse" cx="330" cy="615" r="165"/></svg>
+            <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="330" cy="615" r="165"/></svg>
           </div>
         </div>
         <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" decoding="async"></figure>
@@ -2323,7 +2331,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
             <li><strong>The Result:</strong> Realized Stanford’s ambitious architectural vision without compromise.</li>
           </ul>
       </div></article>
-      <article class="tx-imm-step is-narrow" data-cam=".5 .242 .5 .03 1" data-cam-m=".46 .5 .5 .5 1"><div class="tx-imm-card">
+      <article class="tx-imm-step" data-cam=".5 .242 .5 .03 1" data-cam-m=".46 .5 .5 .5 1"><div class="tx-imm-card">
           <div class="eyebrow">Architectural Vision</div>
           <h3>Engineering Stanford’s vision for a <span class="tx-imm-hl">brighter, more welcoming hospital</span></h3>
           <ul class="tx-imm-list">
@@ -2353,7 +2361,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
             <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" alt="" width="2300" height="1725" decoding="async">
           </div>
         </div>
-        <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-gap="260" data-center="70" data-dir="1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/nyareducestherisk.png" alt="" width="974" height="864" fetchpriority="low" decoding="async"></figure>
+        <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-gap="260" data-center="70" data-push data-dir="1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/smrfdamper.png" alt="" width="816" height="607" fetchpriority="low" decoding="async"></figure>
+        <figure class="tx-imm-inset is-site" data-card="0" data-push data-anchor=".3 .6" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsf_site_extended_full_rectangular.png" alt="" width="1203" height="1254" fetchpriority="low" decoding="async"></figure>
         <figure class="tx-imm-inset is-bearing is-mep" data-reveal data-anchor=".9 .5" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/nyareducestherisk-2.png" alt="" width="701" height="780" fetchpriority="low" decoding="async"></figure>
         <figure class="tx-imm-inset is-bearing is-late" data-reveal data-anchor=".55 .66" data-dx="0" data-gap="24" data-edge="1" data-late="1" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/.jpeg" alt="" width="1024" height="768" fetchpriority="low" decoding="async"></figure>
       </div>
@@ -5003,7 +5012,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     eh=eh-1*(parseFloat(getComputedStyle(head).paddingTop)||0);
     story.style.setProperty('--ucsf-eyebrow-h',eh+'px');
     var mt=note?parseFloat(getComputedStyle(note).marginTop)||0:0;
-    story.style.setProperty('--ucsf-head-h-short',Math.max(0,h-(note?note.offsetHeight+mt:0)-eh)+'px');
+    var sh=Math.max(0,h-(note?note.offsetHeight+mt:0)-eh);
+    story.style.setProperty('--ucsf-head-h-short',sh+'px');
+    // The title then sits in the vertical middle of that black band.
+    if(h2)story.style.setProperty('--ucsf-title-shift',(h2.offsetTop+h2.offsetHeight/2-sh/2)+'px');
   }
   if('ResizeObserver' in window){new ResizeObserver(setH).observe(head);if(navEl)new ResizeObserver(setH).observe(navEl)}
   setH();addEventListener('resize',setH,{passive:true});
@@ -5035,10 +5047,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var upright=window.matchMedia('(max-width:1100px) and (orientation:portrait)');
   function read(attr){return [box].concat(steps).map(function(el){return (el.getAttribute(attr)||'.5 .5 .5 .5 1').trim().split(/\s+/).map(Number)})}
   var camSide=read('data-cam'),camUp=read('data-cam-m');
-  var cur=null,raf=0,active=null;
+  var cur=null,raf=0,active=null,last=null;
   var insets=[].slice.call(box.querySelectorAll('.tx-imm-inset')).map(function(el){
     var a=el.getAttribute('data-anchor').split(' ').map(Number);
-    return {el:el,fx:a[0],fy:a[1],dx:Number(el.getAttribute('data-dx'))||0,dir:Number(el.getAttribute('data-dir'))||1,gap:el.hasAttribute('data-gap')?Number(el.getAttribute('data-gap')):24,gd:Number(el.getAttribute('data-gd'))||0,edge:el.hasAttribute('data-edge'),center:el.hasAttribute('data-center'),reveal:el.hasAttribute('data-reveal'),card:cards[el.classList.contains('is-atrium')?1:2]};
+    return {el:el,fx:a[0],fy:a[1],dx:Number(el.getAttribute('data-dx'))||0,dir:Number(el.getAttribute('data-dir'))||1,gap:el.hasAttribute('data-gap')?Number(el.getAttribute('data-gap')):24,gd:Number(el.getAttribute('data-gd'))||0,edge:el.hasAttribute('data-edge'),center:el.hasAttribute('data-center'),reveal:el.hasAttribute('data-reveal'),push:el.hasAttribute('data-push'),card:cards[el.hasAttribute('data-card')?Number(el.getAttribute('data-card')):el.classList.contains('is-atrium')?1:2],first:el.getAttribute('data-card')==='0'};
   });
   var photo=box.querySelector('.tx-imm-photo');
   function ready(){box.classList.add('is-ready')}
@@ -5061,7 +5073,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       var k=0;while(k<c.length-1&&c[k+1]<=0)k++;
       cam=k===c.length-1?list[k+1]:mix(list[k+1],list[k+2],ease(-c[k]/Math.max(1,c[k+1]-c[k])));
     }
-    return {cam:cam,act:act,lit:lit};
+    return {cam:cam,act:act,lit:lit,c0:c[0],H:H};
   }
   function place(cam){
     var W=stage.clientWidth,H=stage.clientHeight;
@@ -5083,25 +5095,39 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         else if(it.dir>0)cx=Math.max(cx,cr.right-sl+it.gap+it.gd*D+D/2);else cx=Math.min(cx,cr.left-sl-it.gap-it.gd*D-D/2);
       }
       if(it.center&&!upright.matches&&it.card){cx=((it.card.getBoundingClientRect().right-sl)+W)/2;cy=R/2+(Number(it.el.getAttribute('data-center'))||0)}  // centred in the free space beside the card
+      if(it.push&&!upright.matches&&it.card){  // centred above the card that will push it up
+        var pb=cards[cards.indexOf(it.card)+1];if(pb){var pr=pb.getBoundingClientRect();cx=(pr.left+pr.right)/2-sl}
+      }
       cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));cy=Math.min(R-Dh/2-12,Math.max(12+Dh/2,cy));
       if(it.edge&&!upright.matches){  // the flush-left circle rises as far as it can without touching the other one
         var ot=insets.filter(function(q){return q!==it&&q.el.classList.contains('is-bearing')})[0];
         if(ot&&ot.cx!=null){var need=D+18,ddx=cx-ot.cx;if(Math.abs(ddx)<need)cy=Math.max(cy,ot.cy+Math.sqrt(need*need-ddx*ddx))}
       }
-      if(it.center&&!upright.matches&&it.card){  // the next box rises from below and pushes the circle up and out of the photo
+      if((it.center||it.push)&&!upright.matches&&it.card){  // the next box rises from below and pushes the circle up and out of the photo
         var nx=cards[cards.indexOf(it.card)+1];
         if(nx){var pen=(cy+D/2+40)-(nx.getBoundingClientRect().top-stage.getBoundingClientRect().top);if(pen>0)cy-=pen*1.9}  // pushed early and about twice as far as the box has risen
       }
       if(upright.matches&&it.el.classList.contains('is-film')){cx=W/2;cy=R/2}  // upright screens: the film sits centred in the photo
       it.cx=cx;it.cy=cy;
-      if(!it.center&&it.card){  // gone before the next card reaches it: fades once that card's top is 140px below the circle
+      if(!it.center&&!(it.push&&!upright.matches)&&it.card){  // gone before the next card reaches it: fades once that card's top is 140px below the circle
         var nc=cards[cards.indexOf(it.card)+1];
         it.el.classList.toggle('is-cleared',!!nc&&nc.getBoundingClientRect().top-stage.getBoundingClientRect().top<cy+Dh/2+140);
       }
+      // first card's circle: one wheel click after that card becomes active; it stays on while the next card is active (that card
+      // pushes it out of the photo, and brings it back down when scrolling up)
+      if(it.first)it.el.classList.toggle('is-shown',!!(last&&(last.lit1||(last.act===1&&it.push&&!upright.matches))));
       if((it.center||it.reveal)&&it.card){  // appears once 55% of its card is on screen
         var kr=it.card.getBoundingClientRect(),sr2=stage.getBoundingClientRect();
         var vis=Math.max(0,Math.min(kr.bottom,sr2.bottom)-Math.max(kr.top,sr2.top))/Math.max(1,kr.height);
-        it.el.classList.toggle('is-shown',vis>=Math.min(.55,.9*sr2.height/Math.max(1,kr.height)));
+        var clear=true;
+        if(it.reveal&&!upright.matches){  // also waits until the previous card has moved up clear of the circle (24px gap)
+          var pc=cards[cards.indexOf(it.card)-1];if(pc)clear=pc.getBoundingClientRect().bottom-sr2.top<cy-Dh/2-24;
+        }
+        if(it.el.hasAttribute('data-late')){  // the late circle never comes before the other circle of its card
+          var first=insets.filter(function(q){return q!==it&&q.card===it.card&&q.reveal&&!q.el.hasAttribute('data-late')})[0];
+          if(first&&!first.el.classList.contains('is-shown'))clear=false;
+        }
+        it.el.classList.toggle('is-shown',clear&&vis>=Math.min(.55,.9*sr2.height/Math.max(1,kr.height)));
       }
       it.el.style.left=(cx-D/2).toFixed(1)+'px';it.el.style.top=(cy-Dh/2).toFixed(1)+'px';
     });
@@ -5110,7 +5136,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     raf=0;
     var r=box.getBoundingClientRect();
     if(r.bottom<-200||r.top>innerHeight+200){cur=null;return}
-    var g=goal();
+    var g=goal();last=g;
+    // The UCSF site circle: one wheel click (100px of scrolling) after its card becomes the active one.
+    // The UCSF site circle: one wheel click (100px) after both the photo has settled in place and the first card has become the
+    // active one, so it grows in on screen. Both are measured from fixed positions, so scrolling back up hides it at the same point.
+    g.lit1=g.act===0&&(parseFloat(getComputedStyle(stage).top)||0)-box.getBoundingClientRect().top>=100&&g.c0<=g.H*.55-100;
     if(g.act!==active){active=g.act;box.setAttribute('data-step',active)}
     box.classList.toggle('is-lit',g.lit);
     var moving=false;
