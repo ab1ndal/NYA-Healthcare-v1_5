@@ -1744,7 +1744,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm-inset.is-atrium.is-shown,.tx-imm-inset.is-bearing.is-shown,.tx-imm-inset.is-site.is-shown{opacity:1;transform:none}
 /* UCSF photos: rectangles in each picture's own shape, so nothing is cropped; as wide as the circles were. */
 .tx-imm-inset.is-site,#tx-imm .tx-imm-inset.is-atrium,.tx-imm-inset.is-mep,.tx-imm-inset.is-late{border-radius:4px}
-.tx-imm-inset.is-site{aspect-ratio:619 / 550}
+/* Site map: as large as the damper frame so its street labels read. It is centred over the next card the same way,
+   so it shares the damper's shrink-back below ~1180px wide rather than slide under the first card. */
+.tx-imm-inset.is-site{aspect-ratio:619 / 550;width:max(var(--tx-d),min(calc(var(--tx-d) * 1.45),calc(180vw - 1730px)))}
 /* Damper frame: larger so its labels read, with the empty right edge (past the sideplate label) cropped off.
    It sits centred over the next card, so below ~1180px wide it shrinks back toward the old size (180vw - 1730px
    tracks the free width between the two cards) rather than slide under the text card. */
