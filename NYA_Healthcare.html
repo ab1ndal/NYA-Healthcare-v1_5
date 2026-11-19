@@ -1688,10 +1688,16 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   mask-image:radial-gradient(circle 165px at 330px 615px,#000 99.5%,transparent 100%)}
 .tx-imm-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;opacity:0;pointer-events:none}
 .tx-imm-ring circle{fill:none;stroke:#fff;stroke-opacity:.5;stroke-width:.5;vector-effect:non-scaling-stroke}
-.tx-imm.is-ready[data-step="0"] .tx-imm-ring{opacity:1}
+/* The colour circle waits until the first card has been scrolled two more wheel clicks (is-lit, set by the script). */
+.tx-imm.is-ready.is-lit[data-step="0"] .tx-imm-ring{opacity:1}
+/* Two cyan rings keep growing out of the circle's edge and fading, one after the other, so the eye finds the circle. */
+.tx-imm-ring circle.tx-imm-pulse{stroke:var(--cyan);stroke-opacity:1;stroke-width:1.5;opacity:0;transform-box:view-box;transform-origin:330px 615px;
+  animation:tx-imm-pulse 2.8s cubic-bezier(.2,.6,.3,1) infinite}
+.tx-imm-ring circle.tx-imm-pulse + circle.tx-imm-pulse{animation-delay:1.4s}
+@keyframes tx-imm-pulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.28);opacity:0}}
 /* Everything waits for the photo (is-ready, set by the script). */
 .tx-imm .tx-imm-photo{opacity:0}
-.tx-imm.is-ready .tx-imm-photo,.tx-imm.is-ready[data-step="0"] .tx-imm-color{opacity:1}
+.tx-imm.is-ready .tx-imm-photo,.tx-imm.is-ready.is-lit[data-step="0"] .tx-imm-color{opacity:1}
 /* Round photos (atrium, isolator bearing): centred on the part of the building they show (data-anchor, placed by the script),
    kept clear of the card; they fade and grow in while their slide is the one on screen. */
 .tx-imm-inset{position:absolute;left:0;top:0;margin:0;width:clamp(160px,min(23vw,44svh),360px);aspect-ratio:1;border-radius:50%;overflow:hidden;
@@ -1702,6 +1708,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 /* The fades play with everyone's settings (opacity and size only); this beats the page-wide rule. */
 .tx-imm .tx-imm-photo,.tx-imm .tx-imm-color,.tx-imm .tx-imm-ring{transition:opacity .9s ease!important}
 .tx-imm .tx-imm-inset{transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.2,1)!important}
+/* A round photo fades out as the next card comes up towards it, before they touch (is-cleared, set by the script). */
+.tx-imm .tx-imm-inset.is-cleared{opacity:0!important;transform:scale(.85)!important;transition-delay:0s!important}
 /* the second circle of the last slide arrives after the first */
 .tx-imm .tx-imm-inset.is-late.is-shown{transition-delay:.55s!important}
 /* The cards */
@@ -2241,7 +2249,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
           <div class="tx-imm-scene">
             <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
             <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" decoding="async">
-            <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="330" cy="615" r="165"/></svg>
+            <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="330" cy="615" r="165"/><circle class="tx-imm-pulse" cx="330" cy="615" r="165"/><circle class="tx-imm-pulse" cx="330" cy="615" r="165"/></svg>
           </div>
         </div>
         <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1-1024x683.webp" alt="" width="1024" height="683" fetchpriority="low" decoding="async"></figure>
@@ -4987,13 +4995,15 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     var act=0,best=Infinity;
     c.forEach(function(v,k){if(Math.abs(v)<best){best=Math.abs(v);act=k}});
     if(c[0]>H*.55)act=-1;
+    // The colour circle: two wheel clicks (about 200px) after the first card becomes the active one.
+    var lit=act===0&&c[0]<=H*.55-200;
     var cam;
     if(c[0]>=0)cam=mix(list[0],list[1],ease(Math.max(0,Math.min(1,1-c[0]/H))));
     else{
       var k=0;while(k<c.length-1&&c[k+1]<=0)k++;
       cam=k===c.length-1?list[k+1]:mix(list[k+1],list[k+2],ease(-c[k]/Math.max(1,c[k+1]-c[k])));
     }
-    return {cam:cam,act:act};
+    return {cam:cam,act:act,lit:lit};
   }
   function place(cam){
     var W=stage.clientWidth,H=stage.clientHeight;
@@ -5025,6 +5035,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         if(nx){var pen=(cy+D/2+40)-(nx.getBoundingClientRect().top-stage.getBoundingClientRect().top);if(pen>0)cy-=pen*1.9}  // pushed early and about twice as far as the box has risen
       }
       it.cx=cx;it.cy=cy;
+      if(!it.center&&it.card){  // gone before the next card reaches it: fades once that card's top is 140px below the circle
+        var nc=cards[cards.indexOf(it.card)+1];
+        it.el.classList.toggle('is-cleared',!!nc&&nc.getBoundingClientRect().top-stage.getBoundingClientRect().top<cy+D/2+140);
+      }
       if((it.center||it.reveal)&&it.card){  // appears once 55% of its card is on screen
         var kr=it.card.getBoundingClientRect(),sr2=stage.getBoundingClientRect();
         var vis=Math.max(0,Math.min(kr.bottom,sr2.bottom)-Math.max(kr.top,sr2.top))/Math.max(1,kr.height);
@@ -5039,6 +5053,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     if(r.bottom<-200||r.top>innerHeight+200){cur=null;return}
     var g=goal();
     if(g.act!==active){active=g.act;box.setAttribute('data-step',active)}
+    box.classList.toggle('is-lit',g.lit);
     var moving=false;
     if(!cur)cur=g.cam.slice();
     else cur=cur.map(function(v,i){var d=g.cam[i]-v;if(Math.abs(d)>.0005){moving=true;return v+d*.16}return g.cam[i]});
