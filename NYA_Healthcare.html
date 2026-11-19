@@ -1300,7 +1300,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 .range-nav[data-tone="light"]{--rn-text:#151515;--rn-mark:#151515;--rn-surface:#ffffff}
 .range-nav.is-on{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s,background-color .2s}
 /* The faintest text still reaches 4.5:1 on either surface. */
-.range-nav a{display:grid;align-content:end;gap:5px;min-width:0;color:var(--rn-soft);text-decoration:none;font-size:var(--text-eyebrow);line-height:1.2;letter-spacing:.12em;text-transform:uppercase;transition:color .4s ease}
+.range-nav a{display:grid;align-content:end;gap:5px;min-width:0;color:var(--rn-soft);text-decoration:none;font-size:calc(var(--text-eyebrow) + 2pt);line-height:1.2;letter-spacing:.12em;text-transform:uppercase;transition:color .4s ease}
 .range-nav a:hover,.range-nav a[aria-current="true"]{color:var(--rn-on)}
 .range-nav a:focus-visible{outline:2px solid var(--rn-text);outline-offset:2px}
 .rn-head{display:flex;min-width:0}
