@@ -1944,9 +1944,12 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   #projects .projects-head h2 em{display:block}
   #projects .projects-head .value-note{max-width:22rem;margin:.9rem auto 0;font-size:.95rem;line-height:1.45}
   #projects .projects-head{margin-bottom:1.4rem}
-  /* Every section's eyebrow uses the same small one-line size. Only the long ARCS eyebrow may still wrap, on the narrowest phones. */
-  .eyebrow{white-space:nowrap;font-size:min(calc(var(--text-eyebrow) + 2pt),2.7vw)!important;letter-spacing:.14em!important}
-  .financial-risk--arcs .eyebrow{white-space:normal}}</style>
+  /* Every section's eyebrow uses the same size, the tag size, so a section label is never smaller than the tags under it.
+     Long eyebrows wrap rather than shrink: ARCS on phones, and SSI and "Damped Moment Frame Design" on 360px-class phones. */
+  .eyebrow{font-size:var(--text-eyebrow)!important;letter-spacing:.14em!important;align-items:flex-start}
+  /* The rule mark stays beside the first line when the label wraps (as the ARCS eyebrow already does). Half the eyebrow's own
+     line height, since sections set different line heights. */
+  .eyebrow::before{margin-top:calc(.5lh - .5px)}}</style>
 <style id="ssi-heading-centre">
 /* The SSI title is centred on the page; its eyebrow stays where it was. */
 .ssi-compare--reference .ssi-reference-heading{text-align:center}
