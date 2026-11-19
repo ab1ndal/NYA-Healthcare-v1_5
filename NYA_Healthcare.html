@@ -45,6 +45,25 @@
   --space-6: 6.5rem;
   --ease:cubic-bezier(.16,1,.3,1);--pad:clamp(1.4rem,5vw,5rem);--section:clamp(4.5rem,8vw,8rem)
 }
+/* Large screens: the page's sizes stop growing around 1920px, so on a 27" (2560x1440) screen everything sat at its
+   1920 size in a much bigger window. Above 1920px the root size grows with the screen, by min(width/1920,
+   height/960) (960 = the browser window height on a 1920x1080 monitor), so everything set in rem (type, spacing,
+   layout widths, the caps of the fluid sizes) grows by the same factor and the page keeps its 1920 proportions.
+   Capped at the 2560 size (x1.333) so browser zoom keeps working on bigger screens: growth tied to the window
+   cancels zoom until the window is back to 1920 CSS px, and the cap limits that to the first two zoom steps
+   (WCAG 1.4.4; Smashing, "Addressing Accessibility Concerns With Using Fluid Type", 2023). 100% keeps a reader's
+   larger default text size. Fixed-size drawings scaled by script (Stanford/UCSF scenes, relationships diagram) stay
+   in px; the CSS `zoom` property was rejected because it inflates 100vw/100svh and breaks the full-screen parts. */
+@media(min-width:1921px){html{font-size:clamp(100%,min(100vw / 120,100vh / 60),133.333%)}
+  /* The fluid tokens mix rem with vw. Above 1920 the root size is the only scale (it may follow the height, or stop
+     at the cap, while vw keeps following the width), so each token is its exact 1920 value in rem. */
+  :root{--text-display:6.5rem;--text-stat:8.75rem;--text-h1:4rem;--text-h2:2.25rem;--text-h2-lg:2.75rem;--text-h3:1.65rem;--text-body:1.175rem;--pad:5rem;--section:8rem}
+  /* DM Sans has an optical-size axis that narrows its letters as text grows, which changes line breaks. Hold it at the
+     body text's 1920 shape (opsz 18.8), as the AMC section did. A per-element value (opsz = own size at 1920) is not
+     possible: Chrome resolves em in font-variation-settings against the parent's size, like font-size, even through a
+     registered custom property. The closing lede is measured on a canvas by sizeLede(), which ignores this setting,
+     so it keeps the default; the relationships diagram is drawn in px, so its default already matches 1920. */
+  body *:not(.nya-rel-world,.nya-rel-world *,.nya-s33-lede){font-variation-settings:"opsz" 18.8}}
 /* Dark gutter + mid-grey thumb: default light scrollbar blended into the white sections. */
 html{scroll-behavior:smooth;scrollbar-color:#6b7280 var(--bg)} body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:var(--text-body);line-height:1.7;overflow-x:hidden}
 a{color:inherit;text-decoration:none} img{display:block;max-width:100%} button{font:inherit}
@@ -52,7 +71,7 @@ a{color:inherit;text-decoration:none} img{display:block;max-width:100%} button{f
 /* Page-wide lining numerals, matching the NYA approach section (Cormorant defaults to old-style figures). */
 body,body *{font-variant-numeric:lining-nums}
 .nya-journey-chapter-number,.rn-num{font-variant-numeric:lining-nums tabular-nums}
-.eyebrow{display:flex;align-items:center;gap:12px;font-size:var(--text-eyebrow);letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem}
+.eyebrow{display:flex;align-items:center;gap:.75rem;font-size:var(--text-eyebrow);letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem}
 .eyebrow:before{content:"";width:2.125rem;height:1px;background:currentColor;flex:0 0 auto}
 .display{font-family:var(--display);font-weight:300;letter-spacing:-.02em;line-height:1.03}
 .muted{color:var(--muted)}
@@ -128,19 +147,19 @@ body,body *{font-variant-numeric:lining-nums}
 .projects-head h2 em{color:var(--cyan);font-weight:300;font-style:italic}
 
 .project-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.project{position:relative;overflow:hidden;min-height:330px;cursor:pointer;background:#111;opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.project.is-visible{opacity:1;transform:none}.project.featured{grid-column:span 7;grid-row:span 2;min-height:680px}.project.std{grid-column:span 5}.project.wide{grid-column:span 4;min-height:300px}
+.project{position:relative;overflow:hidden;min-height:20.625rem;cursor:pointer;background:#111;opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.project.is-visible{opacity:1;transform:none}.project.featured{grid-column:span 7;grid-row:span 2;min-height:42.5rem}.project.std{grid-column:span 5}.project.wide{grid-column:span 4;min-height:18.75rem}
 .project img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.58) saturate(.9);transition:.8s var(--ease)}.project:hover img{transform:scale(1.045);filter:brightness(.7) saturate(1)}
 .project:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,7,9,.94) 0%,rgba(5,7,9,.2) 60%,transparent 100%)}
 .project-body{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:clamp(1.4rem,2.8vw,2.4rem)}.project-tag{font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:.5rem}.project h3{font-family:var(--display);font-weight:300;color:#fff;line-height:1.08;font-size:var(--text-h2-lg)}.project-outcome{font-size:var(--text-body);color:rgba(255,255,255,.8);margin-top:.8rem;max-width:29.375rem;line-height:1.55}
-.project-arrow{position:absolute;z-index:3;top:1.2rem;right:1.2rem;width:2.375rem;height:38px;border:1px solid rgba(255,255,255,.25);border-radius:50%;display:grid;place-items:center;color:var(--cyan);opacity:0;transform:translateX(-5px);transition:.3s}.project:hover .project-arrow{opacity:1;transform:none}
+.project-arrow{position:absolute;z-index:3;top:1.2rem;right:1.2rem;width:2.375rem;height:2.375rem;border:1px solid rgba(255,255,255,.25);border-radius:50%;display:grid;place-items:center;color:var(--cyan);opacity:0;transform:translateX(-5px);transition:.3s}.project:hover .project-arrow{opacity:1;transform:none}
 
 
 .cta{position:relative;padding:clamp(5rem,10vw,9rem) 0;overflow:hidden;color:#101216;background:radial-gradient(circle at 88% 22%,rgba(34,211,255,.075),transparent 30%),linear-gradient(180deg,#f5f4ef 0%,#e9e7df 100%);border-top:1px solid rgba(16,18,22,.10);border-bottom:1px solid rgba(16,18,22,.10)}
 .cta:after{content:"";position:absolute;left:0;top:0;width:min(11.25rem,18vw);height:3px;background:var(--cyan);box-shadow:0 0 24px rgba(34,211,255,.28);pointer-events:none}
 .cta:before{content:"NYA";position:absolute;right:1.5vw;bottom:-2.25vw;font-family:var(--display);font-size:var(--text-watermark);line-height:.78;color:rgba(16,18,22,.05);letter-spacing:-.08em;pointer-events:none;white-space:nowrap}.cta .wrap{position:relative;z-index:2}.cta .eyebrow{color:var(--green-on-light)}.cta h2{font-size:var(--text-display);max-width:62.5rem;color:#0d1014}.cta p{max-width:43.75rem;margin-top:1.3rem;font-size:var(--text-body);color:rgba(13,16,20,.70)}
 
-.modal{position:fixed;inset:0;z-index:100;display:flex;opacity:0;pointer-events:none;transition:.3s}.modal.open{opacity:1;pointer-events:auto}.modal-backdrop{position:absolute;inset:0;background:rgba(4,5,7,.78);backdrop-filter:blur(6px)}.modal-panel{position:relative;margin-left:auto;width:min(37.5rem,96vw);height:100%;overflow:auto;overscroll-behavior:contain;background:var(--card);border-left:1px solid var(--line);transform:translateX(45px);transition:.45s var(--ease);z-index:2}.modal.open .modal-panel{transform:none}.modal-hero{height:300px;background-size:cover;background-position:center;position:relative}.modal-hero:after{content:"";position:absolute;inset:auto 0 0;height:120px;background:linear-gradient(transparent,var(--card))}.modal-close{position:absolute;top:1.1rem;right:1.1rem;width:2.5rem;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;font-size:var(--text-h3);cursor:pointer;z-index:3}.modal-body{padding:2rem 2rem 3rem}.modal-tag{font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:.6rem}.modal-title{font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.05;font-weight:300;color:#fff;margin-bottom:1.4rem}.modal-specs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:1.4rem}.modal-spec{background:var(--surface);padding:1rem}.modal-spec-k{font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}.modal-spec-v{font-size:var(--text-small);color:#fff}.modal-desc{font-size:var(--text-body);color:rgba(255,255,255,.78);line-height:1.75;margin-bottom:1.5rem}.modal-link{display:inline-flex;align-items:center;gap:8px;font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);border-bottom:1px solid rgba(34,211,255,.45)}
+.modal{position:fixed;inset:0;z-index:100;display:flex;opacity:0;pointer-events:none;transition:.3s}.modal.open{opacity:1;pointer-events:auto}.modal-backdrop{position:absolute;inset:0;background:rgba(4,5,7,.78);backdrop-filter:blur(6px)}.modal-panel{position:relative;margin-left:auto;width:min(37.5rem,96vw);height:100%;overflow:auto;overscroll-behavior:contain;background:var(--card);border-left:1px solid var(--line);transform:translateX(45px);transition:.45s var(--ease);z-index:2}.modal.open .modal-panel{transform:none}.modal-hero{height:18.75rem;background-size:cover;background-position:center;position:relative}.modal-hero:after{content:"";position:absolute;inset:auto 0 0;height:7.5rem;background:linear-gradient(transparent,var(--card))}.modal-close{position:absolute;top:1.1rem;right:1.1rem;width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;font-size:var(--text-h3);cursor:pointer;z-index:3}.modal-body{padding:2rem 2rem 3rem}.modal-tag{font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:.6rem}.modal-title{font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.05;font-weight:300;color:#fff;margin-bottom:1.4rem}.modal-specs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:1.4rem}.modal-spec{background:var(--surface);padding:1rem}.modal-spec-k{font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}.modal-spec-v{font-size:var(--text-small);color:#fff}.modal-desc{font-size:var(--text-body);color:rgba(255,255,255,.78);line-height:1.75;margin-bottom:1.5rem}.modal-link{display:inline-flex;align-items:center;gap:8px;font-size:var(--text-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);border-bottom:1px solid rgba(34,211,255,.45)}
 
 @media (max-width:1100px), (max-width:1100px) and (orientation:portrait){.proof:nth-child(2){border-right:0}.proof:nth-child(-n+2){border-bottom:1px solid var(--line)}.flagship{grid-template-columns:1fr}.project.featured,.project.std,.project.wide{grid-column:span 12;grid-row:auto;min-height:420px}}
 @media (max-width:760px), (max-width:1100px) and (orientation:portrait){:root{--pad:1.25rem;--section:4.5rem}.hero{min-height:720px}.hero h1{font-size:var(--text-display)}.hero-dots{display:none}.proof{border-right:0;border-bottom:1px solid var(--line)}.proof:last-child{border-bottom:0}.value-head,.projects-head{align-items:flex-start;flex-direction:column}.project.featured,.project.std,.project.wide{min-height:360px}.modal-specs{grid-template-columns:1fr}}
@@ -807,7 +826,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   .iso-strip-label {
     margin: 0;
     font-family: var(--body);
-    font-size: clamp(12px, 1.45cqw, 19px);
+    font-size: clamp(0.75rem, 1.45cqw, 1.1875rem);
     font-weight: 500;
     line-height: 1.35;
     letter-spacing: normal;
@@ -867,7 +886,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
  .ucsf-story-animation .iso-name{font-size:clamp(12px,3.2vw,16px);line-height:1.12;}}
 
 /* All section and slide eyebrows: exactly 2pt larger than the existing fluid type token. */
-.eyebrow { font-size: calc(var(--text-eyebrow) + 2pt) !important; }</style>
+.eyebrow { font-size: calc(var(--text-eyebrow) + 1rem / 6) !important; }</style>
 
 <style id="nya-scrollytelling-module">
 /* NYA's approach: problem -> chevron -> promise, then four cards. No pinning: the parts fade in
@@ -1162,6 +1181,9 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* The top message's full-size arrangement applies to every landscape window (it used to stop at 721px, so a narrow landscape phone got a different one). */
 @media (min-width:1101px), (orientation:landscape){ .nya-rel-note--hcai{left:330px;top:92px;width:710px;display:block;} .nya-rel-note--hcai h3{font-size:40px;line-height:1.05;text-align:center;margin:0;padding:0;} .nya-rel-note--hcai p{font-size:22px;line-height:1.34;margin:40px 0 0;} .nya-rel-note--hcai>div:last-child{max-width:none;margin-left:0;} .nya-rel-note--hcai .nya-rel-stat{position:static;float:left;clear:left;margin:15px 22px 0 -10px;transform:none;} .nya-rel-note--hcai .nya-rel-stat small span{display:block;} .nya-rel-note--hcai .nya-rel-cap1{margin-left:-30px;} .nya-rel-note--hcai .nya-rel-cap2{margin-left:-42px;} .nya-rel-shape--hl{display:block;float:left;width:113px;height:82px;shape-outside:polygon(0px 0px,106px 0px,94px 8px,83px 16px,73px 24px,63px 32px,54px 40px,45px 48px,37px 56px,29px 64px,22px 72px,15px 80px,13px 82px,0px 82px);} .nya-rel-shape--hr{display:block;float:right;width:183px;height:214px;shape-outside:polygon(183px 0px,7px 0px,19px 8px,30px 16px,40px 24px,50px 32px,59px 40px,68px 48px,76px 56px,84px 64px,91px 72px,98px 80px,105px 88px,111px 96px,117px 104px,123px 112px,128px 120px,134px 128px,139px 136px,143px 144px,148px 152px,152px 160px,156px 168px,160px 176px,163px 184px,167px 192px,170px 200px,173px 208px,175px 214px,183px 214px);}}
 
+/* Above 1920 the root size grows, but this diagram is already scaled as a whole by its script: keep the tokens
+   used inside it at their 1920 values so its text is not scaled twice. */
+@media(min-width:1921px){.nya-rel-world{font-size:18.8px;--text-body:18.8px;--text-small:15px;--text-eyebrow:13px;--text-h2:36px;--text-h3:26.4px;--space-1:8px;--space-2:16px;--space-3:24px;--space-4:40px}}
 .nya-rel-a11y{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);}
 /* Phone-sized arrangement of the notes: upright screens only. Landscape phones use the same layout as the desktop. */
 @media (max-width:1100px) and (orientation:portrait){
@@ -1258,7 +1280,7 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   max-width:min(100%,35rem);
 }
 @media (min-width:1101px){
-  .project-grid .project.wide{min-height:340px;}}
+  .project-grid .project.wide{min-height:21.25rem;}}
 /* Narrow laptops: the bottom-row cards are at their slimmest, where a title can take three lines, so they get a little more height. */
 @media (min-width:1101px) and (max-width:1279px){
   .project-grid .project.wide{min-height:370px;}}</style>
@@ -1294,17 +1316,17 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
   --rn-soft:color-mix(in srgb,var(--rn-text) 60%,var(--rn-surface));--rn-on:color-mix(in srgb,var(--rn-text) 82%,var(--rn-surface));
   --rn-fill:color-mix(in srgb,var(--rn-mark) 55%,var(--rn-surface));--rn-track:color-mix(in srgb,var(--rn-text) 12%,var(--rn-surface));
   position:fixed;z-index:960;top:0;left:0;right:0;
-  display:grid;grid-template-columns:repeat(4,1fr);align-items:end;gap:var(--space-2,16px);padding:6px var(--gutter,24px) 0;background:var(--rn-surface);
+  display:grid;grid-template-columns:repeat(4,1fr);align-items:end;gap:var(--space-2,16px);padding:.375rem var(--gutter,1.5rem) 0;background:var(--rn-surface);
   font-family:var(--body);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-100%);
   transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s linear .35s,background-color .2s}
 .range-nav[data-tone="light"]{--rn-text:#151515;--rn-mark:#151515;--rn-surface:#ffffff}
 .range-nav.is-on{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s,background-color .2s}
 /* The faintest text still reaches 4.5:1 on either surface. */
-.range-nav a{display:grid;align-content:end;gap:5px;min-width:0;color:var(--rn-soft);text-decoration:none;font-size:calc(var(--text-eyebrow) + 2pt);line-height:1.2;letter-spacing:.12em;text-transform:uppercase;transition:color .4s ease}
+.range-nav a{display:grid;align-content:end;gap:.3125rem;min-width:0;color:var(--rn-soft);text-decoration:none;font-size:calc(var(--text-eyebrow) + 1rem / 6);line-height:1.2;letter-spacing:.12em;text-transform:uppercase;transition:color .4s ease}
 .range-nav a:hover,.range-nav a[aria-current="true"]{color:var(--rn-on)}
 .range-nav a:focus-visible{outline:2px solid var(--rn-text);outline-offset:2px}
 .rn-head{display:flex;min-width:0}
-.rn-num{font-variant-numeric:tabular-nums;letter-spacing:.08em;margin-right:6px}
+.rn-num{font-variant-numeric:tabular-nums;letter-spacing:.08em;margin-right:.375rem}
 .range-nav-label{min-width:0;text-wrap:balance}
 .rn-current{display:none}
 .rn-bar{display:block;height:1px;margin-bottom:1px;background:var(--rn-track);overflow:visible}
@@ -1936,7 +1958,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
    smaller, "NYA reduces the risk." larger. */
 @media (min-width:1101px), (orientation:landscape){
   .hero .hero-content{margin-inline:auto;text-align:center;width:min(68.75rem,calc(100% - 2*var(--pad)));padding-bottom:clamp(.9rem,3.2svh,2.4rem)}
-  .hero .hero-content h1{width:auto;max-width:none;margin-inline:auto;font-size:calc(clamp(1.25rem,min(3.1vw,6.4svh),3.3rem) + 5pt);line-height:1.12;letter-spacing:-.01em;font-weight:600;font-style:normal;text-shadow:0 1px 2px rgba(2,8,28,.7),0 3px 9px rgba(2,8,28,.6),0 0 12px rgba(255,255,255,.4),0 0 28px rgba(160,215,255,.38),0 0 52px rgba(120,190,255,.22)!important}
+  .hero .hero-content h1{width:auto;max-width:none;margin-inline:auto;font-size:calc(clamp(1.25rem,min(3.1vw,6.4svh),3.3rem) + 5rem / 12);line-height:1.12;letter-spacing:-.01em;font-weight:600;font-style:normal;text-shadow:0 1px 2px rgba(2,8,28,.7),0 3px 9px rgba(2,8,28,.6),0 0 12px rgba(255,255,255,.4),0 0 28px rgba(160,215,255,.38),0 0 52px rgba(120,190,255,.22)!important}
   .hero .hero-content h1 em{display:block;margin-top:.12em;font-size:1em;line-height:1.12;color:#fff;font-weight:600;font-style:italic;text-shadow:0 1px 2px rgba(2,8,28,.7),0 3px 9px rgba(2,8,28,.6),0 0 12px rgba(255,255,255,.4),0 0 28px rgba(160,215,255,.38),0 0 52px rgba(120,190,255,.22)!important}}</style>
 <style id="projects-head-centre">
 /* "Selected Healthcare Work": the eyebrow stays where it was (top left); the title is centred on one line and the sentence under it is centred. */
@@ -1945,7 +1967,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 #projects .projects-head .value-note{max-width:60rem;margin:1rem auto 0;text-align:center}
 /* The visible space under the sentence (before the project grid) matches the visible space above it (under the title). The title's own
    spacing changes with its size, so this follows the window width. */
-#projects .projects-head{margin-bottom:clamp(10.5px,calc(18.5px - .506vw),16.5px)}
+#projects .projects-head{margin-bottom:clamp(.65625rem,calc(1.15625rem - .506vw),1.03125rem)}
 /* Phones and upright tablets: the title on two large centred lines ("proven hands" on its own line), the sentence centred under it
    in a narrower column so it wraps into two short lines. */
 @media (max-width:760px), (max-width:1100px) and (orientation:portrait){
@@ -1989,7 +2011,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .ssi-compare--reference.ssi-video-design .ssi-reference-body{grid-row:2;grid-column:1/-1}
 
   /* Videos: never narrower than half the panel body (their original size); they grow into any height the screen has left. */
-  .ssi-compare--reference.ssi-video-design{--ssi-video-floor:calc(50% - clamp(.45rem,.75vw,.825rem));--ssi-video-room:min(calc((100vh - var(--ssi-fit-rest)) * 369 / 406),55%);--ssi-fit-rest:640px}
+  .ssi-compare--reference.ssi-video-design{--ssi-video-floor:calc(50% - clamp(.45rem,.75vw,.825rem));--ssi-video-room:min(calc((100vh - var(--ssi-fit-rest)) * 369 / 406),55%);--ssi-fit-rest:40rem}
   .ssi-compare--reference.ssi-video-design .ssi-reference-body{grid-template-columns:minmax(0,1fr) minmax(var(--ssi-video-floor),var(--ssi-video-room))}
   .ssi-compare--reference.ssi-video-design .ssi-reference-panel--advanced .ssi-reference-body{grid-template-columns:minmax(var(--ssi-video-floor),var(--ssi-video-room)) minmax(0,1fr)}
 }
@@ -2019,13 +2041,13 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .hero-scroll-arrow-c{display:none}
 @media (min-width:1101px) and (min-height:584px), (min-width:768px) and (min-height:584px) and (orientation:landscape){
   .hero-scroll-arrow-c{display:block;position:absolute;z-index:500;left:0;right:0;bottom:0;text-align:center;line-height:0;font-size:0;pointer-events:none} /* 4px higher than nyase.com's, so the 8px glide stays inside the hero */
-  .hero-scroll-arrow{display:inline-block;line-height:0;padding:15px;position:relative;cursor:pointer;pointer-events:auto;animation:hero-arrow-glide 4s ease-in-out infinite!important}
-  .hero-scroll-arrow svg{display:block;width:2rem;height:32px;color:rgb(200,191,191)} /* a thin line arrow (straight shaft, wide open head) in the same 62px space as before */
+  .hero-scroll-arrow{display:inline-block;line-height:0;padding:.9375rem;position:relative;cursor:pointer;pointer-events:auto;animation:hero-arrow-glide 4s ease-in-out infinite!important}
+  .hero-scroll-arrow svg{display:block;width:2rem;height:2rem;color:rgb(200,191,191)} /* a thin line arrow (straight shaft, wide open head) in the same 62px space as before */
   .hero-scroll-arrow-c:hover .hero-scroll-arrow svg,.hero-scroll-arrow-c:focus-visible .hero-scroll-arrow svg{color:#fff}
   .hero-scroll-arrow-c:focus-visible{outline:2px solid #fff;outline-offset:-6px}
-  .hero .hero-content{padding-bottom:56px} /* the arrow's 42px plus a small gap above and below it, and room for its 8px glide */
+  .hero .hero-content{padding-bottom:3.5rem} /* the arrow's 42px plus a small gap above and below it, and room for its 8px glide */
 }
-@keyframes hero-arrow-glide{0%,40%,100%{transform:translateY(0)}20%{transform:translateY(8px)}}
+@keyframes hero-arrow-glide{0%,40%,100%{transform:translateY(0)}20%{transform:translateY(.5rem)}}
 </style>
 </head>
 <body id="top">
@@ -3839,7 +3861,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
       const fit=getFit(),navH=(document.getElementById('range-nav')||{}).offsetHeight||0;
       const blocks=[[730,300],[700,540],[700,540]];
       let cap=Infinity;
-      blocks.forEach(function(b){cap=Math.min(cap,(innerWidth-40)/(b[0]*fit),(innerHeight-navH-36)/(b[1]*fit))});
+      const k=(matchMedia('(min-width:1921px)').matches?parseFloat(getComputedStyle(document.documentElement).fontSize)/16:1);
+      blocks.forEach(function(b){cap=Math.min(cap,(innerWidth-40*k)/(b[0]*fit),(innerHeight-navH-36*k)/(b[1]*fit))});
       z=Math.min(z,cap);
     }
     return {x:lerp(a.x,b.x,t),y:lerp(a.y,b.y,t),z:z,name:nm};
@@ -3847,7 +3870,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   }
   return scenes[scenes.length-1];
  }
- function getFit(){return Math.min((innerWidth-36)/1300,(innerHeight-44)/1180);}
+ function getFit(){const k=(matchMedia('(min-width:1921px)').matches?parseFloat(getComputedStyle(document.documentElement).fontSize)/16:1);return Math.min((innerWidth-36*k)/1300,(innerHeight-44*k)/1180);}
  function capture(){
   if(reduced.matches||matchMedia('(max-width:1100px) and (orientation:portrait)').matches)return;
   const rect=story.getBoundingClientRect();
@@ -4236,29 +4259,6 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
    White section with the page's light-section ink and accent; z-index keeps it above the
    fixed WebGL backdrop (z-index:0). */
 .amc-funnel{position:relative;z-index:1;background:#fff;color:var(--ink)}
-/* The page's type and spacing tokens stop growing around 1920px, which leaves this
-   full-screen scene small on larger screens. Above 1920px each token keeps its normal value
-   but may grow past it in proportion to the screen: the second term equals the token's
-   1920x1080 value scaled by min(width/1920, height/1080), so the scene keeps its proportions
-   (and fits vertically). Scoped to wide screens so the page's own token overrides for small
-   screens (e.g. --pad at 760px) still apply here.
-   DM Sans is held at its 1920px reading-size optical shape: its opsz axis otherwise narrows
-   glyphs at large sizes, which shortens lines against the em measures and leaves dividers
-   running past the text. */
-@media(min-width:1921px){
-  .amc-funnel{
-    --text-display:max(clamp(2.625rem, 1.7rem + 4.1vw, 6.5rem), min(5.4167vw, 9.6296vh));
-    --text-h2-lg:max(clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem), min(2.2917vw, 4.0741vh));
-    --text-body:max(16px, clamp(1.0625rem, 0.875rem + 0.25vw, 1.25rem), min(0.97917vw, 1.7407vh));
-    --text-eyebrow:max(12px, 0.8125rem, min(0.67708vw, 1.2037vh));
-    --space-1:max(0.5rem, min(0.41667vw, 0.74074vh));
-    --space-2:max(1rem, min(0.83333vw, 1.4815vh));
-    --space-3:max(1.5rem, min(1.25vw, 2.2222vh));
-    --space-5:max(4rem, min(3.3333vw, 5.9259vh));
-    --pad:max(clamp(1.4rem, 5vw, 5rem), min(4.1667vw, 7.4074vh));
-    font-size:var(--text-body);
-    font-variation-settings:"opsz" 18.8;
-  }}
 .amc-funnel .eyebrow{color:var(--green-on-light)}
 .amc-funnel-pin{position:-webkit-sticky;position:sticky;top:0;height:100svh;overflow:hidden;padding-top:var(--amc-nav,36px)}
 .amc-funnel-track{position:relative;display:flex;align-items:center;width:max-content;height:100%;will-change:transform}
@@ -4277,7 +4277,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
    centres panels by their own width, so centring and lead lines follow. */
 .amc-funnel-panel{position:relative;z-index:1;flex:none;width:fit-content;max-width:calc(100vw - 2 * var(--pad))}
 .amc-funnel-panel--center{text-align:center}
-.amc-funnel-gap{flex:none;width:max(clamp(11.25rem,34vw,35rem), min(29.167vw, 51.852vh))}
+.amc-funnel-gap{flex:none;width:clamp(11.25rem,34vw,35rem)}
 .amc-funnel-label{margin-bottom:var(--space-3)}
 .amc-funnel-label::before{display:none}
 
@@ -4382,12 +4382,13 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     svg.textContent='';lines=[];node=null;
     var pinned=pinnable();sec.classList.toggle('is-pinned',pinned);
     if(!pinned){sec.style.height='';track.style.transform='';cPanel.style.opacity='';dPanel.style.opacity='';return}
-    var nav=document.getElementById('range-nav');sec.style.setProperty('--amc-nav',((nav&&nav.offsetHeight)||30)+6+'px');
+    var sc=(matchMedia('(min-width:1921px)').matches?parseFloat(getComputedStyle(document.documentElement).fontSize)/16:1);
+    var nav=document.getElementById('range-nav');sec.style.setProperty('--amc-nav',((nav&&nav.offsetHeight)||30)+6*sc+'px');
     sec.classList.add('is-measuring');track.style.transform='none';
     var vw=pin.clientWidth,vh=window.innerHeight,W=track.scrollWidth,H=track.clientHeight;
     // Translate that centres each panel on screen.
     // Panels taller than the screen pan vertically while they are held (no type scaling).
-    var room=H-Math.min(110,H*.18);
+    var room=H-Math.min(110*sc,H*.18);
     [cPanel,dPanel,oPanel].forEach(function(el,i){
       X[i]=el.offsetLeft+el.offsetWidth/2-vw/2;D[i]=Math.max(0,el.offsetHeight-room)/2;
     });
@@ -4403,26 +4404,26 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     svg.setAttribute('width',W);svg.setAttribute('height',H);svg.setAttribute('viewBox','0 0 '+W+' '+H);
     // Message fans out to each driver; the drivers then converge on one node midway to the
     // outcomes, and the outcomes fan out from it (together, not one driver per outcome).
-    var m=rel(msgText),d=rel(dPanel),o=rel(oPanel),gap=8,n=drivers.length,k=outcomes.length;
-    var hubX=(d.r+o.l)/2,hubY=d.cy;
+    var m=rel(msgText),d=rel(dPanel),o=rel(oPanel),gap=8*sc,n=drivers.length,k=outcomes.length;
+    var hubX=(d.r+o.l)/2,hubY=d.cy,nodeR=NODE_R*sc;
     // Each line meets the ring at its own point (spread over +-NODE_SPREAD rad), so the lines
     // read as spokes of the node instead of merging into one thick stem before it.
     function onRing(i,count,dir){var a=count>1?(i/(count-1)*2-1)*NODE_SPREAD:0;
-      return [hubX+dir*NODE_R*Math.cos(a),hubY+NODE_R*Math.sin(a)]}
+      return [hubX+dir*nodeR*Math.cos(a),hubY+nodeR*Math.sin(a)]}
     drivers.forEach(function(it,i){
       var h=rel(it.querySelector('h3'));
-      addLine(curve(m.r+28,m.cy+(i-(n-1)/2)*gap,h.l-20,h.cy,.25,.85),'is-in-line','fan',i,it);
+      addLine(curve(m.r+28*sc,m.cy+(i-(n-1)/2)*gap,h.l-20*sc,h.cy,.25,.85),'is-in-line','fan',i,it);
       var e=onRing(i,n,-1);
-      addLine(curve(d.r+24,rel(it).cy,e[0],e[1],.1,1),'is-out-line','gather',i,null);
+      addLine(curve(d.r+24*sc,rel(it).cy,e[0],e[1],.1,1),'is-out-line','gather',i,null);
     });
     outcomes.forEach(function(it,i){
       var h=rel(it.querySelector('h3'));
       var s0=onRing(i,k,1);
-      addLine(curve(s0[0],s0[1],h.l-20,h.cy,0,.85),'is-out-line','out',i,it);
+      addLine(curve(s0[0],s0[1],h.l-20*sc,h.cy,0,.85),'is-out-line','out',i,it);
     });
     // Node drawn last so it sits over the line ends.
     node=document.createElementNS(NS,'g');node.setAttribute('class','amc-funnel-node');
-    [['ring',NODE_R-.5],['core',NODE_CORE_R]].forEach(function(c){
+    [['ring',nodeR-.5],['core',NODE_CORE_R*sc]].forEach(function(c){
       var e=document.createElementNS(NS,'circle');e.setAttribute('class',c[0]);
       e.setAttribute('cx',hubX);e.setAttribute('cy',hubY);e.setAttribute('r',c[1]);node.appendChild(e);
     });
@@ -4502,9 +4503,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   }
   // Width changes re-layout; small height-only changes (mobile URL bar) do not, to avoid
   // jumps, unless the height crosses the static/pinned threshold.
-  var lastW=window.innerWidth,lastH=window.innerHeight,rt=0;
+  var rootPx=function(){return parseFloat(getComputedStyle(document.documentElement).fontSize)};
+  var lastW=window.innerWidth,lastH=window.innerHeight,lastRem=rootPx(),rt=0;
   window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){
-    if(window.innerWidth!==lastW||Math.abs(window.innerHeight-lastH)>120||(window.innerHeight<MIN_PIN_HEIGHT)!==(lastH<MIN_PIN_HEIGHT)){lastW=window.innerWidth;lastH=window.innerHeight;layout()}queue()},150)});
+    if(window.innerWidth!==lastW||rootPx()!==lastRem||Math.abs(window.innerHeight-lastH)>120||(window.innerHeight<MIN_PIN_HEIGHT)!==(lastH<MIN_PIN_HEIGHT)){lastW=window.innerWidth;lastH=window.innerHeight;lastRem=rootPx();layout()}queue()},150)});
   if(reduce.addEventListener)reduce.addEventListener('change',function(){layout();queue()});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){layout();queue()});
   window.addEventListener('load',function(){layout();queue()});
@@ -5106,34 +5108,34 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     scene.style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0) scale('+s.toFixed(4)+')';
     // Round photos: centred on their anchor point, pushed clear of the card (dir: -1 card on the right, 1 card on the left)
     // and kept inside the photo area.
-    var pad=Math.max(16,W*.04),sl=stage.getBoundingClientRect().left;
+    var k=(matchMedia('(min-width:1921px)').matches?parseFloat(getComputedStyle(document.documentElement).fontSize)/16:1),pad=Math.max(16*k,W*.04),sl=stage.getBoundingClientRect().left;
     // data-yref: the circles keep the heights they had with the photo framed by this (focus, screen) pair, whatever the photo framing now is
     var yy=y;if(box.hasAttribute('data-yref')){var q=box.getAttribute('data-yref').split(' ').map(Number);yy=Math.min(0,Math.max(R-h,q[1]*R-q[0]*h))}
     insets.forEach(function(it){
-      var D=it.el.offsetWidth,Dh=it.el.offsetHeight,cx=x+it.fx*w+it.dx,cy=yy+it.fy*h;  // data-dx: screen px right of the anchor (review notes)
+      var D=it.el.offsetWidth,Dh=it.el.offsetHeight,cx=x+it.fx*w+it.dx*k,cy=yy+it.fy*h;  // data-dx: screen px right of the anchor (review notes)
       if(!upright.matches&&it.card){
         var cr=it.card.getBoundingClientRect();
         if(it.edge)cx=(sl+W)-cr.right+D/2;  // flush-left circle: its margin from the left edge equals the card's margin from the right edge
-        else if(it.dir>0)cx=Math.max(cx,cr.right-sl+it.gap+it.gd*D+D/2);else cx=Math.min(cx,cr.left-sl-it.gap-it.gd*D-D/2);
+        else if(it.dir>0)cx=Math.max(cx,cr.right-sl+it.gap*k+it.gd*D+D/2);else cx=Math.min(cx,cr.left-sl-it.gap*k-it.gd*D-D/2);
       }
-      if(it.center&&!upright.matches&&it.card){cx=((it.card.getBoundingClientRect().right-sl)+W)/2;cy=R/2+(Number(it.el.getAttribute('data-center'))||0)}  // centred in the free space beside the card
+      if(it.center&&!upright.matches&&it.card){cx=((it.card.getBoundingClientRect().right-sl)+W)/2;cy=R/2+(Number(it.el.getAttribute('data-center'))||0)*k}  // centred in the free space beside the card
       if(it.push&&!upright.matches&&it.card){  // centred above the card that will push it up
         var pb=cards[cards.indexOf(it.card)+1];if(pb){var pr=pb.getBoundingClientRect();cx=(pr.left+pr.right)/2-sl}
       }
-      cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));cy=Math.min(R-Dh/2-12,Math.max(12+Dh/2,cy));
+      cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));cy=Math.min(R-Dh/2-12*k,Math.max(12*k+Dh/2,cy));
       if(it.edge&&!upright.matches){  // the flush-left circle rises as far as it can without touching the other one
         var ot=insets.filter(function(q){return q!==it&&q.el.classList.contains('is-bearing')})[0];
-        if(ot&&ot.cx!=null){var need=D+18,ddx=cx-ot.cx;if(Math.abs(ddx)<need)cy=Math.max(cy,ot.cy+Math.sqrt(need*need-ddx*ddx))}
+        if(ot&&ot.cx!=null){var need=D+18*k,ddx=cx-ot.cx;if(Math.abs(ddx)<need)cy=Math.max(cy,ot.cy+Math.sqrt(need*need-ddx*ddx))}
       }
       if((it.center||it.push)&&!upright.matches&&it.card){  // the next box rises from below and pushes the circle up and out of the photo
         var nx=cards[cards.indexOf(it.card)+1];
-        if(nx){var pen=(cy+D/2+40)-(nx.getBoundingClientRect().top-stage.getBoundingClientRect().top);if(pen>0)cy-=pen*1.9}  // pushed early and about twice as far as the box has risen
+        if(nx){var pen=(cy+D/2+40*k)-(nx.getBoundingClientRect().top-stage.getBoundingClientRect().top);if(pen>0)cy-=pen*1.9}  // pushed early and about twice as far as the box has risen
       }
       if(upright.matches&&it.el.classList.contains('is-film')){cx=W/2;cy=R/2}  // upright screens: the film sits centred in the photo
       it.cx=cx;it.cy=cy;
       if(!it.center&&!(it.push&&!upright.matches)&&it.card){  // gone before the next card reaches it: fades once that card's top is 140px below the circle
         var nc=cards[cards.indexOf(it.card)+1];
-        it.el.classList.toggle('is-cleared',!!nc&&nc.getBoundingClientRect().top-stage.getBoundingClientRect().top<cy+Dh/2+140);
+        it.el.classList.toggle('is-cleared',!!nc&&nc.getBoundingClientRect().top-stage.getBoundingClientRect().top<cy+Dh/2+140*k);
       }
       // first card's circle: one wheel click after that card becomes active; it stays on while the next card is active (that card
       // pushes it out of the photo, and brings it back down when scrolling up)
