@@ -91,6 +91,10 @@ body,body *{font-variant-numeric:lining-nums}
 
 .logo{position:absolute;z-index:40;left:var(--pad);top:clamp(1.1rem,2.2vw,1.8rem);width:clamp(10rem,18vw,17.1875rem)}
 .logo img{width:100%;height:auto}
+/* Keyboard users: first Tab shows this; it jumps past the logo link to the page content. */
+.skip-link{position:fixed;z-index:1000;left:var(--pad);top:.75rem;padding:.6rem 1rem;background:var(--bg);color:var(--text);font:500 .875rem/1.2 var(--body);text-decoration:none;border:1px solid var(--line2);border-radius:4px;transform:translateY(-200%)}
+.skip-link:focus{transform:none}
+.skip-link:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 
 .hero{position:relative;min-height:760px;height:100svh;display:flex;align-items:flex-end;overflow:hidden;border-bottom:1px solid var(--line)}
 .hero-frames,.hero-frame,.hero-overlay{position:absolute;inset:0}
@@ -2062,6 +2066,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 </style>
 </head>
 <body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
 
 <div class="webgl-shell" id="webgl-shell" aria-hidden="true">
 
@@ -2072,6 +2077,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   <img src="https://www.nyase.com/wp-content/uploads/2026/07/nabihyoussefassociateslogo_white.png" alt="Nabih Youssef Associates Structural Engineers">
 </a>
 
+<main id="main">
 <header class="hero" id="hero">
   <div class="hero-frames" aria-hidden="true">
     <!-- The first frame is the video's own poster, so it costs nothing extra and keeps the
@@ -2616,6 +2622,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 
 
 <div class="nya-copyright">© 2026 Nabih Youssef &amp; Associates. All rights reserved.</div>
+</main>
 
 
 <div class="modal" id="project-modal" inert role="dialog" aria-modal="true" aria-labelledby="modal-title">
