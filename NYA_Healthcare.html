@@ -1728,13 +1728,14 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 .tx-imm-step.is-narrow .tx-imm-card{width:min(100%,460px)}
 .tx-imm-card{width:min(100%,560px);background:rgba(8,11,14,.92);border:1px solid rgba(255,255,255,.1);padding:clamp(1.6rem,2.6vw,2.75rem);box-shadow:0 24px 60px rgba(0,0,0,.35)}
 .tx-imm-card .eyebrow{margin-bottom:.8rem}
-.tx-imm-card h3{font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.05;font-weight:300;color:#fff}
+.tx-imm-card h3{font-family:var(--display);font-size:var(--text-h2-lg);line-height:1.08;font-weight:300;color:#fff}
 .tx-imm-card p{margin-top:1rem;color:rgba(255,255,255,.76);font-size:var(--text-body);line-height:1.7}
 .tx-imm-list{list-style:none;margin:1.1rem 0 0;padding:0;display:grid;gap:.95rem}
-.tx-imm-list li{position:relative;padding-left:1.75rem;color:rgba(255,255,255,.76);font-size:var(--text-body);line-height:1.62}
+.tx-imm-list li{position:relative;padding-left:1.75rem;color:rgba(255,255,255,.76);font-size:var(--text-body);line-height:1.7}
 .tx-imm-list li::before{content:"";position:absolute;left:0;top:.5em;width:.7rem;height:.7rem;border-radius:50%;background:var(--cyan)}
 .tx-imm-list li strong{color:var(--cyan);font-weight:500}
-.tx-imm-hl{color:var(--cyan)}
+/* Highlighted words in the card titles: cyan italic, like the highlights in every section title */
+.tx-imm-hl{color:var(--cyan);font-style:italic}
 .tx-imm-card p.tx-imm-credit{margin-top:1.2rem;font-size:.75rem;line-height:1.4;color:rgba(255,255,255,.45)}
 .tx-imm-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 /* Desktop and phones on their side: the section title stays pinned, so the stage starts below it. */
@@ -1757,8 +1758,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .tx-imm-step,.tx-imm-step.is-left{min-height:0;justify-content:center;padding:0 0 3rem}
   .tx-imm-card{background:rgba(8,11,14,.94);padding:1.4rem 1.3rem}
   .tx-imm-step.is-narrow .tx-imm-card{width:min(100%,560px)}
-  .tx-imm-card p{font-size:max(15px,.95rem);line-height:1.62}
-  .tx-imm-list li{font-size:max(15px,.95rem);line-height:1.58}
+  /* body text at the theme's body size, as in the other sections */
+  .tx-imm-card p,.tx-imm-list li{font-size:var(--text-body);line-height:1.7}
   .tx-imm-inset{width:clamp(110px,32vw,220px)}
   /* the base isolation film: as wide as the screen allows, centred in the pinned photo */
   .tx-imm-inset.is-film{width:min(calc(100vw - 2*var(--pad)),calc((var(--tx-stage-h) - 24px) * 4 / 3),560px)}}
