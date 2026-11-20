@@ -1798,7 +1798,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .tx-imm-card h3{font-size:min(var(--text-h2-lg),5svh)}
   .tx-imm-card p{font-size:.92rem;line-height:1.55;margin-top:.6rem}
   .tx-imm-list{margin-top:.7rem;gap:.55rem}.tx-imm-list li{font-size:.92rem;line-height:1.5;padding-left:1.4rem}.tx-imm-list li::before{width:.55rem;height:.55rem}
-  .tx-imm-inset{--tx-d:clamp(6rem,30svh,10rem)}}
+  /* photos as large as the free space beside the card allows (the card is 54vw wide); a card's two photos share that space */
+  .tx-imm-inset{--tx-d:min(calc(100svh - var(--tx-top) - 2rem),calc(46vw - 3*var(--pad)))}
+  .tx-imm-inset.is-mep,.tx-imm-inset.is-late{width:calc(23vw - 1.5*var(--pad))}}
 /* Upright phones and tablets: the cards are too tall to sit over the photo, so the photo is pinned at the top (half the screen)
    and the cards slide up from below and pass under it. */
 @media (max-width:1100px) and (orientation:portrait){
@@ -1810,7 +1812,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .tx-imm-step.is-narrow .tx-imm-card{width:min(100%,35rem)}
   /* body text at the theme's body size, as in the other sections */
   .tx-imm-card p,.tx-imm-list li{font-size:var(--text-body);line-height:1.7}
-  .tx-imm-inset{--tx-d:clamp(6.875rem,32vw,13.75rem)}
+  /* photos centred in the pinned photo, about three quarters of its height; a card's two photos sit side by side */
+  .tx-imm-inset{--tx-d:min(calc(100vw - 2*var(--pad)),calc(var(--tx-stage-h) * .72))}
+  .tx-imm-inset.is-mep,.tx-imm-inset.is-late{width:calc(50vw - 1.5*var(--pad))}
   /* the base isolation film: as wide as the screen allows, centred in the pinned photo */
   .tx-imm-inset.is-film{width:min(calc(100vw - 2*var(--pad)),calc((var(--tx-stage-h) - 1.5rem) * 4 / 3),35rem)}}
 </style>
@@ -5107,6 +5111,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var IW=1600,IH=1067;
   var side=window.matchMedia('(min-width:1101px), (orientation:landscape) and (max-height:500px)');
   var upright=window.matchMedia('(max-width:1100px) and (orientation:portrait)');
+  var phone=window.matchMedia('(max-width:1100px) and (orientation:portrait), (max-width:1100px) and (orientation:landscape) and (max-height:500px)');
   function read(attr){return [box].concat(steps).map(function(el){return (el.getAttribute(attr)||'.5 .5 .5 .5 1').trim().split(/\s+/).map(Number)})}
   var camSide=read('data-cam'),camUp=read('data-cam-m');
   var cur=null,raf=0,active=null,last=null;
@@ -5161,10 +5166,15 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         var pb=cards[cards.indexOf(it.card)+1];if(pb){var pr=pb.getBoundingClientRect();cx=(pr.left+pr.right)/2-sl}
       }
       cx=Math.min(W-pad-D/2,Math.max(pad+D/2,cx));cy=Math.min(R-Dh/2-12*k,Math.max(12*k+Dh/2,cy));
+      if(phone.matches&&it.card){  // phones: a card's photos sit side by side, centred in the free part of the photo (all of it when upright, beside the card on its side)
+        var grp=insets.filter(function(q){return q.card===it.card}).sort(function(a,b){return a.fx-b.fx}),fr=it.card.getBoundingClientRect(),x0=0,x1=W;
+        if(!upright.matches){if(it.dir<0)x1=fr.left-sl;else x0=fr.right-sl}
+        cx=x0+(x1-x0)*(grp.indexOf(it)+.5)/grp.length;cy=R/2;
+      }
       if(it.rise&&!upright.matches&&it.card){  // data-rise: follows the previous card up from below the stage, a gap under it, and stops at its centred height
         var rc=cards[cards.indexOf(it.card)-1];if(rc)cy=Math.max(cy,rc.getBoundingClientRect().bottom-stage.getBoundingClientRect().top+it.gap*k+Dh/2);
       }
-      if(it.edge&&!upright.matches){  // the flush-left circle rises as far as it can without touching the other one
+      if(it.edge&&!phone.matches){  // the flush-left circle rises as far as it can without touching the other one
         var ot=insets.filter(function(q){return q!==it&&q.el.classList.contains('is-bearing')})[0];
         // rectangles: if they share any width, this one sits at least 18px below the other
         if(ot&&ot.cx!=null){if(Math.abs(cx-ot.cx)<(D+ot.D)/2+18*k)cy=Math.max(cy,ot.cy+(Dh+ot.Dh)/2+18*k)}
@@ -5173,7 +5183,6 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         var nx=cards[cards.indexOf(it.card)+1];
         if(nx){var pen=(cy+D/2+40*k)-(nx.getBoundingClientRect().top-stage.getBoundingClientRect().top);if(pen>0)cy-=pen*1.9}  // pushed early and about twice as far as the box has risen
       }
-      if(upright.matches&&it.el.classList.contains('is-film')){cx=W/2;cy=R/2}  // upright screens: the film sits centred in the photo
       it.cx=cx;it.cy=cy;it.D=D;it.Dh=Dh;
       if(!it.center&&!(it.push&&!upright.matches)&&it.card){  // gone before the next card reaches it: fades once that card's top is 140px below the circle
         var nc=cards[cards.indexOf(it.card)+1];
@@ -5186,14 +5195,15 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         var kr=it.card.getBoundingClientRect(),sr2=stage.getBoundingClientRect();
         var vis=Math.max(0,Math.min(kr.bottom,sr2.bottom)-Math.max(kr.top,sr2.top))/Math.max(1,kr.height);
         var clear=true;
-        if(it.reveal&&!upright.matches){  // also waits until the previous card has moved up clear of the circle (24px gap)
+        if((it.reveal||phone.matches)&&!upright.matches){  // also waits until the previous card has moved up clear of the circle (24px gap)
           var pc=cards[cards.indexOf(it.card)-1];if(pc)clear=pc.getBoundingClientRect().bottom-sr2.top<cy-Dh/2-24*k;
         }
         if(it.el.hasAttribute('data-late')){  // the late circle never comes before the other circle of its card
           var first=insets.filter(function(q){return q!==it&&q.card===it.card&&q.reveal&&!q.el.hasAttribute('data-late')})[0];
           if(first&&!first.el.classList.contains('is-shown'))clear=false;
         }
-        it.el.classList.toggle('is-shown',clear&&vis>=Math.min(.55,.9*sr2.height/Math.max(1,kr.height)));
+        // phones: shown while its card is the active one (the cards are taller than the photo there, and upright they pass under it)
+        it.el.classList.toggle('is-shown',clear&&(phone.matches?!!last&&last.act===cards.indexOf(it.card):vis>=Math.min(.55,.9*sr2.height/Math.max(1,kr.height))));
       }
       if(it.rise&&!upright.matches)it.el.classList.add('is-shown');  // a rising inset is never faded: it is simply below the stage (clipped) until it slides in
       it.el.style.left=(cx-D/2).toFixed(1)+'px';it.el.style.top=(cy-Dh/2).toFixed(1)+'px';
