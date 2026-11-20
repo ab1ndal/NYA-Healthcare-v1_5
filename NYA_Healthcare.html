@@ -1375,25 +1375,29 @@ body.ucsf-bg-ready .hero .ucsf-bg-media { opacity: 1; }
 /* The bar steps aside while a project pop-up is open (the pop-up sits on a lower layer). */
 html:has(#project-modal.open) .range-nav{opacity:0;visibility:hidden;pointer-events:none}</style>
 <style id="approach-nav-morph-style">
-/* NYA's approach -> case-study nav (desktop), see approach-nav-morph: each card docks under the bar. Its title strip
-   stays put while the rest of the card scrolls up beneath it, then the strip closes with the card's bottom edge, which
-   rises into that part's progress line while the number and title shrink into its label in #range-nav.
-   Scroll-driven, card by card, so it reverses on the way back up. While it runs the bar uses its light tone (white, ink
-   labels), and keeps it until the dark Cost Optimization part (ARCS) reaches the bar; then it changes tone as it does
-   between any two parts.
-   The script sets --rn-bg on the bar and --rn-lab on each link. */
+/* NYA's approach -> case-study nav (wider screens), see approach-nav-morph. The section pins full-screen for about a
+   screen of scrolling. The four titles (number and name) shrink down together along a diagonal into their slots in the
+   bar, which has slid up into the foot of the screen, leaving an onion-skin trail of fading copies. Then the next part
+   (Cost Optimization, dark), pulled up over the pin by a negative margin, rises with the bar on its top edge and
+   swallows the emptied cards, coming to rest just under the lead line, so the frame is never left as empty white.
+   Scroll-driven, so it reverses on the way back up. The script sets --pin-top/--pin-run on the section, the first
+   part's margin-top, --rn-y on the bar and --rn-lab on each link. */
+.nya-journey.is-morph-pin .nya-journey-stage{position:sticky;top:var(--pin-top,0px);min-height:100svh}
+.nya-journey.is-morph-pin::after{content:"";display:block;height:var(--pin-run,150svh)}
+/* Where it overlaps the white section the dark part must be solid: its usual see-through fill (over the WebGL
+   backdrop) would turn grey over white and show the cards beneath. */
+.rn-overlap #arcs-studies{background:linear-gradient(145deg,#071016,#091820)}
+/* While it runs the real titles step aside for the moving ones (still in the page for screen readers). */
+.nya-journey.is-morphing .nya-journey-chapter-heading{opacity:0}
 .nya-morph-layer{position:fixed;inset:0;z-index:961;pointer-events:none;overflow:hidden}
 .nya-morph-layer[hidden]{display:none}
-.nya-morph-ghost{position:absolute;left:0;top:0;margin:0;transform-origin:0 0;color:var(--ink)}
+.nya-morph-ghost{position:absolute;left:0;top:0;margin:0;transform-origin:0 0;color:var(--ink);will-change:transform,opacity}
 .nya-morph-ghost.is-line{white-space:nowrap}
 .nya-morph-ghost.is-num{color:var(--green-on-light)}
-/* The docked strip: a white panel and four 1px lines, stretched with transforms so it never animates layout. */
-.nya-morph-rule{position:absolute;left:0;top:0;width:1px;height:1px;transform-origin:0 0;background:rgba(12,18,20,.16);will-change:transform,opacity}
-.nya-morph-rule.is-top{height:2px;background:var(--green-on-light)}
-.nya-morph-rule.is-box{background:#fff}
-.range-nav.rn-morphing{--rn-text:#151515;--rn-mark:#151515;--rn-surface:#ffffff;
-  opacity:var(--rn-bg,0);visibility:visible;transform:none;transition:none;pointer-events:none}
-/* Once every card has landed, the white bar works as the nav (until the dark part reaches it and it changes tone). */
+/* The bar keeps its dark tone throughout (it belongs to the dark part it rides in on) and stays solid: it slides in
+   from below the screen rather than fading. */
+.range-nav.rn-morphing{--rn-text:#e8e6e0;--rn-mark:var(--gold);--rn-surface:#0a0c0f;
+  opacity:1;visibility:visible;transform:translateY(var(--rn-y,100vh));transition:none;pointer-events:none}
 .range-nav.rn-morphing.rn-morph-done{pointer-events:auto}
 .range-nav.rn-morphing > a .rn-head,
 .range-nav.rn-morphing > a .rn-bar{opacity:var(--rn-lab,0)}
@@ -3471,7 +3475,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
     if(touching||root.style.overflow==='hidden'||document.body.style.overflow==='hidden')return;
     if(heldAt!==null&&Math.abs(scrollY-heldAt)<40)return;
     heldAt=null;
-    const vh=innerHeight,r=story.getBoundingClientRect();
+    // Measure the stage, not the section: on wider screens the section also holds the nav-morph pin's scroll run.
+    const vh=innerHeight,r=(story.querySelector('.nya-journey-stage')||story).getBoundingClientRect();
     if(r.height>vh*1.25)return;
     // Only while the section is still below the top of the window: once it has scrolled past, the card titles are
     // flying into the case-study nav (approach-nav-morph) and the reader must be free to stop anywhere.
@@ -3646,194 +3651,199 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   const story=document.getElementById('difference-story');
   const nav=document.getElementById('range-nav');
   if(!story||!nav)return;
-  // Each card docks under the bar: its title strip stays put while the rest of the card scrolls up beneath it (the card
-  // shortens), then the strip closes with the card's bottom edge, which rises into that part's progress line while the
-  // number and title shrink into its label. Moves 1:1 with the scroll.
+  const stage=story.querySelector('.nya-journey-stage');
+  const lead=story.querySelector('.nya-journey-lead');
+  const chapters=story.querySelector('.nya-journey-chapters');
+  // Pinned while the reader scrolls `run` px. The next part (the first case study, dark) is pulled up by a negative
+  // margin, so it rises into the pinned frame and comes to rest just under the lead line. Something always fills the
+  // frame: first the cards, then the dark part swallowing them. Beats, as shares of the run (P, 0 to 1):
+  //   BAR     the bar slides up into the foot of the screen;
+  //   FLY     all four titles shrink down together, through their dimmed cards, into their slots in the bar;
+  //   SWALLOW from pEnter the dark edge rises with the bar on it, so the emptied cards shrink from the bottom up.
+  const ENTER=.45,BAR=[.02,.1],FLY=[.06,.02],BODY_DIM=.8;
+  // Onion-skin trail: ECHOES fading copies, each TRAIL_GAP of the flight behind the one before.
+  const ECHOES=5,TRAIL_GAP=.07;
   // Pair each card with its nav link by name ("&" and "and" count as the same), so moving a PART keeps the pairs right.
   const key=t=>t.toLowerCase().replace(/&/g,'and').replace(/[^a-z]/g,'');
   const navLinks=Array.from(nav.querySelectorAll(':scope > a'));
+  // The bar rides in on the first case study (the first link, in page order).
+  const first=navLinks[0]&&document.getElementById(navLinks[0].getAttribute('href').slice(1));
+  if(!stage||!lead||!chapters||!first)return;
   const layer=document.createElement('div');
   layer.className='nya-morph-layer';layer.hidden=true;layer.setAttribute('aria-hidden','true');
   const el=(cls,text)=>{const d=document.createElement('div');d.className=cls;if(text!=null)d.textContent=text;layer.appendChild(d);return d;};
-  // The docked strip for each card: a white panel and the four lines of its frame, drawn under the moving text.
   const cards=[];
   story.querySelectorAll('.nya-journey-chapter').forEach(card=>{
     const h=card.querySelector('h3');
     const a=h&&navLinks.find(l=>key(l.querySelector('.range-nav-label').textContent)===key(h.textContent));
     if(!a)return;
     cards.push({card,h,n:card.querySelector('.nya-journey-chapter-number'),head:card.querySelector('.nya-journey-chapter-heading'),
-      link:a,bar:a.querySelector('.rn-bar'),p:0,m:0,
-      box:el('nya-morph-rule is-box'),left:el('nya-morph-rule is-side'),right:el('nya-morph-rule is-side'),
-      top:el('nya-morph-rule is-top'),bottom:el('nya-morph-rule is-bottom')});
+      p:card.querySelector('p'),link:a});
   });
-  // One flight per moving piece, from an element in the card to one in the bar:
-  //   wrap = the title as it wraps in the card (fades out early); line = the same title on one line (fades in);
-  //   num = the card number, flying to the bar's number;
-  //   cap = a copy of the bar's own label or number (its type, caps and spacing) flying alongside the title or number
-  //         (of), kept to the same width; it cross-fades in mid-flight so what reaches the bar already matches it.
+  // One flight per moving piece, from the card to the bar:
+  //   wrap = the title as it wraps in the card; line = the same title on one line (takes over once it fits);
+  //   num = the card number; cap = a copy of the bar's own label or number riding alongside (of), which cross-fades in
+  //   as the piece reaches the bar, so what lands already matches the bar. line and num leave a trail of echoes.
   const flights=[];
+  const echoes=f=>{f.echo=[];for(let j=0;j<ECHOES;j++)f.echo.push(el(f.el.className,f.el.textContent));};
   cards.forEach(c=>{
     const label=c.link.querySelector('.range-nav-label'),rnNum=c.link.querySelector('.rn-num');
     const line={from:c.h,to:label,el:el('nya-morph-ghost is-line',c.h.textContent),kind:'line',card:c};
-    flights.push({from:c.h,to:label,el:el('nya-morph-ghost',c.h.textContent),kind:'wrap',scaleBy:line,card:c},line,
-      {from:label,to:label,el:el('nya-morph-ghost is-line',label.textContent),kind:'cap',of:line,card:c});
+    const wrap={from:c.h,to:label,el:el('nya-morph-ghost',c.h.textContent),kind:'wrap',scaleBy:line,card:c};
+    line.wrap=wrap;
+    flights.push(wrap,line,{from:label,to:label,el:el('nya-morph-ghost',label.textContent),kind:'cap',of:line,card:c});
     if(c.n&&rnNum){
       const num={from:c.n,to:rnNum,el:el('nya-morph-ghost is-line is-num',c.n.textContent),kind:'num',card:c};
       flights.push(num,{from:rnNum,to:rnNum,el:el('nya-morph-ghost is-line',rnNum.textContent),kind:'cap',of:num,card:c});
     }
   });
-  // The bar shows from the first case study (the first link, in page order) reaching the middle of the screen.
-  const first=navLinks[0]&&document.getElementById(navLinks[0].getAttribute('href').slice(1));
-  if(!flights.length||!first)return;
+  // Only the one-line title and the number leave a trail: echoes of the wrapped title too would overprint them.
+  flights.forEach(f=>{if(f.kind==='line'||f.kind==='num')echoes(f);});
+  if(!flights.length)return;
   document.body.appendChild(layer);
-  // Phones and upright tablets have a one-line bar with no four slots to fly into (mobile version to come).
+  // Phones and upright tablets have a one-line bar with no four slots to land in: no pin, no morph there.
   const phone=matchMedia('(max-width:760px), (max-width:1100px) and (orientation:portrait)');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const clamp=v=>v<0?0:v>1?1:v;
   const smooth=(a,b,v)=>{const t=clamp((v-a)/(b-a));return t*t*(3-2*t);};
   const px=v=>v.toFixed(1)+'px';
-  // Hairlines sit on whole device pixels so they stay crisp instead of shimmering as they move.
-  const dpx=v=>(Math.round(v*devicePixelRatio)/devicePixelRatio)+'px';
-  let raf=0,on=false,sized=false;
+  let raf=0,on=false,sized=false,pinned=false;
+  let run=1,pinTop=0,nb=0,pEnter=ENTER,flyEnd=ENTER-FLY[1],lastW=0,lastH=0;
+  // The pin and the overlap, measured with the cards at rest (only transforms and opacity ever move them):
+  //   restTop = where the dark edge rests at the end: the bar on it covers the cards' top line, just under the lead;
+  //   run     = scroll spent pinned, sized so the edge enters at the foot of the screen at P = ENTER;
+  //   overlap = how far the next part is pulled up, so its natural top at P = 1 is restTop;
+  //   flyEnd  = the titles have landed just before the edge comes in at the foot to carry them up.
+  function layoutPin(){
+    const want=!(phone.matches||reduced.matches);
+    if(want!==pinned){
+      pinned=want;
+      story.classList.toggle('is-morph-pin',want);first.classList.toggle('rn-overlap',want);
+      if(!want)first.style.marginTop='';
+    }
+    if(!want)return;
+    // iOS and iPadOS bars change the height by a little while scrolling; only a real resize re-measures.
+    const vw=innerWidth,vh=innerHeight;
+    if(sized&&vw===lastW&&Math.abs(vh-lastH)<100)return;
+    lastW=vw;lastH=vh;
+    nb=nav.offsetHeight;
+    story.style.setProperty('--pin-top','0px');
+    const sTop=stage.getBoundingClientRect().top,stageH=stage.offsetHeight;
+    const cardsOff=chapters.getBoundingClientRect().top-sTop;
+    pinTop=Math.min(0,vh-stageH);
+    const restTop=Math.min(vh-nb,Math.max(nb,pinTop+cardsOff+nb));
+    run=Math.round(Math.min(1.6*vh,Math.max(.9*vh,(vh-restTop)/(1-ENTER))));
+    pEnter=1-(vh-restTop)/run;
+    flyEnd=Math.max(FLY[0]+.2,pEnter-FLY[1]);
+    story.style.setProperty('--pin-top',pinTop+'px');
+    story.style.setProperty('--pin-run',run+'px');
+    // +1: the section's bottom border.
+    first.style.marginTop=(-Math.max(0,Math.round(pinTop+stageH+1-restTop)))+'px';
+  }
   // Each ghost copies its source's type (and, for the wrapped title, its width) so it starts as an exact stand-in.
+  // Bar targets are kept relative to the bar, which moves (--rn-y).
   function copyStyle(){
+    nav.style.setProperty('--rn-y','0px');
+    const navTop=nav.getBoundingClientRect().top;
     flights.forEach(f=>{
       const cs=getComputedStyle(f.from),st=f.el.style;
       st.fontFamily=cs.fontFamily;st.fontSize=cs.fontSize;st.fontWeight=cs.fontWeight;
       st.lineHeight=cs.lineHeight;st.letterSpacing=cs.letterSpacing;
-      st.width=f.kind==='wrap'?f.from.getBoundingClientRect().width+'px':'auto';
-      // The bar's copies take its case and colour too (the bar is in its light tone while this runs).
+      // The wrapped title and the bar's label copy keep their source's width, so they wrap the same way.
+      st.width=f.kind==='wrap'||(f.kind==='cap'&&f.of.kind==='line')?f.from.getBoundingClientRect().width+'px':'auto';
+      // The bar's copies take its case and colour too.
       if(f.kind==='cap'){st.textTransform=cs.textTransform;st.color=cs.color;f.el.textContent=f.from.textContent;}
-      // A label that wraps in the bar (narrower desktops) gets a copy that wraps the same way, so it lands in the label's shape.
-      if(f.kind==='cap'&&f.from.classList.contains('range-nav-label')){
-        st.width=f.from.getBoundingClientRect().width+'px';st.whiteSpace='normal';st.textWrap='balance';
-      }
+      // A label that wraps in the bar (narrower desktops) wraps its copy the same way, so it lands in the label's shape.
+      if(f.kind==='cap'&&f.of.kind==='line')st.textWrap='balance';
+      if(f.echo)f.echo.forEach(e=>{e.style.cssText=st.cssText;});
+      const t=f.to.getBoundingClientRect();
+      f.goal={left:t.left,top:t.top-navTop,width:t.width,height:t.height};
     });
-    cards.forEach(c=>{c.padB=parseFloat(getComputedStyle(c.card).paddingBottom)||0;});
     flights.forEach(f=>{f.w=f.el.offsetWidth;f.h=f.el.offsetHeight;});
+    cards.forEach(c=>{c.padB=parseFloat(getComputedStyle(c.card).paddingBottom)||0;});
     sized=true;
+  }
+  function start(){
+    on=true;layer.hidden=false;
+    nav.classList.add('rn-morphing');story.classList.add('is-morphing');
   }
   function stop(){
     if(!on)return;
     on=false;layer.hidden=true;
-    nav.classList.remove('rn-morphing','rn-morph-done');
+    nav.classList.remove('rn-morphing','rn-morph-done');story.classList.remove('is-morphing');
+    nav.style.removeProperty('--rn-y');
+    cards.forEach(c=>{if(c.p)c.p.style.opacity='';});
   }
-  function start(){
-    on=true;sized=false;layer.hidden=false;
-    nav.classList.add('rn-morphing');
+  // Where a piece is at flight progress e: from its place in the card (a) to its slot in the bar (l), shrinking to fit.
+  function pose(f,a,l,e){
+    const ref=f.scaleBy||f,s=Math.min(l.height/ref.h,l.width/ref.w),k=1+(s-1)*e;
+    return {x:a.left+(l.left-a.left)*e,y:a.top+(l.top+(l.height-ref.h*s)/2-a.top)*e,k};
   }
-  // Moves every title and number ghost: from where it sits (from[i], a rect) to its place in the bar, by t = f.card's
-  // progress; scales so the one-line title fits the label; cross-fades the wrapped and one-line titles, and mid-flight
-  // (t .45 to .8) cross-fades the card's serif title and number into the bar's own caps. capOf = how much of the bar's
-  // copy shows (it hands over to the real label at the very end).
-  function placeTitles(from,tOf,landOf,capOf){
-    const to=flights.map(f=>f.to.getBoundingClientRect());
-    const ks=flights.map((f,i)=>{
-      const ref=f.scaleBy||f,l=to[i],e=tOf(f.card);
-      const s=Math.min(l.height/ref.h,l.width/ref.w);
-      return {s,k:1+(s-1)*e,ref,e};
-    });
-    // The one-line title only fades in once it has shrunk to fit inside its card (so it never runs into the next card).
-    flights.forEach((f,i)=>{
-      if(f.kind!=='wrap')return;
-      f.swap=f.scaleBy.swap=smooth(1,.93,ks[i].k*f.scaleBy.w/f.w);
-    });
-    flights.forEach((f,i)=>{
-      if(f.kind==='cap')return;
-      const a=from[i],l=to[i];
-      const {s,k,ref,e}=ks[i],swap=f.swap||0,land=landOf(f.card)*(1-smooth(.45,.8,e));
-      const x=a.left+(l.left-a.left)*e;
-      const y=a.top+(l.top+(l.height-ref.h*s)/2-a.top)*e;
-      f.x=x;f.y=y;f.k=k;f.e=e;
-      f.el.style.transform='translate('+px(x)+','+px(y)+') scale('+k.toFixed(4)+')';
-      f.el.style.opacity=String(f.kind==='wrap'?land*(1-swap):f.kind==='line'?land*swap:land);
-    });
-    // The bar's copy rides with its title or number: same left edge, same middle, as wide as the title is now, growing
-    // or shrinking to its own natural size by the time it lands.
-    flights.forEach(f=>{
-      if(f.kind!=='cap')return;
-      const o=f.of,e=o.e,kc=o.w*o.k/f.w+(1-o.w*o.k/f.w)*e;
-      const y=o.y+(o.h*o.k-f.h*kc)/2;
-      f.el.style.transform='translate('+px(o.x)+','+px(y)+') scale('+kc.toFixed(4)+')';
-      f.el.style.opacity=String(smooth(.45,.8,e)*capOf(f.card));
-    });
+  // How visible each piece is at e and scale k: the wrapped title hands over to the one-line title once that fits
+  // the card's width; both hand over to the bar's own type as they reach the bar.
+  function seen(f,e,k){
+    const lineW=f.kind==='wrap'?f.scaleBy.w:f.kind==='line'?f.w:0,wrapW=f.kind==='wrap'?f.w:f.kind==='line'?f.wrap.w:0;
+    const swap=lineW?smooth(1,.93,k*lineW/wrapW):0;
+    const base=f.kind==='wrap'?1-swap:f.kind==='line'?swap:1;
+    return base*(1-smooth(.78,.95,e));
   }
   function frame(){
     raf=0;
-    if(phone.matches||reduced.matches){stop();return;}
+    if(!pinned){stop();return;}
     const vh=innerHeight;
-    // The bar switches itself on once the first case study reaches the middle of the screen (s1). It keeps the light tone
-    // (white, set here) until that dark part actually reaches the bar; from there the bar runs itself.
-    const s1=first.getBoundingClientRect().top+scrollY-vh/2;
-    const under=first.getBoundingClientRect().top<=nav.offsetHeight;
-    const far=scrollY>=s1+vh,past=scrollY>=s1&&nav.classList.contains('is-on')&&under;
-    dock(vh,far,past);
-  }
-  // Where each card is relative to the bar. nb = the bar's height (it sits at the top of the screen once shown).
-  // p: the card's top travelling the last quarter screen down to the bar (the bar fades in). docked: its top has reached
-  // the bar. m: progress into the bar, 0 to 1, as its bottom edge rises from the foot of the title strip to the bar.
-  function measure(vh,nb){
-    return cards.map(c=>{
-      const r=c.card.getBoundingClientRect(),hd=c.head.getBoundingClientRect();
-      const rowH=hd.bottom-r.top,stripH=rowH+(c.padB||0);
-      c.p=clamp((nb+vh*.25-r.top)/(vh*.25));
-      c.docked=r.top<=nb;
-      c.m=clamp((nb+stripH-r.bottom)/stripH);
-      return {r,stripH};
-    });
-  }
-  // While a card is docked its number and title hold the place they had when its top met the bar, then move from there
-  // (a fixed point, so they never trail the scrolling page).
-  function dockedFrom(geo,nb){
-    return flights.map(f=>{
-      const a=f.from.getBoundingClientRect(),r=geo[cards.indexOf(f.card)].r;
-      return f.card.docked?{left:a.left,top:nb+(a.top-r.top)}:a;
-    });
-  }
-  function finish(most,done){
-    // The bar fades in as the first card approaches it; each label (and its line) appears as its own card lands.
-    nav.style.setProperty('--rn-bg',smooth(0,1,most).toFixed(3));
-    cards.forEach(c=>c.link.style.setProperty('--rn-lab',smooth(.97,1,c.m).toFixed(3)));
-    nav.classList.toggle('rn-morph-done',done);
-  }
-  function dock(vh,far,past){
-    // When a card's top meets the bar, the strip down to the end of its title row (frame, number and title)
-    // stays put under the bar while the rest of the card scrolls up beneath it. Then, as the card's bottom edge rises from
-    // the strip's foot to the bar, the frame fades and the number and title fly into the label.
-    const nb=nav.offsetHeight;
-    let geo=measure(vh,nb);
-    const most=Math.max(...cards.map(c=>c.p)),done=cards.every(c=>c.m>=1);
-    if(far||most<=0||(past&&done)){stop();return;}
+    // Reads first, then writes.
+    const sr=story.getBoundingClientRect(),nextTop=first.getBoundingClientRect().top;
+    const P=clamp((pinTop-sr.top)/run);
+    // The bar slides up into the foot of the screen (solid, never a grey fade), waits there, then rides up on the
+    // dark edge.
+    const Y=Math.max(0,Math.min(vh-nb*smooth(BAR[0],BAR[1],P),nextTop-nb));
+    const e0=smooth(0,1,clamp((P-FLY[0])/(flyEnd-FLY[0])));
+    const landed=e0>=1;
+    if(P<=0||(landed&&Y<=0&&sized)){stop();return;}
     if(!on)start();
-    if(!sized){copyStyle();geo=measure(vh,nb);}
-    placeTitles(dockedFrom(geo,nb),c=>smooth(0,1,c.m),c=>c.docked?1:0,c=>c.docked?1-smooth(.97,1,c.m):0);
-    cards.forEach((c,i)=>{
-      const {r,stripH}=geo[i];
-      const show=c.docked?'':'none';
-      [c.box,c.left,c.right,c.top,c.bottom].forEach(e=>{e.style.display=show;});
-      if(!c.docked)return;
-      // The strip runs from the bar down to the card's bottom edge, but no further than the end of the title row.
-      const h=Math.max(0,Math.min(stripH,r.bottom-nb));
-      c.box.style.transform='translate('+dpx(r.left)+','+dpx(nb)+') scale('+r.width.toFixed(1)+','+h.toFixed(1)+')';
-      c.left.style.transform='translate('+dpx(r.left)+','+dpx(nb)+') scaleY('+h.toFixed(1)+')';
-      c.right.style.transform='translate('+dpx(r.right-1)+','+dpx(nb)+') scaleY('+h.toFixed(1)+')';
-      c.top.style.transform='translate('+dpx(r.left)+','+dpx(nb)+') scaleX('+r.width.toFixed(1)+')';
-      // Once the card's bottom edge meets the strip, the whole frame fades out quickly, so the title is free to fly up
-      // into the bar instead of crossing the edges of a box. The bar's own progress line fades in with its label.
-      const frameO=String(1-smooth(0,.25,c.m));
-      c.bottom.style.display=c.m>0?'':'none';
-      c.bottom.style.transform='translate('+dpx(r.left)+','+dpx(nb+h-1)+') scaleX('+r.width.toFixed(1)+')';
-      c.left.style.opacity=c.right.style.opacity=c.top.style.opacity=c.bottom.style.opacity=frameO;
+    if(!sized)copyStyle();
+    const from=flights.map(f=>f.from.getBoundingClientRect());
+    const to=flights.map(f=>({left:f.goal.left,top:Y+f.goal.top,width:f.goal.width,height:f.goal.height}));
+    // Cards: the body dims as its title leaves; the frame stays until the dark edge swallows it.
+    const dim=String(1-BODY_DIM*smooth(0,.4,e0));
+    cards.forEach(c=>{if(c.p)c.p.style.opacity=dim;});
+    // Titles and numbers, all four together, each with its trail.
+    flights.forEach((f,i)=>{
+      if(f.kind==='cap')return;
+      const e=e0,q=pose(f,from[i],to[i],e);
+      f.x=q.x;f.y=q.y;f.k=q.k;f.e=e;
+      f.el.style.transform='translate('+px(q.x)+','+px(q.y)+') scale('+q.k.toFixed(4)+')';
+      f.el.style.opacity=String(seen(f,e,q.k));
+      if(!f.echo)return;
+      // The trail shows only while the piece is moving, strongest mid-flight, each echo fainter than the last.
+      const trail=smooth(0,.12,e)*(1-smooth(.82,1,e));
+      f.echo.forEach((g,j)=>{
+        const ej=Math.max(0,e-(j+1)*TRAIL_GAP),qj=pose(f,from[i],to[i],ej);
+        g.style.transform='translate('+px(qj.x)+','+px(qj.y)+') scale('+qj.k.toFixed(4)+')';
+        g.style.opacity=String(seen(f,ej,qj.k)*trail*.5*(1-(j+1)/(ECHOES+1)));
+      });
     });
-    finish(most,done);
+    // The bar's copy rides with its title or number, as wide as the title is now, growing or shrinking to its own
+    // size by the time it lands, then hands over to the real label.
+    flights.forEach(f=>{
+      if(f.kind!=='cap')return;
+      const o=f.of,e=o.e,kc=o.w*o.k/f.w+(1-o.w*o.k/f.w)*e;
+      f.el.style.transform='translate('+px(o.x)+','+px(o.y+(o.h*o.k-f.h*kc)/2)+') scale('+kc.toFixed(4)+')';
+      f.el.style.opacity=String(smooth(.78,.95,e)*(1-smooth(.97,1,e)));
+    });
+    nav.style.setProperty('--rn-y',px(Y));
+    const lab=smooth(.97,1,e0).toFixed(3);
+    cards.forEach(c=>c.link.style.setProperty('--rn-lab',lab));
+    nav.classList.toggle('rn-morph-done',landed);
   }
   const schedule=()=>{if(!raf)raf=requestAnimationFrame(frame);};
+  const relayout=force=>{if(force===true)sized=false;layoutPin();sized=false;schedule();};
   addEventListener('scroll',schedule,{passive:true});
   let rt=0;
-  addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{sized=false;schedule();},120);},{passive:true});
-  phone.addEventListener('change',schedule);reduced.addEventListener('change',schedule);
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{sized=false;schedule();});
-  schedule();
+  addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(relayout,120);},{passive:true});
+  phone.addEventListener('change',()=>relayout(true));reduced.addEventListener('change',()=>relayout(true));
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>relayout(true));
+  relayout(true);
 })();
 </script>
 <script id="nya-rel-scrollytelling-script">
