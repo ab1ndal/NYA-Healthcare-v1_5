@@ -3996,10 +3996,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel-item h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2-lg);line-height:1.1;color:var(--ink);text-wrap:balance}
 .amc-funnel-item p{margin:0;color:var(--ink2);text-wrap:balance}
 /* Stacked rows on demand: the script measures the drivers' compact form with it and stacks
-   the outcomes beside the compact drivers. :where keeps it at the base rows' specificity so
-   the short-landscape padding below still applies. */
+   the outcomes beside the compact drivers. Rows are a little tighter than the narrow-screen
+   stack so both lists fit under the recap on laptop screens without panning. :where keeps it
+   at the base rows' specificity so the short-landscape padding below still applies. */
 :where(.amc-funnel-panel.is-stacked) .amc-funnel-list{grid-template-columns:minmax(0,var(--amc-measure))}
-:where(.amc-funnel-panel.is-stacked) .amc-funnel-item{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-2) 0}
+:where(.amc-funnel-panel.is-stacked) .amc-funnel-item{grid-template-columns:minmax(0,1fr);row-gap:.25rem;padding:.75rem 0}
 /* While the outcomes sit hidden over the drivers (before they arrive), they take no pointer. */
 .amc-funnel.is-composed .amc-funnel-panel--outcomes:not(.is-open){pointer-events:none}
 /* Measure in em of the headline's own font so it breaks the same three lines at every size
@@ -4177,14 +4178,17 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     recapBand=recap.offsetTop+recap.offsetHeight-track.offsetTop;
     // Translate that centres each panel on screen.
     // Panels taller than the screen pan vertically while they are held (no type scaling).
+    // Breathing room a held panel keeps before it pans: the message keeps the full margin; below
+    // the recap the band itself spaces the top, so only a small margin is kept.
+    function roomIn(h,below){return h-(below?Math.min(48*sc,h*.08):Math.min(110*sc,h*.18))}
     [cPanel,dPanel,oPanel].forEach(function(el,i){
-      var h=H-(i?recapBand:0),room=h-Math.min(110*sc,h*.18);
+      var h=H-(i?recapBand:0),room=roomIn(h,i>0);
       X[i]=el.offsetLeft+el.offsetWidth/2-vw/2;D[i]=Math.max(0,el.offsetHeight-room)/2;
     });
     if(morph){
       // The last scene centres the stacked drivers and the outcomes as one group.
       X[2]=(dPanel.offsetLeft+oPanel.offsetLeft+oPanel.offsetWidth)/2-vw/2;
-      var h3=H-recapBand;D[2]=Math.max(0,Math.max(oPanel.offsetHeight,morph.h)-(h3-Math.min(110*sc,h3*.18)))/2;
+      D[2]=Math.max(0,Math.max(oPanel.offsetHeight,morph.h)-roomIn(H-recapBand,true))/2;
     }
     // Holds grow with any vertical pan so tall panels are read at a steady pace; slides are
     // at least ~one screen of scroll so short tracks (wide screens) still feel deliberate.
