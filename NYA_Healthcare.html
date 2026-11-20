@@ -3666,6 +3666,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   const ENTER=.45,BAR=[.02,.1],FLY=[.06,.02],BODY_DIM=.8;
   // Onion-skin trail: ECHOES fading copies, each TRAIL_GAP of the flight behind the one before.
   const ECHOES=5,TRAIL_GAP=.07;
+  // The cards' top accent line (px).
+  const ACCENT=2;
   // Pair each card with its nav link by name ("&" and "and" count as the same), so moving a PART keeps the pairs right.
   const key=t=>t.toLowerCase().replace(/&/g,'and').replace(/[^a-z]/g,'');
   const navLinks=Array.from(nav.querySelectorAll(':scope > a'));
@@ -3776,6 +3778,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
     nav.classList.remove('rn-morphing','rn-morph-done');story.classList.remove('is-morphing');
     nav.style.removeProperty('--rn-y');
     cards.forEach(c=>{if(c.p)c.p.style.opacity='';});
+    chapters.style.opacity='';
   }
   // Where a piece is at flight progress e: from its place in the card (a) to its slot in the bar (l), shrinking to fit.
   function pose(f,a,l,e){
@@ -3795,7 +3798,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
     if(!pinned){stop();return;}
     const vh=innerHeight;
     // Reads first, then writes.
-    const sr=story.getBoundingClientRect(),nextTop=first.getBoundingClientRect().top;
+    const sr=story.getBoundingClientRect(),nextTop=first.getBoundingClientRect().top,cardsTop=chapters.getBoundingClientRect().top;
     const P=clamp((pinTop-sr.top)/run);
     // The bar slides up into the foot of the screen (solid, never a grey fade), waits there, then rides up on the
     // dark edge.
@@ -3810,6 +3813,9 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
     // Cards: the body dims as its title leaves; the frame stays until the dark edge swallows it.
     const dim=String(1-BODY_DIM*smooth(0,.4,e0));
     cards.forEach(c=>{if(c.p)c.p.style.opacity=dim;});
+    // Once the bar covers the cards' top line they are wholly under it and the dark part, so they step aside: the page
+    // scrolls a frame ahead of the bar (which follows in rAF), and would otherwise flash their accent line above it.
+    chapters.style.opacity=Y<=cardsTop+ACCENT?'0':'';
     // Titles and numbers, all four together, each with its trail.
     flights.forEach((f,i)=>{
       if(f.kind==='cap')return;
