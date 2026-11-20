@@ -1801,7 +1801,15 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   /* photos as large as the free space beside the card allows (the card is 54vw wide); a card's two photos are staggered
      diagonally across that space, each just over half its width, so their facing corners overlap a little */
   .tx-imm-inset{--tx-d:min(calc(100svh - var(--tx-top) - 2rem),calc(46vw - 3*var(--pad)))}
-  .tx-imm-inset.is-mep,.tx-imm-inset.is-late{width:calc((46vw - var(--pad)) * .52)}}
+  .tx-imm-inset.is-mep,.tx-imm-inset.is-late{width:calc((46vw - var(--pad)) * .52)}
+  /* Base isolation film: its text doesn't scale with the drawing, so in a short 4:3 panel the fit script shrank it to about
+     half size with wide empty sides. Here the panel takes the full photo height, the text steps down and the padding tightens. */
+  .tx-imm-inset.is-film{width:calc(46vw - 3*var(--pad));height:calc(100svh - var(--tx-top) - 1.5rem);aspect-ratio:auto}
+  .tx-imm-inset.is-film .ucsf-story-animation{padding:.25rem}
+  .tx-imm-inset.is-film .iso-film{row-gap:.3rem;padding:.4rem}
+  .tx-imm-inset.is-film .iso-strip{row-gap:.15rem;padding-top:.15rem}
+  .tx-imm-inset.is-film .iso-strip-label{font-size:11px;line-height:1.2}
+  .tx-imm-inset.is-film .iso-name{font-size:12px;line-height:1.12}}
 /* Upright phones and tablets: the cards are too tall to sit over the photo, so the photo is pinned at the top (half the screen)
    and the cards slide up from below and pass under it. */
 @media (max-width:1100px) and (orientation:portrait){
@@ -5234,6 +5242,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   function kick(){if(!raf)raf=requestAnimationFrame(frame)}
   addEventListener('scroll',kick,{passive:true});
   addEventListener('resize',function(){cur=null;kick()},{passive:true});
+  // the stage grows when the section's intro note hides (top and height transition); place the photos again once it has
+  stage.addEventListener('transitionend',function(e){if(e.target===stage)kick()});
   if(side.addEventListener)side.addEventListener('change',function(){cur=null;kick()});
   kick();
 });
