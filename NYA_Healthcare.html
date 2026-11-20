@@ -4269,10 +4269,12 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     var rc=clamp((t1-.55)/.35,0,1);
     recap.style.opacity=rc.toFixed(3);recap.style.translate=rc<1?'0 '+((1-rc)*10).toFixed(1)+'px':'';
     // Slide 2 is split: drivers gather in its first half, outcomes fan out in the second.
-    // Composed, the drivers fold into their stacked column (to t2=.45), then the outcomes
-    // come in one after another.
+    // Composed, the drivers fold into their stacked column (first half of the slide), then the
+    // outcomes come in one after another.
     if(morph){
-      applyMorph(ease(clamp(t2/.45,0,1)));
+      // Fold runs on the slide's raw progress: applyMorph eases each axis itself, and easing
+      // here as well (and through t2) compounds into a whip at mid-fold.
+      applyMorph(clamp((s-c)/P.toOutcomes/.5,0,1));
       outcomes.forEach(function(it,i){it.classList.toggle('is-in',t2>=.5+i*.1)});
     }
     lines.forEach(function(L){
