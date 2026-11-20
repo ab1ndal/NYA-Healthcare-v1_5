@@ -3945,7 +3945,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 /* AMC: three scenes on one horizontal track - message, drivers, outcomes. Each is
    centred on screen in turn; scroll holds a scene, then slides it out left while the next
    slides in and the lead lines draw between them. From the drivers on, the headline stays
-   small at the top (recap). On wide screens the drivers then fold into a compact column on
+   small at the top (recap). On wide screens the drivers then fold into a stacked column on
    the left and the outcomes arrive beside them; narrower screens slide the drivers away.
    Section height is set by the script.
    White section with the page's light-section ink and accent; z-index keeps it above the
@@ -3995,7 +3995,6 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel-item::after{bottom:-1px;transform:translate(var(--amc-rx,0px),var(--amc-ry,0px)) scaleX(var(--amc-rs,1))}
 .amc-funnel-item h3{font-family:var(--display);font-weight:300;font-size:var(--text-h2-lg);line-height:1.1;color:var(--ink);text-wrap:balance}
 .amc-funnel-item p{margin:0;color:var(--ink2);text-wrap:balance}
-.amc-funnel-panel--drivers .amc-funnel-label,.amc-funnel-panel--drivers h3,.amc-funnel-panel--drivers p{transform-origin:0 0}
 /* Stacked rows on demand: the script measures the drivers' compact form with it and stacks
    the outcomes beside the compact drivers. :where keeps it at the base rows' specificity so
    the short-landscape padding below still applies. */
@@ -4009,8 +4008,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 .amc-funnel-msg em,.amc-funnel-recap em{color:var(--green-on-light)}
 /* The headline, small, held at the top from the drivers on so the later scenes stay tied to
    it. Decorative repeat of the h2 (aria-hidden); the script fades it in and reserves its band.
-   White band: tall panels pan up under it like under a header. */
-.amc-funnel-recap{position:absolute;z-index:2;left:0;right:0;top:var(--amc-nav,36px);margin:0;padding:var(--space-3) var(--pad) var(--space-2);background:#fff;text-align:center;font-family:var(--display);font-weight:300;font-size:var(--text-h2);line-height:1.15;letter-spacing:-.01em;color:var(--ink);text-wrap:balance;opacity:0;pointer-events:none}
+   White band: tall panels pan up under it like under a header, fading out under its edge
+   rather than being cut through a line of text. */
+.amc-funnel-recap{position:absolute;z-index:2;left:0;right:0;top:0;margin:0;padding:calc(var(--amc-nav,36px) + var(--space-3)) var(--pad) var(--space-2);background:#fff;text-align:center;font-family:var(--display);font-weight:300;font-size:var(--text-h2);line-height:1.15;letter-spacing:-.01em;color:var(--ink);text-wrap:balance;opacity:0;pointer-events:none}
+.amc-funnel-recap::after{content:"";position:absolute;left:0;right:0;top:100%;height:var(--space-3);background:linear-gradient(#fff,rgba(255,255,255,0))}
 
 /* Reveal states, toggled by scroll position (both directions). */
 .amc-funnel .amc-funnel-label,.amc-funnel .amc-funnel-item,.amc-funnel-msg{opacity:0;transition:opacity .7s var(--ease),transform .7s var(--ease)}
@@ -4058,11 +4059,12 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   var dLabel=dPanel.querySelector('.amc-funnel-label'),oLabel=oPanel.querySelector('.amc-funnel-label'),
       msg=sec.querySelector('.amc-funnel-msg'),msgText=sec.querySelector('.amc-funnel-msg-text');
   var recap=sec.querySelector('.amc-funnel-recap'),dList=dPanel.querySelector('.amc-funnel-list'),oGap=oPanel.previousElementSibling;
-  // Wide screens: on the way to the outcomes the drivers fold from two columns into a compact
-  // stacked column (scaled to COMPACT_SCALE) and stay on the left, the outcomes arriving
-  // beside them. Used only where both fit side by side at MIN_COMPACT_SCALE or more; elsewhere
-  // the drivers slide away as before. morph = the measured fold, null when not composed.
-  var COMPACT_SCALE=.85,MIN_COMPACT_SCALE=.65,morph=null,morphU=-1;
+  // Wide screens: on the way to the outcomes the drivers fold from two columns into a stacked
+  // column (same type size) and stay on the left, the outcomes arriving beside them with no
+  // lines between (owner: no node/spider lines there, no type size change). Used only where
+  // both fit side by side with at least MIN_FOLD_GAP px between; elsewhere the drivers slide
+  // away as before, gathering into the node. morph = the measured fold, null when not composed.
+  var MIN_FOLD_GAP=64,MAX_FOLD_GAP=160,morph=null,morphU=-1;
   // Height the recap band takes from the top of the track in the drivers and outcomes scenes.
   var recapBand=0;
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -4103,7 +4105,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     morph=null;morphU=-1;
     sec.classList.remove('is-composed');oPanel.classList.remove('is-stacked');oPanel.style.marginLeft='';oGap.style.display='';
     [dLabel].concat(drivers.map(function(it){return it.querySelector('h3')}),drivers.map(function(it){return it.querySelector('p')}))
-      .forEach(function(el){el.style.translate='';el.style.scale=''});
+      .forEach(function(el){el.style.translate=''});
     drivers.forEach(function(it){['--amc-rx','--amc-ry','--amc-rs'].forEach(function(v){it.style.removeProperty(v)})});
     ['--amc-tx','--amc-ty','--amc-ts'].forEach(function(v){dList.style.removeProperty(v)});
   }
@@ -4113,36 +4115,32 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     var A=driverBoxes();dPanel.classList.add('is-stacked');var B=driverBoxes();dPanel.classList.remove('is-stacked');
     sec.classList.add('is-composed');oPanel.classList.add('is-stacked');
     var ow=oPanel.offsetWidth,avail=parseFloat(getComputedStyle(oPanel).maxWidth)||vw;
-    // Hub gap: at least 7rem, then any spare width up to 20rem so the node's lines stay
-    // long, flat S-curves rather than steep ones.
-    var minGap=112*sc,s=Math.min(COMPACT_SCALE,(avail-minGap-ow)/B.w);
-    var gap=clamp(avail-s*B.w-ow,minGap,320*sc);
-    if(s<MIN_COMPACT_SCALE){sec.classList.remove('is-composed');oPanel.classList.remove('is-stacked');return}
-    oGap.style.display='none';oPanel.style.marginLeft=(s*B.w+gap-A.w)+'px';
-    // Compact column keeps the drivers' left edge and is centred on their old centre line.
-    var oy=(A.h-s*B.h)/2;
-    function shift(a,b){return {dx:s*b.x-a.x,dy:oy+s*b.y-a.y}}
+    var spare=avail-B.w-ow;
+    if(spare<MIN_FOLD_GAP*sc){sec.classList.remove('is-composed');oPanel.classList.remove('is-stacked');return}
+    oGap.style.display='none';oPanel.style.marginLeft=(B.w+Math.min(spare,MAX_FOLD_GAP*sc)-A.w)+'px';
+    // Stacked column keeps the drivers' left edge and is centred on their old centre line.
+    var oy=(A.h-B.h)/2;
+    function shift(a,b){return {dx:b.x-a.x,dy:oy+b.y-a.y}}
     var parts=[{el:dLabel,d:shift(A.label,B.label)}];
     drivers.forEach(function(it,i){
       parts.push({el:it.querySelector('h3'),d:shift(A.heads[i],B.heads[i])});
       parts.push({el:it.querySelector('p'),d:shift(A.bodies[i],B.bodies[i])});
     });
-    morph={s:s,oy:oy,w:B.w,h:B.h,parts:parts,
+    morph={h:B.h,parts:parts,
       rows:drivers.map(function(it,i){var a=A.rows[i],b=B.rows[i];
-        return {el:it,dx:s*b.x-a.x,dy:oy+s*(b.y+b.h)-(a.y+a.h),k:s*b.w/a.w,cy:oy+s*(b.y+b.h/2)}}),
-      top:{dx:s*B.list.x-A.list.x,dy:oy+s*B.list.y-A.list.y,k:s*B.list.w/A.list.w},
-      headCy:B.heads.map(function(b){return oy+s*(b.y+b.h/2)}),
-      headDx:B.heads.map(function(b,i){return s*b.x-A.heads[i].x})};
+        return {el:it,dx:b.x-a.x,dy:oy+(b.y+b.h)-(a.y+a.h),k:b.w/a.w}}),
+      top:{dx:B.list.x-A.list.x,dy:oy+B.list.y-A.list.y,k:B.list.w/A.list.w},
+      headCy:B.heads.map(function(b){return oy+b.y+b.h/2}),
+      headDx:B.heads.map(function(b,i){return b.x-A.heads[i].x})};
   }
   function applyMorph(u){
     if(!morph||u===morphU)return;morphU=u;
     // Vertical leads, horizontal follows: each description drops below its title's line
     // before sliding left under it, so the two never cross. Hairlines shorten with the
     // horizontal part so they never end inside a line of text.
-    var m=morph,sc=1+(m.s-1)*u,uy=ease(clamp(u/.6,0,1)),ux=ease(clamp((u-.3)/.7,0,1));
+    var m=morph,uy=ease(clamp(u/.6,0,1)),ux=ease(clamp((u-.3)/.7,0,1));
     m.parts.forEach(function(p){
       p.el.style.translate=u?(p.d.dx*ux).toFixed(2)+'px '+(p.d.dy*uy).toFixed(2)+'px':'';
-      p.el.style.scale=u?sc.toFixed(4):'';
     });
     m.rows.forEach(function(r){var st=r.el.style;
       st.setProperty('--amc-rx',(r.dx*ux).toFixed(2)+'px');st.setProperty('--amc-ry',(r.dy*uy).toFixed(2)+'px');
@@ -4184,9 +4182,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       X[i]=el.offsetLeft+el.offsetWidth/2-vw/2;D[i]=Math.max(0,el.offsetHeight-room)/2;
     });
     if(morph){
-      // The last scene centres the compact drivers and the outcomes as one group.
+      // The last scene centres the stacked drivers and the outcomes as one group.
       X[2]=(dPanel.offsetLeft+oPanel.offsetLeft+oPanel.offsetWidth)/2-vw/2;
-      var h3=H-recapBand;D[2]=Math.max(0,Math.max(oPanel.offsetHeight,morph.s*morph.h)-(h3-Math.min(110*sc,h3*.18)))/2;
+      var h3=H-recapBand;D[2]=Math.max(0,Math.max(oPanel.offsetHeight,morph.h)-(h3-Math.min(110*sc,h3*.18)))/2;
     }
     // Holds grow with any vertical pan so tall panels are read at a steady pace; slides are
     // at least ~one screen of scroll so short tracks (wide screens) still feel deliberate.
@@ -4202,10 +4200,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     svg.setAttribute('width',W);svg.setAttribute('height',H);svg.setAttribute('viewBox','0 0 '+W+' '+H);
     // Message fans out to each driver; the drivers then converge on one node midway to the
     // outcomes, and the outcomes fan out from it (together, not one driver per outcome).
+    // Composed: only the message's lines; the outcomes simply arrive beside the drivers.
     var m=rel(msgText),d=rel(dPanel),o=rel(oPanel),gap=8*sc,n=drivers.length,k=outcomes.length;
-    // Composed: the drivers' right edge is the compact column's (its centre line is unchanged).
-    var dRight=morph?d.l+morph.s*morph.w:d.r;
-    var hubX=(dRight+o.l)/2,hubY=d.cy,nodeR=NODE_R*sc;
+    var hubX=(d.r+o.l)/2,hubY=d.cy,nodeR=NODE_R*sc;
     // Each line meets the ring at its own point (spread over +-NODE_SPREAD rad), so the lines
     // read as spokes of the node instead of merging into one thick stem before it.
     function onRing(i,count,dir){var a=count>1?(i/(count-1)*2-1)*NODE_SPREAD:0;
@@ -4213,22 +4210,24 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     drivers.forEach(function(it,i){
       var h=rel(it.querySelector('h3')),y0=m.cy+(i-(n-1)/2)*gap;
       var fan=addLine(curve(m.r+28*sc,y0,h.l-20*sc,h.cy,.25,.85),'is-in-line','fan',i,it);
-      if(morph)fan.fold={x0:m.r+28*sc,y0:y0,x1:h.l-20*sc,dx:morph.headDx[i],y1:h.cy,y2:d.t+morph.headCy[i]};
+      if(morph){fan.fold={x0:m.r+28*sc,y0:y0,x1:h.l-20*sc,dx:morph.headDx[i],y1:h.cy,y2:d.t+morph.headCy[i]};return}
       var e=onRing(i,n,-1);
-      addLine(curve(dRight+24*sc,morph?d.t+morph.rows[i].cy:rel(it).cy,e[0],e[1],.1,1),'is-out-line','gather',i,null);
+      addLine(curve(d.r+24*sc,rel(it).cy,e[0],e[1],.1,1),'is-out-line','gather',i,null);
     });
-    outcomes.forEach(function(it,i){
+    if(!morph)outcomes.forEach(function(it,i){
       var h=rel(it.querySelector('h3'));
       var s0=onRing(i,k,1);
       addLine(curve(s0[0],s0[1],h.l-20*sc,h.cy,0,.85),'is-out-line','out',i,it);
     });
     // Node drawn last so it sits over the line ends.
-    node=document.createElementNS(NS,'g');node.setAttribute('class','amc-funnel-node');
-    [['ring',nodeR-.5],['core',NODE_CORE_R*sc]].forEach(function(c){
-      var e=document.createElementNS(NS,'circle');e.setAttribute('class',c[0]);
-      e.setAttribute('cx',hubX);e.setAttribute('cy',hubY);e.setAttribute('r',c[1]);node.appendChild(e);
-    });
-    svg.appendChild(node);
+    if(!morph){
+      node=document.createElementNS(NS,'g');node.setAttribute('class','amc-funnel-node');
+      [['ring',nodeR-.5],['core',NODE_CORE_R*sc]].forEach(function(c){
+        var e=document.createElementNS(NS,'circle');e.setAttribute('class',c[0]);
+        e.setAttribute('cx',hubX);e.setAttribute('cy',hubY);e.setAttribute('r',c[1]);node.appendChild(e);
+      });
+      svg.appendChild(node);
+    }
     void sec.offsetWidth;sec.classList.remove('is-measuring');
     lines.forEach(function(L){L.f=-1});
   }
@@ -4266,22 +4265,24 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     var rc=clamp((t1-.55)/.35,0,1);
     recap.style.opacity=rc.toFixed(3);recap.style.translate=rc<1?'0 '+((1-rc)*10).toFixed(1)+'px':'';
     // Slide 2 is split: drivers gather in its first half, outcomes fan out in the second.
-    // Composed, the drivers first fold into their compact column (to t2=.45), then gather
-    // (to .72), then the outcomes fan out.
-    var gEnd=morph?.72:.5,gLen=morph?.27:.5;
-    applyMorph(morph?ease(clamp(t2/.45,0,1)):0);
+    // Composed, the drivers fold into their stacked column (to t2=.45), then the outcomes
+    // come in one after another.
+    if(morph){
+      applyMorph(ease(clamp(t2/.45,0,1)));
+      outcomes.forEach(function(it,i){it.classList.toggle('is-in',t2>=.5+i*.1)});
+    }
     lines.forEach(function(L){
       var f=L.side==='fan'?clamp((t1-L.i*.07)/.79,0,1)
-           :L.side==='gather'?clamp(((t2-(gEnd-gLen))/gLen-L.i*.05)/.85,0,1)
-           :clamp(((t2-gEnd)/(1-gEnd)-L.i*.07)/.79,0,1);
+           :L.side==='gather'?clamp((t2*2-L.i*.05)/.85,0,1)
+           :clamp(((t2-.5)*2-L.i*.07)/.79,0,1);
       if(Math.abs(f-L.f)<.0005)return;L.f=f;
       // A line shows only once it has some length: its first few px float alone beside the
       // headline and read as a stray dot.
       L.p.style.strokeDashoffset=(L.len*(1-f)).toFixed(1);L.p.style.visibility=L.len*f>=MIN_DRAWN_PX?'visible':'hidden';
       if(L.target)L.target.classList.toggle('is-in',f>=.97);
     });
-    // Node appears as the last driver line reaches it (gather end), before the outcomes leave it.
-    if(node)node.classList.toggle('is-in',t2>=gEnd-.05);
+    // Node appears as the last driver line reaches it (gather ends at t2=.5), before the outcomes leave it.
+    if(node)node.classList.toggle('is-in',t2>=.45);
     // A scene fades only in the back half of its exit, so the lines never float free of it.
     cPanel.style.opacity=(1-clamp((t1-.5)/.4,0,1)).toFixed(3);
     // Drivers hold full strength longer: the gather lines start at their right edge. Composed,
