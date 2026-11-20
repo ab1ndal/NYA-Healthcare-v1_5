@@ -1798,9 +1798,10 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   .tx-imm-card h3{font-size:min(var(--text-h2-lg),5svh)}
   .tx-imm-card p{font-size:.92rem;line-height:1.55;margin-top:.6rem}
   .tx-imm-list{margin-top:.7rem;gap:.55rem}.tx-imm-list li{font-size:.92rem;line-height:1.5;padding-left:1.4rem}.tx-imm-list li::before{width:.55rem;height:.55rem}
-  /* photos as large as the free space beside the card allows (the card is 54vw wide); a card's two photos share that space */
+  /* photos as large as the free space beside the card allows (the card is 54vw wide); a card's two photos are staggered
+     diagonally across that space, each just over half its width, so their facing corners overlap a little */
   .tx-imm-inset{--tx-d:min(calc(100svh - var(--tx-top) - 2rem),calc(46vw - 3*var(--pad)))}
-  .tx-imm-inset.is-mep,.tx-imm-inset.is-late{width:calc(23vw - 1.5*var(--pad))}}
+  .tx-imm-inset.is-mep,.tx-imm-inset.is-late{width:calc((46vw - var(--pad)) * .52)}}
 /* Upright phones and tablets: the cards are too tall to sit over the photo, so the photo is pinned at the top (half the screen)
    and the cards slide up from below and pass under it. */
 @media (max-width:1100px) and (orientation:portrait){
@@ -5170,6 +5171,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
         var grp=insets.filter(function(q){return q.card===it.card}).sort(function(a,b){return a.fx-b.fx}),fr=it.card.getBoundingClientRect(),x0=0,x1=W;
         if(!upright.matches){if(it.dir<0)x1=fr.left-sl;else x0=fr.right-sl}
         cx=x0+(x1-x0)*(grp.indexOf(it)+.5)/grp.length;cy=R/2;
+        if(!upright.matches&&grp.length===2){  // on its side: staggered diagonally, the first photo top left, the late one bottom right (on top)
+          var lt=it.el.hasAttribute('data-late'),m=20*k;
+          cx=lt?x1-m-D/2:x0+m+D/2;cy=lt?R-m-Dh/2:m+Dh/2;
+        }
       }
       if(it.rise&&!upright.matches&&it.card){  // data-rise: follows the previous card up from below the stage, a gap under it, and stops at its centred height
         var rc=cards[cards.indexOf(it.card)-1];if(rc)cy=Math.max(cy,rc.getBoundingClientRect().bottom-stage.getBoundingClientRect().top+it.gap*k+Dh/2);
