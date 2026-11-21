@@ -4052,7 +4052,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
 /* Static: the recap is held under the nav once the headline has scrolled away (script). */
 .amc-funnel:not(.is-pinned) .amc-funnel-recap{position:fixed;transition:opacity .4s var(--ease)}
 @media (max-height:500px) and (orientation:landscape){
-  .amc-funnel-recap{font-size:var(--text-h3);padding-top:calc(var(--amc-nav,36px) + var(--space-1));padding-bottom:var(--space-1)}}
+  .amc-funnel-recap{font-size:var(--text-h2);padding-top:calc(var(--amc-nav,36px) + var(--space-1));padding-bottom:var(--space-1)}
+  /* Match the space after the final outcome to the next section's text inset. */
+  .amc-funnel:not(.is-pinned) .amc-funnel-track{padding-bottom:clamp(1.2rem,3svh,2.2rem)}
+  .amc-funnel-panel--outcomes .amc-funnel-item:last-child::after{display:none}}
 /* Landscape phones: the outcomes get the driver titles beside them, as on desktop: a short
    column held below the recap while the outcomes scroll past. Built by the script from the
    driver titles (aria-hidden repeat); no hairlines. */
@@ -4072,7 +4075,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   /* Drivers and the titles + outcomes block both run the full content width, edges aligned;
      the outcome descriptions widen to fill. */
   .amc-funnel:not(.is-pinned) .amc-funnel-panel--drivers,.amc-funnel:not(.is-pinned) .amc-funnel-panel--outcomes{width:100%}
-  .amc-funnel:not(.is-pinned) .amc-funnel-panel--outcomes .amc-funnel-list{grid-template-columns:minmax(0,1fr)}}</style>
+  .amc-funnel:not(.is-pinned) .amc-funnel-panel--outcomes .amc-funnel-list{grid-template-columns:minmax(0,1fr)}
+  /* "Example outcomes" holds too, level with the drivers label, and the points scroll under
+     it: the white backing starts at the recap's edge so no text shows in between. */
+  .amc-funnel:not(.is-pinned) .amc-funnel-panel--outcomes>.amc-funnel-label{position:sticky;z-index:1;top:var(--amc-recap-h,80px);margin-bottom:0;padding:var(--space-2) 0 var(--space-1);background:#fff}}</style>
 <script id="amc-funnel-behavior">
 (function(){
   var sec=document.getElementById('amc-funnel');if(!sec)return;
