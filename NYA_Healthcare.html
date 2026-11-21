@@ -4031,7 +4031,10 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   .amc-funnel-item{grid-template-columns:minmax(0,1fr);row-gap:var(--space-1);padding:var(--space-2) 0}}
 /* Portrait phones: the screen, not the measure, sets the column; fill lines and only
    avoid a lone last word (balance would leave every line visibly short). */
-@media(max-width:37.5em){.amc-funnel-item p{text-wrap:pretty}}
+@media(max-width:37.5em){.amc-funnel-item p{text-wrap:pretty}
+  /* Rows as tight as the desktop stacked rows; the folded titles close up further. */
+  .amc-funnel-item{row-gap:.25rem;padding-block:.75rem}
+  :where(.amc-funnel-panel.is-titles) .amc-funnel-item{padding-block:.25rem}}
 /* Short landscape phones: tighter rows so less of the list needs panning. */
 @media(max-height:500px) and (orientation:landscape){
   .amc-funnel-item{padding-block:var(--space-1)}
@@ -4177,6 +4180,8 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
       headCy:B.heads.map(function(b){return oy+b.y+b.h/2}),
       headDx:B.heads.map(function(b,i){return b.x-A.heads[i].x})};
   }
+  // Vertical progress of the fold at raw fold progress u (shared with the track's vertical move).
+  function foldY(m,u){return m.side?ease(clamp(u/.6,0,1)):ease(clamp((u-.15)/.85,0,1))}
   function applyMorph(u){
     if(!morph||u===morphU)return;morphU=u;
     // Vertical leads, horizontal follows: each description drops below its title's line
@@ -4184,7 +4189,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     // horizontal part so they never end inside a line of text.
     // Folding to titles, descriptions are gone (u=.3) before the titles start closing up over
     // them.
-    var m=morph,uy=m.side?ease(clamp(u/.6,0,1)):ease(clamp((u-.15)/.85,0,1)),ux=m.side?ease(clamp((u-.3)/.7,0,1)):uy;
+    var m=morph,uy=foldY(m,u),ux=m.side?ease(clamp((u-.3)/.7,0,1)):uy;
     m.parts.forEach(function(p){
       p.el.style.translate=u?(p.d.dx*ux).toFixed(2)+'px '+(p.d.dy*uy).toFixed(2)+'px':'';
       if(p.fade)p.el.style.opacity=u?(1-clamp(u/.3,0,1)).toFixed(3):'';
@@ -4294,10 +4299,14 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     // Phase boundaries: a = slide 1 starts, b = drivers reached, c = slide 2 starts, e = outcomes reached.
     var a=P.holdMessage,b=a+P.toDrivers,c=b+P.holdDrivers,e=c+P.toOutcomes;
     var t1=ease(clamp((s-a)/P.toDrivers,0,1)),t2=ease(clamp((s-c)/P.toOutcomes,0,1)),x,y;
+    // Folding to titles, the fold lifts the titles by about what the track drops to take in the
+    // outcomes below them; both run on the fold's vertical progress so they cancel and the titles
+    // hold still. On t2 the fold ran ahead: titles rose under the recap, then dropped back.
+    var u2=clamp((s-c)/P.toOutcomes/.5,0,1),ty2=morph&&!morph.side?foldY(morph,u2):t2;
     if(s<a){x=X[0];y=lerp(D[0],-D[0],s/a)}
     else if(s<b){x=lerp(X[0],X[1],t1);y=lerp(-D[0],D[1],t1)}
     else if(s<c){x=X[1];y=lerp(D[1],-D[1],(s-b)/P.holdDrivers)}
-    else if(s<e){x=lerp(X[1],X[2],t2);y=lerp(-D[1],D[2],t2)}
+    else if(s<e){x=lerp(X[1],X[2],t2);y=lerp(-D[1],D[2],ty2)}
     else{x=X[2];y=lerp(D[2],-D[2],clamp((s-e)/P.holdOutcomes,0,1))}
     // From the drivers on, the scenes sit centred below the recap band.
     y+=recapBand/2*t1;
@@ -4309,7 +4318,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     if(morph){
       // Fold runs on the slide's raw progress: applyMorph eases each axis itself, and easing
       // here as well (and through t2) compounds into a whip at mid-fold.
-      applyMorph(clamp((s-c)/P.toOutcomes/.5,0,1));
+      applyMorph(u2);
       outcomes.forEach(function(it,i){it.classList.toggle('is-in',t2>=.5+i*.1)});
     }
     lines.forEach(function(L){
