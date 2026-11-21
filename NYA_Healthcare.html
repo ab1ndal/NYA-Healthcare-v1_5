@@ -3100,8 +3100,20 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
     root.addEventListener("keydown", function (e) {
       if (e.code === "Space" || e.code === "Enter") { e.preventDefault(); toggle(); }
     });
+    // Inside a Technical Excellence photo inset the film is laid out but faded to opacity 0 until its slide; the
+    // observer still counts it as on screen. Redrawing it there every frame made iPhone Safari shake the pinned photo
+    // while scrolling, so it also stops while that inset is fully transparent.
+    var onScreen = true, shown = true, inset = root.closest && root.closest(".tx-imm-inset");
+    function sync() { visible = onScreen && shown; run(); }
+    if (inset) {
+      var checkShown = function () { shown = getComputedStyle(inset).opacity !== "0"; sync(); };
+      inset.addEventListener("transitionrun", function (e) { if (e.target === inset && e.propertyName === "opacity") { shown = true; sync(); } });
+      inset.addEventListener("transitionend", function (e) { if (e.target === inset && e.propertyName === "opacity") checkShown(); });
+      inset.addEventListener("transitioncancel", function (e) { if (e.target === inset && e.propertyName === "opacity") checkShown(); });
+      checkShown();
+    }
     if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; run(); }).observe(root);
+      new IntersectionObserver(function (es) { onScreen = es[0].isIntersecting; sync(); }).observe(root);
     }
   }
 
