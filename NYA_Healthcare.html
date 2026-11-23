@@ -13,9 +13,9 @@
 <meta property="og:site_name" content="Nabih Youssef Associates">
 <meta property="og:title" content="Healthcare Structural Engineering | Nabih Youssef Associates">
 <meta property="og:description" content="NYA healthcare structural engineering: advanced seismic analysis, HCAI experience, constructability, coordination, and hospital delivery across California and the U.S.">
-<meta property="og:image" content="https://www.nyase.com/wp-content/uploads/2026/07/new_stanford_hospital-scaled.jpg">
-<meta property="og:image:width" content="2560">
-<meta property="og:image:height" content="1638">
+<meta property="og:image" content="https://www.nyase.com/wp-content/uploads/2026/11/newstanfordhospitalog.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="New Stanford Hospital">
 <meta name="twitter:card" content="summary_large_image">
 <!-- The 150px mark, not the 1811x1888 original: this is drawn at 16-32px and is one of the
@@ -24,6 +24,11 @@
 <!-- Every first-screen byte except the fonts (logo, hero poster, hero video) comes from
      nyase.com, which sits behind Sucuri, so open that connection before the parser needs it. -->
 <link rel="preconnect" href="https://www.nyase.com">
+<!-- Hero poster (the LCP image), fetched before the parser reaches the hero. Portrait phones and
+     tablets show it in a square box, so they get the 1536px copy; the #hero-poster script
+     picks the same file with the same media query. -->
+<link rel="preload" as="image" href="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital-1536x983.webp" media="(max-width:1100px) and (orientation:portrait)" fetchpriority="high">
+<link rel="preload" as="image" href="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp" media="not all and (max-width:1100px) and (orientation:portrait)" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -1936,7 +1941,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
   <div class="webgl-noise"></div>
 </div>
 <a class="logo" href="https://www.nyase.com/" aria-label="Nabih Youssef Associates home">
-  <img src="https://www.nyase.com/wp-content/uploads/2026/07/nabihyoussefassociateslogo_white.png" alt="Nabih Youssef Associates Structural Engineers">
+  <img src="https://www.nyase.com/wp-content/uploads/2026/07/nabihyoussefassociateslogo_white-768x164.png" srcset="https://www.nyase.com/wp-content/uploads/2026/07/nabihyoussefassociateslogo_white-768x164.png 768w, https://www.nyase.com/wp-content/uploads/2026/07/nabihyoussefassociateslogo_white-1024x219.png 1024w, https://www.nyase.com/wp-content/uploads/2026/07/nabihyoussefassociateslogo_white.png 2284w" sizes="clamp(10rem, 18vw, 17.1875rem)" width="2284" height="488" alt="Nabih Youssef Associates Structural Engineers">
 </a>
 
 <main id="main">
@@ -1951,10 +1956,13 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
     <div class="hero-frame" data-bg="https://www.nyase.com/wp-content/uploads/2026/11/centurycityhospital.webp"></div>
   </div>
   <div class="ucsf-bg-media" id="ucsf-bg-media">
-    <video id="ucsf-bg-video" autoplay muted loop playsinline preload="metadata" poster="https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital.webp" tabindex="-1"
+    <video id="ucsf-bg-video" autoplay muted loop playsinline preload="metadata" tabindex="-1"
       data-src-720="https://www.nyase.com/wp-content/uploads/2026/11/stanford-animation-720.mp4"
       data-src-1080="https://www.nyase.com/wp-content/uploads/2026/11/stanford-animation-1080.mp4"
       data-src-1440="https://www.nyase.com/wp-content/uploads/2026/11/stanford-animation-1440.mp4"></video>
+    <!-- Poster set here, right after the video, so it matches the preloaded file in <head>
+         (1536px copy on portrait phones/tablets, full size elsewhere) and is never fetched twice. -->
+    <script id="hero-poster">(function(v){if(!v)return;v.poster='https://www.nyase.com/wp-content/uploads/2026/11/new_stanford_hospital'+(window.matchMedia('(max-width:1100px) and (orientation:portrait)').matches?'-1536x983':'')+'.webp';})(document.getElementById('ucsf-bg-video'));</script>
   </div>
   <div class="hero-content reveal">
     <h1 class="display">Hospital projects are <span class="nowrap">high-stakes.</span><br><em>NYA reduces the risk.</em></h1>
@@ -2165,8 +2173,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
       <div class="tx-imm-stage" aria-hidden="true">
         <div class="tx-imm-view">
           <div class="tx-imm-scene">
-            <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" loading="lazy" decoding="async">
-            <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" alt="" width="1600" height="1067" loading="lazy" decoding="async">
+            <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-768x512.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1024x683.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1536x1024.webp 1536w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp 1600w" sizes="max(100vw, 150vh)" alt="" width="1600" height="1067" loading="lazy" decoding="async">
+            <img class="tx-imm-color" src="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-768x512.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1024x683.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_-1536x1024.webp 1536w, https://www.nyase.com/wp-content/uploads/2026/11/stanfordhospital_photobybrucedamonte_.webp 1600w" sizes="max(100vw, 150vh)" alt="" width="1600" height="1067" loading="lazy" decoding="async">
             <svg class="tx-imm-ring" viewBox="0 0 1600 1067" preserveAspectRatio="none" focusable="false"><circle cx="330" cy="615" r="165"/></svg>
           </div>
         </div>
@@ -2261,13 +2269,13 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
       <div class="tx-imm-stage" aria-hidden="true">
         <div class="tx-imm-view">
           <div class="tx-imm-scene">
-            <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" alt="" width="2300" height="1725" loading="lazy" decoding="async">
+            <img class="tx-imm-photo" src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-768x576.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1024x768.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-1536x1152.webp 1536w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering-2048x1536.webp 2048w, https://www.nyase.com/wp-content/uploads/2026/11/ucsfhelendillerhospitalstructuralengineering.webp 2300w" sizes="max(100vw, 150vh)" alt="" width="2300" height="1725" loading="lazy" decoding="async">
           </div>
         </div>
-        <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-gap="260" data-center="70" data-push data-dir="1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/smrfdamper.png" alt="" width="816" height="607" fetchpriority="low" loading="lazy" decoding="async"></figure>
-        <figure class="tx-imm-inset is-site" data-card="0" data-push data-anchor=".3 .6" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfsite.png" alt="" width="619" height="550" fetchpriority="low" loading="lazy" decoding="async"></figure>
-        <figure class="tx-imm-inset is-bearing is-mep" data-reveal data-anchor=".9 .5" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/preview-e1795121973303.png" alt="" width="1512" height="1586" fetchpriority="low" loading="lazy" decoding="async"><figcaption class="tx-imm-cap">Bathroom Pod</figcaption></figure>
-        <figure class="tx-imm-inset is-bearing is-late" data-reveal data-anchor=".55 .66" data-dx="0" data-gap="24" data-edge="1" data-late="1" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/.jpeg" alt="" width="1024" height="768" fetchpriority="low" loading="lazy" decoding="async"><figcaption class="tx-imm-cap">Prefabricated MEP Rack</figcaption></figure>
+        <figure class="tx-imm-inset is-atrium" data-anchor=".46 .6917" data-dx="30" data-gap="260" data-center="70" data-push data-dir="1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfsmrfdamper.webp" alt="" width="816" height="607" fetchpriority="low" loading="lazy" decoding="async"></figure>
+        <figure class="tx-imm-inset is-site" data-card="0" data-push data-anchor=".3 .6" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfsiteplan.webp" alt="" width="619" height="550" fetchpriority="low" loading="lazy" decoding="async"></figure>
+        <figure class="tx-imm-inset is-bearing is-mep" data-reveal data-anchor=".9 .5" data-dx="0" data-gap="60" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfbathroompod.webp" alt="" width="960" height="1007" fetchpriority="low" loading="lazy" decoding="async"><figcaption class="tx-imm-cap">Bathroom Pod</figcaption></figure>
+        <figure class="tx-imm-inset is-bearing is-late" data-reveal data-anchor=".55 .66" data-dx="0" data-gap="24" data-edge="1" data-late="1" data-dir="-1"><img src="https://www.nyase.com/wp-content/uploads/2026/11/ucsfmeprack.webp" alt="" width="1024" height="768" fetchpriority="low" loading="lazy" decoding="async"><figcaption class="tx-imm-cap">Prefabricated MEP Rack</figcaption></figure>
       </div>
       <div class="tx-imm-steps">
       <article class="tx-imm-step" data-cam=".5 0 .5 0 1" data-cam-m=".3 .5 .5 .5 1"><div class="tx-imm-card">
@@ -2397,7 +2405,7 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
     </div>
     <div class="nya-s33-run"><div class="nya-s33-scene">
     <div class="nya-s33-art" aria-hidden="true">
-      <img class="nya-s33-full" src="https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfullv.webp" alt="" width="2000" height="667" loading="lazy" decoding="async">
+      <img class="nya-s33-full" src="https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfullv.webp" srcset="https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfullv-768x256.webp 768w, https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfullv-1024x342.webp 1024w, https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfullv-1536x512.webp 1536w, https://www.nyase.com/wp-content/uploads/2026/11/nyaclosinghospitalfullv.webp 2000w" sizes="(max-width:899px) 100vw, (max-width:1100px) and (orientation:portrait) 100vw, 130vw" alt="" width="2000" height="667" loading="lazy" decoding="async">
     </div>
     <ol class="nya-s33-steps">
       <li class="nya-s33-step"><div class="nya-s33-copy"><h3>Technical <br>Ingenuity</h3><p>Creative engineering that protects seismic performance, preserves design ambition, and reduces material demands</p></div></li>
