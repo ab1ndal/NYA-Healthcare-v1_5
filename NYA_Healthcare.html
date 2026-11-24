@@ -4416,9 +4416,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   // The reveal plays by itself once it starts, on every layout. When the first card's place (where it sits, not mid-rise) comes
   // 85% of the way down the screen, the cards come up one after another, 0.2s apart (on phones and upright tablets two at a
   // time, 0.45s apart), each finishing on its own whatever the scroll does. The building is separate: once the cards have all
-  // finished and it is on screen, it fades fully in by itself. Scrolling back above the section (the first card's place below
+  // started and it is on screen, it fades fully in by itself, together with the last card. Scrolling back above the section (the first card's place below
   // the screen) resets it, so it plays again next time.
-  let played=false,shown=0,built=false,stepping=false,shownAt=0;
+  let played=false,shown=0,built=false,stepping=false;
   const cardList=()=>[...section.querySelectorAll('.nya-s33-step')];
   function applyReveal(){
     cardList().forEach((li,i)=>{const on=i<shown;li.style.setProperty('--cp',on?'1':'0');li.classList.toggle('is-on',on)});
@@ -4427,7 +4427,7 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   function step(){
     const n=cardList().length;
     if(!played||shown>=n){stepping=false;return}
-    shown=Math.min(n,shown+(scene?2:1));shownAt=performance.now();
+    shown=Math.min(n,shown+(scene?2:1));
     applyReveal();
     if(shown>=n){stepping=false;request();return}
     stepping=true;
@@ -4445,10 +4445,9 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     const end=scrollY+vh>=document.documentElement.scrollHeight-2,n=cards.length;
     if(!played&&(ft<vh*.85||end)){played=true;if(!stepping)step()}
     else if(played&&ft>vh&&!end){resetReveal();return}
-    // The building: once the last card has finished (its 0.5s; 0.62s for the second of a pair) and the drawing is on screen.
+    // The building: it starts together with the last card, once the drawing is on screen.
     if(!built&&shown>=n){
-      const done=performance.now()-shownAt>=(scene?620:500);
-      if(done&&a.top<vh*.95){built=true;applyReveal()}
+      if(a.top<vh*.95){built=true;applyReveal()}
       else setTimeout(request,100);
     }
   }
