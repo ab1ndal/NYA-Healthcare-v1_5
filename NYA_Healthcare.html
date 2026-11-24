@@ -1457,10 +1457,10 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
 /* The cards come up with the scroll, one after another: each fades in and rises 2.5rem in turn, left to right within a row (--cp
    runs 0 to 1 per card, set by the script). While the script measures the layout (is-fitting) the cards sit in place. */
 .is-live .nya-s33-step{opacity:var(--cp,0);transform:translateY(calc((1 - var(--cp,0))*2.5rem));transition:opacity .25s linear,transform .25s linear}
-.nya-s33.is-live.is-forced .nya-s33-step{transition:opacity .5s ease-out,transform .5s ease-out!important}
-/* Desktop: the cards and the building come in at a steady pace (see step() in the script), so each card takes 0.5s and the
-   building 0.5s, eased. */
-.nya-s33.is-live.is-forced.is-pinned .nya-s33-step{transition:opacity .5s ease-out,transform .5s ease-out!important}
+.nya-s33.is-live.is-forced .nya-s33-step{transition:opacity .6s ease-out,transform .6s ease-out!important}
+/* Desktop: the cards and the building come in at a steady pace (see step() in the script), so each card takes 0.6s and the
+   building 0.8s, eased. */
+.nya-s33.is-live.is-forced.is-pinned .nya-s33-step{transition:opacity .6s ease-out,transform .6s ease-out!important}
 .nya-s33.is-live.is-forced.is-pinned .nya-s33-full{transition:opacity .8s ease-out,transform .8s ease-out!important}
 .nya-s33.is-live.is-forced.is-fitting .nya-s33-step,.nya-s33.is-fitting .nya-s33-step{transform:none!important;transition:none!important}
 
@@ -1501,8 +1501,8 @@ html:has(#project-modal.open) .nya-morph-layer{display:none}</style>
    still brings them in order; scrolling back takes them away again from the last. */
 .nya-s33.is-scene .nya-s33-step{opacity:0;transform:translateY(1.5rem);pointer-events:none}
 .nya-s33.is-scene .nya-s33-step.is-on{opacity:1;transform:none;pointer-events:auto}
-.nya-s33.is-live.is-forced.is-scene .nya-s33-step{transition:opacity .5s ease-out,transform .5s ease-out!important}
-.nya-s33.is-live.is-forced.is-scene .nya-s33-step:nth-child(even).is-on{transition-delay:.12s!important}
+.nya-s33.is-live.is-forced.is-scene .nya-s33-step{transition:opacity .6s ease-out,transform .6s ease-out!important}
+.nya-s33.is-live.is-forced.is-scene .nya-s33-step:nth-child(even).is-on{transition-delay:.15s!important}
 .nya-s33.is-live.is-forced.is-scene.is-fitting .nya-s33-step{transition:none!important}
 .nya-s33.is-live.is-forced.is-scene .nya-s33-full{transition:opacity .8s ease-out,transform .8s ease-out!important}
 /* The copyright line follows close under the lawn. */
@@ -4414,11 +4414,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   const clamp=v=>Math.max(0,Math.min(1,v));
   let pinned=false,scene=false,frame=0;
   // The reveal plays by itself once it starts, on every layout. When the first card's place (where it sits, not mid-rise) comes
-  // 85% of the way down the screen, the cards come up one after another, 0.2s apart (on phones and upright tablets two at a
-  // time, 0.45s apart), each finishing on its own whatever the scroll does. The building is separate: once the cards have all
-  // started and it is on screen, it fades fully in by itself, together with the last card. Scrolling back above the section (the first card's place below
+  // 85% of the way down the screen, the cards come up one after another, 0.35s apart (on phones and upright tablets two at a
+  // time, 0.65s apart), each finishing on its own whatever the scroll does. The building is separate: it starts halfway through the
+  // last card's rise (once the drawing is on screen) and fades fully in by itself. Scrolling back above the section (the first card's place below
   // the screen) resets it, so it plays again next time.
-  let played=false,shown=0,built=false,stepping=false;
+  let played=false,shown=0,built=false,stepping=false,shownAt=0;
   const cardList=()=>[...section.querySelectorAll('.nya-s33-step')];
   function applyReveal(){
     cardList().forEach((li,i)=>{const on=i<shown;li.style.setProperty('--cp',on?'1':'0');li.classList.toggle('is-on',on)});
@@ -4427,11 +4427,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
   function step(){
     const n=cardList().length;
     if(!played||shown>=n){stepping=false;return}
-    shown=Math.min(n,shown+(scene?2:1));
+    shown=Math.min(n,shown+(scene?2:1));shownAt=performance.now();
     applyReveal();
     if(shown>=n){stepping=false;request();return}
     stepping=true;
-    setTimeout(step,scene?450:200);
+    setTimeout(step,scene?650:350);
   }
   function resetReveal(){played=false;shown=0;built=false;applyReveal()}
   function draw(){
@@ -4445,9 +4445,11 @@ document.querySelectorAll('.arcs-cost-chart').forEach(initArcsChart);
     const end=scrollY+vh>=document.documentElement.scrollHeight-2,n=cards.length;
     if(!played&&(ft<vh*.85||end)){played=true;if(!stepping)step()}
     else if(played&&ft>vh&&!end){resetReveal();return}
-    // The building: it starts together with the last card, once the drawing is on screen.
+    // The building: it starts halfway through the last card's 0.6s rise (on phones the second of the pair, 0.15s behind), once
+    // the drawing is on screen.
     if(!built&&shown>=n){
-      if(a.top<vh*.95){built=true;applyReveal()}
+      const due=performance.now()-shownAt>=(scene?450:300);
+      if(due&&a.top<vh*.95){built=true;applyReveal()}
       else setTimeout(request,100);
     }
   }
